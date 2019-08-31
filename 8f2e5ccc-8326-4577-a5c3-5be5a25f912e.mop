@@ -1,0 +1,122 @@
+{
+  "Name": "PlaySpeedExample",
+  "_id": "8f2e5ccc-8326-4577-a5c3-5be5a25f912e",
+  "Namespace": "user.tenfour",
+  "Description": "Minimal example of using IPlaySpeedProvider",
+  "Inputs": [
+    {
+      "Name": "Value1",
+      "MetaInstanceID": "706b315d-9fe3-4548-98e0-e8ec4409bf70",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Value2",
+      "MetaInstanceID": "484b7dd6-2176-4443-8cff-985fe459c983",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Sum",
+      "MetaInstanceID": "f4600509-8b85-4e01-b7fc-a7995e8d1854",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "fa0b9b25-7c2b-4e34-ab7c-0a6f048007d8",
+      "MetaID": "db69a22a-450b-4bcc-97e7-7b2751dfe697",
+      "Name": "PlaySpeedExampleFunc",
+      "Version": "c4e0eb6e-4254-469b-a9d7-9e3b01ed5283",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDdb69a22a_450b_4bcc_97e7_7b2751dfe697",
+        "{",
+        "    public class Class_PlaySpeedExample : OperatorPart.Function",
+        "    {",
+        "        public override void Dispose()",
+        "        {",
+        "            base.Dispose();",
+        "            if (_subscribedTo != null)",
+        "            {",
+        "                _subscribedTo.PlaySpeedChanged -= PlaySpeed_OnChanged;",
+        "            }",
+        "        }",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            if (_subscribedTo == null)",
+        "            {",
+        "                context.PlaySpeedProvider.PlaySpeedChanged += PlaySpeed_OnChanged;",
+        "                _subscribedTo = context.PlaySpeedProvider;",
+        "            }",
+        "            return context;",
+        "        }",
+        "        ",
+        "        Framefield.Core.IPlaySpeedProvider _subscribedTo = null;",
+        "",
+        "        private void PlaySpeed_OnChanged(object sender, EventArgs e)",
+        "        {",
+        "            Framefield.Core.IPlaySpeedProvider p = sender as Framefield.Core.IPlaySpeedProvider;",
+        "            Logger.Debug(this, \"Play speed has changed ==> \" + p.PlaySpeed);",
+        "        }",
+        "    }",
+        "}",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "706b315d-9fe3-4548-98e0-e8ec4409bf70",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fa0b9b25-7c2b-4e34-ab7c-0a6f048007d8"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "484b7dd6-2176-4443-8cff-985fe459c983",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fa0b9b25-7c2b-4e34-ab7c-0a6f048007d8"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fa0b9b25-7c2b-4e34-ab7c-0a6f048007d8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f4600509-8b85-4e01-b7fc-a7995e8d1854"
+    }
+  ]
+}
