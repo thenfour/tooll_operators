@@ -306,7 +306,7 @@
       "MetaInstanceID": "fb891950-a632-46c8-b62c-74d24296ee6d",
       "MetaID": "af210a7d-df6a-4187-a9b9-efcb79863a6b",
       "Name": "_TransformMatrixFunc",
-      "Version": "e735f18e-16ad-459d-bac0-27f95362512c",
+      "Version": "2656c19e-468a-4611-96be-f56affe8a82e",
       "Type": "Scene",
       "IsMultiInput": "True",
       "Script": [
@@ -316,7 +316,7 @@
         "",
         "namespace Framefield.Core.IDaf210a7d_df6a_4187_a9b9_efcb79863a6b",
         "{",
-        "    public class Class_TransformMatrix : OperatorPart.Function, ISceneTransform",
+        "    public class Class__TransformMatrix : OperatorPart.Function, ISceneTransform",
         "    {",
         "        // ISceneTransform",
         "        public Matrix Transform",

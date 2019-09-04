@@ -1,0 +1,104 @@
+{
+  "Name": "SKServerStateProgram",
+  "_id": "aad892a0-67bc-4f55-835e-1d7989662b74",
+  "Namespace": "user.tenfour",
+  "Description": "takes state from SKWebServer and displays info",
+  "Inputs": [
+    {
+      "Name": "ServerState",
+      "MetaInstanceID": "9877d5cc-846a-4715-ad25-9f726de95630",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "BeatFrac",
+      "MetaInstanceID": "a7e15fed-468c-40ab-bddd-483c943f695b",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "bb040fa5-b988-4068-a372-afc6a6df77cb",
+      "MetaID": "122e5e99-6c4d-4969-a9e9-0bd04ffe499c",
+      "Name": "SKServerStateProgramFunc",
+      "Version": "2fdf23e6-c143-4ff7-9f67-dba477e87920",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID122e5e99_6c4d_4969_a9e9_0bd04ffe499c",
+        "{",
+        "    public class Class_SKServerStateProgram : OperatorPart.Function",
+        "    {",
+        "        int _count = 0;",
+        "",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            ServerState = 0",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            //>>> _params ",
+        "            var ServerState = inputs[(int)InputId.ServerState].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            //<<< _params ",
+        "            ",
+        "            if ((object)ServerState != null) {",
+        "                //Logger.Info(this,\"typeof serverstate: {0}\", ServerState.GetType().ToString());",
+        "                var s = (SlashKickPerformer.SKPlayerState)ServerState;",
+        "    ",
+        "                context.Value = (float)(double)s.ProgramIndex;",
+        "                //_count ++;",
+        "                //Logger.Info(this,\"playhead: {0}, program:{1}, bpm:{2}, isplay:{3}, beat:{4}, count:{5}\", s.Playhead,",
+        "                //s.ProgramIndex, s.BPM,",
+        "                //s.IsPlaying, s.Beatfrac, _count);",
+        "            }",
+        "",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9877d5cc-846a-4715-ad25-9f726de95630",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "bb040fa5-b988-4068-a372-afc6a6df77cb"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "bb040fa5-b988-4068-a372-afc6a6df77cb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a7e15fed-468c-40ab-bddd-483c943f695b"
+    }
+  ]
+}

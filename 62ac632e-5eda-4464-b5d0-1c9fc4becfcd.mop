@@ -24,12 +24,55 @@
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [],
+        "Inputs": [
+          {
+            "ID": "810e1039-99f0-401c-a106-3e87bd2811fb",
+            "Type": "Float",
+            "Value": [
+              "-14.98062"
+            ]
+          },
+          {
+            "ID": "465c0f09-2564-4d74-97e5-f16e4a168bcf",
+            "Type": "Float",
+            "Value": [
+              "0.9878151"
+            ]
+          },
+          {
+            "ID": "db7fa71f-f8fd-4c13-b1a7-716a32ddb7c5",
+            "Type": "Float",
+            "Value": [
+              "-12.89093"
+            ]
+          },
+          {
+            "ID": "cd55616a-d11d-4b9b-ad6d-6071cac5e87b",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "28827d15-597c-4214-8be9-72762d229578",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "7dcec0b7-d396-406c-9291-c6a82a371e47",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          }
+        ],
         "States": []
       }
     },
     {
-      "Name": "Cube (Dep.)",
+      "Name": "__Cube (Dep.)__",
       "MetaInstanceID": "135a5eef-a07f-46b6-b850-95e545a8cc31",
       "MetaID": "61ab8b9e-0b3b-4e94-9e95-a481dc51dadc",
       "OperatorProperties": {
@@ -127,7 +170,22 @@
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [],
+        "Inputs": [
+          {
+            "ID": "c47b5fdd-a3cc-42c5-98b7-9866c2b4f70f",
+            "Type": "Text",
+            "Value": [
+              "C:/Users/carl/Videos/2019-05-31 16-17-20.flv"
+            ]
+          },
+          {
+            "ID": "63c17f31-b3eb-4b88-89f0-c4a6a62919d8",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          }
+        ],
         "States": []
       }
     }

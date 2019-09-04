@@ -1,0 +1,140 @@
+{
+  "Name": "SetPointTexture",
+  "_id": "fb9f6208-6697-4bc0-80da-ff077cf0f050",
+  "Namespace": "user.tenfour",
+  "Description": "Loads an image and sets it to texture stage 0.",
+  "Inputs": [
+    {
+      "Name": "Scene",
+      "MetaInstanceID": "0ab48f35-dbef-4ff9-9f3a-d42f76ed21be",
+      "DefaultValue": {
+        "Type": "Scene",
+        "Value": "Framefield.Core.Scene"
+      },
+      "MetaID": "79122951-7bc4-4c68-b085-866eab828248",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Image",
+      "MetaInstanceID": "2e57e63e-49da-4b13-8bb0-4ad832f60792",
+      "DefaultValue": {
+        "Type": "Image",
+        "Value": "Framefield.Core.Image"
+      },
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Scene",
+      "MetaInstanceID": "64f06099-232c-4637-8fae-4554215e2924",
+      "MetaID": "79122951-7bc4-4c68-b085-866eab828248"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "4fc391ba-50f2-49c3-8d11-5bbbb1801813",
+      "MetaID": "da73918b-021f-4b5a-96d5-1b29e4c45e81",
+      "Name": "SetPointTextureFunc",
+      "Version": "4590d226-272d-431c-a31b-b12b78aecf34",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "",
+        "namespace Framefield.Core.IDda73918b_021f_4b5a_96d5_1b29e4c45e81",
+        "{",
+        "    public class Class_SetPointTexture : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Scene = 0,",
+        "            Image = 1",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public override void Dispose()",
+        "        {",
+        "            Utilities.DisposeObj(ref _texture);",
+        "        }",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> __params",
+        "            var Scene = inputs[(int)InputId.Scene];",
+        "            var ImageInput = inputs[(int)InputId.Image];",
+        "            //<<< __params",
+        "",
+        "            if (ImageInput.Func.Changed)",
+        "            {",
+        "                var Image = ImageInput.Eval(context).Image;",
+        "                Dispose();",
+        "                if (Image != null)",
+        "                {",
+        "                    _texture = new ShaderResourceView(context.D3DDevice, Image);",
+        "                }",
+        "                ImageInput.Func.Changed = false;",
+        "            }",
+        "",
+        "            var prevTexture0 = context.Texture0;",
+        "            if (_texture != null)",
+        "                context.Texture0 = _texture;",
+        "",
+        "            Scene.Eval(context);",
+        "",
+        "            context.Texture0 = prevTexture0;",
+        "            return context;",
+        "        }",
+        "",
+        "        ShaderResourceView _texture = null;",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4fc391ba-50f2-49c3-8d11-5bbbb1801813",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "64f06099-232c-4637-8fae-4554215e2924"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0ab48f35-dbef-4ff9-9f3a-d42f76ed21be",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4fc391ba-50f2-49c3-8d11-5bbbb1801813"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2e57e63e-49da-4b13-8bb0-4ad832f60792",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4fc391ba-50f2-49c3-8d11-5bbbb1801813"
+    }
+  ]
+}

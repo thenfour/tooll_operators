@@ -42,6 +42,21 @@
         "Inputs": [],
         "States": []
       }
+    },
+    {
+      "Name": "PlaySpeedExample",
+      "MetaInstanceID": "ac8092bf-762b-430e-a458-d7b13f57b4f3",
+      "MetaID": "8f2e5ccc-8326-4577-a5c3-5be5a25f912e",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "15031.8438762204",
+        "PosY": "-1102.09285375648",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
     }
   ],
   "Connections": [

@@ -1,0 +1,146 @@
+{
+  "Name": "SKWebServer",
+  "_id": "29f0a920-72f4-450b-a6fe-f3c773736719",
+  "Namespace": "user.tenfour",
+  "Description": "web server that listens for specific events. outputs dynamic player state. (struct SlashKickPerformer.SKPlayerState)\r\n",
+  "Inputs": [
+    {
+      "Name": "SyncOffsetMS",
+      "MetaInstanceID": "72c67e8d-d5e8-4832-8070-af6288204715",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "milliseconds to shift beats and timing to keep in sync\r\n",
+      "Min": "-1000",
+      "Max": "1000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ServerPrefix",
+      "MetaInstanceID": "1bad8a63-e27a-4ffb-b95f-36de5fa75b38",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": "http://127.0.0.1:7777"
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "State",
+      "MetaInstanceID": "4722d312-1e90-40b6-8143-afcd1de4557f",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "a6046534-ed3f-4b26-a304-a74a9ed12d0e",
+      "MetaID": "fc530095-f8cd-494b-b66f-e1f0ce675291",
+      "Name": "SKWebServerFunc",
+      "Version": "86d20ebd-c369-4ff1-82fe-b4b58bf867d7",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SlashKickPerformer;",
+        "",
+        "namespace Framefield.Core.IDfc530095_f8cd_494b_b66f_e1f0ce675291",
+        "{",
+        "    public class Class_SKWebServer : OperatorPart.Function,  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        SlashKickPerformer.SKWebServer _server = null;",
+        "        string _oldPrefix = null;",
+        "",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            SyncOffsetMS = 0,",
+        "            ServerPrefix = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        public override void Dispose() {",
+        "        ",
+        "            if (_server != null) {",
+        "                _server.Dispose();",
+        "                Logger.Info(this,\"Stopping SK Web server @ {0}\", _oldPrefix);",
+        "                _server = null;",
+        "            }",
+        "        }",
+        "        ",
+        "        public void HandleEvent(SlashKickEventType e, double arg1, double arg2) {",
+        "            Logger.Info(this,\"Handle SK Event '{0}'\", e.ToString());",
+        "        }",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            //>>> _params ",
+        "            var SyncOffsetMS = inputs[(int)InputId.SyncOffsetMS].Eval(context).Value;",
+        "            var ServerPrefix = inputs[(int)InputId.ServerPrefix].Eval(context).Text;",
+        "            //<<< _params ",
+        "",
+        "            if (ServerPrefix != _oldPrefix) {",
+        "                if (_server != null) {",
+        "                    _server.Dispose();",
+        "                    _server = null;",
+        "                }",
+        "                _oldPrefix = ServerPrefix;",
+        "                _server = new SlashKickPerformer.SKWebServer(ServerPrefix);",
+        "                Logger.Info(this,\"Started SK Web server @ {0}\", ServerPrefix);",
+        "            }",
+        "            ",
+        "            _server.Transport.OffsetSeconds = SyncOffsetMS / 1000;",
+        "",
+        "            context.Dynamic = _server.GetState();",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "72c67e8d-d5e8-4832-8070-af6288204715",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1bad8a63-e27a-4ffb-b95f-36de5fa75b38",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4722d312-1e90-40b6-8143-afcd1de4557f"
+    }
+  ]
+}

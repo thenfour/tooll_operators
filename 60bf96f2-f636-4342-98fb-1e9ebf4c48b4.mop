@@ -1,12 +1,12 @@
 {
-  "Name": "StretchedPixelLine",
-  "_id": "dd19af21-97a9-4c8b-a63f-2e393c33de4b",
-  "Namespace": "lib.image.blur",
-  "Description": "Reduces noise (white pixels) in an image",
+  "Name": "DitherViaImage",
+  "_id": "60bf96f2-f636-4342-98fb-1e9ebf4c48b4",
+  "Namespace": "user.tenfour",
+  "Description": "fork from asciifilter",
   "Inputs": [
     {
       "Name": "Code",
-      "MetaInstanceID": "c8ec36a0-b9a7-4292-8aa4-f7168df2a571",
+      "MetaInstanceID": "ce7f3a47-c422-40c5-bf99-e9bff872bc74",
       "DefaultValue": {
         "Type": "Text",
         "Value": [
@@ -19,29 +19,20 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
+          "Texture2D DitherPattern;",
           "Texture2D Image;",
-          "float2 Position;",
-          "float Width;",
-          "float Rotate;",
+          "float DitherStrength01;",
+          "float DestValues;",
+          "float2 Pixellate;",
           "//<<< _parameters\r",
-          "float4x4 ViewToWorld;\r",
           " \r",
-          "//>>> setup\r",
           "SamplerState samLinear\r",
           "{\r",
-          "    Filter = MIN_MAG_MIP_POINT;\r",
-          "    AddressU = Clamp;\r",
-          "    AddressV = Clamp;\r",
-          "};\r",
-          "//<<< setup\r",
-          "\r",
-          "BlendState NoBlend \r",
-          "{\r",
-          "    AlphaToCoverageEnable = FALSE;\r",
-          "    BlendEnable[0] = FALSE;\r",
+          "    Filter = MIN_MAG_MIP_LINEAR;\r",
+          "    AddressU = Wrap;\r",
+          "    AddressV = Wrap;\r",
           "};\r",
           "\r",
-          "//>>> declarations\r",
           "struct VS_IN\r",
           "{\r",
           "    float4 pos : POSITION;\r",
@@ -51,11 +42,8 @@
           "struct PS_IN\r",
           "{\r",
           "    float4 pos : SV_POSITION;\r",
-          "    float2 texCoord: TEXCOORD0;\t    \r",
-          "    float3 worldTViewPos: TEXCOORD1;\r",
-          "    float3 worldTViewDir: TEXCOORD2;\r",
+          "    float2 texCoord: TEXCOORD0;\r",
           "};\r",
-          "//<<< declarations\r",
           "\r",
           "//>>> _GS\r",
           "",
@@ -75,55 +63,44 @@
           "//<<< _VS\r",
           "\r",
           "//>>> PS\r",
-          "static const int NUMWT = 10;\r",
-          "static const float Gauss[NUMWT] = { 0.93, 0.86, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1 };\r",
           "\r",
           "float4 PS( PS_IN input ) : SV_Target\r",
           "{\r",
-          "    float width, height;\r",
-          "    Image.GetDimensions(width, height);\r",
+          "    float ditherWidth, ditherHeight;\r",
+          "    DitherPattern.GetDimensions(ditherWidth, ditherHeight);\r",
           "    \r",
-          "    float angle = Rotate / 180.0 * 3.141578;\r",
-          "    float2 dir = float2( sin( angle ), cos( angle ));\r",
-          "\r",
-          "    // Calculate distance to line...\r",
-          "    float2 p1 = Position; //float2(0.5,0.5);\r",
-          "    float2 p2 = p1 + dir * 0.01; // BUG? Without the multiplication, the shader doesn't compile...\r",
-          "    float size= length(dir);\r",
-          "    float cx = p2.x - p1.x;\r",
-          "    float cy = p2.y - p1.y;\r",
-          "    float bx = -cy;\r",
-          "    float by = cx;\r",
-          "    float x= input.texCoord.x;\r",
-          "    float y= input.texCoord.y;\r",
-          "    float ex = x - p1.x;\r",
-          "    float ey = y - p1.y;\r",
-          "    float dist = (ex*by - ey*bx) / (sqrt(bx*bx + by*by));\r",
-          "\r",
-          "    float2 pos = dir;\r",
+          "    uint2 srcPos = input.pos.xy;\r",
+          "    // quantize to pixellate.\r",
+          "    uint2 ditherPos = floor(srcPos / Pixellate);\r",
+          "    srcPos = ditherPos * Pixellate;\r",
           "    \r",
-          "    dist = clamp( -dist, 0, Width); \r",
+          "    float dith = DitherPattern.Load(uint3(ditherPos % uint2(ditherWidth, ditherHeight), 0)).r;\r",
+          "    dith -= .5;\r",
+          "    float strength = DitherStrength01 * (1./DestValues);\r",
+          "    dith *= strength;\r",
           "    \r",
-          "    float2 offset = dist * float2(dir.x , dir.y);    \r",
-          "    float4 c = Image.Sample(samLinear, input.texCoord + offset);\r",
-          "\r",
-          "    return c;\r",
+          "    float4 ret = Image.Load(uint3(srcPos,0));\r",
+          "    ret.rgb += dith;\r",
+          "    \r",
+          "    // reduce values\r",
+          "    ret.rgb = floor(ret.rgb * DestValues) / DestValues;\r",
+          "    \r",
+          "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
+          "    return ret;\r",
           "}\r",
           "//<<< PS\r",
           "\r",
-          "//>>> technique\r",
+          "//>>> _technique\r",
           "technique10 Render",
           "{",
           "    pass P0",
           "    {",
-          "    SetBlendState( NoBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );",
           "        SetGeometryShader( 0 );",
           "        SetVertexShader( CompileShader( vs_4_0, VS() ) );",
           "        SetPixelShader( CompileShader( ps_4_0, PS() ) );",
           "    }",
           "}",
           "//<<< _technique\r",
-          "\r",
           ""
         ]
       },
@@ -139,7 +116,7 @@
     },
     {
       "Name": "Image",
-      "MetaInstanceID": "072365d5-52c6-4564-b417-7d50c09a1f3d",
+      "MetaInstanceID": "63855465-2b62-4efd-a7a2-00d8c5222ceb",
       "DefaultValue": {
         "Type": "Image",
         "Value": "Framefield.Core.Image"
@@ -155,8 +132,59 @@
       "EnumValues": []
     },
     {
-      "Name": "Position.X",
-      "MetaInstanceID": "f1ee6dfa-f976-4899-9a66-515ef0864bfa",
+      "Name": "DitherPattern",
+      "MetaInstanceID": "428649af-f444-411b-a548-cff8a43b13ff",
+      "DefaultValue": {
+        "Type": "Image",
+        "Value": "Framefield.Core.Image"
+      },
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "DitherStrength01",
+      "MetaInstanceID": "4b75ad31-e053-486c-9642-dc7a1028a046",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "DestValues",
+      "MetaInstanceID": "825834c8-722b-457c-8e12-b2469aa8c9db",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "2"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "2",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Pixellate.X",
+      "MetaInstanceID": "839492cf-53e2-4d85-809a-70bb800e4c92",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -172,8 +200,8 @@
       "EnumValues": []
     },
     {
-      "Name": "Position.Y",
-      "MetaInstanceID": "52759e63-b678-4c3d-979f-c28922db8e05",
+      "Name": "Pixellate.Y",
+      "MetaInstanceID": "294bf80b-fc0e-47c3-9267-9dacc1497570",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -184,40 +212,6 @@
       "Description": "",
       "Min": "-10000",
       "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "Width",
-      "MetaInstanceID": "a963ca65-172f-4758-bd17-344d1b48bc95",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "Rotate",
-      "MetaInstanceID": "9a6fde74-f1a8-4469-a8fc-aaf5a2cd74d7",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
@@ -226,16 +220,16 @@
   "Outputs": [
     {
       "Name": "Image",
-      "MetaInstanceID": "85bbca84-cd44-4686-b475-06f035957367",
+      "MetaInstanceID": "a8d3c4cc-57a1-4783-91cf-06888e22255d",
       "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "90976559-7a51-41db-bcd1-3afccbe40d49",
-      "MetaID": "5d7fff04-d099-489b-a972-ab8edd217441",
-      "Name": "StretchedPixelLineFunc",
-      "Version": "293fe926-5fbb-4451-b4b9-0a427df71a56",
+      "MetaInstanceID": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240",
+      "MetaID": "bc8d64b8-201e-4427-91e1-213378d77d81",
+      "Name": "DitherViaImageFunc",
+      "Version": "05f70000-e17c-4787-957a-594ac2e1dcff",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -249,46 +243,49 @@
         "using SharpDX.Windows;",
         "//<<< _using",
         "",
-        "namespace Framefield.Core.ID5d7fff04_d099_489b_a972_ab8edd217441",
+        "namespace Framefield.Core.IDbc8d64b8_201e_4427_91e1_213378d77d81",
         "{",
-        "    public class Class_StretchedPixelLine : FXImageFunction",
+        "    public class Class_DitherViaImage : FXImageFunction",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
         "            Code = 0,",
-        "            Image = 1,",
-        "            PositionX = 2,",
-        "            PositionY = 3,",
-        "            Width = 4,",
-        "            Rotate = 5",
+        "            DitherPattern = 1,",
+        "            Image = 2,",
+        "            DitherStrength01 = 3,",
+        "            DestValues = 4,",
+        "            PixellateX = 5,",
+        "            PixellateY = 6",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var DitherPattern = inputs[(int)InputId.DitherPattern].Eval(context).Image; // Needs to be checked for null!",
         "            var Image = inputs[(int)InputId.Image].Eval(context).Image; // Needs to be checked for null!",
-        "            var PositionX = inputs[(int)InputId.PositionX].Eval(context).Value;",
-        "            var PositionY = inputs[(int)InputId.PositionY].Eval(context).Value;",
-        "            var Position = new Vector2(PositionX, PositionY);",
-        "            var Width = inputs[(int)InputId.Width].Eval(context).Value;",
-        "            var Rotate = inputs[(int)InputId.Rotate].Eval(context).Value;",
+        "            var DitherStrength01 = inputs[(int)InputId.DitherStrength01].Eval(context).Value;",
+        "            var DestValues = inputs[(int)InputId.DestValues].Eval(context).Value;",
+        "            var PixellateX = inputs[(int)InputId.PixellateX].Eval(context).Value;",
+        "            var PixellateY = inputs[(int)InputId.PixellateY].Eval(context).Value;",
+        "            var Pixellate = new Vector2(PixellateX, PixellateY);",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
-        "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 1));",
+        "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 0));",
         "",
         "                //>>> _setup",
+        "                using (var DitherPatternView = new ShaderResourceView(context.D3DDevice, DitherPattern))",
         "                using (var ImageView = new ShaderResourceView(context.D3DDevice, Image))",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"DitherPattern\").AsShaderResource().SetResource(DitherPatternView);",
         "                    _effect.GetVariableByName(\"Image\").AsShaderResource().SetResource(ImageView);",
-        "                    _effect.GetVariableByName(\"Position\").AsVector().Set(new Vector2(PositionX, PositionY));",
-        "                    _effect.GetVariableByName(\"Width\").AsScalar().Set(Width);",
-        "                    _effect.GetVariableByName(\"Rotate\").AsScalar().Set(Rotate);",
+        "                    _effect.GetVariableByName(\"DitherStrength01\").AsScalar().Set(DitherStrength01);",
+        "                    _effect.GetVariableByName(\"DestValues\").AsScalar().Set(DestValues);",
+        "                    _effect.GetVariableByName(\"Pixellate\").AsVector().Set(new Vector2(PixellateX, PixellateY));",
         "                //<<< _setup",
-        "",
         "",
         "                Render(context);",
         "",
@@ -310,45 +307,51 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49",
+      "SourceOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "85bbca84-cd44-4686-b475-06f035957367"
+      "TargetOpPart": "a8d3c4cc-57a1-4783-91cf-06888e22255d"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "c8ec36a0-b9a7-4292-8aa4-f7168df2a571",
+      "SourceOpPart": "ce7f3a47-c422-40c5-bf99-e9bff872bc74",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49"
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "072365d5-52c6-4564-b417-7d50c09a1f3d",
+      "SourceOpPart": "428649af-f444-411b-a548-cff8a43b13ff",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49"
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "f1ee6dfa-f976-4899-9a66-515ef0864bfa",
+      "SourceOpPart": "63855465-2b62-4efd-a7a2-00d8c5222ceb",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49"
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "52759e63-b678-4c3d-979f-c28922db8e05",
+      "SourceOpPart": "4b75ad31-e053-486c-9642-dc7a1028a046",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49"
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "a963ca65-172f-4758-bd17-344d1b48bc95",
+      "SourceOpPart": "825834c8-722b-457c-8e12-b2469aa8c9db",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49"
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "9a6fde74-f1a8-4469-a8fc-aaf5a2cd74d7",
+      "SourceOpPart": "839492cf-53e2-4d85-809a-70bb800e4c92",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90976559-7a51-41db-bcd1-3afccbe40d49"
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "294bf80b-fc0e-47c3-9267-9dacc1497570",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     }
   ]
 }

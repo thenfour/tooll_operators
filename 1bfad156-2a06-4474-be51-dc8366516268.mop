@@ -1,0 +1,121 @@
+{
+  "Name": "SKSceneSwitch",
+  "_id": "1bfad156-2a06-4474-be51-dc8366516268",
+  "Namespace": "user.tenfour",
+  "Description": "same as Switch, uses the SK server state program to switch.\r\n",
+  "Inputs": [
+    {
+      "Name": "Inputs",
+      "MetaInstanceID": "e83b74fe-7e4b-410f-934e-db42f3e0440b",
+      "DefaultValue": {
+        "Type": "Generic",
+        "Value": "Framefield.Core.Generic"
+      },
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "f08ab04f-83c2-4dd3-aa2d-18a9301acc77",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e",
+      "MetaID": "dbef9b88-ac5e-48fe-a1e7-34c039909060",
+      "Name": "SKSceneSwitchFunc",
+      "Version": "dadc715f-0924-43c2-803b-949f1ea60c3f",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDdbef9b88_ac5e_48fe_a1e7_34c039909060",
+        "{",
+        "    public class Class_SKSceneSwitch : OperatorPart.Function,",
+        "                                Framefield.Core.OperatorPartTraits.ITraverseModifier",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Inputs = 0",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public IEnumerable<OperatorPart> GetRelevantConnections()",
+        "        {",
+        "            List<OperatorPart> connections = new List<OperatorPart>();",
+        "",
+        "            var inputs = OperatorPart.Connections[(int)InputId.Inputs];",
+        "            if (_currentIndex >= 0 && inputs.Connections.Count > 0)",
+        "                connections.Add(inputs.Connections[_currentIndex % inputs.Connections.Count]);",
+        "",
+        "            //connections.Add(OperatorPart.Connections[(int)InputId.Index]);",
+        "",
+        "            return connections;",
+        "        }",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var Inputs = inputs[(int)InputId.Inputs];",
+        "            //<<< _params",
+        "",
+        "            //int _currentIndex = -1;",
+        "            if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
+        "                var s = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                _currentIndex = s.ProgramIndex;",
+        "            }",
+        "",
+        "            if (_currentIndex >= 0 && Inputs.Connections.Count > 0)",
+        "            {",
+        "                var selectedInput = Inputs.Connections[_currentIndex % Inputs.Connections.Count];",
+        "                selectedInput.Eval(context);",
+        "            }",
+        "            return context;",
+        "        }",
+        "",
+        "        int _currentIndex = -1;",
+        "    }",
+        "}",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f08ab04f-83c2-4dd3-aa2d-18a9301acc77"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e83b74fe-7e4b-410f-934e-db42f3e0440b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e"
+    }
+  ]
+}
