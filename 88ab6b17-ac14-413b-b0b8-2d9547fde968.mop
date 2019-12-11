@@ -1,0 +1,69 @@
+{
+  "Name": "SKServerPlayhead",
+  "_id": "88ab6b17-ac14-413b-b0b8-2d9547fde968",
+  "Namespace": "user.tenfour",
+  "Description": "forces fetch time from global state.",
+  "Inputs": [],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "90323f6a-fdad-458c-ba68-6950e1ceae77",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "07c969dd-4fa8-48d8-a0d0-09edb7b7d3d5",
+      "MetaID": "52f0e488-0b26-414d-8539-782447bfd103",
+      "Name": "SKServerPlayheadFunc",
+      "Version": "9f6bcdb1-445e-4a42-9b1a-a4779297b52a",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID52f0e488_0b26_414d_8539_782447bfd103",
+        "{",
+        "    public class Class_SKServerPlayhead : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> function",
+        "            ",
+        "            ",
+        "            ",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "              var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                context.Value = ((float)skstate.ProgramTime);",
+        "            } else {",
+        "                context.Value = context.Time;",
+        "            }",
+        "            return context;",
+        "            ",
+        "            //<<< function",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "07c969dd-4fa8-48d8-a0d0-09edb7b7d3d5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "90323f6a-fdad-458c-ba68-6950e1ceae77"
+    }
+  ]
+}

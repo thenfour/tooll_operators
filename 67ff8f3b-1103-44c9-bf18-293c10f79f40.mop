@@ -1,5 +1,5 @@
 {
-  "Name": "LoadRefMapAndFont",
+  "Name": "LoadRefMapAndFontXXX",
   "_id": "67ff8f3b-1103-44c9-bf18-293c10f79f40",
   "Namespace": "user.tenfour",
   "Description": "",
@@ -152,7 +152,7 @@
     {
       "MetaInstanceID": "9fb18e91-1ce4-4678-b7d9-b1d1cc729450",
       "MetaID": "4a903549-5a68-4e69-ac82-1cd6ed186f54",
-      "Name": "LoadRefMapAndFontFunc",
+      "Name": "LoadRefMapAndFontXXXFunc",
       "Version": "c9260233-d0bc-4b2b-9fe3-7018aeb0367e",
       "Type": "Float",
       "IsMultiInput": "True",

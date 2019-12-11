@@ -1,0 +1,95 @@
+{
+  "Name": "ConcatValueLists",
+  "_id": "7a89f159-b892-4621-b07d-f2cd4b99e716",
+  "Namespace": "user.tenfour.list",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Lists",
+      "MetaInstanceID": "59cc141e-88c8-4aa8-9f21-8590605d8792",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "List<float>",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "12526177-bf1a-44ee-b566-d804ec4eba1e",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "b531dd97-bd5b-454e-b46c-9069d68b6483",
+      "MetaID": "cb224ea5-daa8-4118-96b3-da6c39c538c5",
+      "Name": "ConcatValueListsFunc",
+      "Version": "2b9a303f-1f05-440d-a2d2-e2ec1221e50c",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDcb224ea5_daa8_4118_96b3_da6c39c538c5",
+        "{",
+        "    public class Class_ConcatValueLists : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Lists = 0",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        List<float> _list = new List<float>();",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            var Lists = inputs[(int)InputId.Lists];//.Eval(context);",
+        "            ",
+        "            _list.Clear();",
+        "            foreach (var input in Lists.Connections) {",
+        "                _list.AddRange((List<float>)input.Eval(context).Dynamic);",
+        "            }",
+        "            ",
+        "            context.Dynamic = _list;",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "59cc141e-88c8-4aa8-9f21-8590605d8792",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b531dd97-bd5b-454e-b46c-9069d68b6483"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b531dd97-bd5b-454e-b46c-9069d68b6483",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "12526177-bf1a-44ee-b566-d804ec4eba1e"
+    }
+  ]
+}

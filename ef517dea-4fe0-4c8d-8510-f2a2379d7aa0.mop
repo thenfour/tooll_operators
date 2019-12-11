@@ -1,5 +1,5 @@
 {
-  "Name": "SKServerStateBeat",
+  "Name": "SKServerStateBeatXX",
   "_id": "ef517dea-4fe0-4c8d-8510-f2a2379d7aa0",
   "Namespace": "user.tenfour",
   "Description": "takes state from SKWebServer and displays info",
@@ -33,8 +33,8 @@
     {
       "MetaInstanceID": "1b48efbc-2123-4519-a919-6c172038ad1b",
       "MetaID": "60fe0af9-1c37-434a-888c-b780839f2972",
-      "Name": "SKServerStateBeatFunc",
-      "Version": "597aa3cf-b69e-4edf-9d45-d9f2d70c344d",
+      "Name": "SKServerStateBeatXXFunc",
+      "Version": "a14b3b67-398d-40e4-a81a-1f76a8145b42",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -46,7 +46,7 @@
         "",
         "namespace Framefield.Core.ID60fe0af9_1c37_434a_888c_b780839f2972",
         "{",
-        "    public class Class_SKServerStateInfo : OperatorPart.Function",
+        "    public class Class_SKServerStateBeat : OperatorPart.Function",
         "    {",
         "        int _count = 0;",
         "",
@@ -82,8 +82,7 @@
         "",
         ""
       ],
-      "AdditionalAssemblies": [
-      ]
+      "AdditionalAssemblies": []
     }
   ],
   "Operators": [],

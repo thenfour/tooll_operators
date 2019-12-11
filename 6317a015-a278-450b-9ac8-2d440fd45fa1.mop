@@ -19,7 +19,8 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
-          "",
+          "float BlossomStrength;",
+          "float WhiteOut;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -139,7 +140,7 @@
           "        }\r",
           "        \r",
           "        //uv -= nearestPt.xy*(sin(t*1.5)+.2);// blossom effect\r",
-          "        uv -= nearestPt.xy*(iBeat*2.);// blossom effect\r",
+          "        uv -= nearestPt.xy*(frac(iBeat/2.)*BlossomStrength);// blossom effect\r",
           "        uv *= 1.1;\r",
           "        uv = uv.yx; // cheap attempt to reduce regularity\r",
           "    }\r",
@@ -147,6 +148,7 @@
           "\to /= ipartition + 1.;\r",
           "    o = clamp(o,0.,1.);\r",
           "    o = pow(o, o-o+.5);\r",
+          "    o = lerp(o, vec4(1,1,1,1), WhiteOut);\r",
           "}\r",
           "\r",
           "\r",
@@ -188,6 +190,40 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "BlossomStrength",
+      "MetaInstanceID": "6eed2736-9657-4b67-a717-70d49c2ee4aa",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "WhiteOut",
+      "MetaInstanceID": "9ba7b83b-58fd-4351-a176-52bbd24b2b48",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -202,7 +238,7 @@
       "MetaInstanceID": "0f48a4b3-b021-4ea4-b56e-7856676f8180",
       "MetaID": "8b5498fe-f799-4f32-81d8-91a93c143c35",
       "Name": "SH_BloominPartitionFunc",
-      "Version": "a4de962a-d44b-40c3-8287-507ca80c904c",
+      "Version": "5307f9fd-91ce-48d7-994f-570ddb1e92f7",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -223,13 +259,17 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Code = 0",
+        "            Code = 0,",
+        "            BlossomStrength = 1,",
+        "            WhiteOut = 2",
         "        }",
         "        //<<< _inputids",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var BlossomStrength = inputs[(int)InputId.BlossomStrength].Eval(context).Value;",
+        "            var WhiteOut = inputs[(int)InputId.WhiteOut].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -238,13 +278,15 @@
         "                //>>> _setup",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"BlossomStrength\").AsScalar().Set(BlossomStrength);",
+        "                    _effect.GetVariableByName(\"WhiteOut\").AsScalar().Set(WhiteOut);",
         "                //<<< _setup",
         "",
-        "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beatfrac);",
+        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beat);",
         "                }",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
@@ -264,6 +306,7 @@
         ""
       ],
       "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
       ]
     }
   ],
@@ -278,6 +321,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "12b74c0a-ccd6-4fc3-974f-86073d55187f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0f48a4b3-b021-4ea4-b56e-7856676f8180"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6eed2736-9657-4b67-a717-70d49c2ee4aa",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0f48a4b3-b021-4ea4-b56e-7856676f8180"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9ba7b83b-58fd-4351-a176-52bbd24b2b48",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "0f48a4b3-b021-4ea4-b56e-7856676f8180"
     }

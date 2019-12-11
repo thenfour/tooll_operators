@@ -1,0 +1,40 @@
+{
+  "Name": "SyntheticBeach",
+  "_id": "ea47141d-f397-430e-a255-0a0659d507a4",
+  "Namespace": "user.tenfour.rsync",
+  "Description": "",
+  "Inputs": [],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "965a0344-380c-4267-8c02-b8307f762441",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [
+    {
+      "Name": "SH_Beat",
+      "MetaInstanceID": "96e90e59-34ac-435e-b313-0fbd329a0b6b",
+      "MetaID": "439804c4-f92a-4d94-8f42-22d39c0c3aed",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "381.74254937641",
+        "PosY": "-185.621456353568",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "SourceOp": "96e90e59-34ac-435e-b313-0fbd329a0b6b",
+      "SourceOpPart": "50d08b9f-3096-4293-bb46-17be7cc4e2b9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "965a0344-380c-4267-8c02-b8307f762441"
+    }
+  ]
+}

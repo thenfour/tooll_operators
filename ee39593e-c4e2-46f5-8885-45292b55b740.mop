@@ -1,0 +1,139 @@
+{
+  "Name": "RefFontSwitchXX",
+  "_id": "ee39593e-c4e2-46f5-8885-45292b55b740",
+  "Namespace": "user.tenfour",
+  "Description": "fork of switch, but works with ref fonts\r\nproblem is switching with this incurs some kind of delay. it's not worth it; better to just use 2 ASCIIFilterRef2's in front of the usual Switch\r\n",
+  "Inputs": [
+    {
+      "Name": "Inputs",
+      "MetaInstanceID": "06959408-56e0-4d61-8ecb-ba9ce762a6e0",
+      "DefaultValue": {
+        "Type": "Generic",
+        "Value": "Framefield.Core.Generic"
+      },
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "must be a ref font.\r\n",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Index",
+      "MetaInstanceID": "6e44b235-afb8-4c08-b0f0-9a2c72347d84",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-1",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "6cf699b7-0268-42d2-aa0d-aad022af769c",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "e9739f1d-c1a3-40c3-aab1-3672d724ffd4",
+      "MetaID": "4bc112ef-3472-4a7c-a457-200a400a2787",
+      "Name": "RefFontSwitchXXFunc",
+      "Version": "d0109196-0640-4877-b88c-de8183706e45",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.ID4bc112ef_3472_4a7c_a457_200a400a2787",
+        "{",
+        "    public class Class_RefFontSwitch : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Inputs = 0,",
+        "            Index = 1",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var Inputs = inputs[(int)InputId.Inputs];",
+        "            var Index = inputs[(int)InputId.Index].Eval(context).Value;",
+        "            //<<< _params",
+        "",
+        "            //object selectedDynamic = null;",
+        "            int selectedIndex = ((int)Index) % Inputs.Connections.Count;",
+        "",
+        "            for (int i = 0; i < Inputs.Connections.Count; ++ i)",
+        "            {",
+        "                var input = Inputs.Connections[i];",
+        "                input.Eval(context);",
+        "                if (i == selectedIndex) {",
+        "                    continue;",
+        "                    //selectedDynamic = context.Dynamic;",
+        "                }",
+        "            }",
+        "              ",
+        "            Inputs.Connections[selectedIndex].Eval(context);",
+        "//                input.Eval(context);",
+        "",
+        "",
+        "            //if (selectedDynamic != null) {",
+        "              //  context.Dynamic = selectedDynamic;",
+        "            //}",
+        "            return context;",
+        "        }",
+        "",
+        "        //int _currentIndex;",
+        "    }",
+        "}",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e9739f1d-c1a3-40c3-aab1-3672d724ffd4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6cf699b7-0268-42d2-aa0d-aad022af769c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "06959408-56e0-4d61-8ecb-ba9ce762a6e0",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e9739f1d-c1a3-40c3-aab1-3672d724ffd4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6e44b235-afb8-4c08-b0f0-9a2c72347d84",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e9739f1d-c1a3-40c3-aab1-3672d724ffd4"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "Name": "PowStepper",
+  "_id": "3617de06-0bed-495d-8faf-45a9eb4655aa",
+  "Namespace": "user.tenfour",
+  "Description": "fork of abs,\r\ntakes a linear function and shapes transitions between integers with an exponent.",
+  "Inputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "b6df4e92-a828-4066-b2ff-8ce15eb27582",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Exponent",
+      "MetaInstanceID": "c1a477cf-cdff-4670-a42b-36eb9167f496",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "exponennt\r\n",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Result",
+      "MetaInstanceID": "40213d97-2f77-4e87-a084-9e95ab25433b",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "104772d9-ed26-41eb-bfcb-43b944309fcb",
+      "MetaID": "2f567e36-aab3-463a-a712-3ebf3b43b166",
+      "Name": "PowStepperFunc",
+      "Version": "3ac83cf1-ae57-47ad-b0a2-5b66eafd9dff",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.ID2f567e36_aab3_463a_a712_3ebf3b43b166",
+        "{",
+        "    public class Class_PowStepper : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Value = 0,",
+        "            Exponent = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Value = inputs[(int)InputId.Value].Eval(context).Value;",
+        "            var Exponent = inputs[(int)InputId.Exponent].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            double v = Value;// + .5;// center transitions around .5",
+        "            double floorv = Math.Floor(v);",
+        "            double x = v - floorv;",
+        "            ",
+        "            x = Math.Pow(x, Exponent);",
+        "            ",
+        "            context.Value= (float)(floorv + x);",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b6df4e92-a828-4066-b2ff-8ce15eb27582",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "104772d9-ed26-41eb-bfcb-43b944309fcb"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c1a477cf-cdff-4670-a42b-36eb9167f496",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "104772d9-ed26-41eb-bfcb-43b944309fcb"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "104772d9-ed26-41eb-bfcb-43b944309fcb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "40213d97-2f77-4e87-a084-9e95ab25433b"
+    }
+  ]
+}

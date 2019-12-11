@@ -1,0 +1,519 @@
+{
+  "Name": "SKTimeClip",
+  "_id": "78379d6a-7c6d-45e2-b4b7-f1c3a49c669d",
+  "Namespace": "user.tenfour",
+  "Description": "If MapTime is YES, Maps the time of incoming animation a new clip range defined by ClipIn and ClipOut.\r\n\r\nOtherwise SourceIn and SourceOut are ignored.\r\n\r\nOperator sub tree is only evaluated if the time is between ClipIn and ClipOut, plus/minus margin.\r\n\r\nEvalMargin defines seconds to eval before the clip/ after the clip. The point is to keep clean animation lanes while being able to smoothly transition between clips.\r\n\r\noutput values are unclamped.",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "3ed8887c-97e7-44e3-999e-374a6d1ccc77",
+      "DefaultValue": {
+        "Type": "Generic",
+        "Value": "Framefield.Core.Generic"
+      },
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClipIn",
+      "MetaInstanceID": "610bc33a-eb66-4ea0-a858-fa0687bd027e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClipOut",
+      "MetaInstanceID": "c3377945-0276-4584-9666-67d3dd8d93e6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "10"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SourceIn",
+      "MetaInstanceID": "a69c0d27-ebcf-43d3-8a2f-9a63a728ea75",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SourceOut",
+      "MetaInstanceID": "aae7b4ea-39b1-4e0e-9ab7-ded7725329cc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "10"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Layer",
+      "MetaInstanceID": "ffc5adb8-8ea4-4802-b23c-4c577fbc8f5a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "100",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "MapTime",
+      "MetaInstanceID": "12045c2f-f4e5-47fc-bb24-fe8ff08f9d1e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "if no, then no time mapping is performed. keyframes wouldneed to be within this clip. Like TimeClipSwitch.\r\n\r\nif yes, then time is mapped between sourcein/out like TimeClip.",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "No",
+          "Value": "0"
+        },
+        {
+          "Name": "Yes",
+          "Value": "1"
+        }
+      ]
+    },
+    {
+      "Name": "EvalMargin.In",
+      "MetaInstanceID": "743df243-fed9-4716-82a2-2d6092ad212b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "use this to evaluate the clip before /after the specified in/out points. useful for transitions.\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "EvalMargin.Out",
+      "MetaInstanceID": "fdfe9f25-a996-4025-b348-955193d60e86",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "PlayingValue.NotPlaying",
+      "MetaInstanceID": "48ee0db3-783c-4bc3-9ded-66d03e962d45",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "PlayingValue.IsPlaying",
+      "MetaInstanceID": "63a2a542-8ab2-4212-9bd1-31d0189b31ea",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "0df516d7-1c34-43ab-9df7-e8cf486dcb5d",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "Progress",
+      "MetaInstanceID": "e63acb3a-84e6-4c07-a3d2-2db50ddffd5a",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "TimeRelativeToStart",
+      "MetaInstanceID": "c863f001-021c-46c9-9d2b-0ace4e021300",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "TimeRelativeToEnd",
+      "MetaInstanceID": "0af05e4d-9ca4-4948-8a69-347dbc1f81dc",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "IsPlaying",
+      "MetaInstanceID": "21d8cbcf-427b-4c7e-b085-e695b7f98766",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "MetaID": "b2890c04-034c-4f63-9815-1974e9c2a435",
+      "Name": "SKTimeClipFunc",
+      "Version": "01493dd8-1ab1-454b-84f9-638249046b77",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDb2890c04_034c_4f63_9815_1974e9c2a435",
+        "{",
+        "    public class Class_SKTimeClip : OperatorPart.Function,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeClip,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            Output = 0,",
+        "            Progress = 1,",
+        "            TimeRelativeToStart = 2,",
+        "            TimeRelativeToEnd = 3,",
+        "            IsPlaying = 4",
+        "        }",
+        "        //<<< _outputids",
+        "        ",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Input = 0,",
+        "            ClipIn = 1,",
+        "            ClipOut = 2,",
+        "            SourceIn = 3,",
+        "            SourceOut = 4,",
+        "            Layer = 5,",
+        "            MapTime = 6,",
+        "            EvalMarginIn = 7,",
+        "            EvalMarginOut = 8,",
+        "            PlayingValueNotPlaying = 9,",
+        "            PlayingValueIsPlaying = 10",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public double StartTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.ClipIn); } ",
+        "            set { SetInputValue((int)InputId.ClipIn, value); } ",
+        "        }",
+        "",
+        "        public double EndTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.ClipOut); } ",
+        "            set { SetInputValue((int)InputId.ClipOut, value); } ",
+        "        }",
+        "",
+        "        public double SourceStartTime",
+        "        {",
+        "            get {",
+        "                if ((int)GetInputValue((int)InputId.MapTime) == 0)",
+        "                    return StartTime;",
+        "                return GetInputValue((int)InputId.SourceIn);",
+        "            } ",
+        "            set { SetInputValue((int)InputId.SourceIn, value); } ",
+        "        }",
+        "",
+        "        public double SourceEndTime",
+        "        {",
+        "            get",
+        "            {",
+        "                if ((int)GetInputValue((int)InputId.MapTime) == 0)",
+        "                    return EndTime-StartTime;",
+        "",
+        "                return GetInputValue((int)InputId.SourceOut);",
+        "            }                ",
+        "            set { SetInputValue((int)InputId.SourceOut, value); } ",
+        "        }",
+        "",
+        "        public int Layer",
+        "        {",
+        "            get { return (int)GetInputValue((int)InputId.Layer); } ",
+        "            set { SetInputValue((int)InputId.Layer, value); } ",
+        "        }",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            var prevValue = context.Value;",
+        "            //>>> _params",
+        "            var Input = inputs[(int)InputId.Input];",
+        "            var ClipIn = inputs[(int)InputId.ClipIn].Eval(context).Value;",
+        "            var ClipOut = inputs[(int)InputId.ClipOut].Eval(context).Value;",
+        "            var SourceIn = inputs[(int)InputId.SourceIn].Eval(context).Value;",
+        "            var SourceOut = inputs[(int)InputId.SourceOut].Eval(context).Value;",
+        "            var Layer = inputs[(int)InputId.Layer].Eval(context).Value;",
+        "            var MapTime = (int) inputs[(int)InputId.MapTime].Eval(context).Value;",
+        "            var EvalMarginIn = inputs[(int)InputId.EvalMarginIn].Eval(context).Value;",
+        "            var EvalMarginOut = inputs[(int)InputId.EvalMarginOut].Eval(context).Value;",
+        "            var EvalMargin = new Vector2(EvalMarginIn, EvalMarginOut);",
+        "            var PlayingValueNotPlaying = inputs[(int)InputId.PlayingValueNotPlaying].Eval(context).Value;",
+        "            var PlayingValueIsPlaying = inputs[(int)InputId.PlayingValueIsPlaying].Eval(context).Value;",
+        "            var PlayingValue = new Vector2(PlayingValueNotPlaying, PlayingValueIsPlaying);",
+        "            //<<< _params",
+        "            ",
+        "",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                context.Time = (float)skstate.ProgramTime;",
+        "            }",
+        "                    ",
+        "            ",
+        "            switch (outputIdx)",
+        "            {",
+        "                case (int)OutputId.Output:",
+        "                    if (context.Time < (ClipIn - EvalMarginIn) || context.Time >= (ClipOut + EvalMarginOut))",
+        "                    {",
+        "                        context.Value = prevValue;",
+        "                        return context;",
+        "                    }",
+        "                    ",
+        "                    if (MapTime > 0) {",
+        "                        var oldTime = context.Time;",
+        "                        context.Time = SourceIn + (context.Time - ClipIn)*(SourceOut - SourceIn)/(ClipOut - ClipIn);",
+        "            ",
+        "                        _timeAccessorInvalidator.Clear();",
+        "                        Input.TraverseWithFunctionUseSpecificBehavior(null, _timeAccessorInvalidator);",
+        "                        context = Input.Eval(context);",
+        "                        ",
+        "                        context.Time = oldTime;",
+        "                    } else {",
+        "                        context = Input.Eval(context);",
+        "                    }",
+        "                    break;",
+        "",
+        "",
+        "                case (int)OutputId.Progress:",
+        "                    var len = (ClipOut - ClipIn);",
+        "                    if (Math.Abs(len) < 0.001)",
+        "                        context.Value = 0;",
+        "                    else",
+        "                        context.Value = (context.Time - ClipIn) / len;",
+        "                    break;",
+        "                case (int)OutputId.TimeRelativeToStart:",
+        "                    context.Value = context.Time - ClipIn;",
+        "                    break;",
+        "                case (int)OutputId.TimeRelativeToEnd:",
+        "                    context.Value =  context.Time - ClipOut;",
+        "                    break;",
+        "                case (int)OutputId.IsPlaying:",
+        "                    //Logger.Info(this,\"time = {0}\", context.Time);",
+        "                    ",
+        "                    context.Value = (context.Time < (ClipIn - EvalMarginIn) || context.Time >= (ClipOut + EvalMarginOut)) ? PlayingValueNotPlaying : PlayingValueIsPlaying;",
+        "                    break;",
+        "            }",
+        "            ",
+        "            return context;",
+        "        }",
+        "",
+        "        private double GetInputValue(int index)",
+        "        {",
+        "            return OperatorPartUtilities.GetInputFloatValue(OperatorPart.Connections[index]);",
+        "        }",
+        "",
+        "        private void SetInputValue(int index, double val)",
+        "        {",
+        "            OperatorPart opPart = OperatorPart.Connections[index];",
+        "            if (opPart.Connections.Count == 0)",
+        "            {",
+        "                opPart.Func = Utilities.CreateValueFunction(new Float((float)val));",
+        "            }",
+        "        }",
+        "",
+        "        OperatorPart.InvalidateTimeAccessors _timeAccessorInvalidator = new OperatorPart.InvalidateTimeAccessors();",
+        "    }",
+        "}"
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3ed8887c-97e7-44e3-999e-374a6d1ccc77",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "610bc33a-eb66-4ea0-a858-fa0687bd027e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c3377945-0276-4584-9666-67d3dd8d93e6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a69c0d27-ebcf-43d3-8a2f-9a63a728ea75",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "aae7b4ea-39b1-4e0e-9ab7-ded7725329cc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ffc5adb8-8ea4-4802-b23c-4c577fbc8f5a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "12045c2f-f4e5-47fc-bb24-fe8ff08f9d1e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "743df243-fed9-4716-82a2-2d6092ad212b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fdfe9f25-a996-4025-b348-955193d60e86",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "48ee0db3-783c-4bc3-9ded-66d03e962d45",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "63a2a542-8ab2-4212-9bd1-31d0189b31ea",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0df516d7-1c34-43ab-9df7-e8cf486dcb5d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e63acb3a-84e6-4c07-a3d2-2db50ddffd5a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c863f001-021c-46c9-9d2b-0ace4e021300"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0af05e4d-9ca4-4948-8a69-347dbc1f81dc"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "21d8cbcf-427b-4c7e-b085-e695b7f98766"
+    }
+  ]
+}

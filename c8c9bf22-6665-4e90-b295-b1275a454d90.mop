@@ -1,0 +1,96 @@
+{
+  "Name": "Fract",
+  "_id": "c8c9bf22-6665-4e90-b295-b1275a454d90",
+  "Namespace": "user.tenfour.math",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "cfa8b412-1968-45f2-8d86-00f9905f6b27",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "26fe0363-b2dc-4cc4-85f2-c726d127c582",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "e249c059-a9ed-4160-b6f1-3d39292e5508",
+      "MetaID": "f29ad65a-b281-4fbd-915d-7bc45202935f",
+      "Name": "FractFunc",
+      "Version": "c3f130b9-3050-45d9-a8fc-8eca76136ab8",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDf29ad65a_b281_4fbd_915d_7bc45202935f",
+        "{",
+        "    public class Class_Fract : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Input = 0",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Input = inputs[(int)InputId.Input].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "                context.Value = (float) Input % 1;",
+        "",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e249c059-a9ed-4160-b6f1-3d39292e5508",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "26fe0363-b2dc-4cc4-85f2-c726d127c582"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cfa8b412-1968-45f2-8d86-00f9905f6b27",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e249c059-a9ed-4160-b6f1-3d39292e5508"
+    }
+  ]
+}

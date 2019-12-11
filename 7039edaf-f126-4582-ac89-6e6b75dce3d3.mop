@@ -1,0 +1,101 @@
+{
+  "Name": "SKServerBeat",
+  "_id": "7039edaf-f126-4582-ac89-6e6b75dce3d3",
+  "Namespace": "user.tenfour",
+  "Description": "Returns the the current composition time.",
+  "Inputs": [
+    {
+      "Name": "Multiplier",
+      "MetaInstanceID": "4d1d3c9e-bf63-4fbe-a37e-11740174d7d7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "cde790c0-373a-4d54-b15e-2592c3fddaae",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "541f4f2d-e335-4fc6-a922-c25d7241ccc6",
+      "MetaID": "54ca23c6-157c-4e00-8197-6230c3c7b164",
+      "Name": "SKServerBeatFunc",
+      "Version": "2f5560ab-1962-4a07-8cd1-271d9c42b8d8",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID54ca23c6_157c_4e00_8197_6230c3c7b164",
+        "{",
+        "    public class Class_SKServerBeat : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Multiplier = 0",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            // >>> _params",
+        "            var Multiplier = inputs[(int)InputId.Multiplier].Eval(context).Value;",
+        "            // <<< _params",
+        "            //>>> function",
+        "            ",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "              var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "            //    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
+        "            //    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
+        "                context.Value = (float)skstate.Beat / Multiplier;",
+        "            //    _effect.GetVariableByName(\"iBeatInt\").AsScalar().Set((float)(double)context.Objects[\"SKPlayerBeatInt\"]);",
+        "            }",
+        "            return context;",
+        "            ",
+        "            //<<< function",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "541f4f2d-e335-4fc6-a922-c25d7241ccc6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cde790c0-373a-4d54-b15e-2592c3fddaae"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4d1d3c9e-bf63-4fbe-a37e-11740174d7d7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "541f4f2d-e335-4fc6-a922-c25d7241ccc6"
+    }
+  ]
+}

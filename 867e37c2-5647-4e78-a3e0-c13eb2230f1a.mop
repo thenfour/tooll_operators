@@ -1,5 +1,5 @@
 {
-  "Name": "LoadASCIIMapImage",
+  "Name": "LoadASCIIMapImageXXX",
   "_id": "867e37c2-5647-4e78-a3e0-c13eb2230f1a",
   "Namespace": "user.tenfour",
   "Description": "Loads an image file. Click on [...] to select a file.\r\n\r\nWe support most file-types. Use the two additional outputs for Width and Height. \r\n\r\nUse a combination like this to use Image as texture:\r\n\r\n[SetTexture           ]\r\n[Rectange] [Image]\r\n",
@@ -152,7 +152,7 @@
     {
       "MetaInstanceID": "08f56788-6d97-4aa8-991e-3ff193ca6a8b",
       "MetaID": "28f657a7-f62b-4963-bc70-7fdf2ea60ca2",
-      "Name": "LoadASCIIMapImageFunc",
+      "Name": "LoadASCIIMapImageXXXFunc",
       "Version": "d430141c-34ca-4ec8-8c60-d5b9f71107b4",
       "Type": "Float",
       "IsMultiInput": "True",

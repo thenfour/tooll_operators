@@ -1,0 +1,330 @@
+{
+  "Name": "SKServerBeatFract",
+  "_id": "811d3e44-ab32-4eee-84b5-014bee839777",
+  "Namespace": "user.tenfour",
+  "Description": "Returns the the current composition time.",
+  "Inputs": [
+    {
+      "Name": "BeatOffset",
+      "MetaInstanceID": "77c7dd72-f319-4fae-a281-707a4e8a15b3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BeatPeriod",
+      "MetaInstanceID": "3c36c7e1-3529-41af-88ae-532641d38082",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputMinimum",
+      "MetaInstanceID": "95c953d4-8718-4702-8f37-8354d63253bc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputMaximum",
+      "MetaInstanceID": "8915b143-03e4-4508-83b0-ef4d815b0b6b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputOffset",
+      "MetaInstanceID": "0efe9b2a-e462-45c9-96a3-78724876458d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "applied AFTER scaling to min/max\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "AnticipationQ",
+      "MetaInstanceID": "38e6afcc-eecc-4abf-8d3f-a161ee174500",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "6"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "20",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "AnticipationRange",
+      "MetaInstanceID": "c20f5446-d933-4475-b3b9-515773c7be8e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ReleaseQ",
+      "MetaInstanceID": "e967e0b7-73c0-4027-8072-bf1056543722",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "20",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ReleaseRange",
+      "MetaInstanceID": "5a724f8b-8d70-4404-9f16-a4f2fe808b97",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "0-1 area where release is applied\r\n",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "3136cbf8-de39-4758-be62-c1207ab1e878",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "df6c6a23-9de4-4c03-93ba-0fa780598c55",
+      "MetaID": "b11bf345-b17a-4f86-839c-0a9a02869fc3",
+      "Name": "SKServerBeatFractFunc",
+      "Version": "e3c2cec3-551f-44fb-bb44-9b34d60b7838",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDb11bf345_b17a_4f86_839c_0a9a02869fc3",
+        "{",
+        "    public class Class_SKServerBeatFract : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            BeatOffset = 0,",
+        "            BeatPeriod = 1,",
+        "            OutputMinimum = 2,",
+        "            AnticipationQ = 3,",
+        "            ReleaseQ = 4,",
+        "            OutputMaximum = 5,",
+        "            AnticipationRange = 6,",
+        "            ReleaseRange = 7,",
+        "            OutputOffset = 8",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        // https://www.desmos.com/calculator/yosrvxwfz1",
+        "",
+        "        public static double Lerp(double a, double b, double t)",
+        "        {",
+        "            return a*(1.0 - t) + b*t;",
+        "        }",
+        "        ",
+        "        public static double SmoothStepVariable(double x, double q) {",
+        "            return Math.Pow(x, q);",
+        "        }",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
+        "            var BeatPeriod = inputs[(int)InputId.BeatPeriod].Eval(context).Value;",
+        "            var OutputMinimum = inputs[(int)InputId.OutputMinimum].Eval(context).Value;",
+        "            var AnticipationQ = inputs[(int)InputId.AnticipationQ].Eval(context).Value;",
+        "            var ReleaseQ = inputs[(int)InputId.ReleaseQ].Eval(context).Value;",
+        "            var OutputMaximum = inputs[(int)InputId.OutputMaximum].Eval(context).Value;",
+        "            var AnticipationRange = inputs[(int)InputId.AnticipationRange].Eval(context).Value;",
+        "            var ReleaseRange = inputs[(int)InputId.ReleaseRange].Eval(context).Value;",
+        "            var OutputOffset = inputs[(int)InputId.OutputOffset].Eval(context).Value;",
+        "            //<<< _params",
+        "",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "            ",
+        "              var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "              ",
+        "              double x = (((BeatOffset + skstate.Beat) / BeatPeriod) % 1); // linear",
+        "              ",
+        "              // map x{1-anticipationRange,1} to range 0,1",
+        "              double anticipation = 0;",
+        "              if (AnticipationRange > 0) {",
+        "                anticipation = x - (1.0-AnticipationRange);// now between 0 and anticipationRange",
+        "                  anticipation /= AnticipationRange;// now between 0 and 1",
+        "                  anticipation = Math.Max(0, anticipation);",
+        "                  anticipation = SmoothStepVariable(anticipation, AnticipationQ);",
+        "              }",
+        "              double release = 0;",
+        "              if (ReleaseRange > 0) {",
+        "                release = x / ReleaseRange;",
+        "                release = Math.Min(1, release);",
+        "                release = SmoothStepVariable(1.0-release, ReleaseQ);",
+        "              }",
+        "              // lerp between pre & post",
+        "              double y = Lerp(release, anticipation, x);",
+        "              ",
+        "              context.Value =(float)Lerp(OutputMinimum, OutputMaximum, y) + OutputOffset;",
+        "            }",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3136cbf8-de39-4758-be62-c1207ab1e878"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "77c7dd72-f319-4fae-a281-707a4e8a15b3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3c36c7e1-3529-41af-88ae-532641d38082",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "95c953d4-8718-4702-8f37-8354d63253bc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "38e6afcc-eecc-4abf-8d3f-a161ee174500",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e967e0b7-73c0-4027-8072-bf1056543722",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8915b143-03e4-4508-83b0-ef4d815b0b6b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c20f5446-d933-4475-b3b9-515773c7be8e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5a724f8b-8d70-4404-9f16-a4f2fe808b97",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0efe9b2a-e462-45c9-96a3-78724876458d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "df6c6a23-9de4-4c03-93ba-0fa780598c55"
+    }
+  ]
+}

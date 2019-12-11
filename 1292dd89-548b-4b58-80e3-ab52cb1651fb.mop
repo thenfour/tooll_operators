@@ -1,5 +1,5 @@
 {
-  "Name": "SH_CursedPattern",
+  "Name": "SH_BehindGlassBricks",
   "_id": "1292dd89-548b-4b58-80e3-ab52cb1651fb",
   "Namespace": "user.tenfour.shaders",
   "Description": "",
@@ -19,7 +19,9 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
-          "",
+          "float Zoom;",
+          "float BeatResponse;",
+          "float MoveSpeed;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -120,9 +122,9 @@
           "    float t = (iTime+200.) * .6; //t = 0.;\r",
           "    //t += iBeat;\r",
           "    uv -= .5;\r",
-          "    uv *= 21.+iBeat*2.;\r",
-          "    uv = mul(uv, rot2D((1.-iBeat)*.04));\r",
-          "    uv.x += t*3. + iBeat*.2;\r",
+          "    uv *= 21.+frac(iBeat)*BeatResponse;\r",
+          "    uv = mul(uv, rot2D(BeatResponse * (1.-frac(iBeat))*.01));\r",
+          "    uv.x += t*MoveSpeed;// + frac(iBeat)*4.;\r",
           "    \r",
           "    // start with tile pattern\r",
           "    vec2 uv2 = uv;\r",
@@ -187,6 +189,57 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Zoom",
+      "MetaInstanceID": "25409a1e-c6ff-412f-b5d6-6023ca44a641",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BeatResponse",
+      "MetaInstanceID": "0ccebecd-1247-4490-850b-6cb1c48cf03f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "MoveSpeed",
+      "MetaInstanceID": "fc3aa9e8-6ffc-429f-9575-f281c479510a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -200,8 +253,8 @@
     {
       "MetaInstanceID": "96e021cd-469b-477a-9829-54979b980e15",
       "MetaID": "9ab19516-bac7-4afb-9bba-d4947d788ee0",
-      "Name": "SH_CursedPatternFunc",
-      "Version": "5c9406ac-70b3-438f-a780-62962dde8d4e",
+      "Name": "SH_BehindGlassBricksFunc",
+      "Version": "f1674797-9a88-4bb9-8471-8fb74a28f3a3",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -217,18 +270,24 @@
         "",
         "namespace Framefield.Core.ID9ab19516_bac7_4afb_9bba_d4947d788ee0",
         "{",
-        "    public class Class_SH_CursedPattern : FXImageFunction, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_SH_BehindGlassBricks : FXImageFunction, Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Code = 0",
+        "            Code = 0,",
+        "            Zoom = 1,",
+        "            BeatResponse = 2,",
+        "            MoveSpeed = 3",
         "        }",
         "        //<<< _inputids",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var Zoom = inputs[(int)InputId.Zoom].Eval(context).Value;",
+        "            var BeatResponse = inputs[(int)InputId.BeatResponse].Eval(context).Value;",
+        "            var MoveSpeed = inputs[(int)InputId.MoveSpeed].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -237,13 +296,16 @@
         "                //>>> _setup",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"Zoom\").AsScalar().Set(Zoom);",
+        "                    _effect.GetVariableByName(\"BeatResponse\").AsScalar().Set(BeatResponse);",
+        "                    _effect.GetVariableByName(\"MoveSpeed\").AsScalar().Set(MoveSpeed);",
         "                //<<< _setup",
         "",
-        "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beatfrac);",
+        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beat);",
         "                }",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
@@ -263,6 +325,7 @@
         ""
       ],
       "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
       ]
     }
   ],
@@ -277,6 +340,24 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "8abfe1c2-bf22-4144-a191-627338b2e55a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "96e021cd-469b-477a-9829-54979b980e15"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "25409a1e-c6ff-412f-b5d6-6023ca44a641",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "96e021cd-469b-477a-9829-54979b980e15"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0ccebecd-1247-4490-850b-6cb1c48cf03f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "96e021cd-469b-477a-9829-54979b980e15"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fc3aa9e8-6ffc-429f-9575-f281c479510a",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "96e021cd-469b-477a-9829-54979b980e15"
     }

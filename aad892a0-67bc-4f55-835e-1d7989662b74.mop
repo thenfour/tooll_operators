@@ -1,5 +1,5 @@
 {
-  "Name": "SKServerStateProgram",
+  "Name": "SKServerStateProgramXX",
   "_id": "aad892a0-67bc-4f55-835e-1d7989662b74",
   "Namespace": "user.tenfour",
   "Description": "takes state from SKWebServer and displays info",
@@ -33,7 +33,7 @@
     {
       "MetaInstanceID": "bb040fa5-b988-4068-a372-afc6a6df77cb",
       "MetaID": "122e5e99-6c4d-4969-a9e9-0bd04ffe499c",
-      "Name": "SKServerStateProgramFunc",
+      "Name": "SKServerStateProgramXXFunc",
       "Version": "2fdf23e6-c143-4ff7-9f67-dba477e87920",
       "Type": "Float",
       "IsMultiInput": "True",
@@ -82,8 +82,7 @@
         "",
         ""
       ],
-      "AdditionalAssemblies": [
-      ]
+      "AdditionalAssemblies": []
     }
   ],
   "Operators": [],

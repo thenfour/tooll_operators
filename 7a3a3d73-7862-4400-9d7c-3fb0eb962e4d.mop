@@ -1,0 +1,40 @@
+{
+  "Name": "BotanicalGardens",
+  "_id": "7a3a3d73-7862-4400-9d7c-3fb0eb962e4d",
+  "Namespace": "user.tenfour.rsync",
+  "Description": "",
+  "Inputs": [],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "c2d7a8df-3aa6-40e6-bd54-ce97d44f7371",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [
+    {
+      "Name": "SH_Beat",
+      "MetaInstanceID": "3ed94a8f-8136-4500-8855-bb89c44731bc",
+      "MetaID": "439804c4-f92a-4d94-8f42-22d39c0c3aed",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "381.74254937641",
+        "PosY": "-185.621456353568",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "SourceOp": "3ed94a8f-8136-4500-8855-bb89c44731bc",
+      "SourceOpPart": "50d08b9f-3096-4293-bb46-17be7cc4e2b9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c2d7a8df-3aa6-40e6-bd54-ce97d44f7371"
+    }
+  ]
+}

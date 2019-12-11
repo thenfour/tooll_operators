@@ -1,0 +1,98 @@
+{
+  "Name": "ValueList",
+  "_id": "77c9211f-2d5a-43e2-b6b0-6d23cbf3eaa6",
+  "Namespace": "user.tenfour.list",
+  "Description": "outputs a List<float> from multiple input values",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "faa6539f-7d10-4921-a793-bf61fde67e6a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "List<float>",
+      "MetaInstanceID": "eb56c94d-5d14-466a-b396-4c8db9d019d6",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "539de0e6-27e4-40bd-9a78-712fe3f0dd3e",
+      "MetaID": "ba1619f9-6c09-4d61-beac-b3c237076c2d",
+      "Name": "ValueListFunc",
+      "Version": "062edd9f-ff98-4b50-b9f3-c57c7b1f8932",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDba1619f9_6c09_4d61_beac_b3c237076c2d",
+        "{",
+        "    public class Class_ValueList : OperatorPart.Function",
+        "    {",
+        "        // >>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Values = 0",
+        "        }",
+        "        // <<< _inputids",
+        "",
+        "        List<float> _list = new List<float>();",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            inputs[(int)InputId.Values].Eval(context);",
+        "            var Values = inputs[(int)InputId.Values];",
+        "            ",
+        "            _list.Clear();",
+        "            foreach (var input in Values.Connections)",
+        "            {",
+        "                _list.Add(input.Eval(context).Value);",
+        "            }",
+        "            ",
+        "            context.Dynamic = _list;",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "539de0e6-27e4-40bd-9a78-712fe3f0dd3e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "eb56c94d-5d14-466a-b396-4c8db9d019d6"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "faa6539f-7d10-4921-a793-bf61fde67e6a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "539de0e6-27e4-40bd-9a78-712fe3f0dd3e"
+    }
+  ]
+}

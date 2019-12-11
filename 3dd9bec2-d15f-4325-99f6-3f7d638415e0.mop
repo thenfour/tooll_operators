@@ -1,0 +1,148 @@
+{
+  "Name": "SelectFromListValues",
+  "_id": "3dd9bec2-d15f-4325-99f6-3f7d638415e0",
+  "Namespace": "user.tenfour",
+  "Description": "like select from images, but raw values.\r\nworks in between values as well\r\n\r\nValues is a List<float>",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "23952d27-b799-4102-89b3-77d69e3e218f",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "List<float>",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Selector",
+      "MetaInstanceID": "4ff5cede-12b2-4434-97ef-fa690820d7de",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "692f4c37-8597-4402-9e1e-64e76addc44d",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "2b7f736a-a53d-4a2a-9dae-cbe3284d33ff",
+      "MetaID": "8238f74c-e8dc-49c3-b532-6923263282d7",
+      "Name": "SelectFromListValuesFunc",
+      "Version": "4586d4d8-3e4a-4acc-a1f6-d5a70c93a670",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID8238f74c_e8dc_49c3_b532_6923263282d7",
+        "{",
+        "    public class Class_SelectFromListValues : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Selector = 0,",
+        "            Values = 1",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            //>>> _params",
+        "            var Selector = inputs[(int)InputId.Selector].Eval(context).Value;",
+        "            var Values = inputs[(int)InputId.Values].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            //<<< _params",
+        "                ",
+        "            var ValuesList = (List<float>)Values;",
+        "",
+        "            if (ValuesList == null) {",
+        "                return context;",
+        "            }",
+        "        ",
+        "            if (ValuesList.Count == 0)",
+        "                return context;",
+        "",
+        "            Selector = Math.Abs(Selector);",
+        "    ",
+        "            int index1 = (int)(Selector % ValuesList.Count);",
+        "            int index2 = index1;",
+        "            float blendValue = Selector % 1;",
+        "            if ( blendValue > 0) {",
+        "                index2 ++;",
+        "            }",
+        "            ",
+        "            var v1Input = ValuesList[index1 % ValuesList.Count];",
+        "            float v1 = v1Input;//.Eval(context).Value;",
+        "            float v2;",
+        "            ",
+        "            if( blendValue == 0) {",
+        "                v2 = v1;",
+        "            }",
+        "            else {",
+        "                var v2Input = ValuesList[index2 % ValuesList.Count];",
+        "                v2 = v2Input;//.Eval(context).Value;",
+        "            }",
+        "            ",
+        "            //Logger.Info(this,\"v1:{0} v2:{1}\", v1, v2);",
+        "            ",
+        "            context.Value = (float)Utilities.Lerp(v1, v2, blendValue);",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4ff5cede-12b2-4434-97ef-fa690820d7de",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b7f736a-a53d-4a2a-9dae-cbe3284d33ff"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "23952d27-b799-4102-89b3-77d69e3e218f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b7f736a-a53d-4a2a-9dae-cbe3284d33ff"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2b7f736a-a53d-4a2a-9dae-cbe3284d33ff",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "692f4c37-8597-4402-9e1e-64e76addc44d"
+    }
+  ]
+}

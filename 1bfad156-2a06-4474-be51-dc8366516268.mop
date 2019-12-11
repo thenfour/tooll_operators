@@ -24,9 +24,14 @@
   ],
   "Outputs": [
     {
-      "Name": "Input",
+      "Name": "Output",
       "MetaInstanceID": "f08ab04f-83c2-4dd3-aa2d-18a9301acc77",
       "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "Index",
+      "MetaInstanceID": "75393fb3-841e-42a7-bd95-344b83594e1b",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     }
   ],
   "OperatorParts": [
@@ -34,7 +39,7 @@
       "MetaInstanceID": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e",
       "MetaID": "dbef9b88-ac5e-48fe-a1e7-34c039909060",
       "Name": "SKSceneSwitchFunc",
-      "Version": "dadc715f-0924-43c2-803b-949f1ea60c3f",
+      "Version": "850da1f2-420b-4a57-9ddd-1dbe1023de8d",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -60,6 +65,16 @@
         "        }",
         "        //<<< _inputids",
         "",
+        "",
+        "",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            Output = 0,",
+        "            Index = 1",
+        "        }",
+        "        //<<< _outputids",
+        "",
         "        public IEnumerable<OperatorPart> GetRelevantConnections()",
         "        {",
         "            List<OperatorPart> connections = new List<OperatorPart>();",
@@ -67,8 +82,6 @@
         "            var inputs = OperatorPart.Connections[(int)InputId.Inputs];",
         "            if (_currentIndex >= 0 && inputs.Connections.Count > 0)",
         "                connections.Add(inputs.Connections[_currentIndex % inputs.Connections.Count]);",
-        "",
-        "            //connections.Add(OperatorPart.Connections[(int)InputId.Index]);",
         "",
         "            return connections;",
         "        }",
@@ -79,9 +92,8 @@
         "            var Inputs = inputs[(int)InputId.Inputs];",
         "            //<<< _params",
         "",
-        "            //int _currentIndex = -1;",
-        "            if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                var s = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                var s = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                _currentIndex = s.ProgramIndex;",
         "            }",
         "",
@@ -90,6 +102,13 @@
         "                var selectedInput = Inputs.Connections[_currentIndex % Inputs.Connections.Count];",
         "                selectedInput.Eval(context);",
         "            }",
+        "            ",
+        "            //switch(outputIdx) {",
+        "            //case (int)OutputId.Index:",
+        "                context.Value = _currentIndex;",
+        "            //    break;",
+        "            //}",
+        "            ",
         "            return context;",
         "        }",
         "",
@@ -107,15 +126,21 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e83b74fe-7e4b-410f-934e-db42f3e0440b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "f08ab04f-83c2-4dd3-aa2d-18a9301acc77"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "e83b74fe-7e4b-410f-934e-db42f3e0440b",
+      "SourceOpPart": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e"
+      "TargetOpPart": "75393fb3-841e-42a7-bd95-344b83594e1b"
     }
   ]
 }

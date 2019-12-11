@@ -68,7 +68,7 @@
       "MetaInstanceID": "7de60c53-9bc9-48d4-a789-4a4a86a9b108",
       "MetaID": "cac86d7b-6fe4-4e15-af72-b7fbd7bf7798",
       "Name": "__AddParameterCurveFunc",
-      "Version": "7267d22e-a4e6-4561-a3c5-11186877b600",
+      "Version": "b4598d66-6b23-4e86-b005-65d02b18eabc",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [

@@ -1,0 +1,444 @@
+{
+  "Name": "PaletteCycle",
+  "_id": "028f7db9-c421-401d-bebb-f669e37a87b4",
+  "Namespace": "user.tenfour",
+  "Description": "https://iquilezles.org/www/articles/palettes/palettes.htm\r\n\r\nACTUALLY, use \tPaletteCycleVisualizer instead because you can see the image.\r\n",
+  "Inputs": [
+    {
+      "Name": "T",
+      "MetaInstanceID": "4a7096bd-3021-49f0-9ba8-632addd90d4d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "A.X",
+      "MetaInstanceID": "ad2d06ae-d4f6-40fa-a9f6-cb0ac7009624",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "A.Y",
+      "MetaInstanceID": "47bd8a6e-927e-4464-9cd7-fee27c8b265e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "A.Z",
+      "MetaInstanceID": "ebe893e8-d863-44f2-b0a5-a881911841f6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "B.X",
+      "MetaInstanceID": "9e1a3105-22ca-4f86-96e8-db5719db435e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "B.Y",
+      "MetaInstanceID": "d61e1110-b7e6-4bd4-be50-56a9abe125e1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "B.Z",
+      "MetaInstanceID": "e0a1a694-1917-4fe6-933f-34e8dd641a2b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "C.X",
+      "MetaInstanceID": "66f76520-2bcd-4efd-8513-2341ae92e5f2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "C.Y",
+      "MetaInstanceID": "49ff4bee-f0e8-462f-b539-3d0460c0ab8a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "C.Z",
+      "MetaInstanceID": "7f71ce72-c70f-45af-a3ea-db436bec0b49",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "D.X",
+      "MetaInstanceID": "df5359ab-5104-4817-9752-f8af66b29a30",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "D.Y",
+      "MetaInstanceID": "b533e62e-c336-44b2-b2fc-68e68ae9e720",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.333"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "D.Z",
+      "MetaInstanceID": "cd2ad8ab-8b75-44f7-ada8-20c33bee0e03",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.6667"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "R",
+      "MetaInstanceID": "4a91de63-186d-49e3-bf61-75ef391517e3",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "G",
+      "MetaInstanceID": "079bbd04-7417-4e88-8bca-4f56a234a164",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "B",
+      "MetaInstanceID": "e457a645-f6f6-4cc5-98db-b3923c756e8d",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "e2e4e8d9-ff6a-4912-a9de-7f9615106198",
+      "MetaID": "2c44a1eb-d41f-4ab7-b402-1a114f5b7dd9",
+      "Name": "PaletteCycleFunc",
+      "Version": "af7f677d-768b-40ef-b3aa-0d458f581f6d",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using Framefield.Core.Profiling;",
+        "",
+        "namespace Framefield.Core.ID2c44a1eb_d41f_4ab7_b402_1a114f5b7dd9",
+        "{",
+        "    public class Class_PaletteCycle : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            T = 0,",
+        "            AX = 1,",
+        "            AY = 2,",
+        "            AZ = 3,",
+        "            BX = 4,",
+        "            BY = 5,",
+        "            BZ = 6,",
+        "            CX = 7,",
+        "            CY = 8,",
+        "            CZ = 9,",
+        "            DX = 10,",
+        "            DY = 11,",
+        "            DZ = 12",
+        "        }",
+        "        //<<< _inputids",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            R = 0,",
+        "            G = 1,",
+        "            B = 2",
+        "        }",
+        "        //<<< _outputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var T = inputs[(int)InputId.T].Eval(context).Value;",
+        "            var AX = inputs[(int)InputId.AX].Eval(context).Value;",
+        "            var AY = inputs[(int)InputId.AY].Eval(context).Value;",
+        "            var AZ = inputs[(int)InputId.AZ].Eval(context).Value;",
+        "            var A = new Vector3(AX, AY, AZ);",
+        "            var BX = inputs[(int)InputId.BX].Eval(context).Value;",
+        "            var BY = inputs[(int)InputId.BY].Eval(context).Value;",
+        "            var BZ = inputs[(int)InputId.BZ].Eval(context).Value;",
+        "            var B = new Vector3(BX, BY, BZ);",
+        "            var CX = inputs[(int)InputId.CX].Eval(context).Value;",
+        "            var CY = inputs[(int)InputId.CY].Eval(context).Value;",
+        "            var CZ = inputs[(int)InputId.CZ].Eval(context).Value;",
+        "            var C = new Vector3(CX, CY, CZ);",
+        "            var DX = inputs[(int)InputId.DX].Eval(context).Value;",
+        "            var DY = inputs[(int)InputId.DY].Eval(context).Value;",
+        "            var DZ = inputs[(int)InputId.DZ].Eval(context).Value;",
+        "            var D = new Vector3(DX, DY, DZ);",
+        "            //<<< _params",
+        "            ",
+        "//vec3 palette( in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d )",
+        "//{",
+        "//    return a + b*cos( 6.28318*(c*t+d) );",
+        "//}",
+        "            switch (outputIdx) {",
+        "                case (int)OutputId.R:",
+        "                context.Value =(float)( AX + BX*Math.Cos( 6.28318*(C.X*T+DX) ));",
+        "                break;",
+        "                case (int)OutputId.G:",
+        "                context.Value =(float)( AY + BY*Math.Cos( 6.28318*(C.Y*T+DY) ));",
+        "                break;",
+        "                case (int)OutputId.B:",
+        "                context.Value =(float)( AZ + BZ*Math.Cos( 6.28318*(C.Z*T+DZ) ));",
+        "                break;",
+        "            }",
+        "            return context;",
+        "        }",
+        "",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4a91de63-186d-49e3-bf61-75ef391517e3"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "079bbd04-7417-4e88-8bca-4f56a234a164"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e457a645-f6f6-4cc5-98db-b3923c756e8d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4a7096bd-3021-49f0-9ba8-632addd90d4d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ad2d06ae-d4f6-40fa-a9f6-cb0ac7009624",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "47bd8a6e-927e-4464-9cd7-fee27c8b265e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ebe893e8-d863-44f2-b0a5-a881911841f6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9e1a3105-22ca-4f86-96e8-db5719db435e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d61e1110-b7e6-4bd4-be50-56a9abe125e1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e0a1a694-1917-4fe6-933f-34e8dd641a2b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "66f76520-2bcd-4efd-8513-2341ae92e5f2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "49ff4bee-f0e8-462f-b539-3d0460c0ab8a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7f71ce72-c70f-45af-a3ea-db436bec0b49",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "df5359ab-5104-4817-9752-f8af66b29a30",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b533e62e-c336-44b2-b2fc-68e68ae9e720",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cd2ad8ab-8b75-44f7-ada8-20c33bee0e03",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e2e4e8d9-ff6a-4912-a9de-7f9615106198"
+    }
+  ]
+}

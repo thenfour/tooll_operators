@@ -1,0 +1,71 @@
+{
+  "Name": "TestServerStateXXX",
+  "_id": "db605d30-f07b-4c9e-a9b1-1071f622daa7",
+  "Namespace": "user.tenfour",
+  "Description": "non-working fork of Group, for Images\r\ni want to be able to use TimeClips in subtrees and combine them here, for a timeline based scene switcher. not working though.\r\n",
+  "Inputs": [],
+  "Outputs": [
+    {
+      "Name": "Scene",
+      "MetaInstanceID": "ad2b8011-1a6f-4058-a5e7-78fdde787a28",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "484cb5ee-38c8-43a7-9d29-c6237d8df9c8",
+      "MetaID": "2103cae6-2ae3-4fa7-abe7-ab0e4b59c543",
+      "Name": "TestServerStateXXXFunc",
+      "Version": "88bc0617-4f8e-4d17-8b52-b16ef897f0a6",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID2103cae6_2ae3_4fa7_abe7_ab0e4b59c543",
+        "{",
+        "    public class Class_TestServerState : OperatorPart.Function",
+        "    {",
+        "        // >>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "        }",
+        "        // <<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
+        "              var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "              Logger.Info(this, \"skstate is OK\");",
+        "            } else {",
+        "              Logger.Info(this, \"skstate is NULL\");",
+        "            }",
+        "",
+        "",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "484cb5ee-38c8-43a7-9d29-c6237d8df9c8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "ad2b8011-1a6f-4058-a5e7-78fdde787a28"
+    }
+  ]
+}

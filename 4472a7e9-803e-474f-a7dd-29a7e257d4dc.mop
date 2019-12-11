@@ -1,5 +1,5 @@
 {
-  "Name": "LoadHybridMapImage",
+  "Name": "LoadHybridMapImageXXX",
   "_id": "4472a7e9-803e-474f-a7dd-29a7e257d4dc",
   "Namespace": "user.tenfour",
   "Description": "",
@@ -118,7 +118,7 @@
     {
       "MetaInstanceID": "bf4984ae-6dda-4196-87f2-b184d9262636",
       "MetaID": "faad5efb-4a23-496c-a2c1-c7ae3705ae3d",
-      "Name": "LoadHybridMapImageFunc",
+      "Name": "LoadHybridMapImageXXXFunc",
       "Version": "c2a1aa90-68d5-4bfd-aa96-a945569c8d14",
       "Type": "Float",
       "IsMultiInput": "True",

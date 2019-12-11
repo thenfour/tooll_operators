@@ -2,25 +2,8 @@
   "Name": "SKWebServer",
   "_id": "29f0a920-72f4-450b-a6fe-f3c773736719",
   "Namespace": "user.tenfour",
-  "Description": "web server that listens for specific events. outputs dynamic player state. (struct SlashKickPerformer.SKPlayerState)\r\n",
+  "Description": "web server that listens for specific events.\r\nsets context.Objects[\"SKPlayerState\"],\r\nsets context time to playhead time,\r\nand evaluates subtree.\r\n\r\nThis also adjusts the \"idle program\".\r\nSo program indices are +1\r\nIdle program is index 0\r\nAnd time is set for idle program as well.",
   "Inputs": [
-    {
-      "Name": "SyncOffsetMS",
-      "MetaInstanceID": "72c67e8d-d5e8-4832-8070-af6288204715",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Relevant",
-      "Description": "milliseconds to shift beats and timing to keep in sync\r\n",
-      "Min": "-1000",
-      "Max": "1000",
-      "Scale": "1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
     {
       "Name": "ServerPrefix",
       "MetaInstanceID": "1bad8a63-e27a-4ffb-b95f-36de5fa75b38",
@@ -37,13 +20,81 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Input",
+      "MetaInstanceID": "43ae3ec7-81f8-4c1a-bb9c-6c6edfa3d964",
+      "DefaultValue": {
+        "Type": "Scene",
+        "Value": "Framefield.Core.Scene"
+      },
+      "MetaID": "79122951-7bc4-4c68-b085-866eab828248",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ResetSync",
+      "MetaInstanceID": "ddfad692-caec-4d9d-b54b-9e164e6d9a52",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SyncToleranceMS",
+      "MetaInstanceID": "4b283b0c-f664-43b6-99ca-66156f66840d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "100"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-1000",
+      "Max": "1000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SyncOffsetMS",
+      "MetaInstanceID": "72c67e8d-d5e8-4832-8070-af6288204715",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "milliseconds to shift beats and timing to keep in sync\r\n",
+      "Min": "-1000",
+      "Max": "1000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
     {
-      "Name": "State",
+      "Name": "Output",
       "MetaInstanceID": "4722d312-1e90-40b6-8143-afcd1de4557f",
-      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+      "MetaID": "79122951-7bc4-4c68-b085-866eab828248"
     }
   ],
   "OperatorParts": [
@@ -51,7 +102,7 @@
       "MetaInstanceID": "a6046534-ed3f-4b26-a304-a74a9ed12d0e",
       "MetaID": "fc530095-f8cd-494b-b66f-e1f0ce675291",
       "Name": "SKWebServerFunc",
-      "Version": "86d20ebd-c369-4ff1-82fe-b4b58bf867d7",
+      "Version": "7e227bac-8a44-4d62-912a-ce96b81bc204",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -64,7 +115,8 @@
         "",
         "namespace Framefield.Core.IDfc530095_f8cd_494b_b66f_e1f0ce675291",
         "{",
-        "    public class Class_SKWebServer : OperatorPart.Function,  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_SKWebServer : OperatorPart.Function,",
+        "        Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        SlashKickPerformer.SKWebServer _server = null;",
         "        string _oldPrefix = null;",
@@ -73,7 +125,10 @@
         "        private enum InputId",
         "        {",
         "            SyncOffsetMS = 0,",
-        "            ServerPrefix = 1",
+        "            ServerPrefix = 1,",
+        "            Input = 2,",
+        "            ResetSync = 3,",
+        "            SyncToleranceMS = 4",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -86,15 +141,18 @@
         "            }",
         "        }",
         "        ",
-        "        public void HandleEvent(SlashKickEventType e, double arg1, double arg2) {",
-        "            Logger.Info(this,\"Handle SK Event '{0}'\", e.ToString());",
-        "        }",
+        "       // public void HandleEvent(SlashKickEventType e, double arg1, double arg2) {",
+        "        //    Logger.Info(this,\"Handle SK Event '{0}'\", e.ToString());",
+        "        //}",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "",
         "            //>>> _params ",
         "            var SyncOffsetMS = inputs[(int)InputId.SyncOffsetMS].Eval(context).Value;",
         "            var ServerPrefix = inputs[(int)InputId.ServerPrefix].Eval(context).Text;",
+        "            var Input = inputs[(int)InputId.Input];",
+        "            var ResetSync = inputs[(int)InputId.ResetSync].Eval(context).Value;",
+        "            var SyncToleranceMS = inputs[(int)InputId.SyncToleranceMS].Eval(context).Value;",
         "            //<<< _params ",
         "",
         "            if (ServerPrefix != _oldPrefix) {",
@@ -105,13 +163,42 @@
         "                _oldPrefix = ServerPrefix;",
         "                _server = new SlashKickPerformer.SKWebServer(ServerPrefix);",
         "                Logger.Info(this,\"Started SK Web server @ {0}\", ServerPrefix);",
+        "                //_server.Transport.ToleranceSeconds = .1;",
         "            }",
         "            ",
+        "/*            if (ResetSync > .5 && _oldResetTriggerVal != ResetSync) {",
+        "                Logger.Info(this,\"sk server SYNC RESET\");",
+        "                _server.Transport._calculatedOffsetSeconds = 0;",
+        "                _server.Transport._calculatedBeatOffsetSeconds = 0;",
+        "            }*/",
+        "            _oldResetTriggerVal = ResetSync;",
         "            _server.Transport.OffsetSeconds = SyncOffsetMS / 1000;",
+        "            //_server.Transport.ToleranceSeconds = 3.0;//SyncToleranceMS / 1000;",
         "",
-        "            context.Dynamic = _server.GetState();",
+        "            var ServerState = _server.GetState();",
+        "            //context.Dynamic = x;",
+        "            if ((object)ServerState == null)",
+        "                Logger.Info(this,\"sk server state is NULL from the server!\");",
+        "            else {",
+        "                //Logger.Info(this,\"sk server state SET\");",
+        "                if (ServerState.ProgramIndex < 0) {",
+        "                    ServerState.ProgramTime = context.Time;",
+        "                    ServerState.ReaperTime = context.Time;",
+        "                } else {",
+        "                    context.Time = (float)ServerState.ProgramTime;",
+        "                }",
+        "                ServerState.ProgramIndex ++;// account for -1 being the 1st program.",
+        "                context.Objects[\"SKPlayerState\"] = ServerState;",
+        "                context.GlobalObjects[\"SKPlayerState\"] = ServerState;",
+        "                ",
+        "                var oldTime = context.Time;",
+        "                context = Input.Eval(context);",
+        "                context.Time = oldTime;",
+        "            }",
         "            return context;",
         "        }",
+        "        ",
+        "        float _oldResetTriggerVal = -1;",
         "    }",
         "}",
         "",
@@ -133,6 +220,24 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "1bad8a63-e27a-4ffb-b95f-36de5fa75b38",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "43ae3ec7-81f8-4c1a-bb9c-6c6edfa3d964",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ddfad692-caec-4d9d-b54b-9e164e6d9a52",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4b283b0c-f664-43b6-99ca-66156f66840d",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
     },

@@ -1,0 +1,40 @@
+{
+  "Name": "SwimTonic",
+  "_id": "42887c6d-4c0c-4061-91c5-ade02b2a3bdf",
+  "Namespace": "user.tenfour.rsync",
+  "Description": "",
+  "Inputs": [],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "6200d216-a538-4414-8e6c-72de7b3f4026",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [
+    {
+      "Name": "SH_Beat",
+      "MetaInstanceID": "8ee439d5-3c57-4a75-aff8-0230d567e0c1",
+      "MetaID": "439804c4-f92a-4d94-8f42-22d39c0c3aed",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "381.74254937641",
+        "PosY": "-185.621456353568",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "SourceOp": "8ee439d5-3c57-4a75-aff8-0230d567e0c1",
+      "SourceOpPart": "50d08b9f-3096-4293-bb46-17be7cc4e2b9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6200d216-a538-4414-8e6c-72de7b3f4026"
+    }
+  ]
+}

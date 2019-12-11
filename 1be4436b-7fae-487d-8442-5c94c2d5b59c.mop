@@ -1,0 +1,132 @@
+{
+  "Name": "SmoothStepper",
+  "_id": "1be4436b-7fae-487d-8442-5c94c2d5b59c",
+  "Namespace": "user.tenfour",
+  "Description": "fork of abs,\r\ntakes a linear function and puts a smoothstep curve between integers. the result is a smaller transition time instead of linear.\r\n",
+  "Inputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "1fbc842a-4e27-4c41-9c71-4c92ac0ddec1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Iterations",
+      "MetaInstanceID": "60b52f25-552b-47bf-b9aa-da84b5119a22",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "how many times smoothstep is to be applied.",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Result",
+      "MetaInstanceID": "d6415205-dc93-4fa7-b060-56315811fec0",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "2a60cfea-db9c-4da3-8e8c-0303e5f7ea9b",
+      "MetaID": "40905383-3a3e-438b-85d1-8b67e4fbd506",
+      "Name": "SmoothStepperFunc",
+      "Version": "690c7818-e763-4fd8-9f6b-e367b36b00e1",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.ID40905383_3a3e_438b_85d1_8b67e4fbd506",
+        "{",
+        "    public class Class_SmoothStepper : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Value = 0,",
+        "            Iterations = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        public static double Smoothstep(double x) {",
+        "            return x*x*(3-2*x);",
+        "        }",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Value = inputs[(int)InputId.Value].Eval(context).Value;",
+        "            var Iterations = inputs[(int)InputId.Iterations].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            double v = Value + .5;// center transitions around .5",
+        "            double floorv = Math.Floor(v);",
+        "            double x = v - floorv;",
+        "            for (int i = 0; i < Iterations; ++ i) {",
+        "                x = Smoothstep(x);",
+        "            }",
+        "            ",
+        "            context.Value= (float)(floorv + x);",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1fbc842a-4e27-4c41-9c71-4c92ac0ddec1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2a60cfea-db9c-4da3-8e8c-0303e5f7ea9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "60b52f25-552b-47bf-b9aa-da84b5119a22",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2a60cfea-db9c-4da3-8e8c-0303e5f7ea9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2a60cfea-db9c-4da3-8e8c-0303e5f7ea9b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d6415205-dc93-4fa7-b060-56315811fec0"
+    }
+  ]
+}

@@ -245,7 +245,7 @@
       "MetaInstanceID": "3469c793-075d-4f95-b340-52718c508bab",
       "MetaID": "95f3379e-48a3-4a97-b8de-4309981d1180",
       "Name": "PerlinNoiseRGBFunc",
-      "Version": "2eb10245-c3e3-4fd9-900c-f69791461a72",
+      "Version": "69a4cc03-1c02-46ff-bc7f-cabc537caefd",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -266,7 +266,7 @@
         "",
         "namespace Framefield.Core.ID95f3379e_48a3_4a97_b8de_4309981d1180",
         "{",
-        "    public class Class_RGBfBm : FXImageFunction",
+        "    public class Class_PerlinNoiseRGB : FXImageFunction",
         "    {",
         "        protected override Format ColorBufferFormat { get { return Format.R16G16B16A16_UNorm; } }",
         "    ",

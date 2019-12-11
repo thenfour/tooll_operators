@@ -1,0 +1,128 @@
+{
+  "Name": "StringToValueList",
+  "_id": "da52ae45-9cc9-4bed-98d7-234dbdb6dbe5",
+  "Namespace": "user.tenfour",
+  "Description": "Splits a Text input and returns as a List<float>\r\ndelimit with any of ; , [space] [newline] / \\ : \\t \\r \\n",
+  "Inputs": [
+    {
+      "Name": "InputText",
+      "MetaInstanceID": "1644c107-409f-404b-82f7-4b409953435d",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": ""
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "StringList",
+      "MetaInstanceID": "4da4c813-197b-408a-8e76-9b55ea23f6b8",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "eb1a45c9-f9ee-437f-bf61-a796c8d362a7",
+      "MetaID": "af2eba6f-513b-4af6-af9f-bc8e32b69c1a",
+      "Name": "StringToValueListFunc",
+      "Version": "602f72fa-2fe2-4c51-a9fa-ee1e29f62ff8",
+      "Type": "Dynamic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using System.Net;",
+        "using System.IO;",
+        "",
+        "using System.Threading;",
+        "using System.Threading.Tasks;",
+        "using System.Collections.Specialized;",
+        "",
+        "namespace Framefield.Core.IDaf2eba6f_513b_4af6_af9f_bc8e32b69c1a",
+        "{",
+        "    public class Class_StringToValueList : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            InputText = 0",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            StringList = 0",
+        "        }",
+        "        //<<< _outputids",
+        "",
+        "        //List<List<string>> _tmpList = new List<List<string>>();",
+        "        List<float> _resultList = new List<float>();",
+        "        String _oldString = \"\";",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> _params",
+        "            var InputText = inputs[(int)InputId.InputText].Eval(context).Text;",
+        "            //<<< _params",
+        "            ",
+        "            if( _oldString != InputText) {",
+        "                Changed = true;",
+        "            }",
+        "            ",
+        "            if( Changed) {",
+        "                var x = InputText.Split(new char[]{ ' ', '\\r', '\\n', ',', ';',':','\\t', '\\\\', '/', '|' }, StringSplitOptions.RemoveEmptyEntries);",
+        "                // create a new list instead of reusing, just to eliminate weirdness as you type in the box live",
+        "                try {",
+        "                List<float> newResultList = new List<float>();",
+        "                foreach (string s in x) {",
+        "                    newResultList.Add(float.Parse(s));",
+        "                }",
+        "                _resultList = newResultList;",
+        "                } catch (Exception) {}",
+        "                //context.Value = _resultList.Count;",
+        "            }",
+        "",
+        "            context.Dynamic = _resultList;",
+        "            return context;",
+        "        }",
+        "    }",
+        "    ",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "eb1a45c9-f9ee-437f-bf61-a796c8d362a7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4da4c813-197b-408a-8e76-9b55ea23f6b8"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1644c107-409f-404b-82f7-4b409953435d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "eb1a45c9-f9ee-437f-bf61-a796c8d362a7"
+    }
+  ]
+}

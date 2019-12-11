@@ -295,7 +295,7 @@
       "MetaInstanceID": "76fad360-d83a-4b67-a48e-d38a016c42d2",
       "MetaID": "36fa5b8c-7c1d-482c-b386-6c05823a89eb",
       "Name": "DisplaceUVFunc",
-      "Version": "8c04e0de-ab17-483d-b1b2-8411c6121410",
+      "Version": "18e9966b-9494-4dd7-ae1e-cd5b88177025",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -355,6 +355,7 @@
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
         "        {",
+        "        ",
         "            try",
         "            {",
         "                UpdateMesh(context, inputs);",
@@ -371,6 +372,12 @@
         "                Logger.Error(this, \"Load Effect error: {0}\", exception.Message);",
         "            }",
         "",
+        "if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
+        "  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "  Logger.Info(this, \"skstate is OK\");",
+        "} else {",
+        "  Logger.Info(this, \"skstate is NULL\");",
+        "}",
         "            return context;",
         "        }",
         "",
@@ -473,7 +480,9 @@
         "",
         ""
       ],
-      "AdditionalAssemblies": []
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
     }
   ],
   "Operators": [],

@@ -1,0 +1,246 @@
+{
+  "Name": "CurveStepper",
+  "_id": "e71214b1-f536-4b24-a73f-c84b7bfd6274",
+  "Namespace": "user.tenfour",
+  "Description": "Maps linear graph to a smooth-stepped graph. Similar to SmoothStepper, but with different control.\r\n\r\nfor MODE=Transition, negative values become 0 and positive become 1.\r\nOnly one shape is used for the curve.\r\n\r\nfor MODE=Pulse, both shapes are used. at x=0, output is 1. otherwise we stay around 0.\r\n",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "4a1a3cae-5fd9-4c9f-a426-eb5e59b422f9",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Shape",
+      "MetaInstanceID": "b8bcbfc8-0291-4aea-867b-31bd70ed82ab",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "(slope)",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveCenter",
+      "MetaInstanceID": "74a0cacb-02df-44dd-85f4-27bb268e68b1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "p\r\nthe point 0-1 at which slopes are equal between the 2 sides of the curve.\r\n",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TransitionLength",
+      "MetaInstanceID": "f940bf84-6b07-4680-b340-df54057973f5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Phase",
+      "MetaInstanceID": "61387c0b-ac15-4ce3-859b-b9f0c82f3043",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "X offset to apply if you want transitions across boundaries",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "47b24911-7952-4a7c-803c-d17b8fcfe025",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "b19d6e61-a77d-44f4-8666-a17f300a20cc",
+      "MetaID": "503064a7-e96e-41b1-8c2b-11f4426429a7",
+      "Name": "CurveStepperFunc",
+      "Version": "2256296a-c594-4f48-aa57-1ec9de509168",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID503064a7_e96e_41b1_8c2b_11f4426429a7",
+        "{",
+        "    public class Class_CurveStepper : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Shape = 0,",
+        "            TransitionLength = 1,",
+        "            Input = 2,",
+        "            CurveCenter = 3,",
+        "            Phase = 4",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        // https://www.desmos.com/calculator/yosrvxwfz1",
+        "        // r == 0 : effectively horizontal line",
+        "        // r == 1 : linear",
+        "        // r == inf : instant transition",
+        "        public static double SmoothStepVariable(double x, double r)",
+        "        {",
+        "            //double y = r * (x-.5) + .5;",
+        "            double gx = Math.Pow(2 * (.5 - Math.Abs(x - .5)), r) / 2.0;",
+        "            double hx = Math.Floor(x + .5);",
+        "            double y = (1.0 - hx) * gx + hx * (1.0 - gx);",
+        "            return y;",
+        "        }",
+        "        ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "",
+        "        public static double Lerp(double a, double b, double t)",
+        "        {",
+        "            return a*(1.0 - t) + b*t;",
+        "        }",
+        "        ",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Shape = inputs[(int)InputId.Shape].Eval(context).Value;",
+        "            var TransitionLength = inputs[(int)InputId.TransitionLength].Eval(context).Value;",
+        "            var Input = inputs[(int)InputId.Input].Eval(context).Value;",
+        "            var CurveCenter = inputs[(int)InputId.CurveCenter].Eval(context).Value;",
+        "            var Phase = inputs[(int)InputId.Phase].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            ",
+        "            // calculate an x value [0,1]",
+        "            double x = Input - Phase;",
+        "            double i = Math.Floor(x);",
+        "            if (TransitionLength == 0) {",
+        "                x = 0;// avoid div0; deal with instant transitions.",
+        "            } else {",
+        "                x = (x % 1) / TransitionLength;",
+        "            }",
+        "            ",
+        "            double y;",
+        "            if (x <= 0) y = 0;",
+        "            else if (x >= 1) y = 1;",
+        "            else {",
+        "                y = SmoothStepVariable(x, CurveCenter, Shape);",
+        "            }",
+        "            context.Value = (float)(i + y + Phase);",
+        "",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b19d6e61-a77d-44f4-8666-a17f300a20cc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "47b24911-7952-4a7c-803c-d17b8fcfe025"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b8bcbfc8-0291-4aea-867b-31bd70ed82ab",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b19d6e61-a77d-44f4-8666-a17f300a20cc"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f940bf84-6b07-4680-b340-df54057973f5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b19d6e61-a77d-44f4-8666-a17f300a20cc"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4a1a3cae-5fd9-4c9f-a426-eb5e59b422f9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b19d6e61-a77d-44f4-8666-a17f300a20cc"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "74a0cacb-02df-44dd-85f4-27bb268e68b1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b19d6e61-a77d-44f4-8666-a17f300a20cc"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "61387c0b-ac15-4ce3-859b-b9f0c82f3043",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b19d6e61-a77d-44f4-8666-a17f300a20cc"
+    }
+  ]
+}

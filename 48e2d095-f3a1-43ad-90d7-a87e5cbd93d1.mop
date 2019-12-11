@@ -1,0 +1,161 @@
+{
+  "Name": "SequenceValueListWithString",
+  "_id": "48e2d095-f3a1-43ad-90d7-a87e5cbd93d1",
+  "Namespace": "user.tenfour.list",
+  "Description": "Takes a List<float> and list of indices and outputs a re-composed list in the sequence provided.",
+  "Inputs": [
+    {
+      "Name": "ValueList",
+      "MetaInstanceID": "3398b53b-0c47-4f5d-8a02-9f6f34af0e4c",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SequenceText",
+      "MetaInstanceID": "3ac62ff6-45e7-4d81-8c9f-0f61784dff14",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": "0,1"
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "StringList",
+      "MetaInstanceID": "efe890af-d04d-4c97-ad7f-d1b4489336d5",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "4d9e62c6-92c0-4d4e-9d7b-287010b970df",
+      "MetaID": "edf030f8-2c53-4f55-b509-985a7884faeb",
+      "Name": "SequenceValueListWithStringFunc",
+      "Version": "6c210c47-8bfc-4c6b-badb-e8abfc6b8720",
+      "Type": "Dynamic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using System.Net;",
+        "using System.IO;",
+        "",
+        "using System.Threading;",
+        "using System.Threading.Tasks;",
+        "using System.Collections.Specialized;",
+        "",
+        "namespace Framefield.Core.IDedf030f8_2c53_4f55_b509_985a7884faeb",
+        "{",
+        "    public class Class_SequenceValueListWithString : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            SequenceText = 0,",
+        "            ValueList = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            StringList = 0",
+        "        }",
+        "        //<<< _outputids",
+        "",
+        "        //List<int> _sequence = new List<int>();",
+        "        List<float> _resultList = new List<float>();",
+        "        String _oldString = \"\";",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> _params",
+        "            var SequenceText = inputs[(int)InputId.SequenceText].Eval(context).Text;",
+        "            var ValueList = inputs[(int)InputId.ValueList].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            //<<< _params",
+        "            ",
+        "            if( _oldString != SequenceText) {",
+        "                Changed = true;",
+        "            }",
+        "            ",
+        "            if (ValueList == null) {",
+        "                context.Dynamic = null;",
+        "                return context;",
+        "            }",
+        "            ",
+        "            if (Changed || inputs[(int)InputId.ValueList].Func.Changed) {",
+        "                var srcList = (List<float>)ValueList;",
+        "                var x = SequenceText.Split(new char[]{ ' ', '\\r', '\\n', ',', ';',':','\\t', '\\\\', '/', '|' }, StringSplitOptions.RemoveEmptyEntries);",
+        "                _resultList.Clear();",
+        "                //_sequence.Clear();",
+        "                foreach (string s in x) {",
+        "                    int i = int.Parse(s.Trim());",
+        "                    i %= srcList.Count;",
+        "                    if (i < 0) {",
+        "                        i = srcList.Count + i;",
+        "                    }",
+        "                    _resultList.Add(srcList[i]);",
+        "                }",
+        "                //context.Value = _resultList.Count;",
+        "            }",
+        "",
+        "            context.Dynamic = _resultList;",
+        "            return context;",
+        "        }",
+        "    }",
+        "    ",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4d9e62c6-92c0-4d4e-9d7b-287010b970df",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "efe890af-d04d-4c97-ad7f-d1b4489336d5"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3ac62ff6-45e7-4d81-8c9f-0f61784dff14",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4d9e62c6-92c0-4d4e-9d7b-287010b970df"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3398b53b-0c47-4f5d-8a02-9f6f34af0e4c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "4d9e62c6-92c0-4d4e-9d7b-287010b970df"
+    }
+  ]
+}

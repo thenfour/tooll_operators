@@ -1,5 +1,5 @@
 {
-  "Name": "ASCIIFilterRef2",
+  "Name": "ASCIIFilterRef2XXX",
   "_id": "cde891df-c5dd-4bc4-b83c-49f339a830ab",
   "Namespace": "user.tenfour",
   "Description": "Y=multi component",
@@ -275,7 +275,7 @@
     {
       "MetaInstanceID": "df5d76ad-6af4-4b19-9c7e-e67fda60f71a",
       "MetaID": "d46141ed-d625-4280-a77a-bae927e980a3",
-      "Name": "ASCIIFilterRef2Func",
+      "Name": "ASCIIFilterRef2XXXFunc",
       "Version": "0de5f053-227a-4582-a58f-50d220782ae5",
       "Type": "Float",
       "IsMultiInput": "True",

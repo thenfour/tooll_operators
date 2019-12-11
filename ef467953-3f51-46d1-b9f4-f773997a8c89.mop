@@ -19,7 +19,8 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
-          "",
+          "float Brilliance;",
+          "float Fade;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -100,7 +101,6 @@
           "\tvec4 p4 = fract(vec4(p.xyxy) * vec4(.1031, .1030, .0973, .1099));\r",
           "    p4 += dot(p4, p4.wzxy+33.33);\r",
           "    return fract((p4.xxyz+p4.yzzw)*p4.zywx);\r",
-          "\r",
           "}\r",
           "\r",
           "#define q(x,p) (floor((x)/(p))*(p))\r",
@@ -117,7 +117,7 @@
           "    float seed = 1e3;\r",
           "    o = vec4x(0);\r",
           "    \r",
-          "    float t = iTime + pow(1.-iBeat,.5)*.5;\r",
+          "    float t = iTime + sqrt(1.-frac(iBeat/2.))*.2;\r",
           "    \r",
           "    for(float i = 0.; i < PARTITIONS; ++ i) {\r",
           "        vec4 h = hash42(1e3*cellUL+seed); // xy = pos to divide BETWEEN cellUL / cellBR.\r",
@@ -151,6 +151,9 @@
           "            }\r",
           "\t    }\r",
           "    }\r",
+          "    \r",
+          "    o = mix(vec40, o, Fade*Fade);\r",
+          "    o.a = 1.;\r",
           "    \r",
           "    //vec2 N = fragCoord / iResolution.xy-.5;\r",
           "    //o = clamp(o,0.,1.);\r",
@@ -193,6 +196,40 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Brilliance",
+      "MetaInstanceID": "44ce5ced-3643-4e44-a01b-93c59577100e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Fade",
+      "MetaInstanceID": "b7a9dc50-4b11-4efb-9a0f-a21df31a4ba2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -207,7 +244,7 @@
       "MetaInstanceID": "2b849278-df47-406d-b47c-eb27ae53c1ea",
       "MetaID": "3c2d518a-7dcc-4c20-ab40-e9aa68169892",
       "Name": "SH_CyberPartitionsFunc",
-      "Version": "a988a270-b7ff-40ed-8f30-3b7e626056dc",
+      "Version": "af397437-40ba-4684-bf9c-17defcf7e03a",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -228,13 +265,17 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Code = 0",
+        "            Code = 0,",
+        "            Brilliance = 1,",
+        "            Fade = 2",
         "        }",
         "        //<<< _inputids",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var Brilliance = inputs[(int)InputId.Brilliance].Eval(context).Value;",
+        "            var Fade = inputs[(int)InputId.Fade].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -243,13 +284,15 @@
         "                //>>> _setup",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"Brilliance\").AsScalar().Set(Brilliance);",
+        "                    _effect.GetVariableByName(\"Fade\").AsScalar().Set(Fade);",
         "                //<<< _setup",
         "",
-        "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beatfrac);",
+        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beat);",
         "                }",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
@@ -269,6 +312,7 @@
         ""
       ],
       "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
       ]
     }
   ],
@@ -283,6 +327,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "bb82b241-d68d-4417-a911-b3d799ba5ff4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b849278-df47-406d-b47c-eb27ae53c1ea"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "44ce5ced-3643-4e44-a01b-93c59577100e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b849278-df47-406d-b47c-eb27ae53c1ea"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b7a9dc50-4b11-4efb-9a0f-a21df31a4ba2",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "2b849278-df47-406d-b47c-eb27ae53c1ea"
     }

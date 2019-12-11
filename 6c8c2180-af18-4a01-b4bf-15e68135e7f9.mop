@@ -1,0 +1,142 @@
+{
+  "Name": "ValueListXXX",
+  "_id": "6c8c2180-af18-4a01-b4bf-15e68135e7f9",
+  "Namespace": "user.tenfour",
+  "Description": "generates a List<float> based on multiple input values",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "7ae95148-a5ad-4253-baaa-7193bd853906",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Selector",
+      "MetaInstanceID": "5c6549c1-128e-4712-95b2-438f4757820d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "8be8756b-7f87-406d-b09a-abbb8f0721aa",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "3ca191dc-9b95-460e-8c0c-d13c671453c5",
+      "MetaID": "e22a44ae-30ae-4e39-aa86-e4f386aedd5f",
+      "Name": "ValueListXXXFunc",
+      "Version": "bfc39fb9-fbef-45ef-af3d-fa8992d1d515",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDe22a44ae_30ae_4e39_aa86_e4f386aedd5f",
+        "{",
+        "    public class Class_ValueList : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Values = 0,",
+        "            Selector = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        List<float> _list = new List<float>();",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            var Selector = inputs[(int)InputId.Selector].Eval(context).Value;",
+        "            var ValuesNode = inputs[(int)InputId.Values];",
+        "        ",
+        "            //if (ValuesNode.Connections.Count == 0)",
+        "            //    return context;",
+        "            ",
+        "            ",
+        "    ",
+        "            int index1 = (int)(Selector % ValuesNode.Connections.Count);",
+        "            int index2 = index1;",
+        "            float blendValue = Selector % 1;",
+        "            if ( blendValue > 0) {",
+        "                index2 ++;",
+        "            }",
+        "            ",
+        "            var v1Input = ValuesNode.Connections[index1 % ValuesNode.Connections.Count];",
+        "            float v1 = v1Input.Eval(context).Value;",
+        "            float v2;",
+        "            ",
+        "            if( blendValue == 0) {",
+        "                v2 = v1;",
+        "            }",
+        "            else {",
+        "                var v2Input = ValuesNode.Connections[index2 % ValuesNode.Connections.Count];",
+        "                v2 = v2Input.Eval(context).Value;",
+        "            }",
+        "            ",
+        "            //Logger.Info(this,\"v1:{0} v2:{1}\", v1, v2);",
+        "            ",
+        "            context.Value = (float)Utilities.Lerp(v1, v2, blendValue);",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7ae95148-a5ad-4253-baaa-7193bd853906",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3ca191dc-9b95-460e-8c0c-d13c671453c5"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5c6549c1-128e-4712-95b2-438f4757820d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3ca191dc-9b95-460e-8c0c-d13c671453c5"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3ca191dc-9b95-460e-8c0c-d13c671453c5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8be8756b-7f87-406d-b09a-abbb8f0721aa"
+    }
+  ]
+}

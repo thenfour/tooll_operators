@@ -1,5 +1,5 @@
 {
-  "Name": "ASCIIFilterHybrid",
+  "Name": "ASCIIFilterHybridXXX",
   "_id": "73abf0f0-d797-4398-90aa-5b77b19bf4ba",
   "Namespace": "user.tenfour",
   "Description": "Y=multi component",
@@ -243,7 +243,7 @@
     {
       "MetaInstanceID": "f2b551d5-58a4-4e9a-8a2a-7a4db5f95e72",
       "MetaID": "182c83e5-c59c-451d-a0f2-976c7c841926",
-      "Name": "ASCIIFilterHybridFunc",
+      "Name": "ASCIIFilterHybridXXXFunc",
       "Version": "013bd18f-1763-4df8-b326-4f8147a20eb4",
       "Type": "Float",
       "IsMultiInput": "True",

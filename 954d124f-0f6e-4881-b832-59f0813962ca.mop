@@ -136,11 +136,11 @@
           "    float sgn = 1.;\r",
           "    vec2 uv2 = uv;\r",
           "    for (float i = 0.; i < 25.; ++ i) {\r",
-          "        float a = (t+iBeat)*(sgn*=-1.);\r",
+          "        float a = (iBeat)*(sgn*=-1.);\r",
           "        float sd2 = sdShape(mul(uv2*.9,rot2D(a))+vec2(0,centerDist), nsin(i*.2+t));\r",
           "    \tsd2 = opSubtraction(sd2, sdShape(uv2+vec2(0,centerDist), nsin(i*.2+t)));\r",
           "        sd = opUnion(sd, sd2);\r",
-          "        uv2 *= 1.05 + pow(iBeat*.4,3.);\r",
+          "        uv2 *= 1.05 + pow(frac(iBeat)*.4,3.);\r",
           "    }\r",
           "\r",
           "    o.rgb = dtoa(sd, vec3(50,400,400)) * vec3(.9,.8,.5);\r",
@@ -208,7 +208,7 @@
       "MetaInstanceID": "cedd58ba-b45c-4c25-86eb-d65003b410b4",
       "MetaID": "7fef30f5-f8eb-487d-85ea-876a79a90e46",
       "Name": "SH_CopperCoilFunc",
-      "Version": "e674a5bb-8a09-419e-8fa1-7d7a199cb309",
+      "Version": "5dde3cc1-6619-4d47-80e8-4480e157a1c1",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -246,11 +246,11 @@
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
         "                //<<< _setup",
         "",
-        "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beatfrac);",
+        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beat);",
         "                }",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
@@ -270,6 +270,7 @@
         ""
       ],
       "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
       ]
     }
   ],

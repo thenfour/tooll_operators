@@ -1,0 +1,104 @@
+{
+  "Name": "GlobalTimeWhenChanged",
+  "_id": "c32dcf94-0cd6-4c6c-97d4-06e5b8d1be7c",
+  "Namespace": "user.tenfour",
+  "Description": "Time the input was changed.\r\n\r\nAlso see [TimeValueChanged]",
+  "Inputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "2e6a7d80-65fa-4b5e-a30a-d21f2291c52b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Time",
+      "MetaInstanceID": "96d54268-aaca-4915-8640-697d203f3f53",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "7b071a7b-a4aa-45cf-9de8-7c7ee8054a23",
+      "MetaID": "f1973af5-3582-460e-8446-bf2a664bfd77",
+      "Name": "GlobalTimeWhenChangedFunc",
+      "Version": "f2c7900b-b774-449e-91fa-28084e1ac01a",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDf1973af5_3582_460e_8446_bf2a664bfd77",
+        "{",
+        "    public class Class_GlobalTimeWhenChanged : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Value = 0",
+        "        }",
+        "        //<<< _inputids        ",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var Value = inputs[(int)InputId.Value].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            if (Changed == true && Value != _lastValue)",
+        "            {            ",
+        "                _lastValue = Value;",
+        "                _lastChangedTime = context.GlobalTime;",
+        "                Changed = false;",
+        "            }",
+        "            context.Value = _lastChangedTime;",
+        "            return context;",
+        "        }",
+        "",
+        "        float _lastChangedTime = -99999;",
+        "        float _lastValue;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7b071a7b-a4aa-45cf-9de8-7c7ee8054a23",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "96d54268-aaca-4915-8640-697d203f3f53"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2e6a7d80-65fa-4b5e-a30a-d21f2291c52b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b071a7b-a4aa-45cf-9de8-7c7ee8054a23"
+    }
+  ]
+}

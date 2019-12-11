@@ -1,5 +1,5 @@
 {
-  "Name": "LoadRefMapAndFont3",
+  "Name": "LoadRefMapAndFont3XXX",
   "_id": "32bdaf39-9bc0-41bc-aa8c-63f54e5bf190",
   "Namespace": "user.tenfour",
   "Description": "",
@@ -20,6 +20,23 @@
       "Scale": "1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Scale",
+      "MetaInstanceID": "1e5adc64-af5a-4d83-9ae8-aed3b22c0104",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "-1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "if >0, then it will tell the asciifilter to use this scale, IF the asciifilter's own scale is unspecified.\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -33,8 +50,8 @@
     {
       "MetaInstanceID": "ddf16986-e6cf-432b-a8ea-43f74ccab712",
       "MetaID": "29c4c899-667b-4fe7-997f-d5d02da5740f",
-      "Name": "LoadRefMapAndFont3Func",
-      "Version": "6e36e1c5-e55f-40f7-aa34-e2c5487b5038",
+      "Name": "LoadRefMapAndFont3XXXFunc",
+      "Version": "9b096b7b-8310-4f35-8be8-10e54facac12",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -56,7 +73,8 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            ArgsFilePath = 0",
+        "            ArgsFilePath = 0,",
+        "            Scale = 1",
         "        }",
         "        //<<< _inputids",
         "",
@@ -76,6 +94,7 @@
         "        {",
         "            //>>> _params",
         "            var ArgsFilePath = inputs[(int)InputId.ArgsFilePath].Eval(context).Text;",
+        "            var Scale = inputs[(int)InputId.Scale].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            DateTime? writeTime = null;",
@@ -192,6 +211,7 @@
         "                context.Dynamic[\"PixelFormat\"] = pixelFormat;// 0=square, 1=fivetile",
         "                context.Dynamic[\"ColorSpace\"] = colorSpace;",
         "                context.Dynamic[\"ArgsFilePath\"] = ArgsFilePath;",
+        "                context.Dynamic[\"Scale\"] = Scale;",
         "                ",
         "                context.Dynamic[\"HashCode\"] = string.Format(\"{0}|{1}\", ArgsFilePath, _lastArgsWriteTime.ToBinary().ToString(\"x\"));",
         "                ",
@@ -232,6 +252,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "1a15fbdd-365b-476b-b662-7377bdd13263",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "ddf16986-e6cf-432b-a8ea-43f74ccab712"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1e5adc64-af5a-4d83-9ae8-aed3b22c0104",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "ddf16986-e6cf-432b-a8ea-43f74ccab712"
     },

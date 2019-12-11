@@ -1,0 +1,186 @@
+{
+  "Name": "Quantize",
+  "_id": "2905c2ee-b901-442d-b223-a59550a72cb8",
+  "Namespace": "user.tenfour.math",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "c829d655-d120-44e0-bbb5-3c1f4c5376b7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Q size",
+      "MetaInstanceID": "5988f920-a9f1-45dc-aa74-21ce6c7234f8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.25"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "(slope)",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Phase",
+      "MetaInstanceID": "be6256aa-e36c-405b-8e6d-cc24e529e3d5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "X offset to apply if you want transitions across boundaries",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "e988dddf-e1a2-455c-8842-501f58c0a765",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "fcbb87a0-7519-4851-8b63-7648433c2d25",
+      "MetaID": "0c052443-e4e7-4e57-b64d-3c4fa4951747",
+      "Name": "QuantizeFunc",
+      "Version": "4d757b9a-472c-48d8-9984-8ec887585efb",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID0c052443_e4e7_4e57_b64d_3c4fa4951747",
+        "{",
+        "    public class Class_Quantize : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Qsize = 0,",
+        "            Input = 1,",
+        "            Phase = 2",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        // https://www.desmos.com/calculator/yosrvxwfz1",
+        "        // r == 0 : effectively horizontal line",
+        "        // r == 1 : linear",
+        "        // r == inf : instant transition",
+        "        public static double SmoothStepVariable(double x, double r)",
+        "        {",
+        "            //double y = r * (x-.5) + .5;",
+        "            double gx = Math.Pow(2 * (.5 - Math.Abs(x - .5)), r) / 2.0;",
+        "            double hx = Math.Floor(x + .5);",
+        "            double y = (1.0 - hx) * gx + hx * (1.0 - gx);",
+        "            return y;",
+        "        }",
+        "        ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "",
+        "        public static double Lerp(double a, double b, double t)",
+        "        {",
+        "            return a*(1.0 - t) + b*t;",
+        "        }",
+        "        ",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Qsize = inputs[(int)InputId.Qsize].Eval(context).Value;",
+        "            var Input = inputs[(int)InputId.Input].Eval(context).Value;",
+        "            var Phase = inputs[(int)InputId.Phase].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            if (Qsize < 0.0001)",
+        "                context.Value = Input;",
+        "            else {",
+        "                Input += Phase;",
+        "                context.Value = (float)( Math.Floor(Input / Qsize) * Qsize) - Phase;",
+        "            }",
+        "            ",
+        "",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fcbb87a0-7519-4851-8b63-7648433c2d25",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e988dddf-e1a2-455c-8842-501f58c0a765"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5988f920-a9f1-45dc-aa74-21ce6c7234f8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fcbb87a0-7519-4851-8b63-7648433c2d25"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c829d655-d120-44e0-bbb5-3c1f4c5376b7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fcbb87a0-7519-4851-8b63-7648433c2d25"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "be6256aa-e36c-405b-8e6d-cc24e529e3d5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fcbb87a0-7519-4851-8b63-7648433c2d25"
+    }
+  ]
+}

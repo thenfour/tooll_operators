@@ -1,0 +1,143 @@
+{
+  "Name": "SKStretchedTime",
+  "_id": "25f6ebf4-0b3d-4570-a241-ee5222e2183b",
+  "Namespace": "user.tenfour",
+  "Description": "Returns a timing variable that progresses with the given speed. This can be useful for tweaking VJ-Camera animations (e.g. in conjunction with [RandomObserverCam.TimeOffset]",
+  "Inputs": [
+    {
+      "Name": "ResetTrigger",
+      "MetaInstanceID": "1342116a-5ea0-4007-8713-6044536ee5d2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Speed",
+      "MetaInstanceID": "b452eb64-55c8-428e-97cf-25ea1a502076",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "StretchedTime",
+      "MetaInstanceID": "1589c0d1-e546-4d5a-9488-ed8174ff1777",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "f498bf89-1245-4345-a5c1-e589e7696b99",
+      "MetaID": "9ba5b656-7178-4ffb-99d1-efd637a16da2",
+      "Name": "SKStretchedTimeFunc",
+      "Version": "6e906b9a-0fae-4c34-9354-8a69365c41ff",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using Framefield.Core.Profiling;",
+        "",
+        "namespace Framefield.Core.ID9ba5b656_7178_4ffb_99d1_efd637a16da2",
+        "{",
+        "    public class Class_SKStretchedTime : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            ResetTrigger = 0,",
+        "            Speed = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var ResetTrigger = inputs[(int)InputId.ResetTrigger].Eval(context).Value;",
+        "            var Speed = inputs[(int)InputId.Speed].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            ",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "              var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                context.Time = ((float)skstate.ProgramTime);",
+        "            }",
+        "                        ",
+        "            var resetPressed = (ResetTrigger - _lastResetTrigger  > 0.5f); ",
+        "            if(resetPressed) {",
+        "                _time = 0;",
+        "            }",
+        "                                    ",
+        "            if(context.GlobalTime != _lastTime) {            ",
+        "                var duration = (float)(context.GlobalTime - _lastTime);",
+        "                _lastTime = context.GlobalTime;",
+        "                _time += duration * Speed;                ",
+        "            }",
+        "            //_time = Utilities.Clamp( _time, ClampRangeMin, ClampRangeMax);",
+        "            context.Value = (float)_time;;",
+        "            return context;",
+        "        }",
+        "",
+        "        private double _time; ",
+        "        private double _lastTime;",
+        "        private float _lastResetTrigger;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1342116a-5ea0-4007-8713-6044536ee5d2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f498bf89-1245-4345-a5c1-e589e7696b99"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b452eb64-55c8-428e-97cf-25ea1a502076",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f498bf89-1245-4345-a5c1-e589e7696b99"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f498bf89-1245-4345-a5c1-e589e7696b99",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1589c0d1-e546-4d5a-9488-ed8174ff1777"
+    }
+  ]
+}

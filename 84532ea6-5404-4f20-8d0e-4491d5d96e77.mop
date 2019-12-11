@@ -1,0 +1,1553 @@
+{
+  "Name": "SlashImage",
+  "_id": "84532ea6-5404-4f20-8d0e-4491d5d96e77",
+  "Namespace": "user.tenfour",
+  "Description": "Divides an image into rectangular cells, and performs transformations on them:\r\n- Scale\r\n-Rotation\r\n-Translation\r\n-Skew",
+  "Inputs": [
+    {
+      "Name": "Code",
+      "MetaInstanceID": "7639679d-7643-4a0d-8890-145f285edf61",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": [
+          "//>>> _common parameters\r",
+          "float4x4 objectToWorldMatrix;",
+          "float4x4 worldToCameraMatrix;",
+          "float4x4 projMatrix;",
+          "Texture2D txDiffuse;",
+          "float2 RenderTargetSize;",
+          "//<<< _common parameters\r",
+          "\r",
+          "//>>> _parameters\r",
+          "Texture2D Image;",
+          "float2 CellCount;",
+          "float Rotation;",
+          "float2 ScalingCenter;",
+          "float2 Scale;",
+          "float2 Translate;",
+          "float2 RotationCenter;",
+          "float2 CellScaleCenter;",
+          "float2 ScaleRadialEffect;",
+          "float2 Skew;",
+          "float2 SkewCenter;",
+          "float RandomSeed;",
+          "float2 ScaleRandomEffect;",
+          "float RotationRadialSpeed;",
+          "float RotationRadialOffset;",
+          "float RotationRandomEffect;",
+          "float2 TranslateRadialEffect;",
+          "float2 TranslateRandomEffect;",
+          "float RotationAlternation;",
+          "float2 TranslationAlternation;",
+          "float2 SkewRadialEffect;",
+          "float2 SkewRandomEffect;",
+          "float2 SkewAlternation;",
+          "float CellWrapMode;",
+          "float2 CellSkew;",
+          "float2 CellSkewCenter;",
+          "//<<< _parameters\r",
+          "\r",
+          "static const float PI = atan(1.)*4.;\r",
+          "static const float PI2 = atan(1.)*8.;\r",
+          "\r",
+          "#define iResolution RenderTargetSize\r",
+          "\r",
+          "//>>> _setup\r",
+          "SamplerState samLinear",
+          "{",
+          "    Filter = MIN_MAG_MIP_LINEAR;",
+          "    AddressU = Clamp;",
+          "    AddressV = Clamp;",
+          "};",
+          "//<<< _setup\r",
+          "\r",
+          "SamplerState samLinearWrap\r",
+          "{\r",
+          "    Filter = MIN_MAG_MIP_LINEAR;\r",
+          "    AddressU = Wrap;\r",
+          "    AddressV = Wrap;\r",
+          "};\r",
+          "\r",
+          "//>>> _declarations\r",
+          "struct VS_IN",
+          "{",
+          "    float4 pos : POSITION;",
+          "    float2 texCoord : TEXCOORD;",
+          "};",
+          "",
+          "struct PS_IN",
+          "{",
+          "    float4 pos : SV_POSITION;",
+          "    float2 texCoord: TEXCOORD0;",
+          "};",
+          "//<<< _declarations\r",
+          "\r",
+          "//>>> _GS\r",
+          "",
+          "//<<< _GS\r",
+          "\r",
+          "//>>> _VS \r",
+          "PS_IN VS( VS_IN input )",
+          "{",
+          "    PS_IN output = (PS_IN)0;",
+          "",
+          "    output.pos = mul(input.pos, worldToCameraMatrix);",
+          "    output.pos = mul(output.pos, projMatrix);",
+          "    output.texCoord = input.texCoord;",
+          "",
+          "    return output;",
+          "}",
+          "//<<< _VS\r",
+          "\r",
+          "float4x4 transformMatrix;\r",
+          "\r",
+          "//>>> PS\r",
+          "\r",
+          "void rot2D(inout float2 uv, float r){\r",
+          "    float s = sin(r), c = cos(r);\r",
+          "    uv = mul(uv, float2x2(c, -s, s, c));\r",
+          "}\r",
+          "\r",
+          "// cell small template\r",
+          "float4 hash42(float2 p)\r",
+          "{\r",
+          "\tfloat4 p4 = frac(p.xyxy * float4(.1031, .1030, .0973, .1099));\r",
+          "    p4 += dot(p4, p4.wzxy+33.33);\r",
+          "    return frac((p4.xxyz+p4.yzzw)*p4.zywx);\r",
+          "}\r",
+          "\r",
+          "// if enabled==0, we want parity to be 1 (identity).\r",
+          "// if enabled==1, we want to return parity unchanged (-1 or 1)\r",
+          "// easiest way to do this is shift amounts and return sign(amt).\r",
+          "float2 GetParityFact(float parity, float2 enabled) {\r",
+          "    float2 shift = 1.5 - enabled;// if disabled, then we want to shift parity into the positive\r",
+          "    shift += parity;//parity += shift;// now when enabled (shift=.5), parity stays the same sign(-.5 or 1.5).\r",
+          "    // when disabled (shift=1.5), parity is either .5 or 2.5. always positive.\r",
+          "    return sign(shift);\r",
+          "}\r",
+          "float GetParityFact(float parity, float enabled) {\r",
+          "    float shift = 1.5 - enabled;// if disabled, then we want to shift parity into the positive\r",
+          "    shift += parity;//parity += shift;// now when enabled (shift=.5), parity stays the same sign(-.5 or 1.5).\r",
+          "    // when disabled (shift=1.5), parity is either .5 or 2.5. always positive.\r",
+          "    return sign(shift);\r",
+          "}\r",
+          "\r",
+          "float4 PS( PS_IN input ) : SV_Target\r",
+          "{\r",
+          "    // in order to make CELLS scale from the center of the screen\r",
+          "    input.texCoord -= CellSkewCenter;\r",
+          "    input.texCoord += CellSkew * input.texCoord.yx;\r",
+          "    input.texCoord += CellSkewCenter;\r",
+          "\r",
+          "    float2 cellOrig = floor((input.texCoord - CellScaleCenter) * CellCount) / CellCount;\r",
+          "    cellOrig += CellScaleCenter;\r",
+          "\r",
+          "    float2 cellParity = input.texCoord - CellScaleCenter;// uv coords in phase\r",
+          "    cellParity *= CellCount * .5;// integral cell id now.\r",
+          "    cellParity = frac(cellParity) - .5;// alternating sign.\r",
+          "    cellParity = sign(cellParity);\r",
+          "    //if (cellParity.x == 0) cellParity.x = -1;\r",
+          "   // if (cellParity.y == 0) cellParity.y = -1;\r",
+          "    \r",
+          "    //return float4(cellParity*.5+.5, 0, 1);\r",
+          "    \r",
+          "    //float cellParity1 = sign(frac(cellParity.x * cellParity.y)-.5);\r",
+          "    float cellParity1 = cellParity.x * cellParity.y;\r",
+          "    //return float4(cellParity1, 0, 0, 1);\r",
+          "\r",
+          "    //if (length(input.texCoord - cellOrig) < .01) {\r",
+          "    //    return float4(1,0,0,1);\r",
+          "   // }\r",
+          "    \r",
+          "    float2 _scale = Scale;\r",
+          "    float _rotation = Rotation;\r",
+          "    float2 _translation = Translate;\r",
+          "    float2 _skew = Skew;\r",
+          "    \r",
+          "    float2 cellSize = 1.0 / CellCount;\r",
+          "    float len1 = length(cellOrig - .5 + cellSize * .5);// distance from center of cell to center of viewport\r",
+          "    float4 h = hash42(cellOrig + 1e3 + RandomSeed);\r",
+          "    _scale += len1 * ScaleRadialEffect;\r",
+          "    _scale += (h.xy - .5) * ScaleRandomEffect;\r",
+          "    \r",
+          "    _rotation *= len1 * RotationRadialSpeed;\r",
+          "    float rr = len1 * RotationRadialOffset;\r",
+          "    _rotation += rr;\r",
+          "    _rotation += (h.z - .5) * RotationRandomEffect;\r",
+          "    _rotation *= GetParityFact(cellParity1, RotationAlternation);\r",
+          "    \r",
+          "    _translation += len1 * TranslateRadialEffect;\r",
+          "    _translation += (h.wx - .5) * TranslateRandomEffect;\r",
+          "    _translation *= GetParityFact(cellParity1, TranslationAlternation);\r",
+          "\r",
+          "    _skew += len1 * SkewRadialEffect;\r",
+          "    _skew += (h.ra - .5) * SkewRandomEffect;\r",
+          "    _skew *= GetParityFact(cellParity1, SkewAlternation);\r",
+          "\r",
+          "    float2 uv = (input.texCoord - cellOrig) / cellSize;// map this cell to 0-1 uv\r",
+          "    \r",
+          "    uv += _translation;\r",
+          "     \r",
+          "    uv -= ScalingCenter;\r",
+          "    uv *= _scale;\r",
+          "    uv += ScalingCenter;\r",
+          "\r",
+          "    uv -= SkewCenter;\r",
+          "    uv += _skew * uv.yx;\r",
+          "    uv += SkewCenter;\r",
+          "\r",
+          "    uv -= RotationCenter;\r",
+          "    rot2D(uv, _rotation);\r",
+          "    uv += RotationCenter;\r",
+          "\r",
+          "    // wholeimage mode is handled by the sampler state.\r",
+          "    float a = 1;\r",
+          "    if (CellWrapMode == 0)// intracell\r",
+          "        uv = frac(uv);// after transformation, wrap coords to 0-1. better handled by sampler state.\r",
+          "    else if (CellWrapMode == 2)  {// Transparent\r",
+          "        float2 s = step(0, uv);// check if <= 0\r",
+          "        s *= step(uv, 1);// check if >= 1\r",
+          "        a = min(s.x, s.y);\r",
+          "    }\r",
+          "    else if (CellWrapMode == 3) {// 3 = mirror\r",
+          "        // effectively this is a triangle wave\r",
+          "        uv /= 2;// period 1 becomes period 2 (so each wave stage is 1, and there are 2 stages to the wave)\r",
+          "        uv = frac(uv);// sawtooth\r",
+          "        uv = abs(uv - .5);// triangle between 0 and .5\r",
+          "        uv *= 2;// triangle between 0-1\r",
+          "        uv = 1.-uv;// invert phase\r",
+          "    }\r",
+          "    \r",
+          "    uv /= CellCount;// scale back to real uv\r",
+          "    uv += cellOrig;// and place back in the cell.        \r",
+          "    return Image.Sample(samLinearWrap, uv) * float4(1,1,1,a);\r",
+          "}\r",
+          "\r",
+          "//<<< PS\r",
+          "\r",
+          "\r",
+          "//>>> _technique\r",
+          "technique10 Render",
+          "{",
+          "    pass P0",
+          "    {",
+          "        SetGeometryShader( 0 );",
+          "        SetVertexShader( CompileShader( vs_4_0, VS() ) );",
+          "        SetPixelShader( CompileShader( ps_4_0, PS() ) );",
+          "    }",
+          "}",
+          "//<<< _technique\r",
+          ""
+        ]
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Image",
+      "MetaInstanceID": "306af3a5-3cf4-4868-b4ec-bdc6195dc2cc",
+      "DefaultValue": {
+        "Type": "Image",
+        "Value": "Framefield.Core.Image"
+      },
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RandomSeed",
+      "MetaInstanceID": "a792bada-45ee-4a8a-ba38-d1cfea314504",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellCount.X",
+      "MetaInstanceID": "2363a36a-1153-4179-b774-c7e9790a3e13",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellCount.Y",
+      "MetaInstanceID": "4c423102-b69d-44b7-9f3a-dfbee5694d8d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellScaleCenter.X",
+      "MetaInstanceID": "04ba2e02-5d2f-4544-a598-76e6fbaa3713",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellScaleCenter.Y",
+      "MetaInstanceID": "0455428e-34b4-4340-8e03-3f02b11d2633",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellSkew.X",
+      "MetaInstanceID": "7b91e451-54f6-4d95-8227-2383215cbcd5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellSkew.Y",
+      "MetaInstanceID": "ee4a73a2-9c8c-48cc-ba2e-0de8c6ed800c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellSkewCenter.X",
+      "MetaInstanceID": "8905fd3e-84e8-499b-a5a0-ab35379ac057",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellSkewCenter.Y",
+      "MetaInstanceID": "5dcb400f-1bab-4973-b307-d5d10f9541e7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CellWrapMode",
+      "MetaInstanceID": "ec6d13aa-3ae8-4992-9595-83eda6cf20cb",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Intracell",
+          "Value": "0"
+        },
+        {
+          "Name": "WholeImage",
+          "Value": "1"
+        },
+        {
+          "Name": "Transparent",
+          "Value": "2"
+        },
+        {
+          "Name": "Mirror",
+          "Value": "3"
+        }
+      ]
+    },
+    {
+      "Name": "Translate.X",
+      "MetaInstanceID": "d6cf71bc-64f0-41db-a599-92c8486c4d8d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Translate.Y",
+      "MetaInstanceID": "d12c1bd6-5f8e-4779-96f7-5e295a3492f1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TranslateRandomEffect.X",
+      "MetaInstanceID": "fb76f547-91cd-4ce5-a335-85304883e0ee",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TranslateRandomEffect.Y",
+      "MetaInstanceID": "f3b0584e-1761-4dd7-ba8d-7976bc44f6dc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TranslateRadialEffect.X",
+      "MetaInstanceID": "01bdb038-1c9c-452d-8e90-2a8babb163b7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TranslateRadialEffect.Y",
+      "MetaInstanceID": "cd361c5f-3a8d-4de6-9f2e-1f6aad89c934",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TranslationAlternation.X",
+      "MetaInstanceID": "fb12d76b-3f28-4fc4-8c7e-0af6f9d8fafc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Yes",
+          "Value": "1"
+        },
+        {
+          "Name": "No",
+          "Value": "0"
+        }
+      ]
+    },
+    {
+      "Name": "TranslationAlternation.Y",
+      "MetaInstanceID": "fb4d91f6-2f7b-4259-bcb3-37affb2e4a6c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Yes",
+          "Value": "1"
+        },
+        {
+          "Name": "No",
+          "Value": "0"
+        }
+      ]
+    },
+    {
+      "Name": "Skew.X",
+      "MetaInstanceID": "1f4bef2d-79fb-4a92-895f-78b2216c5e0b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Skew.Y",
+      "MetaInstanceID": "ea25d9d5-6f63-4f56-bb8d-fb5ec8f73f59",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewCenter.X",
+      "MetaInstanceID": "8702af80-3d8a-416b-9169-fee9f7ad4835",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewCenter.Y",
+      "MetaInstanceID": "b659c5b5-85bc-4797-ad86-816bab2aac89",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewRandomEffect.X",
+      "MetaInstanceID": "79253359-f75c-4ff8-82ee-4e30085ff25e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewRandomEffect.Y",
+      "MetaInstanceID": "218f9e13-743a-4bc7-8876-8d8f8d765938",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewRadialEffect.X",
+      "MetaInstanceID": "4c2d2ced-7762-4f6d-90f0-c586084a403e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewRadialEffect.Y",
+      "MetaInstanceID": "d952d981-719b-4e7d-b6d1-02fa4da3af67",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SkewAlternation.X",
+      "MetaInstanceID": "33b960e8-82bf-478b-8072-543e7bdf5d63",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Yes",
+          "Value": "1"
+        },
+        {
+          "Name": "No",
+          "Value": "0"
+        }
+      ]
+    },
+    {
+      "Name": "SkewAlternation.Y",
+      "MetaInstanceID": "982cb606-a4cd-4d45-b2db-f923a8730da2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Yes",
+          "Value": "1"
+        },
+        {
+          "Name": "No",
+          "Value": "0"
+        }
+      ]
+    },
+    {
+      "Name": "Scale.X",
+      "MetaInstanceID": "94c27020-a846-4cfa-9659-e0fb27eb0caa",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Scale.Y",
+      "MetaInstanceID": "4e30f593-6ac5-4bc9-a6ab-a3d902618716",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ScalingCenter.X",
+      "MetaInstanceID": "34040090-0876-43b6-84c3-9cf883c71d40",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ScalingCenter.Y",
+      "MetaInstanceID": "e81976b6-a43f-41e9-97e4-74efdf378dee",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ScaleRandomEffect.X",
+      "MetaInstanceID": "efb277ff-8136-4d9b-912e-04f998089d8b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ScaleRandomEffect.Y",
+      "MetaInstanceID": "16114c5c-c0b3-4801-bd18-d64d2314c5fc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ScaleRadialEffect.X",
+      "MetaInstanceID": "cdb613c4-9694-423a-b96d-835eef34e800",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "Adjusts scale depending on cell position.\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ScaleRadialEffect.Y",
+      "MetaInstanceID": "15888bf2-b7d4-4f82-bac0-2732f02a8940",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "Adjusts scale depending on cell position.\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Rotation",
+      "MetaInstanceID": "c2db98b4-9b25-4713-b327-0d6f0797870e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RotationCenter.X",
+      "MetaInstanceID": "bf2bbce4-3873-406d-96e6-5d657e3cec9a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RotationCenter.Y",
+      "MetaInstanceID": "1ec975fc-8d80-421e-9ae1-adab28e5c534",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RotationRandomEffect",
+      "MetaInstanceID": "b98cb2bf-2f22-4ea5-97e2-aa236184dbc9",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RotationRadialSpeed",
+      "MetaInstanceID": "87b1759b-5bc1-47f6-bd32-44aeff7c4873",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "scales the rotation amount by length from center.",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RotationRadialOffset",
+      "MetaInstanceID": "3a7f4b0c-e3e2-4b97-84eb-6a78b5bddb37",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "RotationAlternation",
+      "MetaInstanceID": "a1255708-b2bc-415c-97d0-f7cd3c53198e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "b1b5e5a5-ff2e-47dd-816e-fa8b2ade934d",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "d2f7be46-d89d-41ca-b1c7-48c3228ca908",
+      "MetaID": "02e37639-0801-492f-8be4-fce0d6367bf9",
+      "Name": "SlashImageFunc",
+      "Version": "4c964c4d-8cca-4041-8d6b-79689cab7cc4",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.ID02e37639_0801_492f_8be4_fce0d6367bf9",
+        "{",
+        "    public class Class_SlashImage : FXImageFunction, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Code = 0,",
+        "            Image = 1,",
+        "            CellCountX = 2,",
+        "            CellCountY = 3,",
+        "            Rotation = 4,",
+        "            ScalingCenterX = 5,",
+        "            ScalingCenterY = 6,",
+        "            ScaleX = 7,",
+        "            ScaleY = 8,",
+        "            TranslateX = 9,",
+        "            TranslateY = 10,",
+        "            RotationCenterX = 11,",
+        "            RotationCenterY = 12,",
+        "            CellScaleCenterX = 13,",
+        "            CellScaleCenterY = 14,",
+        "            ScaleRadialEffectX = 15,",
+        "            ScaleRadialEffectY = 16,",
+        "            SkewX = 17,",
+        "            SkewY = 18,",
+        "            SkewCenterX = 19,",
+        "            SkewCenterY = 20,",
+        "            RandomSeed = 21,",
+        "            ScaleRandomEffectX = 22,",
+        "            ScaleRandomEffectY = 23,",
+        "            RotationRadialSpeed = 24,",
+        "            RotationRadialOffset = 25,",
+        "            RotationRandomEffect = 26,",
+        "            TranslateRadialEffectX = 27,",
+        "            TranslateRadialEffectY = 28,",
+        "            TranslateRandomEffectX = 29,",
+        "            TranslateRandomEffectY = 30,",
+        "            RotationAlternation = 31,",
+        "            TranslationAlternationX = 32,",
+        "            TranslationAlternationY = 33,",
+        "            SkewRadialEffectX = 34,",
+        "            SkewRadialEffectY = 35,",
+        "            SkewRandomEffectX = 36,",
+        "            SkewRandomEffectY = 37,",
+        "            SkewAlternationX = 38,",
+        "            SkewAlternationY = 39,",
+        "            CellWrapMode = 40,",
+        "            CellSkewX = 41,",
+        "            CellSkewY = 42,",
+        "            CellSkewCenterX = 43,",
+        "            CellSkewCenterY = 44",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> _params",
+        "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var Image = inputs[(int)InputId.Image].Eval(context).Image; // Needs to be checked for null!",
+        "            var CellCountX = inputs[(int)InputId.CellCountX].Eval(context).Value;",
+        "            var CellCountY = inputs[(int)InputId.CellCountY].Eval(context).Value;",
+        "            var CellCount = new Vector2(CellCountX, CellCountY);",
+        "            var Rotation = inputs[(int)InputId.Rotation].Eval(context).Value;",
+        "            var ScalingCenterX = inputs[(int)InputId.ScalingCenterX].Eval(context).Value;",
+        "            var ScalingCenterY = inputs[(int)InputId.ScalingCenterY].Eval(context).Value;",
+        "            var ScalingCenter = new Vector2(ScalingCenterX, ScalingCenterY);",
+        "            var ScaleX = inputs[(int)InputId.ScaleX].Eval(context).Value;",
+        "            var ScaleY = inputs[(int)InputId.ScaleY].Eval(context).Value;",
+        "            var Scale = new Vector2(ScaleX, ScaleY);",
+        "            var TranslateX = inputs[(int)InputId.TranslateX].Eval(context).Value;",
+        "            var TranslateY = inputs[(int)InputId.TranslateY].Eval(context).Value;",
+        "            var Translate = new Vector2(TranslateX, TranslateY);",
+        "            var RotationCenterX = inputs[(int)InputId.RotationCenterX].Eval(context).Value;",
+        "            var RotationCenterY = inputs[(int)InputId.RotationCenterY].Eval(context).Value;",
+        "            var RotationCenter = new Vector2(RotationCenterX, RotationCenterY);",
+        "            var CellScaleCenterX = inputs[(int)InputId.CellScaleCenterX].Eval(context).Value;",
+        "            var CellScaleCenterY = inputs[(int)InputId.CellScaleCenterY].Eval(context).Value;",
+        "            var CellScaleCenter = new Vector2(CellScaleCenterX, CellScaleCenterY);",
+        "            var ScaleRadialEffectX = inputs[(int)InputId.ScaleRadialEffectX].Eval(context).Value;",
+        "            var ScaleRadialEffectY = inputs[(int)InputId.ScaleRadialEffectY].Eval(context).Value;",
+        "            var ScaleRadialEffect = new Vector2(ScaleRadialEffectX, ScaleRadialEffectY);",
+        "            var SkewX = inputs[(int)InputId.SkewX].Eval(context).Value;",
+        "            var SkewY = inputs[(int)InputId.SkewY].Eval(context).Value;",
+        "            var Skew = new Vector2(SkewX, SkewY);",
+        "            var SkewCenterX = inputs[(int)InputId.SkewCenterX].Eval(context).Value;",
+        "            var SkewCenterY = inputs[(int)InputId.SkewCenterY].Eval(context).Value;",
+        "            var SkewCenter = new Vector2(SkewCenterX, SkewCenterY);",
+        "            var RandomSeed = inputs[(int)InputId.RandomSeed].Eval(context).Value;",
+        "            var ScaleRandomEffectX = inputs[(int)InputId.ScaleRandomEffectX].Eval(context).Value;",
+        "            var ScaleRandomEffectY = inputs[(int)InputId.ScaleRandomEffectY].Eval(context).Value;",
+        "            var ScaleRandomEffect = new Vector2(ScaleRandomEffectX, ScaleRandomEffectY);",
+        "            var RotationRadialSpeed = inputs[(int)InputId.RotationRadialSpeed].Eval(context).Value;",
+        "            var RotationRadialOffset = inputs[(int)InputId.RotationRadialOffset].Eval(context).Value;",
+        "            var RotationRandomEffect = inputs[(int)InputId.RotationRandomEffect].Eval(context).Value;",
+        "            var TranslateRadialEffectX = inputs[(int)InputId.TranslateRadialEffectX].Eval(context).Value;",
+        "            var TranslateRadialEffectY = inputs[(int)InputId.TranslateRadialEffectY].Eval(context).Value;",
+        "            var TranslateRadialEffect = new Vector2(TranslateRadialEffectX, TranslateRadialEffectY);",
+        "            var TranslateRandomEffectX = inputs[(int)InputId.TranslateRandomEffectX].Eval(context).Value;",
+        "            var TranslateRandomEffectY = inputs[(int)InputId.TranslateRandomEffectY].Eval(context).Value;",
+        "            var TranslateRandomEffect = new Vector2(TranslateRandomEffectX, TranslateRandomEffectY);",
+        "            var RotationAlternation = inputs[(int)InputId.RotationAlternation].Eval(context).Value;",
+        "            var TranslationAlternationX = (int) inputs[(int)InputId.TranslationAlternationX].Eval(context).Value;",
+        "            var TranslationAlternationY = (int) inputs[(int)InputId.TranslationAlternationY].Eval(context).Value;",
+        "            var TranslationAlternation = new Vector2(TranslationAlternationX, TranslationAlternationY);",
+        "            var SkewRadialEffectX = inputs[(int)InputId.SkewRadialEffectX].Eval(context).Value;",
+        "            var SkewRadialEffectY = inputs[(int)InputId.SkewRadialEffectY].Eval(context).Value;",
+        "            var SkewRadialEffect = new Vector2(SkewRadialEffectX, SkewRadialEffectY);",
+        "            var SkewRandomEffectX = inputs[(int)InputId.SkewRandomEffectX].Eval(context).Value;",
+        "            var SkewRandomEffectY = inputs[(int)InputId.SkewRandomEffectY].Eval(context).Value;",
+        "            var SkewRandomEffect = new Vector2(SkewRandomEffectX, SkewRandomEffectY);",
+        "            var SkewAlternationX = (int) inputs[(int)InputId.SkewAlternationX].Eval(context).Value;",
+        "            var SkewAlternationY = (int) inputs[(int)InputId.SkewAlternationY].Eval(context).Value;",
+        "            var SkewAlternation = new Vector2(SkewAlternationX, SkewAlternationY);",
+        "            var CellWrapMode = (int) inputs[(int)InputId.CellWrapMode].Eval(context).Value;",
+        "            var CellSkewX = inputs[(int)InputId.CellSkewX].Eval(context).Value;",
+        "            var CellSkewY = inputs[(int)InputId.CellSkewY].Eval(context).Value;",
+        "            var CellSkew = new Vector2(CellSkewX, CellSkewY);",
+        "            var CellSkewCenterX = inputs[(int)InputId.CellSkewCenterX].Eval(context).Value;",
+        "            var CellSkewCenterY = inputs[(int)InputId.CellSkewCenterY].Eval(context).Value;",
+        "            var CellSkewCenter = new Vector2(CellSkewCenterX, CellSkewCenterY);",
+        "            //<<< _params",
+        "            ",
+        "            return PrepareAndEvalOnChange(context, () => {",
+        "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 0));",
+        "                if (Image == null) {",
+        "                    return;",
+        "                }",
+        "",
+        "                //>>> _setup",
+        "                using (var ImageView = new ShaderResourceView(context.D3DDevice, Image))",
+        "                {",
+        "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"Image\").AsShaderResource().SetResource(ImageView);",
+        "                    _effect.GetVariableByName(\"CellCount\").AsVector().Set(new Vector2(CellCountX, CellCountY));",
+        "                    _effect.GetVariableByName(\"Rotation\").AsScalar().Set(Rotation);",
+        "                    _effect.GetVariableByName(\"ScalingCenter\").AsVector().Set(new Vector2(ScalingCenterX, ScalingCenterY));",
+        "                    _effect.GetVariableByName(\"Scale\").AsVector().Set(new Vector2(ScaleX, ScaleY));",
+        "                    _effect.GetVariableByName(\"Translate\").AsVector().Set(new Vector2(TranslateX, TranslateY));",
+        "                    _effect.GetVariableByName(\"RotationCenter\").AsVector().Set(new Vector2(RotationCenterX, RotationCenterY));",
+        "                    _effect.GetVariableByName(\"CellScaleCenter\").AsVector().Set(new Vector2(CellScaleCenterX, CellScaleCenterY));",
+        "                    _effect.GetVariableByName(\"ScaleRadialEffect\").AsVector().Set(new Vector2(ScaleRadialEffectX, ScaleRadialEffectY));",
+        "                    _effect.GetVariableByName(\"Skew\").AsVector().Set(new Vector2(SkewX, SkewY));",
+        "                    _effect.GetVariableByName(\"SkewCenter\").AsVector().Set(new Vector2(SkewCenterX, SkewCenterY));",
+        "                    _effect.GetVariableByName(\"RandomSeed\").AsScalar().Set(RandomSeed);",
+        "                    _effect.GetVariableByName(\"ScaleRandomEffect\").AsVector().Set(new Vector2(ScaleRandomEffectX, ScaleRandomEffectY));",
+        "                    _effect.GetVariableByName(\"RotationRadialSpeed\").AsScalar().Set(RotationRadialSpeed);",
+        "                    _effect.GetVariableByName(\"RotationRadialOffset\").AsScalar().Set(RotationRadialOffset);",
+        "                    _effect.GetVariableByName(\"RotationRandomEffect\").AsScalar().Set(RotationRandomEffect);",
+        "                    _effect.GetVariableByName(\"TranslateRadialEffect\").AsVector().Set(new Vector2(TranslateRadialEffectX, TranslateRadialEffectY));",
+        "                    _effect.GetVariableByName(\"TranslateRandomEffect\").AsVector().Set(new Vector2(TranslateRandomEffectX, TranslateRandomEffectY));",
+        "                    _effect.GetVariableByName(\"RotationAlternation\").AsScalar().Set(RotationAlternation);",
+        "                    _effect.GetVariableByName(\"TranslationAlternation\").AsVector().Set(new Vector2(TranslationAlternationX, TranslationAlternationY));",
+        "                    _effect.GetVariableByName(\"SkewRadialEffect\").AsVector().Set(new Vector2(SkewRadialEffectX, SkewRadialEffectY));",
+        "                    _effect.GetVariableByName(\"SkewRandomEffect\").AsVector().Set(new Vector2(SkewRandomEffectX, SkewRandomEffectY));",
+        "                    _effect.GetVariableByName(\"SkewAlternation\").AsVector().Set(new Vector2(SkewAlternationX, SkewAlternationY));",
+        "                    _effect.GetVariableByName(\"CellWrapMode\").AsScalar().Set(CellWrapMode);",
+        "                    _effect.GetVariableByName(\"CellSkew\").AsVector().Set(new Vector2(CellSkewX, CellSkewY));",
+        "                    _effect.GetVariableByName(\"CellSkewCenter\").AsVector().Set(new Vector2(CellSkewCenterX, CellSkewCenterY));",
+        "                //<<< _setup",
+        "                ",
+        "                //Pivot /= CellCount;",
+        "                //Translate /= CellCount;",
+        "                ",
+        "                /*var _transform = Matrix.Transformation2D(",
+        "                    Pivot, 0,// scaling center, scalingrotation",
+        "                    Scale,// scaling",
+        "                    Pivot,// rot center",
+        "                    Rotation,// rotation",
+        "                    Translate);",
+        "",
+        "                _effect.GetVariableByName(\"transformMatrix\").AsMatrix().SetMatrix(_transform);",
+        "*/",
+        "",
+        "                Render(context);",
+        "",
+        "                //>>> _cleanup",
+        "                }",
+        "                //<<< _cleanup",
+        "            });",
+        "        }",
+        "",
+        "    }",
+        "}",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b1b5e5a5-ff2e-47dd-816e-fa8b2ade934d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7639679d-7643-4a0d-8890-145f285edf61",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "306af3a5-3cf4-4868-b4ec-bdc6195dc2cc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2363a36a-1153-4179-b774-c7e9790a3e13",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4c423102-b69d-44b7-9f3a-dfbee5694d8d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c2db98b4-9b25-4713-b327-0d6f0797870e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "34040090-0876-43b6-84c3-9cf883c71d40",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e81976b6-a43f-41e9-97e4-74efdf378dee",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "94c27020-a846-4cfa-9659-e0fb27eb0caa",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4e30f593-6ac5-4bc9-a6ab-a3d902618716",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d6cf71bc-64f0-41db-a599-92c8486c4d8d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d12c1bd6-5f8e-4779-96f7-5e295a3492f1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "bf2bbce4-3873-406d-96e6-5d657e3cec9a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1ec975fc-8d80-421e-9ae1-adab28e5c534",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "04ba2e02-5d2f-4544-a598-76e6fbaa3713",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0455428e-34b4-4340-8e03-3f02b11d2633",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cdb613c4-9694-423a-b96d-835eef34e800",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "15888bf2-b7d4-4f82-bac0-2732f02a8940",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1f4bef2d-79fb-4a92-895f-78b2216c5e0b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ea25d9d5-6f63-4f56-bb8d-fb5ec8f73f59",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8702af80-3d8a-416b-9169-fee9f7ad4835",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b659c5b5-85bc-4797-ad86-816bab2aac89",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a792bada-45ee-4a8a-ba38-d1cfea314504",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "efb277ff-8136-4d9b-912e-04f998089d8b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "16114c5c-c0b3-4801-bd18-d64d2314c5fc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "87b1759b-5bc1-47f6-bd32-44aeff7c4873",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3a7f4b0c-e3e2-4b97-84eb-6a78b5bddb37",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b98cb2bf-2f22-4ea5-97e2-aa236184dbc9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "01bdb038-1c9c-452d-8e90-2a8babb163b7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cd361c5f-3a8d-4de6-9f2e-1f6aad89c934",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fb76f547-91cd-4ce5-a335-85304883e0ee",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f3b0584e-1761-4dd7-ba8d-7976bc44f6dc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a1255708-b2bc-415c-97d0-f7cd3c53198e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fb12d76b-3f28-4fc4-8c7e-0af6f9d8fafc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fb4d91f6-2f7b-4259-bcb3-37affb2e4a6c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4c2d2ced-7762-4f6d-90f0-c586084a403e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d952d981-719b-4e7d-b6d1-02fa4da3af67",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "79253359-f75c-4ff8-82ee-4e30085ff25e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "218f9e13-743a-4bc7-8876-8d8f8d765938",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "33b960e8-82bf-478b-8072-543e7bdf5d63",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "982cb606-a4cd-4d45-b2db-f923a8730da2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ec6d13aa-3ae8-4992-9595-83eda6cf20cb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7b91e451-54f6-4d95-8227-2383215cbcd5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ee4a73a2-9c8c-48cc-ba2e-0de8c6ed800c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8905fd3e-84e8-499b-a5a0-ab35379ac057",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5dcb400f-1bab-4973-b307-d5d10f9541e7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    }
+  ]
+}

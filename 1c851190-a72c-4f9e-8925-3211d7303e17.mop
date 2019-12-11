@@ -51,7 +51,7 @@
       "MetaInstanceID": "da6f31f6-6a21-4db7-9cfb-09cf8dd17db1",
       "MetaID": "92f4f20f-b1a5-4b6c-9924-c868ecfe1b5a",
       "Name": "AnimateFunc",
-      "Version": "ff90863f-88d3-4ee5-b3ae-be5dfb76e7d6",
+      "Version": "97374d04-c572-4d21-be6f-0a6b160f1b3f",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -68,7 +68,7 @@
         "",
         "namespace Framefield.Core.ID92f4f20f_b1a5_4b6c_9924_c868ecfe1b5a",
         "{",
-        "    public class Class_Ramp : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_Animate : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",

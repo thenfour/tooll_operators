@@ -19,7 +19,13 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
-          "",
+          "float LayerCount;",
+          "float Zoom;",
+          "float2 Position;",
+          "float AnimTime;",
+          "float Chop;",
+          "float Density;",
+          "float PostEffect;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -90,10 +96,10 @@
           "\r",
           "//>>> PS\r",
           "\r",
-          "static const float z = 1.;\r",
-          "static const float complexity = 13.;\r",
+          "static const float z = Zoom;\r",
+          "static const float complexity = LayerCount;\r",
           "//const float speed = .5;// scene changing speed\r",
-          "static const float density = .8; // 0-1\r",
+          "static const float density = Density; // 0-1\r",
           "\r",
           "vec4 hash42(vec2 p)\r",
           "{\r",
@@ -105,7 +111,7 @@
           "mat2 rot2D(float r){\r",
           "    return mat2(cos(r), sin(r), -sin(r), cos(r));\r",
           "}\r",
-          "#define q(x,p) (floor((x)/(p))*(p))\r",
+          "#define q(x,p) ((p) < 0.001 ? (x) : (floor((x)/(p))*(p)))\r",
           "\r",
           "\r",
           "void mainImage( out vec4 o, vec2 C)\r",
@@ -115,11 +121,12 @@
           "    vec2 N = uv;\r",
           "    uv.x *= R.x/R.y;\r",
           "    uv *= z;\r",
-          "    float t = iTime+1e4;\r",
-          "    if (uv.y > .5)\r",
-          "        uv.x += pow(frac(iBeat),.2) + floor(t/iBPM)*z*1.618;// scene switcher\r",
-          "    else \r",
-          "        uv.x -= pow(abs(frac(iBeat)),.2) + floor(t/iBPM)*z*1.618;// scene switcher\r",
+          "    uv += Position;\r",
+          "    //float t = iTime+1e4;\r",
+          "//    if (uv.y > .5)\r",
+          "       // uv.x += pow(frac(iBeat/4.),.2) + floor(t/iBPM)*z*1.618;// scene switcher\r",
+          "  //  else \r",
+          "  //      uv.x -= pow(abs(frac(iBeat/2.)),.2) + floor(t/iBPM)*z*1.618;// scene switcher\r",
           "    //uv.x += iBeat;\r",
           "    o = vec4x(1);\r",
           "\r",
@@ -129,14 +136,15 @@
           "        p = mul(p,rot2D(h.x*PI*2.));\r",
           "        uv += p * h.z;\r",
           "        h = hash42(floor(uv));\r",
-          "        h += length(fract(p+q(iTime,.1)*.1)); // animate\r",
+          "        h += length(fract(p+q(AnimTime,Chop)*.1)); // animate\r",
           "        h = fract(h);\r",
           "        if (i < 2. || h.w > density) {\r",
           "            o *= h;\r",
           "        }\r",
           "    }\r",
-          "    o=pow(o,o-o+.5);\r",
-          "  \to=step(.5,o) * mod(C.y,3.)/2.;\r",
+          "    o=pow(abs(o),o-o+.5);\r",
+          "    if (PostEffect > 0)\r",
+          "  \t o=step(.5,o) * mod(C.y,3.)/2.;\r",
           "}\r",
           "\r",
           "\r",
@@ -178,6 +186,151 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "LayerCount",
+      "MetaInstanceID": "e40001fc-805c-49d0-a2f9-2e243de340e9",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "13"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "1",
+      "Max": "20",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Zoom",
+      "MetaInstanceID": "6db1d776-de59-4a73-b122-dd88cb8b2810",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Position.X",
+      "MetaInstanceID": "ce1cb83b-82e5-402f-be1c-48222c4c2fc0",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Position.Y",
+      "MetaInstanceID": "52a33f81-45a3-4995-90b8-46107b01e17b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "AnimTime",
+      "MetaInstanceID": "d713c4bf-507c-494f-92a2-c5463fb320d8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Chop",
+      "MetaInstanceID": "ad57bad3-240c-48c0-8d96-e004a4f0fdc8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Density",
+      "MetaInstanceID": "cf9a4bcf-52f8-4c52-9dce-9d1d6490cd2b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.8"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "PostEffect",
+      "MetaInstanceID": "744cf9b0-1329-42c2-8928-b1ce608927c7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "No",
+          "Value": "0"
+        },
+        {
+          "Name": "Yes",
+          "Value": "1"
+        }
+      ]
     }
   ],
   "Outputs": [
@@ -192,7 +345,7 @@
       "MetaInstanceID": "2b655909-500a-4f7f-ac92-218fa127a86c",
       "MetaID": "da7012ff-a134-431d-8896-f4df8ab42f4e",
       "Name": "SH_Glitch01Func",
-      "Version": "60f0415f-c4ab-48a5-8650-83007b70bff6",
+      "Version": "11218c86-8772-40c1-b3d6-77cf054c642c",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -213,13 +366,30 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Code = 0",
+        "            Code = 0,",
+        "            LayerCount = 1,",
+        "            Zoom = 2,",
+        "            PositionX = 3,",
+        "            PositionY = 4,",
+        "            AnimTime = 5,",
+        "            Chop = 6,",
+        "            Density = 7,",
+        "            PostEffect = 8",
         "        }",
         "        //<<< _inputids",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var LayerCount = inputs[(int)InputId.LayerCount].Eval(context).Value;",
+        "            var Zoom = inputs[(int)InputId.Zoom].Eval(context).Value;",
+        "            var PositionX = inputs[(int)InputId.PositionX].Eval(context).Value;",
+        "            var PositionY = inputs[(int)InputId.PositionY].Eval(context).Value;",
+        "            var Position = new Vector2(PositionX, PositionY);",
+        "            var AnimTime = inputs[(int)InputId.AnimTime].Eval(context).Value;",
+        "            var Chop = inputs[(int)InputId.Chop].Eval(context).Value;",
+        "            var Density = inputs[(int)InputId.Density].Eval(context).Value;",
+        "            var PostEffect = (int) inputs[(int)InputId.PostEffect].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -228,14 +398,21 @@
         "                //>>> _setup",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"LayerCount\").AsScalar().Set(LayerCount);",
+        "                    _effect.GetVariableByName(\"Zoom\").AsScalar().Set(Zoom);",
+        "                    _effect.GetVariableByName(\"Position\").AsVector().Set(new Vector2(PositionX, PositionY));",
+        "                    _effect.GetVariableByName(\"AnimTime\").AsScalar().Set(AnimTime);",
+        "                    _effect.GetVariableByName(\"Chop\").AsScalar().Set(Chop);",
+        "                    _effect.GetVariableByName(\"Density\").AsScalar().Set(Density);",
+        "                    _effect.GetVariableByName(\"PostEffect\").AsScalar().Set(PostEffect);",
         "                //<<< _setup",
         "",
-        "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
         "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beat);",
-        "                    _effect.GetVariableByName(\"iBeatInt\").AsScalar().Set((float)(double)context.Objects[\"SKPlayerBeatInt\"]);",
+        "                    //_effect.GetVariableByName(\"iBeatInt\").AsScalar().Set((float)(double)context.Objects[\"SKPlayerBeatInt\"]);",
         "                }",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
@@ -270,6 +447,54 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "83e01b36-e886-4cfc-aa01-410d7118966f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e40001fc-805c-49d0-a2f9-2e243de340e9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6db1d776-de59-4a73-b122-dd88cb8b2810",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ce1cb83b-82e5-402f-be1c-48222c4c2fc0",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "52a33f81-45a3-4995-90b8-46107b01e17b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d713c4bf-507c-494f-92a2-c5463fb320d8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ad57bad3-240c-48c0-8d96-e004a4f0fdc8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cf9a4bcf-52f8-4c52-9dce-9d1d6490cd2b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "744cf9b0-1329-42c2-8928-b1ce608927c7",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
     }

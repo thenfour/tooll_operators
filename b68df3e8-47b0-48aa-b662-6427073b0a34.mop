@@ -1,0 +1,418 @@
+{
+  "Name": "ImageCyclerXXX",
+  "_id": "b68df3e8-47b0-48aa-b662-6427073b0a34",
+  "Namespace": "user.tenfour",
+  "Description": "Composes 2 images in sequence\r\nLike a \"Switch that blends images\"\r\nfork of BlendImages\r\n\r\nno. use SelectFromImage\r\n",
+  "Inputs": [
+    {
+      "Name": "Code",
+      "MetaInstanceID": "dd510fee-5743-4e3c-a659-44e9bd285fb3",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": [
+          "//>>> _common parameters\r",
+          "float4x4 objectToWorldMatrix;",
+          "float4x4 worldToCameraMatrix;",
+          "float4x4 projMatrix;",
+          "Texture2D txDiffuse;",
+          "float2 RenderTargetSize;",
+          "//<<< _common parameters\r",
+          "\r",
+          "//>>> _parameters\r",
+          "Texture2D Images;",
+          "float ColorMode;",
+          "float AlphaMode;",
+          "float Index;",
+          "//<<< _parameters\r",
+          "Texture2D ImageA;\r",
+          "Texture2D ImageB;\r",
+          "\r",
+          "SamplerState samNearest\r",
+          "{\r",
+          "    Filter = MIN_MAG_MIP_LINEAR;\r",
+          "    AddressU = Clamp;\r",
+          "    AddressV = Clamp;\r",
+          "};\r",
+          "\r",
+          "struct VS_IN\r",
+          "{\r",
+          "    float4 pos : POSITION;\r",
+          "    float2 texCoord : TEXCOORD;\r",
+          "};\r",
+          "\r",
+          "struct PS_IN\r",
+          "{\r",
+          "    float4 pos : SV_POSITION;\r",
+          "    float2 texCoord: TEXCOORD0;\t    \r",
+          "    float3 worldTViewPos: TEXCOORD1;\r",
+          "    float3 worldTViewDir: TEXCOORD2;\r",
+          "};\r",
+          "\r",
+          "//>>> _GS\r",
+          "",
+          "//<<< _GS\r",
+          "\r",
+          "//>>> _VS \r",
+          "PS_IN VS( VS_IN input )",
+          "{",
+          "    PS_IN output = (PS_IN)0;",
+          "",
+          "    output.pos = mul(input.pos, worldToCameraMatrix);",
+          "    output.pos = mul(output.pos, projMatrix);",
+          "    output.texCoord = input.texCoord;",
+          "",
+          "    return output;",
+          "}",
+          "//<<< _VS\r",
+          "\r",
+          "//>>> PS\r",
+          "\r",
+          "\r",
+          "float4 PS( PS_IN input ) : SV_Target\r",
+          "{\r",
+          "    float4 tA = ImageA.Sample(samNearest, input.texCoord); \r",
+          "    float4 tB = ImageB.Sample(samNearest, input.texCoord);    \r",
+          "\r",
+          "    float a = tA.a + tB.a - tA.a*tB.a;\r",
+          "    float3 rgb = (1.0 - tB.a)*tA.rgb + tB.a*tB.rgb;   \r",
+          "    \r",
+          "    switch( (int)ColorMode) {\r",
+          "        // screen\r",
+          "        case 1:\r",
+          "            rgb = 1-(1-tA.rgb) * (1-tB.rgb);\r",
+          "            break;\r",
+          "            \r",
+          "        // multiply\r",
+          "        case 2:\r",
+          "            rgb = tA.rgb * tB.rgb;\r",
+          "            break;\r",
+          "        //\r",
+          "        case 3:\r",
+          "            rgb = tA.rgb + tB.rgb;\r",
+          "            break;\r",
+          "        \r",
+          "        // overlay\r",
+          "        case 4:\r",
+          "            rgb = float3( \r",
+          "                tA.r < 0.5?(2.0 * tA.r * tB.r) : (1.0-2.0*(1.0-tA.r)*(1.0- tB.r)),\r",
+          "                tA.g < 0.5?(2.0 * tA.g * tB.g) : (1.0-2.0*(1.0-tA.g)*(1.0- tB.g)),\r",
+          "                tA.b < 0.5?(2.0 * tA.b * tB.b) : (1.0-2.0*(1.0-tA.b)*(1.0- tB.b)));\r",
+          "            break;\r",
+          "            \r",
+          "        // difference\r",
+          "        case 5:\r",
+          "            rgb = abs(tA.rgb - tB.rgb) * tB.a + tB.rgb * (1.0 - tB.a);\r",
+          "            break;        \r",
+          "        case 6:\r",
+          "            rgb = tA.rgb;\r",
+          "            break;\r",
+          "    }\r",
+          "    \r",
+          "    switch( (int)AlphaMode) {\r",
+          "        case 1:\r",
+          "            a = tA.a;\r",
+          "            break;\r",
+          "        case 2:\r",
+          "            a = tA.a * tB.a;\r",
+          "            break;\r",
+          "            \r",
+          "        case  3:\r",
+          "            a =1;\r",
+          "            break;\r",
+          "    }\r",
+          "    \r",
+          "    return float4(rgb, a);\r",
+          "\r",
+          "}\r",
+          "//<<< PS\r",
+          "\r",
+          "//>>> _technique\r",
+          "technique10 Render",
+          "{",
+          "    pass P0",
+          "    {",
+          "        SetGeometryShader( 0 );",
+          "        SetVertexShader( CompileShader( vs_4_0, VS() ) );",
+          "        SetPixelShader( CompileShader( ps_4_0, PS() ) );",
+          "    }",
+          "}",
+          "//<<< _technique\r",
+          ""
+        ]
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Images",
+      "MetaInstanceID": "315a1ad5-bc67-476a-aa7a-c36659b61a9e",
+      "DefaultValue": {
+        "Type": "Image",
+        "Value": "Framefield.Core.Image"
+      },
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorMode",
+      "MetaInstanceID": "29a4fd61-1ad5-4fb4-807b-dddf0991c420",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "NormalBlend",
+          "Value": "0"
+        },
+        {
+          "Name": "Screen",
+          "Value": "1"
+        },
+        {
+          "Name": "Multiply",
+          "Value": "2"
+        },
+        {
+          "Name": "Add",
+          "Value": "3"
+        },
+        {
+          "Name": "Overlay",
+          "Value": "4"
+        },
+        {
+          "Name": "Difference",
+          "Value": "5"
+        },
+        {
+          "Name": "OnlyA",
+          "Value": "6"
+        }
+      ]
+    },
+    {
+      "Name": "AlphaMode",
+      "MetaInstanceID": "f13fd7af-0da2-46f1-8c0c-a4791a9876d6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Normal",
+          "Value": "0"
+        },
+        {
+          "Name": "MaskWithA",
+          "Value": "1"
+        },
+        {
+          "Name": "MaskWithB",
+          "Value": "2"
+        },
+        {
+          "Name": "Opaque",
+          "Value": "3"
+        }
+      ]
+    },
+    {
+      "Name": "Index",
+      "MetaInstanceID": "28f01cd8-4dc0-4ef2-890c-4960a452850a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Scene",
+      "MetaInstanceID": "cf22ecd2-8d6d-4955-ae5c-e3a74bf71295",
+      "DefaultValue": {
+        "Type": "Scene",
+        "Value": "Framefield.Core.Scene"
+      },
+      "MetaID": "79122951-7bc4-4c68-b085-866eab828248",
+      "IsMultiInput": "True",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "10bc5f05-d1b5-46ee-aaa6-ba4b078d17bb",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9",
+      "MetaID": "179c8120-ef75-4615-963c-91510b0ff2bf",
+      "Name": "ImageCyclerXXXFunc",
+      "Version": "0b966296-a19f-417d-a561-4e9b5e0346d4",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.ID179c8120_ef75_4615_963c_91510b0ff2bf",
+        "{",
+        "    public class Class_ImageCycler : FXImageFunction",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Code = 0,",
+        "            Images = 1,",
+        "            ColorMode = 2,",
+        "            AlphaMode = 3,",
+        "            Index = 4,",
+        "            Scene = 5",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            return PrepareAndEvalOnChange(context, () =>",
+        "            {",
+        "                //>>> _params",
+        "                var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "                var Images = inputs[(int)InputId.Images].Eval(context).Image; // Needs to be checked for null!",
+        "                var ColorMode = (int) inputs[(int)InputId.ColorMode].Eval(context).Value;",
+        "                var AlphaMode = (int) inputs[(int)InputId.AlphaMode].Eval(context).Value;",
+        "                var Index = inputs[(int)InputId.Index].Eval(context).Value;",
+        "                var Scene = inputs[(int)InputId.Scene];",
+        "                //<<< _params",
+        "",
+        "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 0));",
+        "                //if(ImageA == null || ImageB ==null) {",
+        "                    //Logger.Warn(this, \"BlendImages requires two images\");",
+        "                //}",
+        "",
+        "                Logger.Warn(this, \"BlendImages type of Images: {0}\", Scene.GetType().Name);",
+        "",
+        "                //>>> _setup",
+        "                using (var ImagesView = new ShaderResourceView(context.D3DDevice, Images))",
+        "                {",
+        "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"Images\").AsShaderResource().SetResource(ImagesView);",
+        "                    _effect.GetVariableByName(\"ColorMode\").AsScalar().Set(ColorMode);",
+        "                    _effect.GetVariableByName(\"AlphaMode\").AsScalar().Set(AlphaMode);",
+        "                    _effect.GetVariableByName(\"Index\").AsScalar().Set(Index);",
+        "                //<<< _setup",
+        "",
+        "                Render(context);",
+        "",
+        "                //>>> _cleanup",
+        "                }",
+        "                //<<< _cleanup",
+        "            });",
+        "        }",
+        "",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "10bc5f05-d1b5-46ee-aaa6-ba4b078d17bb"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "dd510fee-5743-4e3c-a659-44e9bd285fb3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "315a1ad5-bc67-476a-aa7a-c36659b61a9e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "29a4fd61-1ad5-4fb4-807b-dddf0991c420",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f13fd7af-0da2-46f1-8c0c-a4791a9876d6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "28f01cd8-4dc0-4ef2-890c-4960a452850a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cf22ecd2-8d6d-4955-ae5c-e3a74bf71295",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9"
+    }
+  ]
+}

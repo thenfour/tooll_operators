@@ -1,0 +1,831 @@
+{
+  "Name": "DirtyText",
+  "_id": "5861d8a9-d519-4ced-9085-94d49942be03",
+  "Namespace": "user.tenfour",
+  "Description": "text that's always evaluated.",
+  "Inputs": [
+    {
+      "Name": "Text",
+      "MetaInstanceID": "9f4417f1-7625-4dc5-bd6b-8f621a4de18f",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": "Text\\nText"
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Font",
+      "MetaInstanceID": "be589eef-0549-41fc-8c08-921227b4207a",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": "courier new"
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontSize",
+      "MetaInstanceID": "ee1e061b-e6bf-4d1c-8b1f-23246a01c6c6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "20"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "1",
+      "Max": "500",
+      "Scale": "0.1",
+      "ScaleType": "Quadratic",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontColor.R",
+      "MetaInstanceID": "1228d31d-ccc2-4b1b-b112-50534e59f167",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontColor.G",
+      "MetaInstanceID": "d5fa1db8-cfa5-49ce-a9a2-01f9560636f4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontColor.B",
+      "MetaInstanceID": "542dcea8-2832-43a7-9173-8a9ec998e1cd",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontColor.A",
+      "MetaInstanceID": "b4fa1959-f90a-4413-b5b2-97218505dbac",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Position.X",
+      "MetaInstanceID": "375067c2-7d76-41d0-88aa-2d23349351af",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "-1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100",
+      "Max": "100",
+      "Scale": "0.001",
+      "ScaleType": "Quadratic",
+      "EnumValues": []
+    },
+    {
+      "Name": "Position.Y",
+      "MetaInstanceID": "0faa8069-e744-4616-8cd2-4e797d157f1f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100",
+      "Max": "100",
+      "Scale": "0.001",
+      "ScaleType": "Quadratic",
+      "EnumValues": []
+    },
+    {
+      "Name": "Antialiased",
+      "MetaInstanceID": "2945d147-25a7-4ed7-a068-b2d67487a68c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "No",
+          "Value": "0"
+        },
+        {
+          "Name": "Yes",
+          "Value": "1"
+        }
+      ]
+    },
+    {
+      "Name": "LineHeight",
+      "MetaInstanceID": "1b0703f5-e073-4398-ac25-f7b7140e9601",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1.2"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClearColor.R",
+      "MetaInstanceID": "34975bc2-6617-4f83-a7d8-caefa6b11ee7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClearColor.G",
+      "MetaInstanceID": "929ca270-b796-4f9f-ab71-ef9cfe03cd38",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClearColor.B",
+      "MetaInstanceID": "ffedd8d6-89e9-42db-b202-5fdfe54da2de",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClearColor.A",
+      "MetaInstanceID": "468500d8-8b0c-49b8-bd8a-79e31aeeb6a4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Size.Width",
+      "MetaInstanceID": "f7a621d3-2307-4563-8d57-972f5660a8ec",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "-1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-1",
+      "Max": "10000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Size.Height",
+      "MetaInstanceID": "1431db3c-8044-4a59-9a56-a35681aa0a5f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "-1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-1",
+      "Max": "10000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontWeight",
+      "MetaInstanceID": "e5494e69-385a-4970-b4d5-7f52297d8c61",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "400"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "10",
+      "Max": "2000",
+      "Scale": "10",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "FontStyle",
+      "MetaInstanceID": "ba0221f4-a2c6-4cc4-ba3b-adc308d1fe80",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "2",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Normal",
+          "Value": "0"
+        },
+        {
+          "Name": "Oblique",
+          "Value": "1"
+        },
+        {
+          "Name": "Italic",
+          "Value": "2"
+        }
+      ]
+    },
+    {
+      "Name": "VerticalAlign",
+      "MetaInstanceID": "3678e294-738a-4895-9b9a-708eddf0a4eb",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "2",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Top",
+          "Value": "0"
+        },
+        {
+          "Name": "Center",
+          "Value": "2"
+        },
+        {
+          "Name": "Bottom",
+          "Value": "1"
+        }
+      ]
+    },
+    {
+      "Name": "HorizontalAlign",
+      "MetaInstanceID": "46317e65-995f-40d0-b187-f1033edf4cf7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "2",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Left",
+          "Value": "0"
+        },
+        {
+          "Name": "Center",
+          "Value": "2"
+        },
+        {
+          "Name": "Right",
+          "Value": "1"
+        }
+      ]
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "fbc37f65-651b-47a2-9fd5-037d203a43b4",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "c7f622b5-11f2-4f39-9a50-cfe4778986fa",
+      "MetaID": "8b67376b-b40c-4617-b07b-23d115f861d7",
+      "Name": "DirtyTextFunc",
+      "Version": "6e1543c9-1b4f-4d8e-aa94-58e4c06b4205",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "// >>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "// <<< _using",
+        "using SharpDX.Direct2D1;",
+        "using SharpDX.DXGI;",
+        "using SharpDX.DirectWrite;",
+        "",
+        "namespace Framefield.Core.ID8b67376b_b40c_4617_b07b_23d115f861d7",
+        "{",
+        "    public class Class_DirtyText : OperatorPart.Function",
+        "    {",
+        "",
+        "        private void CreateResources(Vector2 canvasSize)",
+        "        {",
+        "            _usedCanvasSize = canvasSize;",
+        "",
+        "            //Create a D3D10.1 render target texture and share it with our D3D11.",
+        "            var dx10TextureDesc = new SharpDX.Direct3D10.Texture2DDescription",
+        "                                      {",
+        "                                          Width = (int) canvasSize.X,",
+        "                                          Height = (int) canvasSize.Y,",
+        "                                          MipLevels = 1,",
+        "                                          ArraySize = 1,",
+        "                                          Format = Format.R8G8B8A8_UNorm,",
+        "                                          SampleDescription = new SampleDescription(1, 0),",
+        "                                          Usage = SharpDX.Direct3D10.ResourceUsage.Default,",
+        "                                          BindFlags = SharpDX.Direct3D10.BindFlags.RenderTarget | SharpDX.Direct3D10.BindFlags.ShaderResource,",
+        "                                          CpuAccessFlags = SharpDX.Direct3D10.CpuAccessFlags.None,",
+        "                                          OptionFlags = SharpDX.Direct3D10.ResourceOptionFlags.Shared",
+        "                                      };",
+        "",
+        "            //Create the RT texture on D3D10",
+        "            Utilities.DisposeObj(ref _dx10Texture);",
+        "            _dx10Texture = new SharpDX.Direct3D10.Texture2D(D3DDevice.DX10_1Device, dx10TextureDesc);",
+        "",
+        "            //Get DXGI Resource and retrieve the sharing handle.",
+        "            Utilities.DisposeObj(ref _dx11Texture);",
+        "            using (var dxgiSurface = _dx10Texture.QueryInterface<Surface>())",
+        "            using (var dxgiResource = dxgiSurface.QueryInterface<SharpDX.DXGI.Resource>())",
+        "            using (var dx11Resource = D3DDevice.Device.OpenSharedResource<SharpDX.Direct3D11.Resource>(dxgiResource.SharedHandle))",
+        "            {",
+        "                _dx11Texture = dx11Resource.QueryInterface<Texture2D>();",
+        "            }",
+        "",
+        "            //Get DXGI Surface from the created render target.",
+        "            using (var dx10Surface = _dx10Texture.QueryInterface<Surface1>())",
+        "            {",
+        "                var referenceSize = 96.0f;",
+        "                _usedDpi = canvasSize.Y*ReferenceDpi/referenceSize;",
+        "                // Create a DC render target.",
+        "                var properties = new RenderTargetProperties",
+        "                                     {",
+        "                                         DpiX = _usedDpi,",
+        "                                         DpiY = _usedDpi,",
+        "                                         PixelFormat = new PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied),",
+        "                                         Type = RenderTargetType.Default",
+        "                                     };",
+        "                Utilities.DisposeObj(ref _bitmapRenderTarget);",
+        "                _bitmapRenderTarget = new RenderTarget(D3DDevice.Direct2DFactory, dx10Surface, properties);",
+        "            }",
+        "",
+        "            Utilities.DisposeObj(ref _sceneColorBrush);",
+        "            _sceneColorBrush = new SolidColorBrush(_bitmapRenderTarget, Color.White);",
+        "",
+        "            CreateSyncResource();",
+        "        }",
+        "",
+        "        private void CreateSyncResource()",
+        "        {",
+        "            if (_syncResource != null)",
+        "                return;",
+        "",
+        "            // Create the synchronizer for D3D10 which is a STAGING resource which we can lock (map)",
+        "            var syncResourceDesc = new SharpDX.Direct3D10.Texture2DDescription",
+        "                                       {",
+        "                                           Width = 16,",
+        "                                           Height = 16,",
+        "                                           MipLevels = 1,",
+        "                                           ArraySize = 1,",
+        "                                           Format = Format.R8G8B8A8_UNorm,",
+        "                                           SampleDescription = new SampleDescription(1, 0),",
+        "                                           Usage = SharpDX.Direct3D10.ResourceUsage.Staging,",
+        "                                           BindFlags = SharpDX.Direct3D10.BindFlags.None,",
+        "                                           CpuAccessFlags = SharpDX.Direct3D10.CpuAccessFlags.Read,",
+        "                                           OptionFlags = SharpDX.Direct3D10.ResourceOptionFlags.None",
+        "                                       };",
+        "            _syncResource = new SharpDX.Direct3D10.Texture2D(D3DDevice.DX10_1Device, syncResourceDesc);",
+        "        }",
+        "",
+        "        private void SyncResources()",
+        "        {",
+        "            if (_syncResource == null || _bitmapRenderTarget == null)",
+        "                return;",
+        "",
+        "            var region = new SharpDX.Direct3D10.ResourceRegion",
+        "                             {",
+        "                                 Left = 0,",
+        "                                 Top = 0,",
+        "                                 Front = 0,",
+        "                                 Right = 16,",
+        "                                 Bottom = 16,",
+        "                                 Back = 1",
+        "                             };",
+        "            D3DDevice.DX10_1Device.CopySubresourceRegion(_dx10Texture, 0, region, _syncResource, 0, 0, 0, 0);",
+        "",
+        "            // this will wait until all GPU operations to _syncResource are done.",
+        "            _syncResource.Map(0, SharpDX.Direct3D10.MapMode.Read, SharpDX.Direct3D10.MapFlags.None);",
+        "            _syncResource.Unmap(0);",
+        "        }",
+        "",
+        "",
+        "        public override void Dispose()",
+        "        {",
+        "            Utilities.DisposeObj(ref _textFormat);",
+        "            Utilities.DisposeObj(ref _sceneColorBrush);",
+        "            Utilities.DisposeObj(ref _dx11Texture);",
+        "            Utilities.DisposeObj(ref _bitmapRenderTarget);",
+        "            Utilities.DisposeObj(ref _syncResource);",
+        "            Utilities.DisposeObj(ref _dx10Texture);",
+        "        }",
+        "",
+        "        // >>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Text = 0,",
+        "            Font = 1,",
+        "            FontSize = 2,",
+        "            FontColorR = 3,",
+        "            FontColorG = 4,",
+        "            FontColorB = 5,",
+        "            FontColorA = 6,",
+        "            PositionX = 7,",
+        "            PositionY = 8,",
+        "            Antialiased = 9,",
+        "            LineHeight = 10,",
+        "            ClearColorR = 11,",
+        "            ClearColorG = 12,",
+        "            ClearColorB = 13,",
+        "            ClearColorA = 14,",
+        "            SizeWidth = 15,",
+        "            SizeHeight = 16,",
+        "            FontWeight = 17,",
+        "            FontStyle = 18,",
+        "            VerticalAlign = 19,",
+        "            HorizontalAlign = 20",
+        "        }",
+        "        // <<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            var SizeWidth = inputs[(int)InputId.SizeWidth].Eval(context).Value;",
+        "            var SizeHeight = inputs[(int)InputId.SizeHeight].Eval(context).Value;",
+        "            var Size = new Vector2(SizeWidth, SizeHeight);",
+        "",
+        "            var useContextSize = Size.X < 16 || Size.Y < 16;",
+        "            var sizeToUse = useContextSize ? new Vector2(context.Viewport.Width, context.Viewport.Height) : Size;",
+        "            ",
+        "            if (sizeToUse.X < 16 || sizeToUse.Y < 16)",
+        "            {",
+        "                Logger.Error(\"Targetbuffer has smaller width or height than 16!\");",
+        "                return context;",
+        "            }",
+        "",
+        "            if (sizeToUse != _usedCanvasSize)",
+        "            {",
+        "                CreateResources(sizeToUse);",
+        "                Changed = true;",
+        "            }",
+        "",
+        "            //if (Changed) ",
+        "            {",
+        "  Logger.Info(this, \"contains SKSTtate? {0}\", context.Objects.ContainsKey(\"SKPlayerState\"));",
+        "                //>>> __params",
+        "                var Text = inputs[(int)InputId.Text].Eval(context).Text;",
+        "                var Font = inputs[(int)InputId.Font].Eval(context).Text;",
+        "                var FontSize = inputs[(int)InputId.FontSize].Eval(context).Value;",
+        "                var FontColorR = inputs[(int)InputId.FontColorR].Eval(context).Value;",
+        "                var FontColorG = inputs[(int)InputId.FontColorG].Eval(context).Value;",
+        "                var FontColorB = inputs[(int)InputId.FontColorB].Eval(context).Value;",
+        "                var FontColorA = inputs[(int)InputId.FontColorA].Eval(context).Value;",
+        "                var FontColor = new Color4(FontColorR, FontColorG, FontColorB, FontColorA);",
+        "                var PositionX = inputs[(int)InputId.PositionX].Eval(context).Value;",
+        "                var PositionY = inputs[(int)InputId.PositionY].Eval(context).Value;",
+        "                var Position = new Vector2(PositionX, PositionY);",
+        "                var Antialiased = (int) inputs[(int)InputId.Antialiased].Eval(context).Value;",
+        "                var LineHeight = inputs[(int)InputId.LineHeight].Eval(context).Value;",
+        "                var ClearColorR = inputs[(int)InputId.ClearColorR].Eval(context).Value;",
+        "                var ClearColorG = inputs[(int)InputId.ClearColorG].Eval(context).Value;",
+        "                var ClearColorB = inputs[(int)InputId.ClearColorB].Eval(context).Value;",
+        "                var ClearColorA = inputs[(int)InputId.ClearColorA].Eval(context).Value;",
+        "                var ClearColor = new Color4(ClearColorR, ClearColorG, ClearColorB, ClearColorA);",
+        "                var FontWeight = inputs[(int)InputId.FontWeight].Eval(context).Value;",
+        "                var FontStyle = (int) inputs[(int)InputId.FontStyle].Eval(context).Value;",
+        "                var VerticalAlign = (int) inputs[(int)InputId.VerticalAlign].Eval(context).Value;",
+        "                var HorizontalAlign = (int) inputs[(int)InputId.HorizontalAlign].Eval(context).Value;",
+        "                //<<< __params",
+        "                ",
+        "                  Logger.Info(this, \" => text: {0}\", Text);",
+        "",
+        "",
+        "                Utilities.DisposeObj(ref _textFormat);",
+        "                _textFormat = new TextFormat(D3DDevice.DirectWriteFactory, Font, (FontWeight)FontWeight, (FontStyle)FontStyle, FontSize)",
+        "                                  {",
+        "                                      TextAlignment = (TextAlignment) HorizontalAlign,",
+        "                                      ParagraphAlignment = (ParagraphAlignment) VerticalAlign,",
+        "                                      WordWrapping = WordWrapping.NoWrap,",
+        "                                  };",
+        "                                  ",
+        "                Text = Text.Replace(\"\\\\n\", \"\\n\");",
+        "                _textFormat.SetLineSpacing(LineSpacingMethod.Uniform, FontSize*LineHeight, FontSize*LineHeight*0.8f);",
+        "                ",
+        "                if (VerticalAlign == 2) // center to baseline",
+        "                {",
+        "                    var layout = new TextLayout(D3DDevice.DirectWriteFactory, Text, _textFormat, _usedCanvasSize.X*ReferenceDpi/_usedDpi, _usedCanvasSize.Y*ReferenceDpi/_usedDpi);",
+        "                    var lineMetrics = layout.GetLineMetrics();",
+        "                    var baseline = lineMetrics[0].Baseline;",
+        "                    var layoutCenter = layout.MaxHeight / 2.0f;",
+        "                    PositionY = 1.0f - 2.0f*(layoutCenter - baseline)*_usedDpi/(_usedCanvasSize.Y*ReferenceDpi);",
+        "                    _textFormat.ParagraphAlignment = 0;",
+        "                }",
+        "",
+        "                float offsetX = ((PositionX + 1.0f)/2.0f)*_usedCanvasSize.X*ReferenceDpi/_usedDpi;",
+        "                float offsetY = ((-PositionY + 1.0f)/2.0f)*_usedCanvasSize.Y*ReferenceDpi/_usedDpi;",
+        "                _clientRectangle = new RectangleF(offsetX, offsetY, ",
+        "                                                  offsetX + _usedCanvasSize.X*ReferenceDpi/_usedDpi, ",
+        "                                                  offsetY + _usedCanvasSize.Y*ReferenceDpi/_usedDpi);",
+        "                _bitmapRenderTarget.TextAntialiasMode = (Antialiased == 1) ? TextAntialiasMode.Default : TextAntialiasMode.Aliased;",
+        "",
+        "                _sceneColorBrush.Color = FontColor;",
+        "                _bitmapRenderTarget.BeginDraw();",
+        "                _bitmapRenderTarget.Clear(ClearColor);",
+        "                _bitmapRenderTarget.DrawText(Text, _textFormat, _clientRectangle, _sceneColorBrush);",
+        "                _bitmapRenderTarget.EndDraw();",
+        "                SyncResources();",
+        "",
+        "                Changed = false;",
+        "            }",
+        "",
+        "            context.Image = _dx11Texture;",
+        "",
+        "            return context;",
+        "        }",
+        "",
+        "        private readonly float ReferenceDpi = 96.0f;",
+        "        private float _usedDpi;",
+        "        private Vector2 _usedCanvasSize;",
+        "        private TextFormat _textFormat;",
+        "        private SolidColorBrush _sceneColorBrush;",
+        "        private RectangleF _clientRectangle;",
+        "        private Texture2D _dx11Texture;",
+        "        private RenderTarget _bitmapRenderTarget;",
+        "        private SharpDX.Direct3D10.Texture2D _syncResource;",
+        "        private SharpDX.Direct3D10.Texture2D _dx10Texture;",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fbc37f65-651b-47a2-9fd5-037d203a43b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9f4417f1-7625-4dc5-bd6b-8f621a4de18f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "be589eef-0549-41fc-8c08-921227b4207a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ee1e061b-e6bf-4d1c-8b1f-23246a01c6c6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1228d31d-ccc2-4b1b-b112-50534e59f167",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d5fa1db8-cfa5-49ce-a9a2-01f9560636f4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "542dcea8-2832-43a7-9173-8a9ec998e1cd",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b4fa1959-f90a-4413-b5b2-97218505dbac",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "375067c2-7d76-41d0-88aa-2d23349351af",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0faa8069-e744-4616-8cd2-4e797d157f1f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2945d147-25a7-4ed7-a068-b2d67487a68c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1b0703f5-e073-4398-ac25-f7b7140e9601",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "34975bc2-6617-4f83-a7d8-caefa6b11ee7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "929ca270-b796-4f9f-ab71-ef9cfe03cd38",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ffedd8d6-89e9-42db-b202-5fdfe54da2de",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "468500d8-8b0c-49b8-bd8a-79e31aeeb6a4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f7a621d3-2307-4563-8d57-972f5660a8ec",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1431db3c-8044-4a59-9a56-a35681aa0a5f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e5494e69-385a-4970-b4d5-7f52297d8c61",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ba0221f4-a2c6-4cc4-ba3b-adc308d1fe80",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3678e294-738a-4895-9b9a-708eddf0a4eb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "46317e65-995f-40d0-b187-f1033edf4cf7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c7f622b5-11f2-4f39-9a50-cfe4778986fa"
+    }
+  ]
+}
