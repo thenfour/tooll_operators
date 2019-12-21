@@ -1,0 +1,150 @@
+{
+  "Name": "Expression",
+  "_id": "fc46d57b-40b7-4e3e-a1d6-00a217b27664",
+  "Namespace": "user.tenfour",
+  "Description": "compiles the user-entered expression. Inputs: X, Y, Z, W\r\n\r\ni would love to do this but will require more work than i wish now.",
+  "Inputs": [
+    {
+      "Name": "X",
+      "MetaInstanceID": "98057b4c-c13b-4725-9105-e1a26af1d34e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Y",
+      "MetaInstanceID": "742f146e-7b68-4f09-bfd3-ac31111d639e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Z",
+      "MetaInstanceID": "5d56ed8d-e3d9-4f6a-86d3-4a6dfc3adeac",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "W",
+      "MetaInstanceID": "e7a66ca8-2f78-4f9e-a031-2ba00b285572",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Product",
+      "MetaInstanceID": "976ae99d-5a18-4f00-9813-6c72a8d56bc9",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "f5ad1faa-287f-4719-88f3-d6e2a7b80810",
+      "MetaID": "279185ad-ec85-4b39-a7f6-1e4bb1da9961",
+      "Name": "ExpressionFunc",
+      "Version": "b09feaf6-bfc6-4f95-8012-1b0092fa3b00",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID279185ad_ec85_4b39_a7f6_1e4bb1da9961",
+        "{",
+        "    public class Class_Expression : OperatorPart.Function",
+        "    {",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            var X = (float) inputs[0].Eval(context).Value;",
+        "            var Y= (float) inputs[1].Eval(context).Value;",
+        "            var Z= (float) inputs[2].Eval(context).Value;",
+        "            var W= (float) inputs[3].Eval(context).Value;",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "98057b4c-c13b-4725-9105-e1a26af1d34e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f5ad1faa-287f-4719-88f3-d6e2a7b80810"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "742f146e-7b68-4f09-bfd3-ac31111d639e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f5ad1faa-287f-4719-88f3-d6e2a7b80810"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5d56ed8d-e3d9-4f6a-86d3-4a6dfc3adeac",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f5ad1faa-287f-4719-88f3-d6e2a7b80810"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e7a66ca8-2f78-4f9e-a031-2ba00b285572",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f5ad1faa-287f-4719-88f3-d6e2a7b80810"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f5ad1faa-287f-4719-88f3-d6e2a7b80810",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "976ae99d-5a18-4f00-9813-6c72a8d56bc9"
+    }
+  ]
+}

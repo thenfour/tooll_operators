@@ -1,0 +1,381 @@
+{
+  "Name": "TimeClipColorExp",
+  "_id": "c9b38440-1b52-4b8f-b955-98e1eaf89232",
+  "Namespace": "user.tenfour.trash",
+  "Description": "Maps the time of incoming animation a new clip range defined by ClipIn and ClipOut.\r\n\r\nOperator sub tree is only evaluated if the time is between ClipIn and ClipOut.",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "b85a2a8a-3122-48ab-ad40-b565b4046aa1",
+      "DefaultValue": {
+        "Type": "Generic",
+        "Value": "Framefield.Core.Generic"
+      },
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClipIn",
+      "MetaInstanceID": "46ea8f74-30df-4fe7-91fe-ed053a1c30dd",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClipOut",
+      "MetaInstanceID": "d9453750-0452-4b82-85e0-7f17dc93e17b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "10"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SourceIn",
+      "MetaInstanceID": "5e265299-f71e-47dc-9a6f-c6e27cc442c9",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SourceOut",
+      "MetaInstanceID": "fd8eceb9-0379-4919-98e8-4b62482f4f40",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "10"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Layer",
+      "MetaInstanceID": "518869f8-8e63-46c6-b224-5ac9966ddb4c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "100",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.R",
+      "MetaInstanceID": "f03c69c9-5199-4092-b81d-c007f8e8d9d8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.G",
+      "MetaInstanceID": "71ebb869-5af5-420a-b34c-226b8eaa89ce",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.B",
+      "MetaInstanceID": "54c92518-bd45-4dae-b0ce-f43b04876328",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.A",
+      "MetaInstanceID": "937aabba-ea20-4662-9515-41990aec4ed3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "b03d31ac-4f2d-4790-b6bb-074b1cd47740",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "662bd559-0542-4199-be05-fb6e28f75e54",
+      "MetaID": "ea70b4fd-ef07-4d76-962c-ef09fc863927",
+      "Name": "TimeClipColorExpFunc",
+      "Version": "ded694be-32e8-48ec-a98a-fc0d33ba5124",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDea70b4fd_ef07_4d76_962c_ef09fc863927",
+        "{",
+        "    public class Class_TimeClipColorExp : OperatorPart.Function,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeClip,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Input = 0,",
+        "            ClipIn = 1,",
+        "            ClipOut = 2,",
+        "            SourceIn = 3,",
+        "            SourceOut = 4,",
+        "            Layer = 5,",
+        "            BackgroundColorR = 6,",
+        "            BackgroundColorG = 7,",
+        "            BackgroundColorB = 8,",
+        "            BackgroundColorA = 9",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public double StartTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.ClipIn); } ",
+        "            set { SetInputValue((int)InputId.ClipIn, value); } ",
+        "        }",
+        "",
+        "        public double EndTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.ClipOut); } ",
+        "            set { SetInputValue((int)InputId.ClipOut, value); } ",
+        "        }",
+        "",
+        "        public double SourceStartTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.SourceIn); } ",
+        "            set { SetInputValue((int)InputId.SourceIn, value); } ",
+        "        }",
+        "",
+        "        public double SourceEndTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.SourceOut); } ",
+        "            set { SetInputValue((int)InputId.SourceOut, value); } ",
+        "        }",
+        "",
+        "        public int Layer",
+        "        {",
+        "            get { return (int)GetInputValue((int)InputId.Layer); } ",
+        "            set { SetInputValue((int)InputId.Layer, value); } ",
+        "        }",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            var prevValue = context.Value;",
+        "            //>>> _params",
+        "            var Input = inputs[(int)InputId.Input];",
+        "            var ClipIn = inputs[(int)InputId.ClipIn].Eval(context).Value;",
+        "            var ClipOut = inputs[(int)InputId.ClipOut].Eval(context).Value;",
+        "            var SourceIn = inputs[(int)InputId.SourceIn].Eval(context).Value;",
+        "            var SourceOut = inputs[(int)InputId.SourceOut].Eval(context).Value;",
+        "            var Layer = inputs[(int)InputId.Layer].Eval(context).Value;",
+        "            var BackgroundColorR = inputs[(int)InputId.BackgroundColorR].Eval(context).Value;",
+        "            var BackgroundColorG = inputs[(int)InputId.BackgroundColorG].Eval(context).Value;",
+        "            var BackgroundColorB = inputs[(int)InputId.BackgroundColorB].Eval(context).Value;",
+        "            var BackgroundColorA = inputs[(int)InputId.BackgroundColorA].Eval(context).Value;",
+        "            var BackgroundColor = new Color4(BackgroundColorR, BackgroundColorG, BackgroundColorB, BackgroundColorA);",
+        "            //<<< _params",
+        "",
+        "            if (context.Time < ClipIn || context.Time >= ClipOut)",
+        "            {",
+        "                context.Value = prevValue;",
+        "                return context;",
+        "            }",
+        "",
+        "            var oldTime = context.Time;",
+        "            context.Time = SourceIn + (context.Time - ClipIn)*(SourceOut - SourceIn)/(ClipOut - ClipIn);",
+        "",
+        "            _timeAccessorInvalidator.Clear();",
+        "            Input.TraverseWithFunctionUseSpecificBehavior(null, _timeAccessorInvalidator);",
+        "            Input.Eval(context);",
+        "            ",
+        "            context.Time = oldTime;",
+        "",
+        "            return context;",
+        "        }",
+        "",
+        "        private double GetInputValue(int index)",
+        "        {",
+        "            return OperatorPartUtilities.GetInputFloatValue(OperatorPart.Connections[index]);",
+        "        }",
+        "",
+        "        private void SetInputValue(int index, double val)",
+        "        {",
+        "            OperatorPart opPart = OperatorPart.Connections[index];",
+        "            if (opPart.Connections.Count == 0)",
+        "            {",
+        "                opPart.Func = Utilities.CreateValueFunction(new Float((float)val));",
+        "            }",
+        "        }",
+        "",
+        "        OperatorPart.InvalidateTimeAccessors _timeAccessorInvalidator = new OperatorPart.InvalidateTimeAccessors();",
+        "    }",
+        "}"
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b85a2a8a-3122-48ab-ad40-b565b4046aa1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "46ea8f74-30df-4fe7-91fe-ed053a1c30dd",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d9453750-0452-4b82-85e0-7f17dc93e17b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5e265299-f71e-47dc-9a6f-c6e27cc442c9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fd8eceb9-0379-4919-98e8-4b62482f4f40",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "518869f8-8e63-46c6-b224-5ac9966ddb4c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f03c69c9-5199-4092-b81d-c007f8e8d9d8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "71ebb869-5af5-420a-b34c-226b8eaa89ce",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "54c92518-bd45-4dae-b0ce-f43b04876328",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "937aabba-ea20-4662-9515-41990aec4ed3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "662bd559-0542-4199-be05-fb6e28f75e54"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "662bd559-0542-4199-be05-fb6e28f75e54",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b03d31ac-4f2d-4790-b6bb-074b1cd47740"
+    }
+  ]
+}

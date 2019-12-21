@@ -2,7 +2,7 @@
   "Name": "TransitionCurve",
   "_id": "e29f442c-bac6-46b1-a7d2-3af025f68185",
   "Namespace": "user.tenfour",
-  "Description": "Maps values transitioning around the transition point to 0-1 with a curve.\r\nThe idea is to shape a transition over time, where 0 is the transition point.\r\n\r\nfor MODE=Transition, negative values become 0 and positive become 1.\r\nOnly one shape is used for the curve.\r\n\r\nfor MODE=Pulse, both shapes are used. at x=0, output is 1. otherwise we stay around 0.\r\n",
+  "Description": "Maps values transitioning around the transition point to 0-1 with a curve.\r\nThe idea is to shape a transition over time, where 0 is the transition point.\r\n\r\nfor MODE=Transition, negative values become 0 and positive become 1.\r\nOnly one shape is used for the curve.\r\n\r\nfor MODE=Pulse, both shapes are used. at x=0, output is 1. otherwise we stay around 0.\r\n\r\n",
   "Inputs": [
     {
       "Name": "Input",

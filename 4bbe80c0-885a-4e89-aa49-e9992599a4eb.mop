@@ -1,0 +1,145 @@
+{
+  "Name": "PolarToCartesian",
+  "_id": "4bbe80c0-885a-4e89-aa49-e9992599a4eb",
+  "Namespace": "user.tenfour.math",
+  "Description": "Takes radius and angle and outputs cartesian X and Y.",
+  "Inputs": [
+    {
+      "Name": "Radius",
+      "MetaInstanceID": "c0195bb7-06a1-4d2f-a2e2-35666f9af568",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Angle",
+      "MetaInstanceID": "95f44be9-656a-4d2f-a998-2048d3bac230",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "X",
+      "MetaInstanceID": "77c71ac2-1618-4a28-83aa-01ed909d8a2b",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "Y",
+      "MetaInstanceID": "75705ee4-1602-4984-be40-e43e6fab1438",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "ec4e4acb-64a8-4e38-9318-28724ba4273e",
+      "MetaID": "7fc90354-dabd-40c4-be59-bdd74ed78f57",
+      "Name": "PolarToCartesianFunc",
+      "Version": "aa0fcd0b-dd79-470b-ba05-2e863220b3cc",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID7fc90354_dabd_40c4_be59_bdd74ed78f57",
+        "{",
+        "    public class Class_PolarToCartesian : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Radius = 0,",
+        "            Angle = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            X = 0,",
+        "            Y = 1",
+        "        }",
+        "        //<<< _outputids",
+        "        ",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Radius = inputs[(int)InputId.Radius].Eval(context).Value;",
+        "            var Angle = inputs[(int)InputId.Angle].Eval(context).Value;",
+        "            //<<< _params",
+        "            switch(outputIdx) {",
+        "            case (int)OutputId.X:",
+        "                context.Value = (float)(Math.Cos(Angle) * Radius);",
+        "                break;",
+        "            case (int)OutputId.Y:",
+        "                context.Value = (float)(Math.Sin(Angle) * Radius);",
+        "                break;",
+        "            }",
+        "",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c0195bb7-06a1-4d2f-a2e2-35666f9af568",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "ec4e4acb-64a8-4e38-9318-28724ba4273e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "95f44be9-656a-4d2f-a998-2048d3bac230",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "ec4e4acb-64a8-4e38-9318-28724ba4273e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ec4e4acb-64a8-4e38-9318-28724ba4273e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "77c71ac2-1618-4a28-83aa-01ed909d8a2b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ec4e4acb-64a8-4e38-9318-28724ba4273e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "75705ee4-1602-4984-be40-e43e6fab1438"
+    }
+  ]
+}

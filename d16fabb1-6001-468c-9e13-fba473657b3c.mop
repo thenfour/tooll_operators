@@ -1,0 +1,188 @@
+{
+  "Name": "AddMulDivAdd",
+  "_id": "d16fabb1-6001-468c-9e13-fba473657b3c",
+  "Namespace": "user.tenfour.math",
+  "Description": "\r\n",
+  "Inputs": [
+    {
+      "Name": "Value1",
+      "MetaInstanceID": "431c32c4-1ed1-415a-b87d-68429d4e5347",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Add1",
+      "MetaInstanceID": "9d150c08-c39b-4ff3-b449-f184d55f88a7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Mul",
+      "MetaInstanceID": "72b8720f-41d6-49dd-9c8b-35dbaaeb62f4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Div",
+      "MetaInstanceID": "483e0ee1-5a9a-43d9-8225-e6053cfe8ef2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Add2",
+      "MetaInstanceID": "a47b4b87-fe6c-45a6-9e12-e4b8814fd490",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Product",
+      "MetaInstanceID": "d5d04349-b026-45c8-912a-05256e401f01",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "1e96663c-e4b6-4e90-a70b-67930db00c3f",
+      "MetaID": "59967456-e346-4f81-835a-5e1111274f07",
+      "Name": "AddMulDivAddFunc",
+      "Version": "b094ad35-7d4a-4fab-b905-5ba66e95c362",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID59967456_e346_4f81_835a_5e1111274f07",
+        "{",
+        "    public class Class_AddMulDivAdd : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Value1 = 0,",
+        "            Add1 = 1,",
+        "            Mul = 2,",
+        "            Div = 3,",
+        "            Add2 = 4",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            //>>> _params",
+        "            var Value1 = inputs[(int)InputId.Value1].Eval(context).Value;",
+        "            var Add1 = inputs[(int)InputId.Add1].Eval(context).Value;",
+        "            var Mul = inputs[(int)InputId.Mul].Eval(context).Value;",
+        "            var Div = inputs[(int)InputId.Div].Eval(context).Value;",
+        "            var Add2 = inputs[(int)InputId.Add2].Eval(context).Value;",
+        "            //<<< _params",
+        "            context.Value = ((Value1 + Add1) * Mul / Div) + Add2;",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "431c32c4-1ed1-415a-b87d-68429d4e5347",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1e96663c-e4b6-4e90-a70b-67930db00c3f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9d150c08-c39b-4ff3-b449-f184d55f88a7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1e96663c-e4b6-4e90-a70b-67930db00c3f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "72b8720f-41d6-49dd-9c8b-35dbaaeb62f4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1e96663c-e4b6-4e90-a70b-67930db00c3f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "483e0ee1-5a9a-43d9-8225-e6053cfe8ef2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1e96663c-e4b6-4e90-a70b-67930db00c3f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a47b4b87-fe6c-45a6-9e12-e4b8814fd490",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1e96663c-e4b6-4e90-a70b-67930db00c3f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1e96663c-e4b6-4e90-a70b-67930db00c3f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d5d04349-b026-45c8-912a-05256e401f01"
+    }
+  ]
+}

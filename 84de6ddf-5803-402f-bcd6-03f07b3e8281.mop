@@ -28,6 +28,13 @@
           "float PointStrength;",
           "float Density;",
           "float CellShape;",
+          "Texture2D Texture;",
+          "float ColorSaturation;",
+          "float TextureMix;",
+          "float TextureScale;",
+          "float OutputQuantization;",
+          "float LevelQuantization;",
+          "float TextureSampleMode;",
           "//<<< _parameters\r",
           "\r",
           "static const float PI = atan(1.)*4.;\r",
@@ -42,6 +49,12 @@
           "    AddressV = Clamp;",
           "};",
           "//<<< _setup\r",
+          "SamplerState samLinearWrap\r",
+          "{\r",
+          "    Filter = MIN_MAG_MIP_POINT;\r",
+          "    AddressU = Wrap;\r",
+          "    AddressV = Wrap;\r",
+          "};\r",
           "\r",
           "//>>> _declarations\r",
           "struct VS_IN",
@@ -88,6 +101,7 @@
           "{\r",
           "    float2 uv = input.texCoord;\r",
           "    float2 R = RenderTargetSize;\r",
+          "    float2 originalUV = uv + Position;\r",
           "    uv.x *= R.x / R.y;\r",
           "    uv += Position + 1e4;\r",
           "    uv *= Zoom;\r",
@@ -122,8 +136,30 @@
           "    sd = pow(max(0,sd), Exponent);\r",
           "    sd *= PointStrength;\r",
           "    //l = 1.-pow(1.-l, ExponentNeg);\r",
-          "\r",
-          "    return clamp(float4(sd * col,1),0, 1);\r",
+          "    \r",
+          "    col = lerp((col.r+col.g+col.b)/3, col, ColorSaturation);\r",
+          "    col = clamp(col, 0, 1);\r",
+          "    \r",
+          "    if (LevelQuantization > 0.001) {\r",
+          "        col = floor(col / LevelQuantization) * LevelQuantization;\r",
+          "    }\r",
+          "    \r",
+          "    if (TextureMix > 0) {\r",
+          "        if (TextureSampleMode == 0) {\r",
+          "            // sample the UV normally.\r",
+          "            col = lerp(col, col * Texture.Sample(samLinearWrap, originalUV / TextureScale).rgb, TextureMix);\r",
+          "        } else {\r",
+          "            // 1= sample only the cell center.\r",
+          "            // not implemented.\r",
+          "        }\r",
+          "    }\r",
+          "    col = clamp(col, 0, 1);\r",
+          "    \r",
+          "    float4 ret = float4(sd * col,1);\r",
+          "    if (OutputQuantization > 0.001) {\r",
+          "        ret.rgb = floor(ret.rgb / OutputQuantization) * OutputQuantization;\r",
+          "    }\r",
+          "    return clamp(ret, 0, 1);\r",
           "}\r",
           "\r",
           "//<<< PS\r",
@@ -321,6 +357,134 @@
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "ColorSaturation",
+      "MetaInstanceID": "53a9955d-53aa-44b7-959f-d85ecd13e290",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Texture",
+      "MetaInstanceID": "a344f632-666d-40f8-8edf-9796209cba90",
+      "DefaultValue": {
+        "Type": "Image",
+        "Value": "Framefield.Core.Image"
+      },
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TextureMix",
+      "MetaInstanceID": "ec8f01de-ff09-408c-b99e-8e849dbae5c2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TextureScale",
+      "MetaInstanceID": "2153231d-e22d-4064-9731-3e4473782f6a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "2"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputQuantization",
+      "MetaInstanceID": "59b74bc1-5a75-4a9a-a5b4-5a88abfdd8b1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.2"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "LevelQuantization",
+      "MetaInstanceID": "6ccf6cce-f6ce-4ff2-b9bf-210c6a6ca682",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TextureSampleMode",
+      "MetaInstanceID": "71568514-8f67-46ef-aabd-9522f9263708",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "UV",
+          "Value": "0"
+        },
+        {
+          "Name": "CellCenter",
+          "Value": "1"
+        }
+      ]
     }
   ],
   "Outputs": [
@@ -335,7 +499,7 @@
       "MetaInstanceID": "7b89689e-8590-4211-a6b8-ae8e0944f419",
       "MetaID": "b181c8c9-bffb-449b-990a-31862537548d",
       "Name": "SH_GlowCellsFunc",
-      "Version": "d8f50286-d7d7-48ac-9c50-062156993b61",
+      "Version": "17e8d59f-1465-4f78-a6cd-afae2d99f992",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -366,7 +530,14 @@
         "            Animate = 7,",
         "            PointStrength = 8,",
         "            Density = 9,",
-        "            CellShape = 10",
+        "            CellShape = 10,",
+        "            Texture = 11,",
+        "            ColorSaturation = 12,",
+        "            TextureMix = 13,",
+        "            TextureScale = 14,",
+        "            OutputQuantization = 15,",
+        "            LevelQuantization = 16,",
+        "            TextureSampleMode = 17",
         "        }",
         "        //<<< _inputids",
         "",
@@ -384,12 +555,20 @@
         "            var PointStrength = inputs[(int)InputId.PointStrength].Eval(context).Value;",
         "            var Density = inputs[(int)InputId.Density].Eval(context).Value;",
         "            var CellShape = inputs[(int)InputId.CellShape].Eval(context).Value;",
+        "            var Texture = inputs[(int)InputId.Texture].Eval(context).Image; // Needs to be checked for null!",
+        "            var ColorSaturation = inputs[(int)InputId.ColorSaturation].Eval(context).Value;",
+        "            var TextureMix = inputs[(int)InputId.TextureMix].Eval(context).Value;",
+        "            var TextureScale = inputs[(int)InputId.TextureScale].Eval(context).Value;",
+        "            var OutputQuantization = inputs[(int)InputId.OutputQuantization].Eval(context).Value;",
+        "            var LevelQuantization = inputs[(int)InputId.LevelQuantization].Eval(context).Value;",
+        "            var TextureSampleMode = (int) inputs[(int)InputId.TextureSampleMode].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
         "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 0));",
         "",
         "                //>>> _setup",
+        "                using (var TextureView = new ShaderResourceView(context.D3DDevice, Texture))",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
         "                    _effect.GetVariableByName(\"Position\").AsVector().Set(new Vector2(PositionX, PositionY));",
@@ -401,6 +580,13 @@
         "                    _effect.GetVariableByName(\"PointStrength\").AsScalar().Set(PointStrength);",
         "                    _effect.GetVariableByName(\"Density\").AsScalar().Set(Density);",
         "                    _effect.GetVariableByName(\"CellShape\").AsScalar().Set(CellShape);",
+        "                    _effect.GetVariableByName(\"Texture\").AsShaderResource().SetResource(TextureView);",
+        "                    _effect.GetVariableByName(\"ColorSaturation\").AsScalar().Set(ColorSaturation);",
+        "                    _effect.GetVariableByName(\"TextureMix\").AsScalar().Set(TextureMix);",
+        "                    _effect.GetVariableByName(\"TextureScale\").AsScalar().Set(TextureScale);",
+        "                    _effect.GetVariableByName(\"OutputQuantization\").AsScalar().Set(OutputQuantization);",
+        "                    _effect.GetVariableByName(\"LevelQuantization\").AsScalar().Set(LevelQuantization);",
+        "                    _effect.GetVariableByName(\"TextureSampleMode\").AsScalar().Set(TextureSampleMode);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -494,6 +680,48 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "34f81b7a-6c2b-4baf-8a7b-02b4c8a5776f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a344f632-666d-40f8-8edf-9796209cba90",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "53a9955d-53aa-44b7-959f-d85ecd13e290",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ec8f01de-ff09-408c-b99e-8e849dbae5c2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2153231d-e22d-4064-9731-3e4473782f6a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "59b74bc1-5a75-4a9a-a5b4-5a88abfdd8b1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6ccf6cce-f6ce-4ff2-b9bf-210c6a6ca682",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "71568514-8f67-46ef-aabd-9522f9263708",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "7b89689e-8590-4211-a6b8-ae8e0944f419"
     }

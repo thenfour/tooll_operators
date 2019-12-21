@@ -2,7 +2,7 @@
   "Name": "Quantize",
   "_id": "2905c2ee-b901-442d-b223-a59550a72cb8",
   "Namespace": "user.tenfour.math",
-  "Description": "",
+  "Description": "InputPhase is 0-1 (so, scaled by qsize)\r\nfor timings for ex, it will affect when transitions appear to happen.\r\n\r\nfor OutputPhase, it affects the actual values chosen. Again scaled by qsize.",
   "Inputs": [
     {
       "Name": "Input",
@@ -39,7 +39,7 @@
       "EnumValues": []
     },
     {
-      "Name": "Phase",
+      "Name": "InputPhase",
       "MetaInstanceID": "be6256aa-e36c-405b-8e6d-cc24e529e3d5",
       "DefaultValue": {
         "Type": "Float",
@@ -52,6 +52,23 @@
       "Min": "-10000",
       "Max": "10000",
       "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputPhase",
+      "MetaInstanceID": "a7efb86b-993a-45f7-bef6-edd30c62a4ce",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
     }
@@ -68,7 +85,7 @@
       "MetaInstanceID": "fcbb87a0-7519-4851-8b63-7648433c2d25",
       "MetaID": "0c052443-e4e7-4e57-b64d-3c4fa4951747",
       "Name": "QuantizeFunc",
-      "Version": "4d757b9a-472c-48d8-9984-8ec887585efb",
+      "Version": "4bcfa597-43e1-45ea-8f12-44ee8aa105b8",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -87,7 +104,8 @@
         "        {",
         "            Qsize = 0,",
         "            Input = 1,",
-        "            Phase = 2",
+        "            InputPhase = 2,",
+        "            OutputPhase = 3",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -131,14 +149,15 @@
         "            //>>> _params",
         "            var Qsize = inputs[(int)InputId.Qsize].Eval(context).Value;",
         "            var Input = inputs[(int)InputId.Input].Eval(context).Value;",
-        "            var Phase = inputs[(int)InputId.Phase].Eval(context).Value;",
+        "            var InputPhase = inputs[(int)InputId.InputPhase].Eval(context).Value;",
+        "            var OutputPhase = inputs[(int)InputId.OutputPhase].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            if (Qsize < 0.0001)",
         "                context.Value = Input;",
         "            else {",
-        "                Input += Phase;",
-        "                context.Value = (float)( Math.Floor(Input / Qsize) * Qsize) - Phase;",
+        "                Input += InputPhase * Qsize;",
+        "                context.Value = (float)( Math.Floor(Input / Qsize) * Qsize) - OutputPhase * Qsize;",
         "            }",
         "            ",
         "",
@@ -179,6 +198,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "be6256aa-e36c-405b-8e6d-cc24e529e3d5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fcbb87a0-7519-4851-8b63-7648433c2d25"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a7efb86b-993a-45f7-bef6-edd30c62a4ce",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "fcbb87a0-7519-4851-8b63-7648433c2d25"
     }

@@ -20,6 +20,8 @@
           "\r",
           "//>>> _parameters\r",
           "float Brilliance;",
+          "float Animate;",
+          "float SubBallSize;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -113,11 +115,13 @@
           "    vec2 uv = fragCoord/iResolution.xy-.5;\r",
           "    uv.x *= iResolution.x / iResolution.y;\r",
           "    uv *= 16.;\r",
-          "    float t = iTime + 1000.;\r",
+          "    //float t = iTime + 1000.;\r",
+          "    float t = Animate;\r",
           "    //t *= .2;\r",
           "    //t += frac(iBeat/2.);\r",
-          "    float beat = (iBeat+1.)/2.;\r",
-          "    t = iTime*.5+sin(beat*PI2*1.)*.2*Brilliance;//floor(beat)+frac(beat)*.5;\r",
+          "    //float beat = (iBeat+1.)/2.;\r",
+          "    //t = iTime*.5+sin(beat*PI2*1.)*.2*Brilliance;//floor(beat)+frac(beat)*.5;\r",
+          "    \r",
           "\r",
           "    float f = 1000.;\r",
           "    const float layerCount = 4.;\r",
@@ -133,7 +137,8 @@
           "            uv = mul(uv, rot2D(t*.1));\r",
           "            for (float i = 1.; i <= balls; ++ i){ \r",
           "                float subBallSize = cos(t*ring+i)*.5+.5;\r",
-          "                subBallSize += (1.-frac(beat))*Brilliance;\r",
+          "                //subBallSize += (1.-frac(beat))*Brilliance;\r",
+          "                subBallSize += SubBallSize*Brilliance;\r",
           "                uv = mul(uv, rot2D((PI2/balls)));\r",
           "                f = opXor(f, length(uv-ringRadius)-subBallSize);\r",
           "            }\r",
@@ -142,9 +147,11 @@
           "    \r",
           "    o = vec4x(dtoa(f, 80.));//*vec4(.9,.2,1.,0);\r",
           "    if (Brilliance > .5) {\r",
-          "    o.rb = mul(o.rb-.5, rot2D((beat)*PI))+.5;\r",
-          "    o.gb = mul(o.gb-.5, rot2D((beat)*PI))+.5;\r",
-          "    o = mix(o, vec4x(o.r+o.g+o.b)/3.,1.- frac(beat));\r",
+          "        o.rb = mul(o.rb-.5, rot2D((Animate)*PI))+.5;\r",
+          "        o.gb = mul(o.gb-.5, rot2D((Animate)*PI))+.5;\r",
+          "        float x = 1;\r",
+          "        //o = mix(o, vec4x(o.r+o.g+o.b)/3.,1.- frac(beat));\r",
+          "        o = mix(o, vec4x(o.r+o.g+o.b)/3.,1.- x);\r",
           "    }\r",
           "\r",
           "    o += .2;\r",
@@ -206,6 +213,40 @@
       "Scale": "0.001",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Animate",
+      "MetaInstanceID": "48cfd392-9293-4c6e-9e16-fd8befdbce62",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SubBallSize",
+      "MetaInstanceID": "8c03591c-1e91-49a7-910d-38b6db9c4085",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -220,7 +261,7 @@
       "MetaInstanceID": "586682b0-10b1-4b2a-b0f3-e994646f1c76",
       "MetaID": "5292de01-889d-47ab-aecd-e152327d62d6",
       "Name": "SH_CelestialCirclesFunc",
-      "Version": "f3bcf36e-f7aa-4e30-b39b-0bdb715d8b5b",
+      "Version": "9ca08e37-e219-4403-a452-665f5c4b5a1f",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -242,7 +283,9 @@
         "        private enum InputId",
         "        {",
         "            Code = 0,",
-        "            Brilliance = 1",
+        "            Brilliance = 1,",
+        "            Animate = 2,",
+        "            SubBallSize = 3",
         "        }",
         "        //<<< _inputids",
         "",
@@ -250,6 +293,8 @@
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
         "            var Brilliance = inputs[(int)InputId.Brilliance].Eval(context).Value;",
+        "            var Animate = inputs[(int)InputId.Animate].Eval(context).Value;",
+        "            var SubBallSize = inputs[(int)InputId.SubBallSize].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -259,6 +304,8 @@
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
         "                    _effect.GetVariableByName(\"Brilliance\").AsScalar().Set(Brilliance);",
+        "                    _effect.GetVariableByName(\"Animate\").AsScalar().Set(Animate);",
+        "                    _effect.GetVariableByName(\"SubBallSize\").AsScalar().Set(SubBallSize);",
         "                //<<< _setup",
         "",
         "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -306,6 +353,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "cb380a68-5656-4e1e-a3b2-6142eb38f49c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "586682b0-10b1-4b2a-b0f3-e994646f1c76"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "48cfd392-9293-4c6e-9e16-fd8befdbce62",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "586682b0-10b1-4b2a-b0f3-e994646f1c76"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8c03591c-1e91-49a7-910d-38b6db9c4085",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "586682b0-10b1-4b2a-b0f3-e994646f1c76"
     }

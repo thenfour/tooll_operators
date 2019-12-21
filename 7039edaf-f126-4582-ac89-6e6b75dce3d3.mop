@@ -5,7 +5,7 @@
   "Description": "Returns the the current composition time.",
   "Inputs": [
     {
-      "Name": "Multiplier",
+      "Name": "BeatPeriod",
       "MetaInstanceID": "4d1d3c9e-bf63-4fbe-a37e-11740174d7d7",
       "DefaultValue": {
         "Type": "Float",
@@ -18,6 +18,23 @@
       "Min": "-10000",
       "Max": "10000",
       "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Offset",
+      "MetaInstanceID": "26412e10-78ee-4c1e-b800-30db3ea3b566",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "1",
       "ScaleType": "Linear",
       "EnumValues": []
     }
@@ -34,7 +51,7 @@
       "MetaInstanceID": "541f4f2d-e335-4fc6-a922-c25d7241ccc6",
       "MetaID": "54ca23c6-157c-4e00-8197-6230c3c7b164",
       "Name": "SKServerBeatFunc",
-      "Version": "2f5560ab-1962-4a07-8cd1-271d9c42b8d8",
+      "Version": "d25affad-fa19-4558-a330-0e2c7ff28779",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -51,13 +68,15 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Multiplier = 0",
+        "            BeatPeriod = 0,",
+        "            Offset = 1",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
         "        {",
         "            // >>> _params",
-        "            var Multiplier = inputs[(int)InputId.Multiplier].Eval(context).Value;",
+        "            var BeatPeriod = inputs[(int)InputId.BeatPeriod].Eval(context).Value;",
+        "            var Offset = inputs[(int)InputId.Offset].Eval(context).Value;",
         "            // <<< _params",
         "            //>>> function",
         "            ",
@@ -65,7 +84,7 @@
         "              var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "            //    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "            //    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                context.Value = (float)skstate.Beat / Multiplier;",
+        "                context.Value = (float)((skstate.Beat + Offset) / BeatPeriod);",
         "            //    _effect.GetVariableByName(\"iBeatInt\").AsScalar().Set((float)(double)context.Objects[\"SKPlayerBeatInt\"]);",
         "            }",
         "            return context;",
@@ -94,6 +113,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "4d1d3c9e-bf63-4fbe-a37e-11740174d7d7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "541f4f2d-e335-4fc6-a922-c25d7241ccc6"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "26412e10-78ee-4c1e-b800-30db3ea3b566",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "541f4f2d-e335-4fc6-a922-c25d7241ccc6"
     }

@@ -1,29 +1,29 @@
 {
-  "Name": "SKTimeClip",
-  "_id": "78379d6a-7c6d-45e2-b4b7-f1c3a49c669d",
+  "Name": "SKTimeClipValue",
+  "_id": "4c75e48b-4386-4234-8a31-6f97cf3190a9",
   "Namespace": "user.tenfour",
-  "Description": "If MapTime is YES, Maps the time of incoming animation a new clip range defined by ClipIn and ClipOut.\r\n\r\nOtherwise SourceIn and SourceOut are ignored.\r\n\r\nOperator sub tree is only evaluated if the time is between ClipIn and ClipOut, plus/minus margin.\r\n\r\nEvalMargin defines seconds to eval before the clip/ after the clip. The point is to keep clean animation lanes while being able to smoothly transition between clips.\r\n\r\noutput values are unclamped.",
+  "Description": "outputs a value that is shaped according to the timeclip.\r\n\r\nuseful for fading in/out during a section, or automating a parameter for a specific section.\r\n\r\nEx version has more output types",
   "Inputs": [
     {
-      "Name": "Input",
-      "MetaInstanceID": "3ed8887c-97e7-44e3-999e-374a6d1ccc77",
+      "Name": "_",
+      "MetaInstanceID": "052288bc-d025-4784-809d-894eccb4fb17",
       "DefaultValue": {
-        "Type": "Generic",
-        "Value": "Framefield.Core.Generic"
+        "Type": "Float",
+        "Value": "0"
       },
-      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
-      "Relevance": "Required",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
-      "Scale": "1",
+      "Relevance": "Optional",
+      "Description": "just needed because ITimeClip thinks this is scene input",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
     },
     {
       "Name": "ClipIn",
-      "MetaInstanceID": "610bc33a-eb66-4ea0-a858-fa0687bd027e",
+      "MetaInstanceID": "e0802201-462b-48b6-a078-c8beb16e2b2b",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -40,7 +40,7 @@
     },
     {
       "Name": "ClipOut",
-      "MetaInstanceID": "c3377945-0276-4584-9666-67d3dd8d93e6",
+      "MetaInstanceID": "9f5f94f3-52f5-4cca-8c1a-94cc9eb532e0",
       "DefaultValue": {
         "Type": "Float",
         "Value": "10"
@@ -56,8 +56,8 @@
       "EnumValues": []
     },
     {
-      "Name": "SourceIn",
-      "MetaInstanceID": "a69c0d27-ebcf-43d3-8a2f-9a63a728ea75",
+      "Name": "__",
+      "MetaInstanceID": "70a88607-c101-4aac-9295-66f6ebcd8015",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -65,33 +65,33 @@
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
       "Relevance": "Optional",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
+      "Description": "just needed because ITimeClip thinks this is sourceIn",
+      "Min": "-10000",
+      "Max": "10000",
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
     },
     {
-      "Name": "SourceOut",
-      "MetaInstanceID": "aae7b4ea-39b1-4e0e-9ab7-ded7725329cc",
+      "Name": "___",
+      "MetaInstanceID": "d6878554-e88c-4ae5-aa32-7916a71286ff",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "10"
+        "Value": "0"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
       "Relevance": "Optional",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
+      "Description": "just needed because ITimeClip thinks this is SourceOut",
+      "Min": "-10000",
+      "Max": "10000",
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
     },
     {
       "Name": "Layer",
-      "MetaInstanceID": "ffc5adb8-8ea4-4802-b23c-4c577fbc8f5a",
+      "MetaInstanceID": "26982911-b9d1-421d-98b4-5e6ab30423c8",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -108,7 +108,7 @@
     },
     {
       "Name": "BackgroundColor.R",
-      "MetaInstanceID": "8578bfd1-de36-4080-9c54-f1af0a9024a2",
+      "MetaInstanceID": "9624405b-c67f-4c23-9294-e5cd7bdb36cb",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -125,10 +125,10 @@
     },
     {
       "Name": "BackgroundColor.G",
-      "MetaInstanceID": "148e5eed-a64c-4709-98d6-a3620dcd8d12",
+      "MetaInstanceID": "a1cfbda6-f225-4bed-a0c1-35b4d7759ce5",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "1"
+        "Value": "0.3"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -142,7 +142,7 @@
     },
     {
       "Name": "BackgroundColor.B",
-      "MetaInstanceID": "87fe3665-acbd-4229-848e-8ff3d90feb26",
+      "MetaInstanceID": "7a2ebc22-7888-49ad-b28c-d6b2f33e1065",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -159,10 +159,10 @@
     },
     {
       "Name": "BackgroundColor.A",
-      "MetaInstanceID": "c7b95e08-ab6f-4528-91db-ceaded5d3806",
+      "MetaInstanceID": "15a19150-3bc9-491c-a455-67ab89137ee9",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "0.6"
+        "Value": "0.5"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -176,7 +176,7 @@
     },
     {
       "Name": "ForegroundColor.R",
-      "MetaInstanceID": "fb8aab91-c070-472f-85b8-9b55b3e2e217",
+      "MetaInstanceID": "266abda7-4cf1-457c-b2fe-b7dcba19dd1a",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -193,7 +193,7 @@
     },
     {
       "Name": "ForegroundColor.G",
-      "MetaInstanceID": "be54c7be-49cd-4dad-9846-d986832e0314",
+      "MetaInstanceID": "d4404bea-e03a-4aa5-bc86-230b972af4c4",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -210,7 +210,7 @@
     },
     {
       "Name": "ForegroundColor.B",
-      "MetaInstanceID": "224795c6-d192-4e35-81a0-066d43d75d7b",
+      "MetaInstanceID": "d134bd3c-1806-469b-bc04-9dfcb9ad708b",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -227,7 +227,7 @@
     },
     {
       "Name": "ForegroundColor.A",
-      "MetaInstanceID": "fb00a343-6bcc-4645-9b08-57dbfde5d7ec",
+      "MetaInstanceID": "79171d53-e5f5-4920-8d0e-14615da1030c",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -243,8 +243,8 @@
       "EnumValues": []
     },
     {
-      "Name": "MapTime",
-      "MetaInstanceID": "12045c2f-f4e5-47fc-bb24-fe8ff08f9d1e",
+      "Name": "OutputValue.Pre",
+      "MetaInstanceID": "a626e443-3618-4ab8-b71c-0403d29d5dc7",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -252,33 +252,7 @@
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
       "Relevance": "Optional",
-      "Description": "if no, then no time mapping is performed. keyframes wouldneed to be within this clip. Like TimeClipSwitch.\r\n\r\nif yes, then time is mapped between sourcein/out like TimeClip.",
-      "Min": "-10000",
-      "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": [
-        {
-          "Name": "No",
-          "Value": "0"
-        },
-        {
-          "Name": "Yes",
-          "Value": "1"
-        }
-      ]
-    },
-    {
-      "Name": "EvalMargin.In",
-      "MetaInstanceID": "743df243-fed9-4716-82a2-2d6092ad212b",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "use this to evaluate the clip before /after the specified in/out points. useful for transitions.\r\n",
+      "Description": "target value before the clip starts\r\n",
       "Min": "-10000",
       "Max": "10000",
       "Scale": "0.1",
@@ -286,42 +260,8 @@
       "EnumValues": []
     },
     {
-      "Name": "EvalMargin.Out",
-      "MetaInstanceID": "fdfe9f25-a996-4025-b348-955193d60e86",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-10000",
-      "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "PlayingValue.NotPlaying",
-      "MetaInstanceID": "48ee0db3-783c-4bc3-9ded-66d03e962d45",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-10000",
-      "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "PlayingValue.IsPlaying",
-      "MetaInstanceID": "63a2a542-8ab2-4212-9bd1-31d0189b31ea",
+      "Name": "OutputValue.During",
+      "MetaInstanceID": "91b44d61-e815-45aa-bcef-8dabf861decb",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -329,47 +269,171 @@
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
       "Relevance": "Optional",
-      "Description": "",
+      "Description": "target value during the clip\r\n\r\n",
       "Min": "-10000",
       "Max": "10000",
       "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Post",
+      "MetaInstanceID": "0f14c8d4-167a-4d30-88f0-5d06ed227fb5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value after the clip is over\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.AnticipationTime",
+      "MetaInstanceID": "611f0d10-f854-4527-8f22-eeb95e9dd376",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.ReleaseTime",
+      "MetaInstanceID": "dbd60b6f-1f3c-4aea-b3f7-f79a3e74a394",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.Slope",
+      "MetaInstanceID": "1e8db833-2dc9-4996-b976-8ec9a46cce32",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.AnticipationTime",
+      "MetaInstanceID": "cc9d4805-d01f-46f4-bfbb-2c69e67662a8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.ReleaseTime",
+      "MetaInstanceID": "4a07c251-268a-4f2f-87aa-a5f659c41e97",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.Slope",
+      "MetaInstanceID": "6018d5cf-9688-4362-a5fc-1374ecc96444",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
     }
   ],
   "Outputs": [
     {
-      "Name": "Output",
-      "MetaInstanceID": "0df516d7-1c34-43ab-9df7-e8cf486dcb5d",
-      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+      "Name": "Value",
+      "MetaInstanceID": "223353b5-9f9a-4063-8721-e759e5b77f94",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "ClipIn",
+      "MetaInstanceID": "e00fe720-d994-4dbc-94a5-81c1cd919bc1",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "ClipOut",
+      "MetaInstanceID": "7f49d999-0faa-4c55-89fb-5c8ded9c4ba7",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     },
     {
       "Name": "Progress",
-      "MetaInstanceID": "e63acb3a-84e6-4c07-a3d2-2db50ddffd5a",
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+      "MetaInstanceID": "d51156c2-376f-4fcf-8aca-4e3a78ca193f",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
     },
     {
       "Name": "TimeRelativeToStart",
-      "MetaInstanceID": "c863f001-021c-46c9-9d2b-0ace4e021300",
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+      "MetaInstanceID": "b7856d13-80fa-489f-9628-fa5356f667cc",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
     },
     {
       "Name": "TimeRelativeToEnd",
-      "MetaInstanceID": "0af05e4d-9ca4-4948-8a69-347dbc1f81dc",
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
-    },
-    {
-      "Name": "IsPlaying",
-      "MetaInstanceID": "21d8cbcf-427b-4c7e-b085-e695b7f98766",
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+      "MetaInstanceID": "a8d5c0b9-f739-45f9-a2db-8c0e344ca998",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
-      "MetaID": "b2890c04-034c-4f63-9815-1974e9c2a435",
-      "Name": "SKTimeClipFunc",
-      "Version": "a2873b6a-9f5a-4bbe-9fa5-a6651a7489fe",
+      "MetaInstanceID": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
+      "MetaID": "7b08006d-ac59-4975-b11d-87b324577b4d",
+      "Name": "SKTimeClipValueFunc",
+      "Version": "cb94c9f0-7182-4c01-aa94-d62c75885926",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -383,9 +447,9 @@
         "using SharpDX.Windows;",
         "//<<< _using",
         "",
-        "namespace Framefield.Core.IDb2890c04_034c_4f63_9815_1974e9c2a435",
+        "namespace Framefield.Core.ID7b08006d_ac59_4975_b11d_87b324577b4d",
         "{",
-        "    public class Class_SKTimeClip : OperatorPart.Function,",
+        "    public class Class_SKTimeClipValueEx : OperatorPart.Function,",
         "                                  Framefield.Core.OperatorPartTraits.ITimeClip,",
         "                                  Framefield.Core.OperatorPartTraits.ITimeClipColor,",
         "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",
@@ -393,36 +457,41 @@
         "        //>>> _outputids",
         "        private enum OutputId",
         "        {",
-        "            Output = 0,",
-        "            Progress = 1,",
-        "            TimeRelativeToStart = 2,",
-        "            TimeRelativeToEnd = 3,",
-        "            IsPlaying = 4",
+        "            Value = 0,",
+        "            ClipIn = 1,",
+        "            ClipOut = 2,",
+        "            Progress = 3,",
+        "            TimeRelativeToStart = 4,",
+        "            TimeRelativeToEnd = 5",
         "        }",
         "        //<<< _outputids",
         "        ",
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Input = 0,",
-        "            ClipIn = 1,",
-        "            ClipOut = 2,",
-        "            SourceIn = 3,",
-        "            SourceOut = 4,",
-        "            Layer = 5,",
-        "            MapTime = 6,",
-        "            EvalMarginIn = 7,",
-        "            EvalMarginOut = 8,",
-        "            PlayingValueNotPlaying = 9,",
-        "            PlayingValueIsPlaying = 10,",
-        "            BackgroundColorR = 11,",
-        "            BackgroundColorG = 12,",
-        "            BackgroundColorB = 13,",
-        "            BackgroundColorA = 14,",
-        "            ForegroundColorR = 15,",
-        "            ForegroundColorG = 16,",
-        "            ForegroundColorB = 17,",
-        "            ForegroundColorA = 18",
+        "            ClipIn = 0,",
+        "            ClipOut = 1,",
+        "            Layer = 2,",
+        "            BackgroundColorR = 3,",
+        "            BackgroundColorG = 4,",
+        "            BackgroundColorB = 5,",
+        "            BackgroundColorA = 6,",
+        "            ForegroundColorR = 7,",
+        "            ForegroundColorG = 8,",
+        "            ForegroundColorB = 9,",
+        "            ForegroundColorA = 10,",
+        "            _ = 11,",
+        "            __ = 12,",
+        "            ___ = 13,",
+        "            OutputValuePre = 14,",
+        "            OutputValueDuring = 15,",
+        "            OutputValuePost = 16,",
+        "            InAnticipationTime = 17,",
+        "            InReleaseTime = 18,",
+        "            InSlope = 19,",
+        "            OutAnticipationTime = 20,",
+        "            OutReleaseTime = 21,",
+        "            OutSlope = 22",
         "        }",
         "        //<<< _inputids",
         "",
@@ -441,23 +510,18 @@
         "        public double SourceStartTime",
         "        {",
         "            get {",
-        "                if ((int)GetInputValue((int)InputId.MapTime) == 0)",
         "                    return StartTime;",
-        "                return GetInputValue((int)InputId.SourceIn);",
         "            } ",
-        "            set { SetInputValue((int)InputId.SourceIn, value); } ",
+        "            set { } ",
         "        }",
         "",
         "        public double SourceEndTime",
         "        {",
         "            get",
         "            {",
-        "                if ((int)GetInputValue((int)InputId.MapTime) == 0)",
-        "                    return EndTime-StartTime;",
-        "",
-        "                return GetInputValue((int)InputId.SourceOut);",
+        "                    return EndTime;",
         "            }                ",
-        "            set { SetInputValue((int)InputId.SourceOut, value); } ",
+        "            set { } ",
         "        }",
         "",
         "        public int Layer",
@@ -505,19 +569,9 @@
         "        {",
         "            var prevValue = context.Value;",
         "            //>>> _params",
-        "            var Input = inputs[(int)InputId.Input];",
         "            var ClipIn = inputs[(int)InputId.ClipIn].Eval(context).Value;",
         "            var ClipOut = inputs[(int)InputId.ClipOut].Eval(context).Value;",
-        "            var SourceIn = inputs[(int)InputId.SourceIn].Eval(context).Value;",
-        "            var SourceOut = inputs[(int)InputId.SourceOut].Eval(context).Value;",
         "            var Layer = inputs[(int)InputId.Layer].Eval(context).Value;",
-        "            var MapTime = (int) inputs[(int)InputId.MapTime].Eval(context).Value;",
-        "            var EvalMarginIn = inputs[(int)InputId.EvalMarginIn].Eval(context).Value;",
-        "            var EvalMarginOut = inputs[(int)InputId.EvalMarginOut].Eval(context).Value;",
-        "            var EvalMargin = new Vector2(EvalMarginIn, EvalMarginOut);",
-        "            var PlayingValueNotPlaying = inputs[(int)InputId.PlayingValueNotPlaying].Eval(context).Value;",
-        "            var PlayingValueIsPlaying = inputs[(int)InputId.PlayingValueIsPlaying].Eval(context).Value;",
-        "            var PlayingValue = new Vector2(PlayingValueNotPlaying, PlayingValueIsPlaying);",
         "            var BackgroundColorR = inputs[(int)InputId.BackgroundColorR].Eval(context).Value;",
         "            var BackgroundColorG = inputs[(int)InputId.BackgroundColorG].Eval(context).Value;",
         "            var BackgroundColorB = inputs[(int)InputId.BackgroundColorB].Eval(context).Value;",
@@ -528,60 +582,112 @@
         "            var ForegroundColorB = inputs[(int)InputId.ForegroundColorB].Eval(context).Value;",
         "            var ForegroundColorA = inputs[(int)InputId.ForegroundColorA].Eval(context).Value;",
         "            var ForegroundColor = new Color4(ForegroundColorR, ForegroundColorG, ForegroundColorB, ForegroundColorA);",
+        "            var _ = inputs[(int)InputId._].Eval(context).Value;",
+        "            var __ = inputs[(int)InputId.__].Eval(context).Value;",
+        "            var ___ = inputs[(int)InputId.___].Eval(context).Value;",
+        "            var OutputValuePre = inputs[(int)InputId.OutputValuePre].Eval(context).Value;",
+        "            var OutputValueDuring = inputs[(int)InputId.OutputValueDuring].Eval(context).Value;",
+        "            var OutputValuePost = inputs[(int)InputId.OutputValuePost].Eval(context).Value;",
+        "            var OutputValue = new Vector3(OutputValuePre, OutputValueDuring, OutputValuePost);",
+        "            var InAnticipationTime = inputs[(int)InputId.InAnticipationTime].Eval(context).Value;",
+        "            var InReleaseTime = inputs[(int)InputId.InReleaseTime].Eval(context).Value;",
+        "            var InSlope = inputs[(int)InputId.InSlope].Eval(context).Value;",
+        "            var In = new Vector3(InAnticipationTime, InReleaseTime, InSlope);",
+        "            var OutAnticipationTime = inputs[(int)InputId.OutAnticipationTime].Eval(context).Value;",
+        "            var OutReleaseTime = inputs[(int)InputId.OutReleaseTime].Eval(context).Value;",
+        "            var OutSlope = inputs[(int)InputId.OutSlope].Eval(context).Value;",
+        "            var Out = new Vector3(OutAnticipationTime, OutReleaseTime, OutSlope);",
         "            //<<< _params",
         "            ",
-        "",
+        "            // make sure time is correct for SK server",
         "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
         "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                context.Time = (float)skstate.ProgramTime;",
         "            }",
+        "",
+        "            float clipIn = ClipIn;",
+        "            float clipOut = ClipOut;",
         "                    ",
-        "            ",
         "            switch (outputIdx)",
         "            {",
-        "                case (int)OutputId.Output:",
-        "                    if (context.Time < (ClipIn - EvalMarginIn) || context.Time >= (ClipOut + EvalMarginOut))",
-        "                    {",
-        "                        context.Value = prevValue;",
-        "                        return context;",
-        "                    }",
-        "                    ",
-        "                    if (MapTime > 0) {",
-        "                        var oldTime = context.Time;",
-        "                        context.Time = SourceIn + (context.Time - ClipIn)*(SourceOut - SourceIn)/(ClipOut - ClipIn);",
-        "            ",
-        "                        _timeAccessorInvalidator.Clear();",
-        "                        Input.TraverseWithFunctionUseSpecificBehavior(null, _timeAccessorInvalidator);",
-        "                        context = Input.Eval(context);",
-        "                        ",
-        "                        context.Time = oldTime;",
-        "                    } else {",
-        "                        context = Input.Eval(context);",
-        "                    }",
+        "                case (int)OutputId.Value:",
+        "                    float leftValue = MapValue(",
+        "                        OutputValuePre, OutputValueDuring,",
+        "                        context.Time,",
+        "                        InAnticipationTime, InReleaseTime,",
+        "                        ClipIn,",
+        "                        InSlope",
+        "                        );",
+        "",
+        "                    float rightValue = MapValue(",
+        "                        leftValue, OutputValuePost,",
+        "                        context.Time,",
+        "                        OutAnticipationTime, OutReleaseTime,",
+        "                        ClipOut,",
+        "                        OutSlope",
+        "                        );",
+        "",
+        "                    context.Value = rightValue;",
         "                    break;",
         "",
-        "",
+        "                case (int)OutputId.ClipIn:",
+        "                    context.Value = ClipIn;",
+        "                    break;",
+        "                case (int)OutputId.ClipOut:",
+        "                    context.Value = ClipOut;",
+        "                    break;",
         "                case (int)OutputId.Progress:",
-        "                    var len = (ClipOut - ClipIn);",
-        "                    if (Math.Abs(len) < 0.001)",
-        "                        context.Value = 0;",
-        "                    else",
-        "                        context.Value = (context.Time - ClipIn) / len;",
+        "                    context.Value = (context.Time - clipIn) / (clipOut - clipIn);",
         "                    break;",
         "                case (int)OutputId.TimeRelativeToStart:",
-        "                    context.Value = context.Time - ClipIn;",
+        "                    context.Value = context.Time - clipIn;",
         "                    break;",
         "                case (int)OutputId.TimeRelativeToEnd:",
-        "                    context.Value =  context.Time - ClipOut;",
-        "                    break;",
-        "                case (int)OutputId.IsPlaying:",
-        "                    //Logger.Info(this,\"time = {0}\", context.Time);",
-        "                    ",
-        "                    context.Value = (context.Time < (ClipIn - EvalMarginIn) || context.Time >= (ClipOut + EvalMarginOut)) ? PlayingValueNotPlaying : PlayingValueIsPlaying;",
+        "                    context.Value = context.Time - clipOut;",
         "                    break;",
         "            }",
         "            ",
         "            return context;",
+        "        }",
+        "        ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "",
+        "        ",
+        "        private float MapValue(float leftValue, float rightValue, float time, float antTime, float relTime, float edgeTime, float slope)",
+        "        {",
+        "            time -= edgeTime;",
+        "            double x = time;",
+        "            double y = 0;",
+        "            if ((antTime + relTime) == 0) {",
+        "                // avoid div0; deal with instant transitions.",
+        "                x = Math.Sign(x);",
+        "            } else {",
+        "                x = time + antTime;",
+        "                x /= antTime + relTime;",
+        "            }",
+        "            ",
+        "            if (x <= 0) y = 0;",
+        "            else if (x >= 1) y = 1;",
+        "            else {",
+        "                // within curve range",
+        "                double p = antTime / (antTime + relTime);",
+        "                    y = SmoothStepVariable(x, p, slope);",
+        "            }",
+        "            return Utilities.Lerp(leftValue, rightValue, (float)y);",
+        "            return 0.0f;",
         "        }",
         "",
         "        private double GetInputValue(int index)",
@@ -598,7 +704,6 @@
         "            }",
         "        }",
         "",
-        "        OperatorPart.InvalidateTimeAccessors _timeAccessorInvalidator = new OperatorPart.InvalidateTimeAccessors();",
         "    }",
         "}"
       ],
@@ -611,147 +716,177 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "3ed8887c-97e7-44e3-999e-374a6d1ccc77",
+      "SourceOpPart": "e0802201-462b-48b6-a078-c8beb16e2b2b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "610bc33a-eb66-4ea0-a858-fa0687bd027e",
+      "SourceOpPart": "9f5f94f3-52f5-4cca-8c1a-94cc9eb532e0",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "c3377945-0276-4584-9666-67d3dd8d93e6",
+      "SourceOpPart": "26982911-b9d1-421d-98b4-5e6ab30423c8",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "a69c0d27-ebcf-43d3-8a2f-9a63a728ea75",
+      "SourceOpPart": "9624405b-c67f-4c23-9294-e5cd7bdb36cb",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "aae7b4ea-39b1-4e0e-9ab7-ded7725329cc",
+      "SourceOpPart": "a1cfbda6-f225-4bed-a0c1-35b4d7759ce5",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "ffc5adb8-8ea4-4802-b23c-4c577fbc8f5a",
+      "SourceOpPart": "7a2ebc22-7888-49ad-b28c-d6b2f33e1065",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "12045c2f-f4e5-47fc-bb24-fe8ff08f9d1e",
+      "SourceOpPart": "15a19150-3bc9-491c-a455-67ab89137ee9",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "743df243-fed9-4716-82a2-2d6092ad212b",
+      "SourceOpPart": "266abda7-4cf1-457c-b2fe-b7dcba19dd1a",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "fdfe9f25-a996-4025-b348-955193d60e86",
+      "SourceOpPart": "d4404bea-e03a-4aa5-bc86-230b972af4c4",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "48ee0db3-783c-4bc3-9ded-66d03e962d45",
+      "SourceOpPart": "d134bd3c-1806-469b-bc04-9dfcb9ad708b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "63a2a542-8ab2-4212-9bd1-31d0189b31ea",
+      "SourceOpPart": "79171d53-e5f5-4920-8d0e-14615da1030c",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8578bfd1-de36-4080-9c54-f1af0a9024a2",
+      "SourceOpPart": "052288bc-d025-4784-809d-894eccb4fb17",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "148e5eed-a64c-4709-98d6-a3620dcd8d12",
+      "SourceOpPart": "70a88607-c101-4aac-9295-66f6ebcd8015",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "87fe3665-acbd-4229-848e-8ff3d90feb26",
+      "SourceOpPart": "d6878554-e88c-4ae5-aa32-7916a71286ff",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "c7b95e08-ab6f-4528-91db-ceaded5d3806",
+      "SourceOpPart": "a626e443-3618-4ab8-b71c-0403d29d5dc7",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "fb8aab91-c070-472f-85b8-9b55b3e2e217",
+      "SourceOpPart": "91b44d61-e815-45aa-bcef-8dabf861decb",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "be54c7be-49cd-4dad-9846-d986832e0314",
+      "SourceOpPart": "0f14c8d4-167a-4d30-88f0-5d06ed227fb5",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "224795c6-d192-4e35-81a0-066d43d75d7b",
+      "SourceOpPart": "611f0d10-f854-4527-8f22-eeb95e9dd376",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "fb00a343-6bcc-4645-9b08-57dbfde5d7ec",
+      "SourceOpPart": "dbd60b6f-1f3c-4aea-b3f7-f79a3e74a394",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "SourceOpPart": "1e8db833-2dc9-4996-b976-8ec9a46cce32",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "0df516d7-1c34-43ab-9df7-e8cf486dcb5d"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "SourceOpPart": "cc9d4805-d01f-46f4-bfbb-2c69e67662a8",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "e63acb3a-84e6-4c07-a3d2-2db50ddffd5a"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "SourceOpPart": "4a07c251-268a-4f2f-87aa-a5f659c41e97",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "c863f001-021c-46c9-9d2b-0ace4e021300"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "SourceOpPart": "6018d5cf-9688-4362-a5fc-1374ecc96444",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "0af05e4d-9ca4-4948-8a69-347dbc1f81dc"
+      "TargetOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8758a4a3-a70a-49fa-b03b-2d9089471ead",
+      "SourceOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "21d8cbcf-427b-4c7e-b085-e695b7f98766"
+      "TargetOpPart": "223353b5-9f9a-4063-8721-e759e5b77f94"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e00fe720-d994-4dbc-94a5-81c1cd919bc1"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7f49d999-0faa-4c55-89fb-5c8ded9c4ba7"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d51156c2-376f-4fcf-8aca-4e3a78ca193f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7856d13-80fa-489f-9628-fa5356f667cc"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a8d5c0b9-f739-45f9-a2db-8c0e344ca998"
     }
   ]
 }

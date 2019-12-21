@@ -83,22 +83,29 @@
       }
     },
     {
-      "Name": "PowStepper",
-      "MetaInstanceID": "ee5d2ee4-3ef0-4895-a154-fcb3fb6db3f2",
-      "MetaID": "3617de06-0bed-495d-8faf-45a9eb4655aa",
+      "Name": "CurveStepper",
+      "MetaInstanceID": "97513694-96cd-4ccb-90b3-277461ba174c",
+      "MetaID": "e71214b1-f536-4b24-a73f-c84b7bfd6274",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "429.259297138602",
+        "PosX": "427.279017929074",
         "PosY": "-202.415779695638",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
           {
-            "ID": "c1a477cf-cdff-4670-a42b-36eb9167f496",
+            "ID": "74a0cacb-02df-44dd-85f4-27bb268e68b1",
             "Type": "Float",
             "Value": [
-              "7"
+              "0"
+            ]
+          },
+          {
+            "ID": "f940bf84-6b07-4680-b340-df54057973f5",
+            "Type": "Float",
+            "Value": [
+              "0"
             ]
           }
         ],
@@ -106,25 +113,17 @@
       }
     },
     {
-      "Name": "SmoothStepper",
-      "MetaInstanceID": "b630da18-09b4-4649-95fc-4eb006d328e5",
-      "MetaID": "1be4436b-7fae-487d-8442-5c94c2d5b59c",
+      "Name": "BlendImages",
+      "MetaInstanceID": "0b5f062a-bee4-40b0-bc09-18652271b206",
+      "MetaID": "5778fd1e-bd11-4b21-9277-62c946c4f80c",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "529.259297138602",
-        "PosY": "-202.415779695638",
-        "Width": "150",
+        "PosX": "106.465742295832",
+        "PosY": "-458.937552474844",
+        "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "60b52f25-552b-47bf-b9aa-da84b5119a22",
-            "Type": "Float",
-            "Value": [
-              "3"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
@@ -134,7 +133,7 @@
       "MetaID": "7039edaf-f126-4582-ac89-6e6b75dce3d3",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "429.259297138602",
+        "PosX": "427.279017929074",
         "PosY": "-177.415779695638",
         "Width": "150",
         "Visible": "True",
@@ -144,7 +143,14 @@
             "ID": "4d1d3c9e-bf63-4fbe-a37e-11740174d7d7",
             "Type": "Float",
             "Value": [
-              "4"
+              "8"
+            ]
+          },
+          {
+            "ID": "26412e10-78ee-4c1e-b800-30db3ea3b566",
+            "Type": "Float",
+            "Value": [
+              "-2"
             ]
           }
         ],
@@ -157,9 +163,9 @@
       "MetaID": "5a891010-14bd-42fa-8a2c-d1ba0faa26cd",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "50.7363398489072",
-        "PosY": "-382.217075046131",
-        "Width": "100",
+        "PosX": "11.1307556583507",
+        "PosY": "-384.197354255659",
+        "Width": "175",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [],
@@ -167,22 +173,22 @@
       }
     },
     {
-      "Name": "Glow",
-      "MetaInstanceID": "ed558e49-5005-46b7-890a-301ae48bf3ed",
-      "MetaID": "9d7cc06b-ebfb-438a-a434-d9e96c74ad49",
+      "Name": "SK_BrokenTVSetup",
+      "MetaInstanceID": "c06605a2-4513-444b-884b-05fae006d4da",
+      "MetaID": "14b56fac-39b7-42a7-8d60-fc529219bfe2",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "105.760539344975",
-        "PosY": "-442.208507589032",
+        "PosX": "52.0080640338164",
+        "PosY": "-519.336068365443",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
           {
-            "ID": "5593e1f2-a620-4b7b-963e-7285355c47f0",
+            "ID": "acd2bda9-c13b-49bd-b1a9-836adaf67d06",
             "Type": "Float",
             "Value": [
-              "9.4"
+              "0.055"
             ]
           }
         ],
@@ -190,22 +196,50 @@
       }
     },
     {
-      "Name": "SKServerBeatFract",
-      "MetaInstanceID": "87808310-65ed-4070-9f5e-154f837d2dd5",
-      "MetaID": "811d3e44-ab32-4eee-84b5-014bee839777",
+      "Name": "Text",
+      "MetaInstanceID": "86d17811-dd42-467a-a308-67abb854d55b",
+      "MetaID": "da549627-ccc4-418a-be00-7f37fa403a19",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "234.594114080346",
-        "PosY": "-341.980833339059",
+        "PosX": "249.045845381835",
+        "PosY": "-367.844708836564",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
           {
-            "ID": "3c36c7e1-3529-41af-88ae-532641d38082",
+            "ID": "8a2272ae-08a6-4894-95d7-9955a4c0e216",
+            "Type": "Text",
+            "Value": [
+              "PLAY"
+            ]
+          },
+          {
+            "ID": "b1e37074-75da-45e6-a30c-22d1c0623da4",
+            "Type": "Text",
+            "Value": [
+              "vcr osd mono"
+            ]
+          },
+          {
+            "ID": "c9c3eab8-b25a-4a0a-a345-ad3563c0ddb9",
             "Type": "Float",
             "Value": [
-              "9"
+              "0.8"
+            ]
+          },
+          {
+            "ID": "e27e12a4-03a2-4733-ab1a-2e26fd35ca40",
+            "Type": "Float",
+            "Value": [
+              "0.8"
+            ]
+          },
+          {
+            "ID": "43d34257-f668-4ec1-a6b3-4f385bbf38d5",
+            "Type": "Float",
+            "Value": [
+              "0.8"
             ]
           }
         ],
@@ -235,36 +269,36 @@
     {
       "SourceOp": "2ee5149f-5746-422e-b60e-ac6c1131d5bf",
       "SourceOpPart": "cde790c0-373a-4d54-b15e-2592c3fddaae",
-      "TargetOp": "b630da18-09b4-4649-95fc-4eb006d328e5",
-      "TargetOpPart": "1fbc842a-4e27-4c41-9c71-4c92ac0ddec1"
+      "TargetOp": "97513694-96cd-4ccb-90b3-277461ba174c",
+      "TargetOpPart": "4a1a3cae-5fd9-4c9f-a426-eb5e59b422f9"
     },
     {
-      "SourceOp": "2ee5149f-5746-422e-b60e-ac6c1131d5bf",
-      "SourceOpPart": "cde790c0-373a-4d54-b15e-2592c3fddaae",
-      "TargetOp": "ee5d2ee4-3ef0-4895-a154-fcb3fb6db3f2",
-      "TargetOpPart": "b6df4e92-a828-4066-b2ff-8ce15eb27582"
-    },
-    {
-      "SourceOp": "ee5d2ee4-3ef0-4895-a154-fcb3fb6db3f2",
-      "SourceOpPart": "40213d97-2f77-4e87-a084-9e95ab25433b",
+      "SourceOp": "97513694-96cd-4ccb-90b3-277461ba174c",
+      "SourceOpPart": "47b24911-7952-4a7c-803c-d17b8fcfe025",
       "TargetOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
       "TargetOpPart": "7a5c1484-a9f5-45b2-9f50-a9a8133e9274"
     },
     {
-      "SourceOp": "87808310-65ed-4070-9f5e-154f837d2dd5",
-      "SourceOpPart": "3136cbf8-de39-4758-be62-c1207ab1e878",
-      "TargetOp": "ed558e49-5005-46b7-890a-301ae48bf3ed",
-      "TargetOpPart": "b414ddd3-0e33-42f9-9d28-51b75b17b7f1"
-    },
-    {
       "SourceOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
       "SourceOpPart": "df0a7369-bb96-47ca-93d9-23172452bf88",
-      "TargetOp": "ed558e49-5005-46b7-890a-301ae48bf3ed",
-      "TargetOpPart": "b6a75de9-c1a0-4523-bbe6-e158add93e26"
+      "TargetOp": "0b5f062a-bee4-40b0-bc09-18652271b206",
+      "TargetOpPart": "31cbd2f8-2f42-403d-9142-3ad22e6b6225"
     },
     {
-      "SourceOp": "ed558e49-5005-46b7-890a-301ae48bf3ed",
-      "SourceOpPart": "2770c76d-ca93-4d99-8d35-8692588241a0",
+      "SourceOp": "86d17811-dd42-467a-a308-67abb854d55b",
+      "SourceOpPart": "1dd30f68-e387-453f-8d2b-b5e1b3243e7b",
+      "TargetOp": "0b5f062a-bee4-40b0-bc09-18652271b206",
+      "TargetOpPart": "9d7470a5-c572-4924-b121-b6e2b1614034"
+    },
+    {
+      "SourceOp": "0b5f062a-bee4-40b0-bc09-18652271b206",
+      "SourceOpPart": "852971d5-5a56-4b81-97de-3c33203693c3",
+      "TargetOp": "c06605a2-4513-444b-884b-05fae006d4da",
+      "TargetOpPart": "b789dbd8-ff6a-4962-b2cb-ef3a3032b55f"
+    },
+    {
+      "SourceOp": "c06605a2-4513-444b-884b-05fae006d4da",
+      "SourceOpPart": "f983b87e-9d08-4a06-bac2-16036cc7becc",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "01e28d41-2001-4530-9521-9fcaed45d4b1"
     }
