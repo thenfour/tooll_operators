@@ -1,5 +1,5 @@
 {
-  "Name": "SKTimeClipXXX",
+  "Name": "XXXSKTimeClipXXX",
   "_id": "2c283c62-03e8-4ca9-aaf5-6dfeedd6cbab",
   "Namespace": "user.tenfour",
   "Description": "Maps the time of incoming animation a new clip range defined by ClipIn and ClipOut.\r\n\r\nOperator sub tree is only evaluated if the time is between ClipIn and ClipOut.",
@@ -84,7 +84,7 @@
     {
       "MetaInstanceID": "3d2944c9-89db-4da3-a901-f97b89c9e44a",
       "MetaID": "753f32f2-0a04-4e6d-b7e3-7dd7b43a88d3",
-      "Name": "SKTimeClipXXXFunc",
+      "Name": "XXXSKTimeClipXXXFunc",
       "Version": "c406860a-d46b-4b04-9239-3d275994a565",
       "Type": "Generic",
       "IsMultiInput": "True",

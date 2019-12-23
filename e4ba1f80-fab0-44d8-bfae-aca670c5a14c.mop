@@ -1,0 +1,922 @@
+{
+  "Name": "SKTimeClipValue",
+  "_id": "e4ba1f80-fab0-44d8-bfae-aca670c5a14c",
+  "Namespace": "user.tenfour",
+  "Description": "ver 3\r\noutputs a value that is shaped according to the timeclip.\r\n\r\nuseful for fading in/out during a section, or automating a parameter for a specific section.\r\n\r\nthis version adds a dynamic map output for use with SKTimeClipMap",
+  "Inputs": [
+    {
+      "Name": "_",
+      "MetaInstanceID": "f03d6ede-6542-4703-9615-73521d5bdf96",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "just needed because ITimeClip thinks this is scene input",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClipIn",
+      "MetaInstanceID": "06d21d6a-e9db-41d4-b389-611004359907",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ClipOut",
+      "MetaInstanceID": "7b535fad-651b-4ef0-b641-039eae5fafe2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "10"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "__",
+      "MetaInstanceID": "792dcfff-5ada-4f0b-b91e-3bec14f4e078",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "just needed because ITimeClip thinks this is sourceIn",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "___",
+      "MetaInstanceID": "771c80ab-234f-4958-a58f-8601b9de7bf5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "just needed because ITimeClip thinks this is SourceOut",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Layer",
+      "MetaInstanceID": "b0db75d3-01a2-4f85-8492-a4dc1c58cba5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "100",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.R",
+      "MetaInstanceID": "b0645656-48c2-450b-944f-8f674e7ad0cc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.G",
+      "MetaInstanceID": "15f00ed0-8038-4f5a-93e3-a656413bc308",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.B",
+      "MetaInstanceID": "a27adb71-c182-44de-ad34-80a59781043b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.A",
+      "MetaInstanceID": "7da9ccbc-e00c-48d0-90e6-5857eb454ea0",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ForegroundColor.R",
+      "MetaInstanceID": "3626225f-65dd-436c-b45d-e0ad7701869f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ForegroundColor.G",
+      "MetaInstanceID": "51217f4e-614a-426e-b54a-6a5ff1e8747c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ForegroundColor.B",
+      "MetaInstanceID": "965ab1c6-174c-4df7-a463-cb73801ad160",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ForegroundColor.A",
+      "MetaInstanceID": "0e36e5d8-43aa-4ec1-aac1-63aeabc519a7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Pre",
+      "MetaInstanceID": "986dff1a-a740-4b09-a147-28ea4ea25a60",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value before the clip starts\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.During",
+      "MetaInstanceID": "94fc794e-6f68-410b-85f1-2914f8ee9d72",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value during the clip\r\n\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Post",
+      "MetaInstanceID": "21490371-0e1d-4454-a367-940598016d8a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value after the clip is over\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.AnticipationTime",
+      "MetaInstanceID": "ceef628f-7166-4d59-960b-7ea9b0000af3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.ReleaseTime",
+      "MetaInstanceID": "44290c2d-c3a1-4684-882a-d3f31aa61a2c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.Slope",
+      "MetaInstanceID": "7547ac6b-d331-44fe-8cca-0244df70f35f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.AnticipationTime",
+      "MetaInstanceID": "fb278ebb-bc5c-4492-8794-f1495aa28d11",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.ReleaseTime",
+      "MetaInstanceID": "5e5b1a15-c26d-44a7-9824-f88e40b0332e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.Slope",
+      "MetaInstanceID": "c93ad3a9-c229-4f9e-b03c-7532d0bc6df1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "aa9422da-0e3a-46b1-bfb2-0a99244536df",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "ClipIn",
+      "MetaInstanceID": "cd8c8c43-bef4-4a28-b3a2-d765fff39d81",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "ClipOut",
+      "MetaInstanceID": "78d69048-c9c7-4c93-a4de-4f51ba133334",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "Progress",
+      "MetaInstanceID": "a68d2339-867c-4433-8ae7-b5abade8345a",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "TimeRelativeToStart",
+      "MetaInstanceID": "22929d9f-6989-4aa7-9bd1-aa6848abfc64",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "TimeRelativeToEnd",
+      "MetaInstanceID": "fe3c0574-08f2-4cfe-a49f-d5cb683b90ee",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "This",
+      "MetaInstanceID": "cf68909e-8719-4740-9c47-1509d00aae5e",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    },
+    {
+      "Name": "IsPlaying",
+      "MetaInstanceID": "205a259c-c18c-4a58-8f4d-819fa4df4134",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "MetaID": "b4795d40-86a5-458d-a641-55c61cc283ca",
+      "Name": "SKTimeClipValueFunc",
+      "Version": "0fdc07f7-aa8d-4b4d-bf1d-cbd0f5b0daf6",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDb4795d40_86a5_458d_a641_55c61cc283ca",
+        "{",
+        "    public class Class_SKTimeClipValueEx : OperatorPart.Function,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeClip,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeClipColor,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            Value = 0,",
+        "            ClipIn = 1,",
+        "            ClipOut = 2,",
+        "            Progress = 3,",
+        "            TimeRelativeToStart = 4,",
+        "            TimeRelativeToEnd = 5,",
+        "            This = 6,",
+        "            IsPlaying = 7",
+        "        }",
+        "        //<<< _outputids",
+        "        ",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            ClipIn = 0,",
+        "            ClipOut = 1,",
+        "            Layer = 2,",
+        "            BackgroundColorR = 3,",
+        "            BackgroundColorG = 4,",
+        "            BackgroundColorB = 5,",
+        "            BackgroundColorA = 6,",
+        "            ForegroundColorR = 7,",
+        "            ForegroundColorG = 8,",
+        "            ForegroundColorB = 9,",
+        "            ForegroundColorA = 10,",
+        "            _ = 11,",
+        "            __ = 12,",
+        "            ___ = 13,",
+        "            OutputValuePre = 14,",
+        "            OutputValueDuring = 15,",
+        "            OutputValuePost = 16,",
+        "            InAnticipationTime = 17,",
+        "            InReleaseTime = 18,",
+        "            InSlope = 19,",
+        "            OutAnticipationTime = 20,",
+        "            OutReleaseTime = 21,",
+        "            OutSlope = 22",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public double StartTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.ClipIn); } ",
+        "            set { SetInputValue((int)InputId.ClipIn, value); } ",
+        "        }",
+        "",
+        "        public double EndTime",
+        "        {",
+        "            get { return GetInputValue((int)InputId.ClipOut); } ",
+        "            set { SetInputValue((int)InputId.ClipOut, value); } ",
+        "        }",
+        "",
+        "        public double SourceStartTime",
+        "        {",
+        "            get {",
+        "                    return StartTime;",
+        "            } ",
+        "            set { } ",
+        "        }",
+        "",
+        "        public double SourceEndTime",
+        "        {",
+        "            get",
+        "            {",
+        "                    return EndTime;",
+        "            }                ",
+        "            set { } ",
+        "        }",
+        "",
+        "        public int Layer",
+        "        {",
+        "            get { return (int)GetInputValue((int)InputId.Layer); } ",
+        "            set { SetInputValue((int)InputId.Layer, value); } ",
+        "        }",
+        "",
+        "        public Color4 BackgroundColor",
+        "        {",
+        "            get {",
+        "            return new Color4(",
+        "                (float)GetInputValue((int)InputId.BackgroundColorR),",
+        "                (float)GetInputValue((int)InputId.BackgroundColorG),",
+        "                (float)GetInputValue((int)InputId.BackgroundColorB),",
+        "                (float)GetInputValue((int)InputId.BackgroundColorA)",
+        "                );",
+        "            }",
+        "            set {",
+        "                SetInputValue((int)InputId.BackgroundColorR, value.Red);",
+        "                SetInputValue((int)InputId.BackgroundColorG, value.Green);",
+        "                SetInputValue((int)InputId.BackgroundColorB, value.Blue);",
+        "                SetInputValue((int)InputId.BackgroundColorA, value.Alpha);",
+        "            }",
+        "        }",
+        "        public Color4 ForegroundColor",
+        "        {",
+        "            get {",
+        "            return new Color4(",
+        "                (float)GetInputValue((int)InputId.ForegroundColorR),",
+        "                (float)GetInputValue((int)InputId.ForegroundColorG),",
+        "                (float)GetInputValue((int)InputId.ForegroundColorB),",
+        "                (float)GetInputValue((int)InputId.ForegroundColorA)",
+        "                );",
+        "            }",
+        "            set {",
+        "                SetInputValue((int)InputId.ForegroundColorR, value.Red);",
+        "                SetInputValue((int)InputId.ForegroundColorG, value.Green);",
+        "                SetInputValue((int)InputId.ForegroundColorB, value.Blue);",
+        "                SetInputValue((int)InputId.ForegroundColorA, value.Alpha);",
+        "            }",
+        "        }",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            var prevValue = context.Value;",
+        "            //>>> _params",
+        "            var ClipIn = inputs[(int)InputId.ClipIn].Eval(context).Value;",
+        "            var ClipOut = inputs[(int)InputId.ClipOut].Eval(context).Value;",
+        "            var Layer = inputs[(int)InputId.Layer].Eval(context).Value;",
+        "            var BackgroundColorR = inputs[(int)InputId.BackgroundColorR].Eval(context).Value;",
+        "            var BackgroundColorG = inputs[(int)InputId.BackgroundColorG].Eval(context).Value;",
+        "            var BackgroundColorB = inputs[(int)InputId.BackgroundColorB].Eval(context).Value;",
+        "            var BackgroundColorA = inputs[(int)InputId.BackgroundColorA].Eval(context).Value;",
+        "            var BackgroundColor = new Color4(BackgroundColorR, BackgroundColorG, BackgroundColorB, BackgroundColorA);",
+        "            var ForegroundColorR = inputs[(int)InputId.ForegroundColorR].Eval(context).Value;",
+        "            var ForegroundColorG = inputs[(int)InputId.ForegroundColorG].Eval(context).Value;",
+        "            var ForegroundColorB = inputs[(int)InputId.ForegroundColorB].Eval(context).Value;",
+        "            var ForegroundColorA = inputs[(int)InputId.ForegroundColorA].Eval(context).Value;",
+        "            var ForegroundColor = new Color4(ForegroundColorR, ForegroundColorG, ForegroundColorB, ForegroundColorA);",
+        "            var _ = inputs[(int)InputId._].Eval(context).Value;",
+        "            var __ = inputs[(int)InputId.__].Eval(context).Value;",
+        "            var ___ = inputs[(int)InputId.___].Eval(context).Value;",
+        "            var OutputValuePre = inputs[(int)InputId.OutputValuePre].Eval(context).Value;",
+        "            var OutputValueDuring = inputs[(int)InputId.OutputValueDuring].Eval(context).Value;",
+        "            var OutputValuePost = inputs[(int)InputId.OutputValuePost].Eval(context).Value;",
+        "            var OutputValue = new Vector3(OutputValuePre, OutputValueDuring, OutputValuePost);",
+        "            var InAnticipationTime = inputs[(int)InputId.InAnticipationTime].Eval(context).Value;",
+        "            var InReleaseTime = inputs[(int)InputId.InReleaseTime].Eval(context).Value;",
+        "            var InSlope = inputs[(int)InputId.InSlope].Eval(context).Value;",
+        "            var In = new Vector3(InAnticipationTime, InReleaseTime, InSlope);",
+        "            var OutAnticipationTime = inputs[(int)InputId.OutAnticipationTime].Eval(context).Value;",
+        "            var OutReleaseTime = inputs[(int)InputId.OutReleaseTime].Eval(context).Value;",
+        "            var OutSlope = inputs[(int)InputId.OutSlope].Eval(context).Value;",
+        "            var Out = new Vector3(OutAnticipationTime, OutReleaseTime, OutSlope);",
+        "            //<<< _params",
+        "            ",
+        "            // make sure time is correct for SK server",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                context.Time = (float)skstate.ProgramTime;",
+        "            }",
+        "",
+        "            float clipIn = ClipIn;",
+        "            float clipOut = ClipOut;",
+        "                    ",
+        "            switch (outputIdx)",
+        "            {",
+        "                case (int)OutputId.Value:",
+        "                    float leftValue = MapValue(",
+        "                        OutputValuePre, OutputValueDuring,",
+        "                        context.Time,",
+        "                        InAnticipationTime, InReleaseTime,",
+        "                        ClipIn,",
+        "                        InSlope",
+        "                        );",
+        "",
+        "                    float rightValue = MapValue(",
+        "                        leftValue, OutputValuePost,",
+        "                        context.Time,",
+        "                        OutAnticipationTime, OutReleaseTime,",
+        "                        ClipOut,",
+        "                        OutSlope",
+        "                        );",
+        "",
+        "                    context.Value = rightValue;",
+        "                    break;",
+        "",
+        "                case (int)OutputId.ClipIn:",
+        "                    context.Value = ClipIn;",
+        "                    break;",
+        "                case (int)OutputId.ClipOut:",
+        "                    context.Value = ClipOut;",
+        "                    break;",
+        "                case (int)OutputId.Progress:",
+        "                    context.Value = (context.Time - clipIn) / (clipOut - clipIn);",
+        "                    break;",
+        "                case (int)OutputId.TimeRelativeToStart:",
+        "                    context.Value = context.Time - clipIn;",
+        "                    break;",
+        "                case (int)OutputId.TimeRelativeToEnd:",
+        "                    context.Value = context.Time - clipOut;",
+        "                    break;",
+        "                case (int)OutputId.This:",
+        "                    context.Dynamic = this;",
+        "                    break;",
+        "                case (int)OutputId.IsPlaying:",
+        "                    context.Value = (context.Time >= clipIn)  && (context.Time < clipOut) ? 1 : 0;",
+        "                    break;",
+        "            }",
+        "            ",
+        "            return context;",
+        "        }",
+        "        ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "",
+        "        ",
+        "        private float MapValue(float leftValue, float rightValue, float time, float antTime, float relTime, float edgeTime, float slope)",
+        "        {",
+        "            time -= edgeTime;",
+        "            double x = time;",
+        "            double y = 0;",
+        "            if ((antTime + relTime) == 0) {",
+        "                // avoid div0; deal with instant transitions.",
+        "                x = Math.Sign(x);",
+        "            } else {",
+        "                x = time + antTime;",
+        "                x /= antTime + relTime;",
+        "            }",
+        "            ",
+        "            if (x <= 0) y = 0;",
+        "            else if (x >= 1) y = 1;",
+        "            else {",
+        "                // within curve range",
+        "                double p = antTime / (antTime + relTime);",
+        "                    y = SmoothStepVariable(x, p, slope);",
+        "            }",
+        "            return Utilities.Lerp(leftValue, rightValue, (float)y);",
+        "            return 0.0f;",
+        "        }",
+        "",
+        "        private double GetInputValue(int index)",
+        "        {",
+        "            return OperatorPartUtilities.GetInputFloatValue(OperatorPart.Connections[index]);",
+        "        }",
+        "",
+        "        private void SetInputValue(int index, double val)",
+        "        {",
+        "            OperatorPart opPart = OperatorPart.Connections[index];",
+        "            if (opPart.Connections.Count == 0)",
+        "            {",
+        "                opPart.Func = Utilities.CreateValueFunction(new Float((float)val));",
+        "            }",
+        "        }",
+        "",
+        "    }",
+        "}"
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "06d21d6a-e9db-41d4-b389-611004359907",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7b535fad-651b-4ef0-b641-039eae5fafe2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b0db75d3-01a2-4f85-8492-a4dc1c58cba5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b0645656-48c2-450b-944f-8f674e7ad0cc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "15f00ed0-8038-4f5a-93e3-a656413bc308",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a27adb71-c182-44de-ad34-80a59781043b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7da9ccbc-e00c-48d0-90e6-5857eb454ea0",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3626225f-65dd-436c-b45d-e0ad7701869f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "51217f4e-614a-426e-b54a-6a5ff1e8747c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "965ab1c6-174c-4df7-a463-cb73801ad160",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0e36e5d8-43aa-4ec1-aac1-63aeabc519a7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f03d6ede-6542-4703-9615-73521d5bdf96",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "792dcfff-5ada-4f0b-b91e-3bec14f4e078",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "771c80ab-234f-4958-a58f-8601b9de7bf5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "986dff1a-a740-4b09-a147-28ea4ea25a60",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "94fc794e-6f68-410b-85f1-2914f8ee9d72",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "21490371-0e1d-4454-a367-940598016d8a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ceef628f-7166-4d59-960b-7ea9b0000af3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "44290c2d-c3a1-4684-882a-d3f31aa61a2c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7547ac6b-d331-44fe-8cca-0244df70f35f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fb278ebb-bc5c-4492-8794-f1495aa28d11",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5e5b1a15-c26d-44a7-9824-f88e40b0332e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c93ad3a9-c229-4f9e-b03c-7532d0bc6df1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "aa9422da-0e3a-46b1-bfb2-0a99244536df"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cd8c8c43-bef4-4a28-b3a2-d765fff39d81"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "78d69048-c9c7-4c93-a4de-4f51ba133334"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a68d2339-867c-4433-8ae7-b5abade8345a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "22929d9f-6989-4aa7-9bd1-aa6848abfc64"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fe3c0574-08f2-4cfe-a49f-d5cb683b90ee"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cf68909e-8719-4740-9c47-1509d00aae5e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "812190e4-84df-4c98-9be9-414c4e09c09f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "205a259c-c18c-4a58-8f4d-819fa4df4134"
+    }
+  ]
+}

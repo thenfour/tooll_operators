@@ -1,5 +1,5 @@
 {
-  "Name": "SKServerBeatFract",
+  "Name": "SKServerBeatFract (old)",
   "_id": "811d3e44-ab32-4eee-84b5-014bee839777",
   "Namespace": "user.tenfour",
   "Description": "Returns the the current composition time.",
@@ -152,7 +152,7 @@
       "Relevance": "Optional",
       "Description": "0-1 area where release is applied\r\n",
       "Min": "0",
-      "Max": "1",
+      "Max": "10",
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
@@ -169,7 +169,7 @@
     {
       "MetaInstanceID": "df6c6a23-9de4-4c03-93ba-0fa780598c55",
       "MetaID": "b11bf345-b17a-4f86-839c-0a9a02869fc3",
-      "Name": "SKServerBeatFractFunc",
+      "Name": "SKServerBeatFract (old)Func",
       "Version": "e3c2cec3-551f-44fb-bb44-9b34d60b7838",
       "Type": "Float",
       "IsMultiInput": "True",

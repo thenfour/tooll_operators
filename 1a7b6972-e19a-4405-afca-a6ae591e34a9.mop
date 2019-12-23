@@ -1,5 +1,5 @@
 {
-  "Name": "TransformImageXX",
+  "Name": "XXXTransformImageXX",
   "_id": "1a7b6972-e19a-4405-afca-a6ae591e34a9",
   "Namespace": "user.tenfour",
   "Description": "crappy attempt",
@@ -303,7 +303,7 @@
     {
       "MetaInstanceID": "1622af77-d41e-49de-b322-1024f02bd6f5",
       "MetaID": "d064f536-3ba4-4727-afde-cef499a5f01b",
-      "Name": "TransformImageXXFunc",
+      "Name": "XXXTransformImageXXFunc",
       "Version": "1b96fb41-8425-4677-a383-1b1f6638b5e4",
       "Type": "Float",
       "IsMultiInput": "True",

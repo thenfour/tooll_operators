@@ -1,8 +1,8 @@
 {
-  "Name": "TransitionCurve",
+  "Name": "TransitionCurve(old)",
   "_id": "e29f442c-bac6-46b1-a7d2-3af025f68185",
   "Namespace": "user.tenfour",
-  "Description": "Maps values transitioning around the transition point to 0-1 with a curve.\r\nThe idea is to shape a transition over time, where 0 is the transition point.\r\n\r\nfor MODE=Transition, negative values become 0 and positive become 1.\r\nOnly one shape is used for the curve.\r\n\r\nfor MODE=Pulse, both shapes are used. at x=0, output is 1. otherwise we stay around 0.\r\n\r\n",
+  "Description": "Maps values transitioning around the transition point to 0-1 with a curve.\r\nThe idea is to shape a transition over time, where 0 is the transition point.\r\n\r\nfor MODE=Transition, negative values become 0 and positive become 1.\r\nOnly one shape is used for the curve.\r\n\r\nfor MODE=Pulse, both shapes are used. at x=0, output is 1. otherwise we stay around 0.\r\n\r\n!!! USE TRANSITIONCURVE  TIME MARKER INSTEAD",
   "Inputs": [
     {
       "Name": "Input",
@@ -178,7 +178,7 @@
     {
       "MetaInstanceID": "52b4b7e1-f329-40aa-96b7-bd99035b9aab",
       "MetaID": "300fa28d-839c-42e6-8a74-3037c0fe3125",
-      "Name": "TransitionCurveFunc",
+      "Name": "TransitionCurve(old)Func",
       "Version": "c6aa5cf6-d225-471a-ac1b-0cd2616b18dd",
       "Type": "Float",
       "IsMultiInput": "True",

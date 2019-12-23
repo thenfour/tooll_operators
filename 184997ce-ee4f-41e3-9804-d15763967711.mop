@@ -1,0 +1,85 @@
+{
+  "Name": "MaxNValues",
+  "_id": "184997ce-ee4f-41e3-9804-d15763967711",
+  "Namespace": "user.tenfour.math",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "cd7c14a7-567e-4c48-b85a-07a173eb9287",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "MultiplyOut",
+      "MetaInstanceID": "54a093e7-4cef-43a9-a679-ec14eeb601f0",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "79ce9647-d8ed-410a-92f1-b8ebf66b3093",
+      "MetaID": "ab2b61d4-768d-4d2c-9e5c-fcaef99cc2be",
+      "Name": "MaxNValuesFunc",
+      "Version": "f9861fcd-0b64-4d51-aa2d-8e4d87eb96f6",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDab2b61d4_768d_4d2c_9e5c_fcaef99cc2be",
+        "{",
+        "    public class Class_MaxNValues : OperatorPart.Function",
+        "    {",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            var Values = (float) inputs[0].Eval(context).Value;",
+        "            //!!automatic generated code ends here",
+        "            float value = 0.0f;",
+        "            foreach (var input in inputs[0].Connections) {",
+        "                value = Math.Max(value, input.Eval(context).Value);",
+        "            }",
+        "            context.Value = value;",
+        "            //!!automatic generated code starts here",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "79ce9647-d8ed-410a-92f1-b8ebf66b3093"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "79ce9647-d8ed-410a-92f1-b8ebf66b3093",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "54a093e7-4cef-43a9-a679-ec14eeb601f0"
+    }
+  ]
+}

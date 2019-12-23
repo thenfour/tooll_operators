@@ -1,8 +1,8 @@
 {
-  "Name": "SKTimeClipValue",
+  "Name": "SKTimeClipValue(old2)",
   "_id": "4c75e48b-4386-4234-8a31-6f97cf3190a9",
   "Namespace": "user.tenfour",
-  "Description": "outputs a value that is shaped according to the timeclip.\r\n\r\nuseful for fading in/out during a section, or automating a parameter for a specific section.\r\n\r\nEx version has more output types",
+  "Description": "outputs a value that is shaped according to the timeclip.\r\n\r\nuseful for fading in/out during a section, or automating a parameter for a specific section.\r\n",
   "Inputs": [
     {
       "Name": "_",
@@ -432,8 +432,8 @@
     {
       "MetaInstanceID": "f5611aea-883a-4356-9429-6f9d1ab7f84c",
       "MetaID": "7b08006d-ac59-4975-b11d-87b324577b4d",
-      "Name": "SKTimeClipValueFunc",
-      "Version": "cb94c9f0-7182-4c01-aa94-d62c75885926",
+      "Name": "SKTimeClipValue(old2)Func",
+      "Version": "36496fe0-9f0e-45fe-8660-6ad3bd3f6d0a",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -449,7 +449,7 @@
         "",
         "namespace Framefield.Core.ID7b08006d_ac59_4975_b11d_87b324577b4d",
         "{",
-        "    public class Class_SKTimeClipValueEx : OperatorPart.Function,",
+        "    public class Class_SKTimeClipValue : OperatorPart.Function,",
         "                                  Framefield.Core.OperatorPartTraits.ITimeClip,",
         "                                  Framefield.Core.OperatorPartTraits.ITimeClipColor,",
         "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",

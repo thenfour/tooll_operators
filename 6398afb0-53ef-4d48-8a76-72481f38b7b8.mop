@@ -1,0 +1,148 @@
+{
+  "Name": "HardStepper",
+  "_id": "6398afb0-53ef-4d48-8a76-72481f38b7b8",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "ccde1b2b-d9de-43e3-b975-e1f4f9530b3d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "InputPhase",
+      "MetaInstanceID": "d56131e3-003c-4df9-9b80-ffef1a24f78b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputPhase",
+      "MetaInstanceID": "79201712-9991-4992-99f7-794c10f32cc2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "8677cf7a-132f-44a3-8c6b-972e975a0367",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "d57b42a3-d74a-4246-a5a0-7e945264e536",
+      "MetaID": "cb88664d-ce90-44df-b341-b49f757ac142",
+      "Name": "HardStepperFunc",
+      "Version": "c79e426a-3ef7-45bc-9e5e-61d89a57c94c",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.IDcb88664d_ce90_44df_b341_b49f757ac142",
+        "{",
+        "    public class Class_HardStepper : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Input = 0,",
+        "            InputPhase = 1,",
+        "            OutputPhase = 2",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Input = inputs[(int)InputId.Input].Eval(context).Value;",
+        "            var InputPhase = inputs[(int)InputId.InputPhase].Eval(context).Value;",
+        "            var OutputPhase = inputs[(int)InputId.OutputPhase].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            ",
+        "            context.Value = (float)Math.Floor(Input + InputPhase) + OutputPhase;",
+        "",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d57b42a3-d74a-4246-a5a0-7e945264e536",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "8677cf7a-132f-44a3-8c6b-972e975a0367"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ccde1b2b-d9de-43e3-b975-e1f4f9530b3d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d57b42a3-d74a-4246-a5a0-7e945264e536"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d56131e3-003c-4df9-9b80-ffef1a24f78b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d57b42a3-d74a-4246-a5a0-7e945264e536"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "79201712-9991-4992-99f7-794c10f32cc2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d57b42a3-d74a-4246-a5a0-7e945264e536"
+    }
+  ]
+}

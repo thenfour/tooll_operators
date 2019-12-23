@@ -1,5 +1,5 @@
 {
-  "Name": "glitch07",
+  "Name": "XXXglitch07",
   "_id": "7e45e702-addb-42bf-a2cf-aea4d256d619",
   "Namespace": "user.tenfour.shaders",
   "Description": "rgbanoise fork\r\nrenders an image purely from pixel shader",
@@ -183,7 +183,7 @@
     {
       "MetaInstanceID": "b1a1a92d-8c73-427c-ac08-97e5308db562",
       "MetaID": "9139e44d-c40b-4324-9ef5-38a8b2c16d83",
-      "Name": "glitch07Func",
+      "Name": "XXXglitch07Func",
       "Version": "34c330e4-6cac-4f8e-a22e-2d5d6907269e",
       "Type": "Float",
       "IsMultiInput": "True",

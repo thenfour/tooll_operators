@@ -1,5 +1,5 @@
 {
-  "Name": "ValueListXXX",
+  "Name": "XXXValueListXXX",
   "_id": "6c8c2180-af18-4a01-b4bf-15e68135e7f9",
   "Namespace": "user.tenfour",
   "Description": "generates a List<float> based on multiple input values",
@@ -50,7 +50,7 @@
     {
       "MetaInstanceID": "3ca191dc-9b95-460e-8c0c-d13c671453c5",
       "MetaID": "e22a44ae-30ae-4e39-aa86-e4f386aedd5f",
-      "Name": "ValueListXXXFunc",
+      "Name": "XXXValueListXXXFunc",
       "Version": "bfc39fb9-fbef-45ef-af3d-fa8992d1d515",
       "Type": "Float",
       "IsMultiInput": "True",

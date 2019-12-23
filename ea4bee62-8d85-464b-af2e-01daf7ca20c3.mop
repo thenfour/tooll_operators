@@ -1,5 +1,5 @@
 {
-  "Name": "ValueGraph",
+  "Name": "XXXValueGraph",
   "_id": "ea4bee62-8d85-464b-af2e-01daf7ca20c3",
   "Namespace": "user.tenfour",
   "Description": "",
@@ -139,7 +139,7 @@
     {
       "MetaInstanceID": "4ffbcb6d-5a42-45ca-acbd-892f0bdf15b2",
       "MetaID": "408d75bf-347f-4d25-bfa4-cfdd83668f03",
-      "Name": "ValueGraphFunc",
+      "Name": "XXXValueGraphFunc",
       "Version": "5a922245-f409-4176-9414-f4ad90f7831d",
       "Type": "Float",
       "IsMultiInput": "True",

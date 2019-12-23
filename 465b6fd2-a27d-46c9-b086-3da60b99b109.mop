@@ -1,0 +1,205 @@
+{
+  "Name": "DonutConspiracyVerseGroove",
+  "_id": "465b6fd2-a27d-46c9-b086-3da60b99b109",
+  "Namespace": "user.tenfour.rsync",
+  "Description": "",
+  "Inputs": [],
+  "Outputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "cf762655-678b-48a4-8263-7b5b966ac508",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [
+    {
+      "Name": "SelectFromImages",
+      "MetaInstanceID": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
+      "MetaID": "5a891010-14bd-42fa-8a2c-d1ba0faa26cd",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-71.0226455241633",
+        "PosY": "-221.736527510696",
+        "Width": "175",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "Gif",
+      "MetaInstanceID": "45ada3f5-f4a3-40b6-8517-1059de39cb6e",
+      "MetaID": "1fdfe74a-cb13-4823-a494-f95d0865951b",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-100.671704062829",
+        "PosY": "-123.540252509893",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "7dec9158-7f63-459e-89d6-aae982d18da7",
+            "Type": "Text",
+            "Value": [
+              "C:/root/Dropbox/root/MUS/2019/rsync perf/visual assets/synthwave driving.gif"
+            ]
+          },
+          {
+            "ID": "c9831b30-b495-41d9-85fa-73d8dad77be8",
+            "Type": "Float",
+            "Value": [
+              "0.4"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "Gif",
+      "MetaInstanceID": "1bd9c271-390a-47f3-ac37-9a5ee0fe6a6b",
+      "MetaID": "1fdfe74a-cb13-4823-a494-f95d0865951b",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-34.5301335255436",
+        "PosY": "-79.4705424635053",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "7dec9158-7f63-459e-89d6-aae982d18da7",
+            "Type": "Text",
+            "Value": [
+              "C:/root/Dropbox/root/MUS/2019/rsync perf/visual assets/synthwave2.gif"
+            ]
+          },
+          {
+            "ID": "c9831b30-b495-41d9-85fa-73d8dad77be8",
+            "Type": "Float",
+            "Value": [
+              "0.3"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKServerBeatCurve",
+      "MetaInstanceID": "cb1f45ce-9426-4232-89d4-0ad6eb674e10",
+      "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "53.9773544758367",
+        "PosY": "-196.736527510696",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "5135350e-10d8-4dbe-b26e-190e7d2ce84b",
+            "Type": "Float",
+            "Value": [
+              "8"
+            ]
+          },
+          {
+            "ID": "a82dd705-ce81-4ec1-992e-958bdc177a26",
+            "Type": "Float",
+            "Value": [
+              "0.1"
+            ]
+          },
+          {
+            "ID": "e9e092c9-388c-40b9-ae66-cfcef8c0a02e",
+            "Type": "Float",
+            "Value": [
+              "0.1"
+            ]
+          },
+          {
+            "ID": "0d4dc2fc-c8d6-4826-a31f-07404cc0024f",
+            "Type": "Float",
+            "Value": [
+              "-2"
+            ]
+          },
+          {
+            "ID": "74ba6ba3-4f86-48b4-93a1-8c41e7f1a72a",
+            "Type": "Float",
+            "Value": [
+              "0.28"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "Gif",
+      "MetaInstanceID": "d63e7ef2-942c-4430-8b49-0209069431f4",
+      "MetaID": "1fdfe74a-cb13-4823-a494-f95d0865951b",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "18.4212825230672",
+        "PosY": "-44.729790634558",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "7dec9158-7f63-459e-89d6-aae982d18da7",
+            "Type": "Text",
+            "Value": [
+              "C:/root/Dropbox/root/MUS/2019/rsync perf/visual assets/80s shimmer.gif"
+            ]
+          },
+          {
+            "ID": "c9831b30-b495-41d9-85fa-73d8dad77be8",
+            "Type": "Float",
+            "Value": [
+              "0.3"
+            ]
+          }
+        ],
+        "States": []
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "SourceOp": "45ada3f5-f4a3-40b6-8517-1059de39cb6e",
+      "SourceOpPart": "5671ec5a-fedc-4671-ab27-92394baad4f1",
+      "TargetOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
+      "TargetOpPart": "f49cb70f-a8fa-4c99-9575-2849fa8df3cc"
+    },
+    {
+      "SourceOp": "1bd9c271-390a-47f3-ac37-9a5ee0fe6a6b",
+      "SourceOpPart": "5671ec5a-fedc-4671-ab27-92394baad4f1",
+      "TargetOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
+      "TargetOpPart": "f49cb70f-a8fa-4c99-9575-2849fa8df3cc"
+    },
+    {
+      "SourceOp": "d63e7ef2-942c-4430-8b49-0209069431f4",
+      "SourceOpPart": "5671ec5a-fedc-4671-ab27-92394baad4f1",
+      "TargetOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
+      "TargetOpPart": "f49cb70f-a8fa-4c99-9575-2849fa8df3cc"
+    },
+    {
+      "SourceOp": "cb1f45ce-9426-4232-89d4-0ad6eb674e10",
+      "SourceOpPart": "2d7f354f-4f0f-4990-88b9-2b2d14308b5e",
+      "TargetOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
+      "TargetOpPart": "7a5c1484-a9f5-45b2-9f50-a9a8133e9274"
+    },
+    {
+      "SourceOp": "f02b7cf0-c2ad-4cef-8975-6b5eb63d44e3",
+      "SourceOpPart": "df0a7369-bb96-47ca-93d9-23172452bf88",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cf762655-678b-48a4-8263-7b5b966ac508"
+    }
+  ]
+}

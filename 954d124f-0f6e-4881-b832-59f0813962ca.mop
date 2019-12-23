@@ -19,7 +19,11 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
-          "",
+          "float4 Color;",
+          "float3 DTOAA;",
+          "float SDOffset;",
+          "float InnerRotation;",
+          "float OuterRotation;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -130,31 +134,32 @@
           "    vec2 uv = fragCoord/iResolution.xy-.5;\r",
           "    uv.x *= iResolution.x / iResolution.y;\r",
           "    uv.y += .05;\r",
+          "    uv = mul(uv, rot2D(OuterRotation));\r",
           "    uv *= 2.2;\r",
           "    float t = 2.3 + iTime*PI/4.;\r",
           "    float sd = 1.;\r",
           "    float sgn = 1.;\r",
           "    vec2 uv2 = uv;\r",
           "    for (float i = 0.; i < 25.; ++ i) {\r",
-          "        float a = (iBeat)*(sgn*=-1.);\r",
+          "        float a = InnerRotation*(sgn*=-1.);\r",
           "        float sd2 = sdShape(mul(uv2*.9,rot2D(a))+vec2(0,centerDist), nsin(i*.2+t));\r",
           "    \tsd2 = opSubtraction(sd2, sdShape(uv2+vec2(0,centerDist), nsin(i*.2+t)));\r",
           "        sd = opUnion(sd, sd2);\r",
-          "        uv2 *= 1.05 + pow(frac(iBeat)*.4,3.);\r",
+          "        uv2 *= 1.05;// + pow(frac(iBeat)*.4,3.);\r",
           "    }\r",
           "\r",
-          "    o.rgb = dtoa(sd, vec3(50,400,400)) * vec3(.9,.8,.5);\r",
-          "    o *= .9;\r",
-          "    if (sd < 0.) {\r",
-          "        o.rg = mul(o.rg, rot2D(sd*5.));// yes i know this is kinda nonsense\r",
-          "    \to -= clamp(sd,sd,0.)*4.;\r",
-          "    }\r",
+          "    o.rgb = dtoa(sd-SDOffset, DTOAA) * Color.rgb;//vec3(.9,.8,.5);\r",
+          "    //o *= .9;\r",
+          "   // if (sd < 0.) {\r",
+          "        //o.rg = mul(o.rg, rot2D(sd*5.));// yes i know this is kinda nonsense\r",
+          "    \t//o -= clamp(sd,sd,0.)*4.;\r",
+          "   // }\r",
           "    //o = fract(o);\r",
           "    o = clamp(o,0.,1.);\r",
           "    o = pow(o, o-o+.5);\r",
-          "    o.rgb += (hash32(fragCoord+t)-.5)*.1;\r",
-          "    vec2 N = fragCoord / iResolution.xy-.5;\r",
-          "    o.rgb += dot(N,N) * vec3(0,1,1);\r",
+          "    //o.rgb += (hash32(fragCoord+t)-.5)*.1;\r",
+          "    //vec2 N = fragCoord / iResolution.xy-.5;\r",
+          "    //o.rgb += dot(N,N) * vec3(0,1,1);\r",
           "}\r",
           "\r",
           "",
@@ -194,6 +199,176 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Color.R",
+      "MetaInstanceID": "f873f85e-b02f-4a8c-ab25-e1113b71d7bb",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Color.G",
+      "MetaInstanceID": "faa04bb0-9ed9-48fa-b3d9-2e9841a6febb",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Color.B",
+      "MetaInstanceID": "1f38b671-441e-4065-892b-987a8994d1c0",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Color.A",
+      "MetaInstanceID": "67159c35-3ee8-4389-92ec-293e3d1b2e1e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "DTOAA.X",
+      "MetaInstanceID": "32e33a26-5a96-4ec6-9b00-375997e4600e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "50"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "5",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "DTOAA.Y",
+      "MetaInstanceID": "a722325c-3180-40b1-91d2-f2a169c87eef",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "400"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "5",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "DTOAA.Z",
+      "MetaInstanceID": "b6140a9d-e248-48ba-81e5-6ec441d7e1ea",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "400"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "5",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SDOffset",
+      "MetaInstanceID": "3847a3b1-1c01-4602-ac25-5753a8ed41e5",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.05"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "InnerRotation",
+      "MetaInstanceID": "81301b22-e47a-484e-bc92-a163e4b8096a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OuterRotation",
+      "MetaInstanceID": "cd336b94-24ed-4f35-a427-68ab258d9db3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -208,7 +383,7 @@
       "MetaInstanceID": "cedd58ba-b45c-4c25-86eb-d65003b410b4",
       "MetaID": "7fef30f5-f8eb-487d-85ea-876a79a90e46",
       "Name": "SH_CopperCoilFunc",
-      "Version": "5dde3cc1-6619-4d47-80e8-4480e157a1c1",
+      "Version": "2e732c07-d031-47d4-9fa2-a4f8c9c02c8f",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -229,13 +404,35 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            Code = 0",
+        "            Code = 0,",
+        "            ColorR = 1,",
+        "            ColorG = 2,",
+        "            ColorB = 3,",
+        "            ColorA = 4,",
+        "            DTOAAX = 5,",
+        "            DTOAAY = 6,",
+        "            DTOAAZ = 7,",
+        "            SDOffset = 8,",
+        "            InnerRotation = 9,",
+        "            OuterRotation = 10",
         "        }",
         "        //<<< _inputids",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
+        "            var ColorR = inputs[(int)InputId.ColorR].Eval(context).Value;",
+        "            var ColorG = inputs[(int)InputId.ColorG].Eval(context).Value;",
+        "            var ColorB = inputs[(int)InputId.ColorB].Eval(context).Value;",
+        "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
+        "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
+        "            var DTOAAX = inputs[(int)InputId.DTOAAX].Eval(context).Value;",
+        "            var DTOAAY = inputs[(int)InputId.DTOAAY].Eval(context).Value;",
+        "            var DTOAAZ = inputs[(int)InputId.DTOAAZ].Eval(context).Value;",
+        "            var DTOAA = new Vector3(DTOAAX, DTOAAY, DTOAAZ);",
+        "            var SDOffset = inputs[(int)InputId.SDOffset].Eval(context).Value;",
+        "            var InnerRotation = inputs[(int)InputId.InnerRotation].Eval(context).Value;",
+        "            var OuterRotation = inputs[(int)InputId.OuterRotation].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -244,6 +441,11 @@
         "                //>>> _setup",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
+        "                    _effect.GetVariableByName(\"Color\").AsVector().Set(new Vector4(ColorR, ColorG, ColorB, ColorA));",
+        "                    _effect.GetVariableByName(\"DTOAA\").AsVector().Set(new Vector3(DTOAAX, DTOAAY, DTOAAZ));",
+        "                    _effect.GetVariableByName(\"SDOffset\").AsScalar().Set(SDOffset);",
+        "                    _effect.GetVariableByName(\"InnerRotation\").AsScalar().Set(InnerRotation);",
+        "                    _effect.GetVariableByName(\"OuterRotation\").AsScalar().Set(OuterRotation);",
         "                //<<< _setup",
         "",
         "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -285,6 +487,66 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "1ea62f18-a7f5-44cd-bcc3-19906070132b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f873f85e-b02f-4a8c-ab25-e1113b71d7bb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "faa04bb0-9ed9-48fa-b3d9-2e9841a6febb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1f38b671-441e-4065-892b-987a8994d1c0",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "67159c35-3ee8-4389-92ec-293e3d1b2e1e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "32e33a26-5a96-4ec6-9b00-375997e4600e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a722325c-3180-40b1-91d2-f2a169c87eef",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b6140a9d-e248-48ba-81e5-6ec441d7e1ea",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3847a3b1-1c01-4602-ac25-5753a8ed41e5",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "81301b22-e47a-484e-bc92-a163e4b8096a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cd336b94-24ed-4f35-a427-68ab258d9db3",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "cedd58ba-b45c-4c25-86eb-d65003b410b4"
     }

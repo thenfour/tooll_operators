@@ -1,0 +1,388 @@
+{
+  "Name": "SKServerBeatFract",
+  "_id": "cc4aa9dd-545c-48d4-9e3c-233ba0a21bd7",
+  "Namespace": "user.tenfour",
+  "Description": "another curve method (the 2-stage one used by most new things)",
+  "Inputs": [
+    {
+      "Name": "BeatOffset",
+      "MetaInstanceID": "5da1e747-845c-4082-8bdc-73ae761a9ab7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BeatPeriod",
+      "MetaInstanceID": "4e54dcc0-69a6-4d50-a733-c1f49ce41f11",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Output.Minimum",
+      "MetaInstanceID": "11c9f6a6-e7d0-452b-8920-58e3734d6c63",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Output.Maximum",
+      "MetaInstanceID": "db391b6f-849f-40a3-b85b-769b80da3153",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Anticipation.Time",
+      "MetaInstanceID": "bf7fbca9-0453-434b-a70c-7362c4f8d48b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "5",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Anticipation.Slope",
+      "MetaInstanceID": "53efd53e-e0a9-4836-881c-5806c98a3e88",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.98",
+      "Max": "0.98",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Anticipation.CurvePos",
+      "MetaInstanceID": "4f17761f-3168-4ca9-bc39-2cd9c88dd83f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Release.Time",
+      "MetaInstanceID": "5a2b8282-b787-46ff-ae53-a0b01ae304cc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.3"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "5",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Release.Slope",
+      "MetaInstanceID": "7051e9c9-71b3-4c67-8c23-78cbdad47196",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.98",
+      "Max": "0.98",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Release.CurvePos",
+      "MetaInstanceID": "26b2c775-8aa0-4633-ba8b-6497be4f94d3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "80dd35a0-2435-4089-8eec-863150e47412",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "629fb8ec-1201-4360-83ca-08675e752a9b",
+      "MetaID": "70cb0311-45e6-407e-b7f1-f9a971eb96d1",
+      "Name": "SKServerBeatFractFunc",
+      "Version": "5d3ffde4-51cd-4911-98b7-4efa0de497ce",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID70cb0311_45e6_407e_b7f1_f9a971eb96d1",
+        "{",
+        "    public class Class_SKServerBeatFractCurve : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            BeatOffset = 0,",
+        "            BeatPeriod = 1,",
+        "            OutputMinimum = 2,",
+        "            OutputMaximum = 3,",
+        "            AnticipationTime = 4,",
+        "            AnticipationSlope = 5,",
+        "            AnticipationCurvePos = 6,",
+        "            ReleaseTime = 7,",
+        "            ReleaseSlope = 8,",
+        "            ReleaseCurvePos = 9",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "                ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "",
+        "",
+        "        private float MapValue(",
+        "            float leftValue, float rightValue,",
+        "            float time, float edgeTime,",
+        "            float antTime, float relTime,",
+        "            float curvePos01, float slope)",
+        "        {",
+        "            time -= edgeTime;",
+        "            double x = time;",
+        "            double y = 0;",
+        "            if ((antTime + relTime) == 0) {",
+        "                // avoid div0; deal with instant transitions.",
+        "                x = Math.Sign(x);",
+        "            } else {",
+        "                x = time + antTime;",
+        "                x /= antTime + relTime;",
+        "            }",
+        "            ",
+        "            if (x <= 0) y = 0;",
+        "            else if (x >= 1) y = 1;",
+        "            else {",
+        "                // within curve range",
+        "                //double p = antTime / (antTime + relTime);",
+        "                y = SmoothStepVariable(x, curvePos01, slope);",
+        "            }",
+        "            return Utilities.Lerp(leftValue, rightValue, (float)y);",
+        "        }",
+        "",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
+        "            var BeatPeriod = inputs[(int)InputId.BeatPeriod].Eval(context).Value;",
+        "            var OutputMinimum = inputs[(int)InputId.OutputMinimum].Eval(context).Value;",
+        "            var OutputMaximum = inputs[(int)InputId.OutputMaximum].Eval(context).Value;",
+        "            var Output = new Vector2(OutputMinimum, OutputMaximum);",
+        "            var AnticipationTime = inputs[(int)InputId.AnticipationTime].Eval(context).Value;",
+        "            var AnticipationSlope = inputs[(int)InputId.AnticipationSlope].Eval(context).Value;",
+        "            var AnticipationCurvePos = inputs[(int)InputId.AnticipationCurvePos].Eval(context).Value;",
+        "            var Anticipation = new Vector3(AnticipationTime, AnticipationSlope, AnticipationCurvePos);",
+        "            var ReleaseTime = inputs[(int)InputId.ReleaseTime].Eval(context).Value;",
+        "            var ReleaseSlope = inputs[(int)InputId.ReleaseSlope].Eval(context).Value;",
+        "            var ReleaseCurvePos = inputs[(int)InputId.ReleaseCurvePos].Eval(context).Value;",
+        "            var Release = new Vector3(ReleaseTime, ReleaseSlope, ReleaseCurvePos);",
+        "            //<<< _params",
+        "",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                float beatFrac = (float)(((BeatOffset + skstate.Beat) / BeatPeriod) % 1); // linear",
+        "              ",
+        "                // \"release\" is the beginning of the beat (maximum -> minimum)",
+        "                float releaseValue = MapValue(",
+        "                    OutputMaximum, OutputMinimum,",
+        "                    beatFrac, 0,",
+        "                    0, ReleaseTime,",
+        "                    ReleaseCurvePos, ReleaseSlope",
+        "                    );",
+        "    ",
+        "                float anticipationValue = MapValue(",
+        "                    releaseValue, OutputMaximum,",
+        "                    beatFrac, 1,",
+        "                    AnticipationTime, 0,",
+        "                    AnticipationCurvePos, AnticipationSlope",
+        "                    );",
+        "    ",
+        "                context.Value = anticipationValue;",
+        "            }",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "80dd35a0-2435-4089-8eec-863150e47412"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5da1e747-845c-4082-8bdc-73ae761a9ab7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4e54dcc0-69a6-4d50-a733-c1f49ce41f11",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "11c9f6a6-e7d0-452b-8920-58e3734d6c63",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "db391b6f-849f-40a3-b85b-769b80da3153",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "bf7fbca9-0453-434b-a70c-7362c4f8d48b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "53efd53e-e0a9-4836-881c-5806c98a3e88",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4f17761f-3168-4ca9-bc39-2cd9c88dd83f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5a2b8282-b787-46ff-ae53-a0b01ae304cc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7051e9c9-71b3-4c67-8c23-78cbdad47196",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "26b2c775-8aa0-4633-ba8b-6497be4f94d3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "629fb8ec-1201-4360-83ca-08675e752a9b"
+    }
+  ]
+}

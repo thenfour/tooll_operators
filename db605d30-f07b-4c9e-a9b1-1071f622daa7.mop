@@ -1,5 +1,5 @@
 {
-  "Name": "TestServerStateXXX",
+  "Name": "xxxTestServerStateXXX",
   "_id": "db605d30-f07b-4c9e-a9b1-1071f622daa7",
   "Namespace": "user.tenfour",
   "Description": "non-working fork of Group, for Images\r\ni want to be able to use TimeClips in subtrees and combine them here, for a timeline based scene switcher. not working though.\r\n",
@@ -15,7 +15,7 @@
     {
       "MetaInstanceID": "484cb5ee-38c8-43a7-9d29-c6237d8df9c8",
       "MetaID": "2103cae6-2ae3-4fa7-abe7-ab0e4b59c543",
-      "Name": "TestServerStateXXXFunc",
+      "Name": "xxxTestServerStateXXXFunc",
       "Version": "88bc0617-4f8e-4d17-8b52-b16ef897f0a6",
       "Type": "Float",
       "IsMultiInput": "True",

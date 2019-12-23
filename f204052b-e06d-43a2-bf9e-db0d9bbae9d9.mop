@@ -1,0 +1,270 @@
+{
+  "Name": "SKSceneIndexTransitionerLinear",
+  "_id": "f204052b-e06d-43a2-bf9e-db0d9bbae9d9",
+  "Namespace": "user.tenfour",
+  "Description": "accepts a scene index info from ListIndex, and shapes the curve according to transition values\r\n",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "0ed20920-0d8e-4ee9-b902-36dbd292a9de",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TransitionTime.Pre",
+      "MetaInstanceID": "783311e1-792c-4da2-a0db-8e1c9d3baa0c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TransitionTime.Post",
+      "MetaInstanceID": "d84ec44f-a2d9-417d-9538-9a8dfe19c943",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "TimeMode",
+      "MetaInstanceID": "47f3d40d-9e6e-4664-8052-20427afd9f12",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Seconds",
+          "Value": "0"
+        },
+        {
+          "Name": "Beats",
+          "Value": "1"
+        }
+      ]
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "ShapedSceneIndex",
+      "MetaInstanceID": "d670df96-e262-4f00-a11b-80c05ddeb6c2",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "RawSceneIndex",
+      "MetaInstanceID": "ca690682-31a2-43be-aad4-dd5343d5bb69",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "SceneTimeElapsed",
+      "MetaInstanceID": "a9d1f6f1-b977-4812-b397-461c59eb0f4e",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "SceneTimeRemaining",
+      "MetaInstanceID": "9391beab-cbf5-45ea-aadf-2160711d9ab2",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "b3d79d51-10fd-47a4-b4cd-dcf242213796",
+      "MetaID": "2412bfbf-62f1-438b-9c48-2e34869e1ab9",
+      "Name": "SKSceneIndexTransitionerLinearFunc",
+      "Version": "cfe08936-ab44-4d50-acc1-147ae718dee5",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID2412bfbf_62f1_438b_9c48_2e34869e1ab9",
+        "{",
+        "    public class Class_SKSceneIndexTransitionerLinear : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            TransitionTimePre = 0,",
+        "            TransitionTimePost = 1,",
+        "            Input = 2,",
+        "            TimeMode = 3",
+        "        }",
+        "        //<<< _inputids",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            ShapedSceneIndex = 0,",
+        "            RawSceneIndex = 1,",
+        "            SceneTimeElapsed = 2,",
+        "            SceneTimeRemaining = 3",
+        "        }",
+        "        //<<< _outputids",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var TransitionTimePre = inputs[(int)InputId.TransitionTimePre].Eval(context).Value;",
+        "            var TransitionTimePost = inputs[(int)InputId.TransitionTimePost].Eval(context).Value;",
+        "            var TransitionTime = new Vector2(TransitionTimePre, TransitionTimePost);",
+        "            var Input = inputs[(int)InputId.Input].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            var TimeMode = (int) inputs[(int)InputId.TimeMode].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            // \"SceneTimeElapsed\", \"SceneTimeRemaining\"",
+        "            Dictionary<string, float> _map = Input as Dictionary<string, float>;",
+        "            if (_map == null) {",
+        "                context.Value = 0;",
+        "                return context;",
+        "            }",
+        "            ",
+        "            float elapsed = _map[\"SceneTimeElapsed\"];",
+        "            float remaining = _map[\"SceneTimeRemaining\"];",
+        "            float index= _map[\"SceneIndex\"];",
+        "            float f =(float) Math.Floor(index);",
+        "            ",
+        "            // convert beats to seconds if necessary.",
+        "            if (TimeMode == 1) {",
+        "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                    var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                    //context.Time = ((float)skstate.ProgramTime);",
+        "                    float bpm = ((float)skstate.BPM);",
+        "                    TransitionTimePost = (float)(60 * TransitionTimePost) / bpm;",
+        "                    TransitionTimePre = (float)(60 * TransitionTimePre) / bpm;",
+        "                }",
+        "            }",
+        "            ",
+        "            switch (outputIdx) {",
+        "            case (int)OutputId.ShapedSceneIndex:",
+        "                if (TransitionTimePre + TransitionTimePost == 0) {",
+        "                    context.Value = (float)Math.Floor(index);",
+        "                } else if (elapsed < TransitionTimePost) {",
+        "                    float x = (elapsed + TransitionTimePre) / (TransitionTimePre + TransitionTimePost);",
+        "                    context.Value = Utilities.Lerp(f - 1, f, x);",
+        "                } else if (remaining < TransitionTimePre) {",
+        "                    float x = (TransitionTimePre - remaining) / (TransitionTimePre + TransitionTimePost);",
+        "                    context.Value = Utilities.Lerp(f, f + 1, x);",
+        "                } else {",
+        "                    // not in a transition zone.",
+        "                    context.Value = (float)Math.Floor(index);",
+        "                }",
+        "                //context.Value = (float)Math.Floor(index);",
+        "                break;",
+        "            case (int)OutputId.RawSceneIndex:",
+        "                context.Value = index;",
+        "                break;",
+        "            case (int)OutputId.SceneTimeElapsed:",
+        "                context.Value = elapsed;",
+        "                break;",
+        "            case (int)OutputId.SceneTimeRemaining:",
+        "                context.Value = remaining;",
+        "                break;",
+        "            }",
+        "            ",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "783311e1-792c-4da2-a0db-8e1c9d3baa0c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d84ec44f-a2d9-417d-9538-9a8dfe19c943",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0ed20920-0d8e-4ee9-b902-36dbd292a9de",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "47f3d40d-9e6e-4664-8052-20427afd9f12",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d670df96-e262-4f00-a11b-80c05ddeb6c2"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "ca690682-31a2-43be-aad4-dd5343d5bb69"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a9d1f6f1-b977-4812-b397-461c59eb0f4e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b3d79d51-10fd-47a4-b4cd-dcf242213796",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "9391beab-cbf5-45ea-aadf-2160711d9ab2"
+    }
+  ]
+}

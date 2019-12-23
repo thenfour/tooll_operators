@@ -1,0 +1,241 @@
+{
+  "Name": "ListIndex",
+  "_id": "b13bee39-6e6d-4eb8-bd23-392d38578238",
+  "Namespace": "user.tenfour.list",
+  "Description": "Takes multiple values, and an X value, and outputs the index where X lands. Fractional indices are supported.\r\n\r\nreturns REAL indices 1-based.\r\nwhen time is before first scene, returns index 0.\r\nwhen time is after index iLast, returns iLast+1\r\n\r\nThe purpose for this is to take a list of points in time (scene TransitionPoints / TimeMarkers),\r\nand a Time (X),\r\nand output which scene we're currently in.\r\n\r\nCombine this with a *stepper and you have a smooth scene switcher",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "c1d59c21-eb8c-4794-a65f-a6b38a6e47e6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "X",
+      "MetaInstanceID": "125ce5c2-e458-48c1-9d63-814338f88fdc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "MarginSceneSize.Before",
+      "MetaInstanceID": "da9ff367-110b-4020-af5b-7dde945b72ca",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1000"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "MarginSceneSize.After",
+      "MetaInstanceID": "635f9180-4251-41b7-b183-d760fbd2f697",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1000"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Index",
+      "MetaInstanceID": "62218228-6561-41ea-b315-10307409014b",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    },
+    {
+      "Name": "SceneTransitionInfo",
+      "MetaInstanceID": "9a4669ed-cb56-428d-a496-9e0ccd0d8b07",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "d06d329a-9484-40b6-879e-f730f7c70395",
+      "MetaID": "01945b29-f071-4366-943e-ba188a25ca81",
+      "Name": "ListIndexFunc",
+      "Version": "02fedb91-f8ae-4ac8-83e9-d3330457c563",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID01945b29_f071_4366_943e_ba188a25ca81",
+        "{",
+        "    public class Class_ListIndex : OperatorPart.Function",
+        "    {",
+        "        // >>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Values = 0,",
+        "            X = 1,",
+        "            MarginSceneSizeBefore = 2,",
+        "            MarginSceneSizeAfter = 3",
+        "        }",
+        "        // <<< _inputids",
+        "        // >>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            Index = 0,",
+        "            SceneTransitionInfo = 1",
+        "        }",
+        "        // <<< _outputids",
+        "",
+        "        List<float> _list = new List<float>();",
+        "        ",
+        "        // \"SceneTimeElapsed\", \"SceneTimeRemaining\", \"SceneIndex\"",
+        "        Dictionary<string, float> _map = new Dictionary<string, float>();",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            inputs[(int)InputId.Values].Eval(context);",
+        "            var Values = inputs[(int)InputId.Values];",
+        "            var X = inputs[(int)InputId.X].Eval(context).Value;",
+        "            var MarginSceneSizeBefore = inputs[(int)InputId.MarginSceneSizeBefore].Eval(context).Value;",
+        "            var MarginSceneSizeAfter = inputs[(int)InputId.MarginSceneSizeAfter].Eval(context).Value;",
+        "            // >>> _paramsx",
+        "            // <<< _paramsx",
+        "            ",
+        "            _list.Clear();",
+        "            ",
+        "            foreach (var input in Values.Connections)",
+        "            {",
+        "                _list.Add(input.Eval(context).Value);",
+        "            }",
+        "            _list.Sort();",
+        "            ",
+        "            float elapsed = 0;",
+        "            float remaining = 0;",
+        "            ",
+        "            if (_list.Count == 0) {",
+        "                context.Value = 0;// no items, undefined",
+        "            }",
+        "            else {",
+        "                // add the margin items",
+        "                _list.Add(_list[_list.Count - 1] + MarginSceneSizeAfter);",
+        "                _list.Insert(0, _list[0] - MarginSceneSizeBefore);",
+        "                ",
+        "                // X is within the set. find which indices it straddles.",
+        "                for (int i = 1; i < _list.Count; ++ i) {",
+        "                    float right = _list[i];",
+        "                    float left = _list[i-1];",
+        "                    if (right == X) {",
+        "                        // case is needed to avoid div0",
+        "                        context.Value = i;",
+        "                        elapsed = 0;",
+        "                        remaining = right - left;",
+        "                        break;",
+        "                    }",
+        "",
+        "                    if (right == left)",
+        "                        continue;// duplicate list values. skip it and avoid a div0",
+        "",
+        "                    if (right > X) {",
+        "                        // calculate 0-1 position within these elements",
+        "                        // left index is i - 1",
+        "                        // right index is i",
+        "                        //Logger.Info(this,\"left val={0} index={1}, right val = {2}, index={3}\", left, i-1, right, i);",
+        "                        float y = X - left;",
+        "                        elapsed = y;",
+        "                        y /= right - left;",
+        "                        context.Value = i - 1 + y;",
+        "                        remaining = right - X;",
+        "                        break;",
+        "                    }",
+        "                }",
+        "            }",
+        "            ",
+        "            _map[\"SceneTimeElapsed\"] = elapsed;",
+        "            _map[\"SceneTimeRemaining\"] = remaining;",
+        "            _map[\"SceneIndex\"] = context.Value;",
+        "            context.Dynamic = _map;",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c1d59c21-eb8c-4794-a65f-a6b38a6e47e6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d06d329a-9484-40b6-879e-f730f7c70395"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "125ce5c2-e458-48c1-9d63-814338f88fdc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d06d329a-9484-40b6-879e-f730f7c70395"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "da9ff367-110b-4020-af5b-7dde945b72ca",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d06d329a-9484-40b6-879e-f730f7c70395"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "635f9180-4251-41b7-b183-d760fbd2f697",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d06d329a-9484-40b6-879e-f730f7c70395"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d06d329a-9484-40b6-879e-f730f7c70395",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "62218228-6561-41ea-b315-10307409014b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d06d329a-9484-40b6-879e-f730f7c70395",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "9a4669ed-cb56-428d-a496-9e0ccd0d8b07"
+    }
+  ]
+}

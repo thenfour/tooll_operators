@@ -1,5 +1,5 @@
 {
-  "Name": "ImageCyclerXXX",
+  "Name": "XXXImageCyclerXXX",
   "_id": "b68df3e8-47b0-48aa-b662-6427073b0a34",
   "Namespace": "user.tenfour",
   "Description": "Composes 2 images in sequence\r\nLike a \"Switch that blends images\"\r\nfork of BlendImages\r\n\r\nno. use SelectFromImage\r\n",
@@ -293,7 +293,7 @@
     {
       "MetaInstanceID": "35e4190b-a4f4-4ea4-921a-7ea1fd2ab1e9",
       "MetaID": "179c8120-ef75-4615-963c-91510b0ff2bf",
-      "Name": "ImageCyclerXXXFunc",
+      "Name": "XXXImageCyclerXXXFunc",
       "Version": "0b966296-a19f-417d-a561-4e9b5e0346d4",
       "Type": "Float",
       "IsMultiInput": "True",

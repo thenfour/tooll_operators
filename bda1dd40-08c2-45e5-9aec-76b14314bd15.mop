@@ -23,6 +23,7 @@
           "float2 Position;",
           "float2 GlimmerOffset;",
           "float Layers;",
+          "float Rotation;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -126,6 +127,7 @@
           "    uv -= .5;\r",
           "    uv *= Zoom;//+frac(beatIntensity);\r",
           "    uv = mul(uv, rot2D((1.-frac(beatIntensity))*.01));\r",
+          "    uv = mul(uv, rot2D(Rotation));\r",
           "    uv += Position;// + frac(iBeat)*4.;\r",
           "    \r",
           "    // start with tile pattern\r",
@@ -293,6 +295,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Rotation",
+      "MetaInstanceID": "6b1bc1fa-a7db-4033-8fc3-cf7c78e01cd3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -307,7 +326,7 @@
       "MetaInstanceID": "f789b586-b403-4cf1-9d4f-1b0d9d3c2029",
       "MetaID": "6472cfb2-d03b-4af4-bcbe-c74e9914f229",
       "Name": "SH_BehindGlassBricks2Func",
-      "Version": "8a36c183-5c42-4fc0-99e2-24a479ae66a5",
+      "Version": "9f6c602b-75b5-4756-a08d-132b8604b0a6",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -334,7 +353,8 @@
         "            PositionY = 3,",
         "            GlimmerOffsetX = 4,",
         "            GlimmerOffsetY = 5,",
-        "            Layers = 6",
+        "            Layers = 6,",
+        "            Rotation = 7",
         "        }",
         "        //<<< _inputids",
         "",
@@ -349,6 +369,7 @@
         "            var GlimmerOffsetY = inputs[(int)InputId.GlimmerOffsetY].Eval(context).Value;",
         "            var GlimmerOffset = new Vector2(GlimmerOffsetX, GlimmerOffsetY);",
         "            var Layers = inputs[(int)InputId.Layers].Eval(context).Value;",
+        "            var Rotation = inputs[(int)InputId.Rotation].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -361,6 +382,7 @@
         "                    _effect.GetVariableByName(\"Position\").AsVector().Set(new Vector2(PositionX, PositionY));",
         "                    _effect.GetVariableByName(\"GlimmerOffset\").AsVector().Set(new Vector2(GlimmerOffsetX, GlimmerOffsetY));",
         "                    _effect.GetVariableByName(\"Layers\").AsScalar().Set(Layers);",
+        "                    _effect.GetVariableByName(\"Rotation\").AsScalar().Set(Rotation);",
         "                //<<< _setup",
         "",
         "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -438,6 +460,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "23617a0c-0dc1-4b5d-a0be-ce6c8f049f6c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f789b586-b403-4cf1-9d4f-1b0d9d3c2029"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6b1bc1fa-a7db-4033-8fc3-cf7c78e01cd3",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "f789b586-b403-4cf1-9d4f-1b0d9d3c2029"
     }

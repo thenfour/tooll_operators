@@ -1,0 +1,96 @@
+{
+  "Name": "HashString",
+  "_id": "cc974fc8-6ae2-4176-88d9-2e9760066b72",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "String",
+      "MetaInstanceID": "f881277e-8c1a-4360-ab04-262c50765952",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": ""
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "9f19621f-ee70-4cbc-8b7d-8f0a9a4e301d",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "d279fa26-b7a4-4a4d-83f6-372443a1ad52",
+      "MetaID": "5b8da823-a160-4535-9a41-b7f7ebc4b134",
+      "Name": "HashStringFunc",
+      "Version": "ad7680b5-0056-4e35-8d22-7f523bd44dc7",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "",
+        "namespace Framefield.Core.ID5b8da823_a160_4535_9a41_b7f7ebc4b134",
+        "{",
+        "    public class Class_HashString : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            String = 0",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> _params",
+        "            var String = inputs[(int)InputId.String].Eval(context).Text;",
+        "            //<<< _params",
+        "",
+        "            context.Value = String.GetHashCode();",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f881277e-8c1a-4360-ab04-262c50765952",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d279fa26-b7a4-4a4d-83f6-372443a1ad52"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d279fa26-b7a4-4a4d-83f6-372443a1ad52",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "9f19621f-ee70-4cbc-8b7d-8f0a9a4e301d"
+    }
+  ]
+}

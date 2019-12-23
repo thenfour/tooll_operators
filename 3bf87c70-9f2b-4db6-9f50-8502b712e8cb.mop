@@ -1,0 +1,122 @@
+{
+  "Name": "SelectString",
+  "_id": "3bf87c70-9f2b-4db6-9f50-8502b712e8cb",
+  "Namespace": "user.tenfour.string",
+  "Description": "Extracts the Nth Element of an incoming List<String>\r\n",
+  "Inputs": [
+    {
+      "Name": "StringList",
+      "MetaInstanceID": "aefd5849-9959-469e-8d64-e83756dd7e80",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Index",
+      "MetaInstanceID": "90aa7ca2-d8b0-4461-9777-96bdd06364b6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "0",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "2c0f3da2-71f1-4cd2-a177-aa6dd04f87c4",
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "eddd142f-2cdc-4357-bb29-54f82cf90a65",
+      "MetaID": "3e0720ec-fd1c-47d2-b4da-3a43e28fa9b8",
+      "Name": "SelectStringFunc",
+      "Version": "9c2776b9-d080-4b30-a946-54c8e83f78f2",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "",
+        "namespace Framefield.Core.ID3e0720ec_fd1c_47d2_b4da_3a43e28fa9b8",
+        "{",
+        "    public class Class_SelectString : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            StringList = 0,",
+        "            Index = 1",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> params",
+        "            dynamic StringList = inputs[(int)InputId.StringList].Eval(context).Dynamic;",
+        "            int Index = (int) inputs[(int)InputId.Index].Eval(context).Value;",
+        "            //<<< params            ",
+        "            if(StringList == null) {",
+        "                Logger.Info(this,\"Can't convert incoming structure to Dynamic\");",
+        "                return context;",
+        "            }",
+        "            ",
+        "                context.Text= StringList[Index % StringList.Count];",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "aefd5849-9959-469e-8d64-e83756dd7e80",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "eddd142f-2cdc-4357-bb29-54f82cf90a65"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "90aa7ca2-d8b0-4461-9777-96bdd06364b6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "eddd142f-2cdc-4357-bb29-54f82cf90a65"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "eddd142f-2cdc-4357-bb29-54f82cf90a65",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2c0f3da2-71f1-4cd2-a177-aa6dd04f87c4"
+    }
+  ]
+}

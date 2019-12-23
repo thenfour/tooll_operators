@@ -1,0 +1,121 @@
+{
+  "Name": "SelectString",
+  "_id": "c247d6e7-faf6-48ef-8f96-1e4017d8b145",
+  "Namespace": "user.tenfour",
+  "Description": "another attempt. wth\r\n",
+  "Inputs": [
+    {
+      "Name": "Strings",
+      "MetaInstanceID": "a0611e5b-51c5-4fbe-92c5-78f1b9e0e9e3",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": ""
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Selector",
+      "MetaInstanceID": "2ef1f045-b34c-49d1-8479-90f0d1a1baba",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "80d54f7d-7a02-47d7-967a-160fda18f19e",
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "f4d9ee2d-046d-4bcc-b87b-32da02f23042",
+      "MetaID": "ecbcb744-66ac-47ea-899b-aceb842cee2f",
+      "Name": "SelectStringFunc",
+      "Version": "8c775b11-73d9-484f-8592-99f25541d7a3",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "",
+        "namespace Framefield.Core.IDecbcb744_66ac_47ea_899b_aceb842cee2f",
+        "{",
+        "    public class Class_SelectString : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Strings = 0,",
+        "            Selector = 1",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> _params",
+        "            var Strings = inputs[(int)InputId.Strings].Eval(context).Text;",
+        "            var Selector = inputs[(int)InputId.Selector].Eval(context).Value;",
+        "            //<<< _params",
+        "",
+        "            context.Text = \"hi\";",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f4d9ee2d-046d-4bcc-b87b-32da02f23042",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "80d54f7d-7a02-47d7-967a-160fda18f19e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a0611e5b-51c5-4fbe-92c5-78f1b9e0e9e3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f4d9ee2d-046d-4bcc-b87b-32da02f23042"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2ef1f045-b34c-49d1-8479-90f0d1a1baba",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f4d9ee2d-046d-4bcc-b87b-32da02f23042"
+    }
+  ]
+}

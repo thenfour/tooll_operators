@@ -1,5 +1,5 @@
 {
-  "Name": "TestServerStateXX",
+  "Name": "xxTestServerStateXX",
   "_id": "ae607e87-0f47-4c14-ac1e-3e5264ad140e",
   "Namespace": "user.tenfour",
   "Description": "fork of Glow but supports a glow color",
@@ -189,7 +189,7 @@
       }
     },
     {
-      "Name": "BlendImagesAddWithAlpha",
+      "Name": "BlendImagesAddWithAlphaXX",
       "MetaInstanceID": "564bf12c-a2a4-4284-8b3b-45891da205d6",
       "MetaID": "855aae3c-97f3-43c9-9304-06e56c3715a7",
       "OperatorProperties": {

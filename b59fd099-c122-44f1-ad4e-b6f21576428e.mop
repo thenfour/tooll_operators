@@ -1,0 +1,198 @@
+{
+  "Name": "RemapSKTimeClipHard",
+  "_id": "b59fd099-c122-44f1-ad4e-b6f21576428e",
+  "Namespace": "user.tenfour",
+  "Description": "ver 3\r\njust remaps a sk timeclipvalue to specified values pre/during/out",
+  "Inputs": [
+    {
+      "Name": "TimeClipObject",
+      "MetaInstanceID": "998d13f3-1460-4e8c-8624-e52e883144fd",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Pre",
+      "MetaInstanceID": "35d87341-3fae-4ed8-a4be-2a21342ad245",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value before the clip starts\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.During",
+      "MetaInstanceID": "38aa1a74-5bf1-4045-852a-6d5c1cc882d2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value during the clip\r\n\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Post",
+      "MetaInstanceID": "6ba48e91-2a3c-41b3-9381-ad91df08c7d4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value after the clip is over\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "b04ed298-24ed-4876-b7c8-18d676f25e58",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "cba77e59-fe8f-4618-8748-25e2b1ef8d46",
+      "MetaID": "a3951a5b-f80e-421e-97a6-6a636282f761",
+      "Name": "RemapSKTimeClipHardFunc",
+      "Version": "2a8fbc3a-e3e7-438a-a4e2-1426df8cc2e3",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDa3951a5b_f80e_421e_97a6_6a636282f761",
+        "{",
+        "    public class Class_RemapSKTimeClipHard : OperatorPart.Function,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            Value = 0",
+        "        }",
+        "        //<<< _outputids",
+        "        ",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            OutputValuePre = 0,",
+        "            OutputValueDuring = 1,",
+        "            OutputValuePost = 2,",
+        "            TimeClipObject = 3",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            var prevValue = context.Value;",
+        "            //>>> _params",
+        "            var OutputValuePre = inputs[(int)InputId.OutputValuePre].Eval(context).Value;",
+        "            var OutputValueDuring = inputs[(int)InputId.OutputValueDuring].Eval(context).Value;",
+        "            var OutputValuePost = inputs[(int)InputId.OutputValuePost].Eval(context).Value;",
+        "            var OutputValue = new Vector3(OutputValuePre, OutputValueDuring, OutputValuePost);",
+        "            var TimeClipObject = inputs[(int)InputId.TimeClipObject].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            //<<< _params",
+        "            ",
+        "            //ITime",
+        "            Framefield.Core.OperatorPartTraits.ITimeClip tc = TimeClipObject as Framefield.Core.OperatorPartTraits.ITimeClip;",
+        "            if (tc == null) {",
+        "                context.Value = OutputValuePre;",
+        "                return context;",
+        "            }",
+        "            ",
+        "            float clipIn = (float) tc.StartTime;",
+        "            float clipOut = (float)tc.EndTime;",
+        "            ",
+        "            if (context.Time < clipIn)",
+        "                context.Value = OutputValuePre;",
+        "            else if (context.Time < clipOut)",
+        "                context.Value = OutputValueDuring;",
+        "            else",
+        "                context.Value = OutputValuePost;",
+        "",
+        "            return context;",
+        "        }",
+        "        ",
+        "",
+        "    }",
+        "}"
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "35d87341-3fae-4ed8-a4be-2a21342ad245",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cba77e59-fe8f-4618-8748-25e2b1ef8d46"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "38aa1a74-5bf1-4045-852a-6d5c1cc882d2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cba77e59-fe8f-4618-8748-25e2b1ef8d46"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6ba48e91-2a3c-41b3-9381-ad91df08c7d4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cba77e59-fe8f-4618-8748-25e2b1ef8d46"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "998d13f3-1460-4e8c-8624-e52e883144fd",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cba77e59-fe8f-4618-8748-25e2b1ef8d46"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cba77e59-fe8f-4618-8748-25e2b1ef8d46",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b04ed298-24ed-4876-b7c8-18d676f25e58"
+    }
+  ]
+}

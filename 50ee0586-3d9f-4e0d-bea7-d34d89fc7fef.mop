@@ -1,0 +1,108 @@
+{
+  "Name": "SKBeatsToSeconds",
+  "_id": "50ee0586-3d9f-4e0d-bea7-d34d89fc7fef",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Beats",
+      "MetaInstanceID": "9a11d6f0-c1c1-4cfb-87c9-1ec6a4b396c4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Seconds",
+      "MetaInstanceID": "2b39a8e1-86d2-4a26-865b-bb32875b46af",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "7fb9b197-bffe-432a-a356-3da160ce71be",
+      "MetaID": "4236919a-6fea-4dfc-8b1d-365e58a1d7b9",
+      "Name": "SKBeatsToSecondsFunc",
+      "Version": "9a1aed8a-f6b7-485c-a900-774ff876b473",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using Framefield.Core.Profiling;",
+        "",
+        "namespace Framefield.Core.ID4236919a_6fea_4dfc_8b1d_365e58a1d7b9",
+        "{",
+        "    public class Class_SKBeatsToSeconds : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Beats = 0",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var Beats = inputs[(int)InputId.Beats].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            float bpm = 100;",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                context.Time = ((float)skstate.ProgramTime);",
+        "                bpm = ((float)skstate.BPM);",
+        "            }",
+        "           ",
+        "            context.Value = (float)(60 * Beats) / bpm;",
+        "            return context;",
+        "        }",
+        "",
+        "        private double _time; ",
+        "        private double _lastTime;",
+        "        private float _lastResetTrigger;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9a11d6f0-c1c1-4cfb-87c9-1ec6a4b396c4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7fb9b197-bffe-432a-a356-3da160ce71be"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7fb9b197-bffe-432a-a356-3da160ce71be",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b39a8e1-86d2-4a26-865b-bb32875b46af"
+    }
+  ]
+}

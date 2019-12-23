@@ -1,5 +1,5 @@
 {
-  "Name": "SH_GlowCells",
+  "Name": "SH_GlowCellsXXX",
   "_id": "84de6ddf-5803-402f-bcd6-03f07b3e8281",
   "Namespace": "user.tenfour.shaders",
   "Description": "",
@@ -101,7 +101,7 @@
           "{\r",
           "    float2 uv = input.texCoord;\r",
           "    float2 R = RenderTargetSize;\r",
-          "    float2 originalUV = uv + Position;\r",
+          "    float2 originalUV = uv + Position;;\r",
           "    uv.x *= R.x / R.y;\r",
           "    uv += Position + 1e4;\r",
           "    uv *= Zoom;\r",
@@ -498,7 +498,7 @@
     {
       "MetaInstanceID": "7b89689e-8590-4211-a6b8-ae8e0944f419",
       "MetaID": "b181c8c9-bffb-449b-990a-31862537548d",
-      "Name": "SH_GlowCellsFunc",
+      "Name": "SH_GlowCellsXXXFunc",
       "Version": "17e8d59f-1465-4f78-a6cd-afae2d99f992",
       "Type": "Float",
       "IsMultiInput": "True",

@@ -1,0 +1,399 @@
+{
+  "Name": "RemapSKTimeClipCurve",
+  "_id": "e505157d-2695-4420-bec7-914fe8fcdeb6",
+  "Namespace": "user.tenfour",
+  "Description": "ver 3\r\ncombines SKTimeClipValue and TransitionCurve",
+  "Inputs": [
+    {
+      "Name": "TimeClipObject",
+      "MetaInstanceID": "071e9fff-4c55-48dd-9864-465ee973aba7",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Pre",
+      "MetaInstanceID": "ae79939a-1136-4b78-906c-fdb30fcc9df2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value before the clip starts\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.During",
+      "MetaInstanceID": "0a4c97fc-dcfc-41f0-a91c-7a6eb366a0ba",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value during the clip\r\n\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputValue.Post",
+      "MetaInstanceID": "6fb1dd55-3f6e-47a2-946b-c6273b04964d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "target value after the clip is over\r\n",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.AnticipationTime",
+      "MetaInstanceID": "86d06b15-798d-4a48-a3e4-87e56672e919",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.ReleaseTime",
+      "MetaInstanceID": "c152d919-fcea-40dc-b1fd-4b76d85e93c3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "In.Slope",
+      "MetaInstanceID": "520c0a1b-96b5-4dea-8fc9-2b7d0e1ba560",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.AnticipationTime",
+      "MetaInstanceID": "6de2d21a-e662-4c95-b7bb-fb9e4cb2c21a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.ReleaseTime",
+      "MetaInstanceID": "1a959e27-9b26-4a47-a3fc-598c6a288c84",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Out.Slope",
+      "MetaInstanceID": "b01d84be-dfa8-438e-a650-6e3913724989",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.95",
+      "Max": "0.95",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "d839e1bd-ab77-48e6-90b6-b1aa6e65919d",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "02905193-6ac9-4e51-87ae-cfb0c836166d",
+      "MetaID": "d4d53191-b486-4063-9ef4-ed1c77513cf4",
+      "Name": "RemapSKTimeClipCurveFunc",
+      "Version": "3ed10095-eb55-4cb1-8b29-383c77ba8ac7",
+      "Type": "Generic",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDd4d53191_b486_4063_9ef4_ed1c77513cf4",
+        "{",
+        "    public class Class_SKTimeClipMap : OperatorPart.Function,",
+        "                                  Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _outputids",
+        "        private enum OutputId",
+        "        {",
+        "            Value = 0",
+        "        }",
+        "        //<<< _outputids",
+        "        ",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            OutputValuePre = 0,",
+        "            OutputValueDuring = 1,",
+        "            OutputValuePost = 2,",
+        "            InAnticipationTime = 3,",
+        "            InReleaseTime = 4,",
+        "            InSlope = 5,",
+        "            OutAnticipationTime = 6,",
+        "            OutReleaseTime = 7,",
+        "            OutSlope = 8,",
+        "            TimeClipObject = 9",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            var prevValue = context.Value;",
+        "            //>>> _params",
+        "            var OutputValuePre = inputs[(int)InputId.OutputValuePre].Eval(context).Value;",
+        "            var OutputValueDuring = inputs[(int)InputId.OutputValueDuring].Eval(context).Value;",
+        "            var OutputValuePost = inputs[(int)InputId.OutputValuePost].Eval(context).Value;",
+        "            var OutputValue = new Vector3(OutputValuePre, OutputValueDuring, OutputValuePost);",
+        "            var InAnticipationTime = inputs[(int)InputId.InAnticipationTime].Eval(context).Value;",
+        "            var InReleaseTime = inputs[(int)InputId.InReleaseTime].Eval(context).Value;",
+        "            var InSlope = inputs[(int)InputId.InSlope].Eval(context).Value;",
+        "            var In = new Vector3(InAnticipationTime, InReleaseTime, InSlope);",
+        "            var OutAnticipationTime = inputs[(int)InputId.OutAnticipationTime].Eval(context).Value;",
+        "            var OutReleaseTime = inputs[(int)InputId.OutReleaseTime].Eval(context).Value;",
+        "            var OutSlope = inputs[(int)InputId.OutSlope].Eval(context).Value;",
+        "            var Out = new Vector3(OutAnticipationTime, OutReleaseTime, OutSlope);",
+        "            var TimeClipObject = inputs[(int)InputId.TimeClipObject].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            //<<< _params",
+        "            ",
+        "            //ITime",
+        "            Framefield.Core.OperatorPartTraits.ITimeClip tc = TimeClipObject as Framefield.Core.OperatorPartTraits.ITimeClip;",
+        "            if (tc == null) {",
+        "                context.Value = OutputValuePre;",
+        "                return context;",
+        "            }",
+        "            ",
+        "            float clipIn = (float) tc.StartTime;",
+        "            float clipOut = (float)tc.EndTime;",
+        "                    ",
+        "            float leftValue = MapValue(",
+        "                OutputValuePre, OutputValueDuring,",
+        "                context.Time,",
+        "                InAnticipationTime, InReleaseTime,",
+        "                clipIn,",
+        "                InSlope",
+        "                );",
+        "",
+        "            float rightValue = MapValue(",
+        "                leftValue, OutputValuePost,",
+        "                context.Time,",
+        "                OutAnticipationTime, OutReleaseTime,",
+        "                clipOut,",
+        "                OutSlope",
+        "                );",
+        "",
+        "            context.Value = rightValue;",
+        "            return context;",
+        "        }",
+        "        ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "        ",
+        "        private float MapValue(float leftValue, float rightValue, float time, float antTime, float relTime, float edgeTime, float slope)",
+        "        {",
+        "            time -= edgeTime;",
+        "            double x = time;",
+        "            double y = 0;",
+        "            if ((antTime + relTime) == 0) {",
+        "                // avoid div0; deal with instant transitions.",
+        "                x = Math.Sign(x);",
+        "            } else {",
+        "                x = time + antTime;",
+        "                x /= antTime + relTime;",
+        "            }",
+        "            ",
+        "            if (x <= 0) y = 0;",
+        "            else if (x >= 1) y = 1;",
+        "            else {",
+        "                // within curve range",
+        "                double p = antTime / (antTime + relTime);",
+        "                    y = SmoothStepVariable(x, p, slope);",
+        "            }",
+        "            return Utilities.Lerp(leftValue, rightValue, (float)y);",
+        "            return 0.0f;",
+        "        }",
+        "",
+        "",
+        "    }",
+        "}"
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ae79939a-1136-4b78-906c-fdb30fcc9df2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0a4c97fc-dcfc-41f0-a91c-7a6eb366a0ba",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6fb1dd55-3f6e-47a2-946b-c6273b04964d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "86d06b15-798d-4a48-a3e4-87e56672e919",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c152d919-fcea-40dc-b1fd-4b76d85e93c3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "520c0a1b-96b5-4dea-8fc9-2b7d0e1ba560",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6de2d21a-e662-4c95-b7bb-fb9e4cb2c21a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1a959e27-9b26-4a47-a3fc-598c6a288c84",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b01d84be-dfa8-438e-a650-6e3913724989",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "071e9fff-4c55-48dd-9864-465ee973aba7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "02905193-6ac9-4e51-87ae-cfb0c836166d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d839e1bd-ab77-48e6-90b6-b1aa6e65919d"
+    }
+  ]
+}
