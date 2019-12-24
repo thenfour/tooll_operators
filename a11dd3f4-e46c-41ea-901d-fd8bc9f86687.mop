@@ -124,7 +124,7 @@
       }
     },
     {
-      "Name": "TransitionCurve",
+      "Name": "TransitionCurve(old)",
       "MetaInstanceID": "766b6c72-a5a9-48a9-b992-ca61e7ebf804",
       "MetaID": "e29f442c-bac6-46b1-a7d2-3af025f68185",
       "OperatorProperties": {
@@ -175,7 +175,7 @@
       }
     },
     {
-      "Name": "TransitionCurve",
+      "Name": "TransitionCurve(old)",
       "MetaInstanceID": "8dd92dd9-b21c-4a33-beb0-7b2960da1bd0",
       "MetaID": "e29f442c-bac6-46b1-a7d2-3af025f68185",
       "OperatorProperties": {
@@ -219,14 +219,14 @@
       }
     },
     {
-      "Name": "TransitionCurve",
+      "Name": "TransitionCurve(old)",
       "MetaInstanceID": "a7830fb1-9155-4f85-9ce4-762a2cb35ba3",
       "MetaID": "e29f442c-bac6-46b1-a7d2-3af025f68185",
       "OperatorProperties": {
         "Name": "",
         "PosX": "-189.776717214322",
         "PosY": "-120.143180669593",
-        "Width": "100",
+        "Width": "150",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
@@ -297,8 +297,8 @@
       "MetaID": "9d7cc06b-ebfb-438a-a434-d9e96c74ad49",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-14.8038281618854",
-        "PosY": "-315.274236726929",
+        "PosX": "4.09026917772224",
+        "PosY": "-324.721285396733",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",

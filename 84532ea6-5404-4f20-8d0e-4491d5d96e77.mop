@@ -45,6 +45,8 @@
           "float CellWrapMode;",
           "float2 CellSkew;",
           "float2 CellSkewCenter;",
+          "float2 ShadeStrength;",
+          "float2 ShadeShape;",
           "//<<< _parameters\r",
           "\r",
           "static const float PI = atan(1.)*4.;\r",
@@ -186,6 +188,11 @@
           "\r",
           "    float2 uv = (input.texCoord - cellOrig) / cellSize;// map this cell to 0-1 uv\r",
           "    \r",
+          "    float2 shade2 = lerp(1., min(uv, 1.-uv), ShadeStrength);\r",
+          "    shade2 = pow(max(0,shade2), ShadeShape);\r",
+          "    float shade = min(shade2.x, shade2.y);//horizShade;\r",
+          "    shade = pow(max(0,shade), .3);\r",
+          "\r",
           "    uv += _translation;\r",
           "     \r",
           "    uv -= ScalingCenter;\r",
@@ -220,7 +227,10 @@
           "    \r",
           "    uv /= CellCount;// scale back to real uv\r",
           "    uv += cellOrig;// and place back in the cell.        \r",
-          "    return Image.Sample(samLinearWrap, uv) * float4(1,1,1,a);\r",
+          "    \r",
+          "    float4 ret = Image.Sample(samLinearWrap, uv) * float4(1,1,1,a);\r",
+          "    ret.rgb *= shade;\r",
+          "    return ret;\r",
           "}\r",
           "\r",
           "//<<< PS\r",
@@ -1050,6 +1060,74 @@
       "Scale": "1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "ShadeStrength.X",
+      "MetaInstanceID": "d20e7efd-96e2-403e-af56-1e9695df2ce4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ShadeStrength.Y",
+      "MetaInstanceID": "aef71dc1-722b-4836-9bca-e3b938d87c64",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ShadeShape.X",
+      "MetaInstanceID": "5d06faa9-3887-4d28-a33f-f7673527d07c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ShadeShape.Y",
+      "MetaInstanceID": "05c69ae2-e2ca-4691-8801-6d25c21c1c06",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -1064,7 +1142,7 @@
       "MetaInstanceID": "d2f7be46-d89d-41ca-b1c7-48c3228ca908",
       "MetaID": "02e37639-0801-492f-8be4-fce0d6367bf9",
       "Name": "SlashImageFunc",
-      "Version": "4c964c4d-8cca-4041-8d6b-79689cab7cc4",
+      "Version": "152dfdcf-5f06-422e-b9f3-6455f16f034a",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -1129,7 +1207,11 @@
         "            CellSkewX = 41,",
         "            CellSkewY = 42,",
         "            CellSkewCenterX = 43,",
-        "            CellSkewCenterY = 44",
+        "            CellSkewCenterY = 44,",
+        "            ShadeStrengthX = 45,",
+        "            ShadeStrengthY = 46,",
+        "            ShadeShapeX = 47,",
+        "            ShadeShapeY = 48",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -1198,6 +1280,12 @@
         "            var CellSkewCenterX = inputs[(int)InputId.CellSkewCenterX].Eval(context).Value;",
         "            var CellSkewCenterY = inputs[(int)InputId.CellSkewCenterY].Eval(context).Value;",
         "            var CellSkewCenter = new Vector2(CellSkewCenterX, CellSkewCenterY);",
+        "            var ShadeStrengthX = inputs[(int)InputId.ShadeStrengthX].Eval(context).Value;",
+        "            var ShadeStrengthY = inputs[(int)InputId.ShadeStrengthY].Eval(context).Value;",
+        "            var ShadeStrength = new Vector2(ShadeStrengthX, ShadeStrengthY);",
+        "            var ShadeShapeX = inputs[(int)InputId.ShadeShapeX].Eval(context).Value;",
+        "            var ShadeShapeY = inputs[(int)InputId.ShadeShapeY].Eval(context).Value;",
+        "            var ShadeShape = new Vector2(ShadeShapeX, ShadeShapeY);",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -1236,6 +1324,8 @@
         "                    _effect.GetVariableByName(\"CellWrapMode\").AsScalar().Set(CellWrapMode);",
         "                    _effect.GetVariableByName(\"CellSkew\").AsVector().Set(new Vector2(CellSkewX, CellSkewY));",
         "                    _effect.GetVariableByName(\"CellSkewCenter\").AsVector().Set(new Vector2(CellSkewCenterX, CellSkewCenterY));",
+        "                    _effect.GetVariableByName(\"ShadeStrength\").AsVector().Set(new Vector2(ShadeStrengthX, ShadeStrengthY));",
+        "                    _effect.GetVariableByName(\"ShadeShape\").AsVector().Set(new Vector2(ShadeShapeX, ShadeShapeY));",
         "                //<<< _setup",
         "                ",
         "                //Pivot /= CellCount;",
@@ -1546,6 +1636,30 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "5dcb400f-1bab-4973-b307-d5d10f9541e7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d20e7efd-96e2-403e-af56-1e9695df2ce4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "aef71dc1-722b-4836-9bca-e3b938d87c64",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5d06faa9-3887-4d28-a33f-f7673527d07c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "05c69ae2-e2ca-4691-8801-6d25c21c1c06",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "d2f7be46-d89d-41ca-b1c7-48c3228ca908"
     }

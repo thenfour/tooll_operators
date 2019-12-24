@@ -114,10 +114,18 @@
           "    uv += _skew * uv.yx;\r",
           "    uv += SkewCenter;\r",
           "    \r",
-          "    if (WrapMode == 0.) {\r",
-          "        return Image.Sample(samLinear, uv);\r",
+          "    float4 ret;\r",
+          "    if (WrapMode == 1) {\r",
+          "        ret = Image.Sample(samLinearWrap, uv);\r",
+          "    } else {\r",
+          "        ret = Image.Sample(samLinear, uv);\r",
           "    }\r",
-          "    return Image.Sample(samLinearWrap, uv);\r",
+          "    \r",
+          "    if (WrapMode == 2) {\r",
+          "        ret.a *= (uv.x >= 0 && uv.x < 1);\r",
+          "        ret.a *= (uv.y >= 0 && uv.y < 1);\r",
+          "    }\r",
+          "   return ret;\r",
           "}\r",
           "\r",
           "//<<< PS\r",
@@ -397,7 +405,7 @@
       "Relevance": "Optional",
       "Description": "",
       "Min": "0",
-      "Max": "1",
+      "Max": "2",
       "Scale": "1",
       "ScaleType": "Linear",
       "EnumValues": [
@@ -408,6 +416,10 @@
         {
           "Name": "Wrap",
           "Value": "1"
+        },
+        {
+          "Name": "Transparent",
+          "Value": "2"
         }
       ]
     }

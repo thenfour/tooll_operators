@@ -1,0 +1,226 @@
+{
+  "Name": "SKServerBeatSubdivider",
+  "_id": "367ac5bc-179f-4b1e-98cf-808cc94fef67",
+  "Namespace": "user.tenfour",
+  "Description": "hard subdivider.\r\nspecify multiplier + divisor to divide the beat into subdivisions. a beat sequencer.\r\n\r\nThen specify a sequence using dashes and non-dashes. Each non-dash will increment the output.\r\n\r\nSo B-B-BBB- will output a stepped sequence, stepping every time a B occurs. Within the sequence, output will range 1-5\r\n\r\nTODO: this should actually output a ramp, not hard steps.",
+  "Inputs": [
+    {
+      "Name": "BeatOffset",
+      "MetaInstanceID": "a027e4d8-7a0e-4e6f-9fe1-40c0c38005ab",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Multiplier",
+      "MetaInstanceID": "e1ac67dd-f4a7-460f-be47-b7e43813004e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Divisor",
+      "MetaInstanceID": "5d55cd65-b8fd-4a77-8a38-0f4bf300bf62",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0.0001",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SubdivisionOffset",
+      "MetaInstanceID": "652d6b1d-d955-4bc0-847c-49405fd47a9f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Sequence",
+      "MetaInstanceID": "2ee9c1b9-4e2c-4bfb-8a76-4aa84aca3164",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": ""
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "54723eb2-77fd-4456-9612-fbb76c7dd29c",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec",
+      "MetaID": "087ba782-5e94-454a-b09e-af1e1f5c2f17",
+      "Name": "SKServerBeatSubdividerFunc",
+      "Version": "e21e2c63-75c9-47c1-9806-3281bd72f8e7",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID087ba782_5e94_454a_b09e_af1e1f5c2f17",
+        "{",
+        "    public class Class_SKServerBeatSubdivider : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            SubdivisionOffset = 0,",
+        "            Sequence = 1,",
+        "            Multiplier = 2,",
+        "            Divisor = 3,",
+        "            BeatOffset = 4",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var SubdivisionOffset = inputs[(int)InputId.SubdivisionOffset].Eval(context).Value;",
+        "            var Sequence = inputs[(int)InputId.Sequence].Eval(context).Text;",
+        "            var Multiplier = inputs[(int)InputId.Multiplier].Eval(context).Value;",
+        "            var Divisor = inputs[(int)InputId.Divisor].Eval(context).Value;",
+        "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
+        "            //<<< _params",
+        "",
+        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                float subdiv = (float)( (BeatOffset + skstate.Beat) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
+        "                subdiv = subdiv + SubdivisionOffset;",
+        "                if (Sequence.Length == 0) {",
+        "                    context.Value = (float)Math.Floor(subdiv);",
+        "                    return context;",
+        "                }",
+        "",
+        "                // in order to calculate output we will need to know the total # of ON-beats elapsed in this sequence,",
+        "                // and the total # of ON-beats in the sequence.",
+        "",
+        "                float currentIndexInSequence = subdiv % Sequence.Length;",
+        "                ",
+        "                int beatsElapsed = 0;",
+        "                //float subseq = 0;",
+        "                int beatsTotal = 0;",
+        "                for (int i = 0; i < Sequence.Length; ++ i) {",
+        "                    bool on = Sequence[i] != '-';",
+        "                    if (on) {",
+        "                        if (i <= currentIndexInSequence) {",
+        "                            beatsElapsed ++;",
+        "                        }",
+        "                        beatsTotal ++;",
+        "                    }",
+        "                }",
+        "                ",
+        "                float currentSequenceStart = (float)Math.Floor(subdiv / Sequence.Length) * beatsTotal;",
+        "                context.Value = (currentSequenceStart + beatsElapsed);",
+        "                //context.Value %= 10;",
+        "            }",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "54723eb2-77fd-4456-9612-fbb76c7dd29c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "652d6b1d-d955-4bc0-847c-49405fd47a9f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2ee9c1b9-4e2c-4bfb-8a76-4aa84aca3164",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e1ac67dd-f4a7-460f-be47-b7e43813004e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5d55cd65-b8fd-4a77-8a38-0f4bf300bf62",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a027e4d8-7a0e-4e6f-9fe1-40c0c38005ab",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+    }
+  ]
+}

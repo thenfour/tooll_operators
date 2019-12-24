@@ -221,7 +221,7 @@
       }
     },
     {
-      "Name": "SKServerBeatFract",
+      "Name": "SKServerBeatFract (old)",
       "MetaInstanceID": "e6957536-8340-48cf-8060-c746ec9da1c5",
       "MetaID": "811d3e44-ab32-4eee-84b5-014bee839777",
       "OperatorProperties": {
@@ -292,8 +292,8 @@
       "MetaID": "78379d6a-7c6d-45e2-b4b7-f1c3a49c669d",
       "OperatorProperties": {
         "Name": "v2+3 fx aut",
-        "PosX": "-161.930293594752",
-        "PosY": "144.829631082676",
+        "PosX": "-174.318582650391",
+        "PosY": "147.307288893804",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -338,7 +338,7 @@
       }
     },
     {
-      "Name": "SKServerBeatFract",
+      "Name": "SKServerBeatFract (old)",
       "MetaInstanceID": "83987b0e-b7da-4c4a-8c1f-be1c114b2f81",
       "MetaID": "811d3e44-ab32-4eee-84b5-014bee839777",
       "OperatorProperties": {

@@ -88,7 +88,7 @@
           "//<<< _VS\r",
           "\r",
           "//>>> PS\r",
-          "const float PARTITIONS = 9.;\r",
+          "const float PARTITIONS = 4.;\r",
           "const float SHADETHRESH = .85;\r",
           "\r",
           "vec3 dtoa(float d, vec3 amount){\r",

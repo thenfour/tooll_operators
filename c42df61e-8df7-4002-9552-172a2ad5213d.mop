@@ -1458,8 +1458,8 @@
       "MetaID": "184997ce-ee4f-41e3-9804-d15763967711",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "924.091532589102",
-        "PosY": "-265.071882098358",
+        "PosX": "928.26828859701",
+        "PosY": "-269.248638106266",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -1806,6 +1806,113 @@
         "Inputs": [
           {
             "ID": "3d1b280b-6f37-4c53-ab66-ad24603db387",
+            "Type": "Float",
+            "Value": [
+              "2"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTimeClipValue",
+      "MetaInstanceID": "4047314d-fcd0-4659-9593-b855c81458f2",
+      "MetaID": "e4ba1f80-fab0-44d8-bfae-aca670c5a14c",
+      "OperatorProperties": {
+        "Name": "credit",
+        "PosX": "993.506581604758",
+        "PosY": "-93.3204037186559",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "06d21d6a-e9db-41d4-b389-611004359907",
+            "Type": "Float",
+            "Value": [
+              "238"
+            ]
+          },
+          {
+            "ID": "7b535fad-651b-4ef0-b641-039eae5fafe2",
+            "Type": "Float",
+            "Value": [
+              "255"
+            ]
+          },
+          {
+            "ID": "792dcfff-5ada-4f0b-b91e-3bec14f4e078",
+            "Type": "Float",
+            "Value": [
+              "211.8215"
+            ]
+          },
+          {
+            "ID": "771c80ab-234f-4958-a58f-8601b9de7bf5",
+            "Type": "Float",
+            "Value": [
+              "245.9"
+            ]
+          },
+          {
+            "ID": "b0db75d3-01a2-4f85-8492-a4dc1c58cba5",
+            "Type": "Float",
+            "Value": [
+              "3"
+            ]
+          },
+          {
+            "ID": "b0645656-48c2-450b-944f-8f674e7ad0cc",
+            "Type": "Float",
+            "Value": [
+              "0.06486817"
+            ]
+          },
+          {
+            "ID": "15f00ed0-8038-4f5a-93e3-a656413bc308",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          },
+          {
+            "ID": "a27adb71-c182-44de-ad34-80a59781043b",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "7da9ccbc-e00c-48d0-90e6-5857eb454ea0",
+            "Type": "Float",
+            "Value": [
+              "0.5"
+            ]
+          },
+          {
+            "ID": "fb278ebb-bc5c-4492-8794-f1495aa28d11",
+            "Type": "Float",
+            "Value": [
+              "7"
+            ]
+          },
+          {
+            "ID": "5e5b1a15-c26d-44a7-9824-f88e40b0332e",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "c93ad3a9-c229-4f9e-b03c-7532d0bc6df1",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "ceef628f-7166-4d59-960b-7ea9b0000af3",
             "Type": "Float",
             "Value": [
               "2"
@@ -2178,6 +2285,12 @@
       "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"
     },
     {
+      "SourceOp": "4047314d-fcd0-4659-9593-b855c81458f2",
+      "SourceOpPart": "205a259c-c18c-4a58-8f4d-819fa4df4134",
+      "TargetOp": "17b615d0-a37a-4886-8dab-16e92a7aeb3d",
+      "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"
+    },
+    {
       "SourceOp": "da1e90cc-d99d-4758-b42c-b23a58007135",
       "SourceOpPart": "aa9422da-0e3a-46b1-bfb2-0a99244536df",
       "TargetOp": "828da567-b37c-444d-8281-1cd05006351c",
@@ -2191,6 +2304,12 @@
     },
     {
       "SourceOp": "d12effdc-614a-44d3-a9eb-4e6c53f80c0a",
+      "SourceOpPart": "aa9422da-0e3a-46b1-bfb2-0a99244536df",
+      "TargetOp": "828da567-b37c-444d-8281-1cd05006351c",
+      "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"
+    },
+    {
+      "SourceOp": "4047314d-fcd0-4659-9593-b855c81458f2",
       "SourceOpPart": "aa9422da-0e3a-46b1-bfb2-0a99244536df",
       "TargetOp": "828da567-b37c-444d-8281-1cd05006351c",
       "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"

@@ -24,6 +24,8 @@
           "float3 C;",
           "float3 D;",
           "float X;",
+          "float ShowIndicator;",
+          "float ImageX;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -102,12 +104,12 @@
           "\r",
           "float4 PS( PS_IN input ) : SV_Target\r",
           "{\r",
-          "    float3 col = pal(input.texCoord.x);\r",
-          "    //if (input.texCoord.y < .5) {\r",
+          "    float3 col = pal(input.texCoord.x + ImageX);\r",
+          "    if (ShowIndicator > 0) {\r",
           "        if (length(input.texCoord.x - frac(X)) < .005) {\r",
           "            col = 1.0-col;\r",
           "        }\r",
-          "    //}\r",
+          "    }\r",
           "    return float4(col,1);\r",
           "}\r",
           "\r",
@@ -358,6 +360,40 @@
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "ShowIndicator",
+      "MetaInstanceID": "ef381e72-ec34-43a6-9b9c-e54911f77dd3",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ImageX",
+      "MetaInstanceID": "8f6d637e-ab58-4f33-ab37-93db06c9265e",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -387,7 +423,7 @@
       "MetaInstanceID": "6d2a1c5c-eaef-40a4-a3ed-162b4c6c64f0",
       "MetaID": "ca23e967-9122-425b-81e9-45fccf3d25b2",
       "Name": "PaletteCycleVisualizerFunc",
-      "Version": "b6bb98f6-cc7d-49d4-8e05-4e24c6a75f76",
+      "Version": "d44394f7-eb63-42e8-951b-35511ce27b3e",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -421,7 +457,9 @@
         "            DX = 10,",
         "            DY = 11,",
         "            DZ = 12,",
-        "            X = 13",
+        "            X = 13,",
+        "            ShowIndicator = 14,",
+        "            ImageX = 15",
         "        }",
         "        //<<< _inputids",
         "",
@@ -457,6 +495,8 @@
         "            var DZ = inputs[(int)InputId.DZ].Eval(context).Value;",
         "            var D = new Vector3(DX, DY, DZ);",
         "            var X = inputs[(int)InputId.X].Eval(context).Value;",
+        "            var ShowIndicator = inputs[(int)InputId.ShowIndicator].Eval(context).Value;",
+        "            var ImageX = inputs[(int)InputId.ImageX].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            ",
@@ -483,6 +523,8 @@
         "                        _effect.GetVariableByName(\"C\").AsVector().Set(new Vector3(CX, CY, CZ));",
         "                        _effect.GetVariableByName(\"D\").AsVector().Set(new Vector3(DX, DY, DZ));",
         "                        _effect.GetVariableByName(\"X\").AsScalar().Set(X);",
+        "                        _effect.GetVariableByName(\"ShowIndicator\").AsScalar().Set(ShowIndicator);",
+        "                        _effect.GetVariableByName(\"ImageX\").AsScalar().Set(ImageX);",
         "                    //<<< _setup",
         "    ",
         "                    Render(context);",
@@ -589,6 +631,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "7941ecaa-fb9d-4ab6-98cf-b47ca9a761e3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6d2a1c5c-eaef-40a4-a3ed-162b4c6c64f0"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ef381e72-ec34-43a6-9b9c-e54911f77dd3",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6d2a1c5c-eaef-40a4-a3ed-162b4c6c64f0"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8f6d637e-ab58-4f33-ab37-93db06c9265e",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "6d2a1c5c-eaef-40a4-a3ed-162b4c6c64f0"
     },

@@ -661,7 +661,7 @@
       }
     },
     {
-      "Name": "SKServerBeatFract",
+      "Name": "SKServerBeatFract (old)",
       "MetaInstanceID": "ca5334c9-2d40-43ca-b8ee-23c1dc243abf",
       "MetaID": "811d3e44-ab32-4eee-84b5-014bee839777",
       "OperatorProperties": {
@@ -956,9 +956,9 @@
       "MetaID": "8eec37e4-33f4-4447-91bd-c2c4255a49de",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "969.857903544807",
-        "PosY": "-73.8280743949331",
-        "Width": "100",
+        "PosX": "892.697269174055",
+        "PosY": "-66.8134712703193",
+        "Width": "175",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [],

@@ -2,7 +2,7 @@
   "Name": "SquareTunnel",
   "_id": "c6537b49-9cbe-40ef-8101-c2527c456aca",
   "Namespace": "user.tenfour.shaders",
-  "Description": "",
+  "Description": "todo: different shapes, demolishion",
   "Inputs": [
     {
       "Name": "Code",
@@ -25,6 +25,10 @@
           "float TriDepth;",
           "float2 Thickness;",
           "float Rotate;",
+          "float2 SlitherPeriod;",
+          "float SlitherAmt;",
+          "float Shape;",
+          "float Broken;",
           "//<<< _parameters\r",
           "\r",
           "const float iTime;\r",
@@ -103,6 +107,18 @@
           "    return max(q.z-h.y,max(q.x*0.866025+p.y*0.5,-p.y)-h.x*0.5);\r",
           "}\r",
           "*/\r",
+          "\r",
+          "float sdCylinder( vec3 p, vec3 c )\r",
+          "{\r",
+          "  return length(p.xz-c.xy)-c.z;\r",
+          "}\r",
+          "\r",
+          "float sdTorus( vec3 p, vec2 t )\r",
+          "{\r",
+          "  vec2 q = vec2(length(p.xz)-t.x,p.y);\r",
+          "  return length(q)-t.y;\r",
+          "}\r",
+          "\r",
           "float opS( float d1, float d2 )\r",
           "{\r",
           "    return max(-d1,d2);\r",
@@ -126,7 +142,9 @@
           "{\r",
           "    vec3 q = p;\r",
           "    float id = floor(p.z*2.);\r",
-          "    p.z = frac(p.z*2.)-0.5;\r",
+          "    p.z = frac(p.z*2.)-.9;\r",
+          "    p.x += sin(id*SlitherPeriod.x)*SlitherAmt;\r",
+          "    p.y += cos(id*SlitherPeriod.y)*SlitherAmt;\r",
           "    \r",
           "    vec3 h = hash31(id + 1e2);\r",
           "    // x = rotation\r",
@@ -135,7 +153,11 @@
           "\r",
           "    float a = (h.x - .5) * Rotate;\r",
           "    p = mul(p, rotz(a));\r",
-          "    \r",
+          "    if (Broken > 0) {\r",
+          "        //p.xy = sign(p.xy) * pow(abs(p.xy), frac(p.x + (p.z * Broken)) + 1);\r",
+          "    }\r",
+          "\r",
+          "\r",
           "    float outerRad = mix(Radius.x, Radius.y, h.y);\r",
           "    float innerRad = 1.-mix(Thickness.x, Thickness.y, h.z);// 1.-thickness.\r",
           "    innerRad *= outerRad;\r",
@@ -143,8 +165,15 @@
           "\t//float outer = sdTriPrism(p, vec2(outerRad, TriDepth));\r",
           "    //float inner = sdTriPrism(p, vec2(innerRad, TriDepth*2. + 1.));\r",
           "    \r",
-          "    float outer = sdBox(p, vec3(outerRad,outerRad,TriDepth));\r",
-          "    float inner = sdBox(p-vec3(0,0,.5), vec3(innerRad,innerRad,TriDepth*2. + 1.));\r",
+          "    float outer = //Shape == 0 ?\r",
+          "        sdBox(p, vec3(outerRad,outerRad,TriDepth))\r",
+          "       // : sdCylinder(p, vec3(1, 1, 1))\r",
+          "       ;\r",
+          "    \r",
+          "    float inner =// Shape == 0 ?\r",
+          "        sdBox(p-vec3(0,0,.5), vec3(innerRad,innerRad,TriDepth*2. + 1.))\r",
+          "        //: sdCylinder(p-vec3(0,0,.5), vec3(1, 1, 1))\r",
+          "        ;\r",
           "    \r",
           "    return float4(hash31(id), opS(inner, outer));\r",
           "}\r",
@@ -383,6 +412,100 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "SlitherPeriod.X",
+      "MetaInstanceID": "ec1d2bda-f291-4c47-a17c-e109db9e7174",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.05"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0.001",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SlitherPeriod.Y",
+      "MetaInstanceID": "b317d636-1202-47cb-bece-e09213f4dc26",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.06"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0.001",
+      "Max": "10000",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SlitherAmt",
+      "MetaInstanceID": "4cf36563-ccd2-48a3-aaf8-b0c247082971",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Shape",
+      "MetaInstanceID": "5f075f64-9c7f-478a-9bee-b2a87a3eb57f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "Square",
+          "Value": "0"
+        },
+        {
+          "Name": "Ring",
+          "Value": "1"
+        }
+      ]
+    },
+    {
+      "Name": "Broken",
+      "MetaInstanceID": "fae8b912-acd3-4371-baf6-b871e64bac15",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -397,7 +520,7 @@
       "MetaInstanceID": "2e028cdc-625a-4a83-9200-80689b4c00ee",
       "MetaID": "b3bd6684-a3db-41e3-b593-64e1c73a3190",
       "Name": "SquareTunnelFunc",
-      "Version": "c394b930-c511-4195-a6a2-5a2c7e4c15c9",
+      "Version": "3263354a-6bf7-4ab8-921f-666cd756e53b",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -428,7 +551,12 @@
         "            TriDepth = 7,",
         "            ThicknessMin = 8,",
         "            ThicknessMax = 9,",
-        "            Rotate = 10",
+        "            Rotate = 10,",
+        "            SlitherPeriodX = 11,",
+        "            SlitherPeriodY = 12,",
+        "            SlitherAmt = 13,",
+        "            Shape = 14,",
+        "            Broken = 15",
         "        }",
         "        //<<< _inputids",
         "",
@@ -448,6 +576,12 @@
         "            var ThicknessMax = inputs[(int)InputId.ThicknessMax].Eval(context).Value;",
         "            var Thickness = new Vector2(ThicknessMin, ThicknessMax);",
         "            var Rotate = inputs[(int)InputId.Rotate].Eval(context).Value;",
+        "            var SlitherPeriodX = inputs[(int)InputId.SlitherPeriodX].Eval(context).Value;",
+        "            var SlitherPeriodY = inputs[(int)InputId.SlitherPeriodY].Eval(context).Value;",
+        "            var SlitherPeriod = new Vector2(SlitherPeriodX, SlitherPeriodY);",
+        "            var SlitherAmt = inputs[(int)InputId.SlitherAmt].Eval(context).Value;",
+        "            var Shape = (int) inputs[(int)InputId.Shape].Eval(context).Value;",
+        "            var Broken = inputs[(int)InputId.Broken].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -462,6 +596,10 @@
         "                    _effect.GetVariableByName(\"TriDepth\").AsScalar().Set(TriDepth);",
         "                    _effect.GetVariableByName(\"Thickness\").AsVector().Set(new Vector2(ThicknessMin, ThicknessMax));",
         "                    _effect.GetVariableByName(\"Rotate\").AsScalar().Set(Rotate);",
+        "                    _effect.GetVariableByName(\"SlitherPeriod\").AsVector().Set(new Vector2(SlitherPeriodX, SlitherPeriodY));",
+        "                    _effect.GetVariableByName(\"SlitherAmt\").AsScalar().Set(SlitherAmt);",
+        "                    _effect.GetVariableByName(\"Shape\").AsScalar().Set(Shape);",
+        "                    _effect.GetVariableByName(\"Broken\").AsScalar().Set(Broken);",
         "                //<<< _setup",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
@@ -556,6 +694,36 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "c006d1d4-0233-4201-b8ed-76d7cd0fcc77",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2e028cdc-625a-4a83-9200-80689b4c00ee"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ec1d2bda-f291-4c47-a17c-e109db9e7174",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2e028cdc-625a-4a83-9200-80689b4c00ee"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b317d636-1202-47cb-bece-e09213f4dc26",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2e028cdc-625a-4a83-9200-80689b4c00ee"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "4cf36563-ccd2-48a3-aaf8-b0c247082971",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2e028cdc-625a-4a83-9200-80689b4c00ee"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5f075f64-9c7f-478a-9bee-b2a87a3eb57f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2e028cdc-625a-4a83-9200-80689b4c00ee"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "fae8b912-acd3-4371-baf6-b871e64bac15",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "2e028cdc-625a-4a83-9200-80689b4c00ee"
     }

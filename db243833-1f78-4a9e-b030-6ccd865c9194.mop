@@ -22,6 +22,7 @@
           "float Brilliance;",
           "float Animate;",
           "float SubBallSize;",
+          "float Zoom;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -114,7 +115,7 @@
           "{\r",
           "    vec2 uv = fragCoord/iResolution.xy-.5;\r",
           "    uv.x *= iResolution.x / iResolution.y;\r",
-          "    uv *= 16.;\r",
+          "    uv *= Zoom;\r",
           "    //float t = iTime + 1000.;\r",
           "    float t = Animate;\r",
           "    //t *= .2;\r",
@@ -247,6 +248,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Zoom",
+      "MetaInstanceID": "957719b9-b630-4ea1-8026-d10cb7dc60c6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "16"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0.001",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -261,7 +279,7 @@
       "MetaInstanceID": "586682b0-10b1-4b2a-b0f3-e994646f1c76",
       "MetaID": "5292de01-889d-47ab-aecd-e152327d62d6",
       "Name": "SH_CelestialCirclesFunc",
-      "Version": "9ca08e37-e219-4403-a452-665f5c4b5a1f",
+      "Version": "09d1367d-c1ea-453d-8d7c-b701a60a04fa",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -285,7 +303,8 @@
         "            Code = 0,",
         "            Brilliance = 1,",
         "            Animate = 2,",
-        "            SubBallSize = 3",
+        "            SubBallSize = 3,",
+        "            Zoom = 4",
         "        }",
         "        //<<< _inputids",
         "",
@@ -295,6 +314,7 @@
         "            var Brilliance = inputs[(int)InputId.Brilliance].Eval(context).Value;",
         "            var Animate = inputs[(int)InputId.Animate].Eval(context).Value;",
         "            var SubBallSize = inputs[(int)InputId.SubBallSize].Eval(context).Value;",
+        "            var Zoom = inputs[(int)InputId.Zoom].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -306,6 +326,7 @@
         "                    _effect.GetVariableByName(\"Brilliance\").AsScalar().Set(Brilliance);",
         "                    _effect.GetVariableByName(\"Animate\").AsScalar().Set(Animate);",
         "                    _effect.GetVariableByName(\"SubBallSize\").AsScalar().Set(SubBallSize);",
+        "                    _effect.GetVariableByName(\"Zoom\").AsScalar().Set(Zoom);",
         "                //<<< _setup",
         "",
         "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -365,6 +386,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "8c03591c-1e91-49a7-910d-38b6db9c4085",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "586682b0-10b1-4b2a-b0f3-e994646f1c76"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "957719b9-b630-4ea1-8026-d10cb7dc60c6",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "586682b0-10b1-4b2a-b0f3-e994646f1c76"
     }

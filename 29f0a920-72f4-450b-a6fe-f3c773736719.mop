@@ -85,7 +85,7 @@
       "MetaInstanceID": "a6046534-ed3f-4b26-a304-a74a9ed12d0e",
       "MetaID": "fc530095-f8cd-494b-b66f-e1f0ce675291",
       "Name": "SKWebServerFunc",
-      "Version": "853cf10d-10e6-4109-a81d-1eebbdbc389d",
+      "Version": "c8745c0b-4f70-4922-a214-4a209ff10b85",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -176,7 +176,7 @@
         "                    ServerState.ProgramIndex ++;// account for -1 being the 1st program.",
         "                    context.Objects[\"SKPlayerState\"] = ServerState;",
         "                    context.GlobalObjects[\"SKPlayerState\"] = ServerState;",
-        "                    ",
+        "                    Framefield.Core.OperatorPartContext.SKServerState = ServerState;",
         "                }",
         "            }",
         "            context = Input.Eval(context);",

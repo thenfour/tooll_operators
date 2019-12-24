@@ -1,12 +1,12 @@
 {
-  "Name": "SKTransitionCurveTimeMarkerXX",
-  "_id": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
+  "Name": "SKTransitionCurveTimeMarker",
+  "_id": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
   "Namespace": "user.tenfour",
   "Description": "a transition curve which is visible on the timeline view. pretty much superior to transitioncurve vanilla.\r\n\r\nit can support a \"point\" peak curve with ant/release, or a transition before or after the point.\r\n\r\nuse SKRemapTimeMarker to base other curves off this point.\r\n\r\nor use it to automate SKTimeClipValue to combine markers into a timeclip.\r\n\r\nor use ListIndex to determine which TimeMarker the playhead is currently in..... together with SKSceneIndexTransition and SelectImage, and you have a full-on scene switcher based on timemarkers as cues.\r\n",
   "Inputs": [
     {
-      "Name": "TransitionPoint",
-      "MetaInstanceID": "8de355f6-6181-44ec-9263-388655bc1dce",
+      "Name": "TransitionSec",
+      "MetaInstanceID": "4e471f27-5417-4eb0-b568-31a8777d0842",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -22,8 +22,25 @@
       "EnumValues": []
     },
     {
+      "Name": "TransitionBeat",
+      "MetaInstanceID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
       "Name": "Color.R",
-      "MetaInstanceID": "66017789-413a-4a59-8367-cebca97751b3",
+      "MetaInstanceID": "133662e1-c36e-4f88-9a5b-477a4ae5b4d6",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -40,7 +57,7 @@
     },
     {
       "Name": "Color.G",
-      "MetaInstanceID": "7c5cf458-a5ad-4ad8-b33b-f17e8bb02d68",
+      "MetaInstanceID": "3fd6bbcc-35c3-4817-a690-9159237168b5",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -57,7 +74,7 @@
     },
     {
       "Name": "Color.B",
-      "MetaInstanceID": "59233fff-fec0-4221-bb91-a6a7050c746a",
+      "MetaInstanceID": "662b6d4f-f390-480a-9a28-b07794631abd",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -74,7 +91,7 @@
     },
     {
       "Name": "Color.A",
-      "MetaInstanceID": "9b6b51e5-c046-4bc1-a5a4-c9f3d78c7045",
+      "MetaInstanceID": "4918be8f-f456-4035-9e35-d033e1306392",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -91,7 +108,7 @@
     },
     {
       "Name": "OutputABC.A",
-      "MetaInstanceID": "6abec742-dd5f-423f-8e67-54bcb0a93df3",
+      "MetaInstanceID": "b50c3391-4ab8-4274-85e7-13f18585e90e",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -108,7 +125,7 @@
     },
     {
       "Name": "OutputABC.B",
-      "MetaInstanceID": "8f48c14d-7790-4455-b906-60e75254f2b4",
+      "MetaInstanceID": "1b1285ea-595a-426d-9c35-d7390a4dd0fd",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -125,7 +142,7 @@
     },
     {
       "Name": "OutputABC.C",
-      "MetaInstanceID": "c22adec6-c5c6-42d2-a77b-fa8e4d89d26d",
+      "MetaInstanceID": "64729395-61ce-4b5e-b79c-ceedca77ce36",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -142,7 +159,7 @@
     },
     {
       "Name": "ABTimeSlopePos.Time",
-      "MetaInstanceID": "0ab8c8c9-bd45-4ecb-82ae-045d5aca6d69",
+      "MetaInstanceID": "cba0ffb8-7b46-426c-9465-ff0c647ceaa8",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -159,7 +176,7 @@
     },
     {
       "Name": "ABTimeSlopePos.Slope",
-      "MetaInstanceID": "f57ac1fc-ecb6-49d3-8ec2-4ca4fb129fc2",
+      "MetaInstanceID": "efafdf8d-f8b3-4bcd-8ce0-8a52495812de",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -176,7 +193,7 @@
     },
     {
       "Name": "ABTimeSlopePos.CurvePos",
-      "MetaInstanceID": "481b61cf-f73a-4e80-8594-87e2743c54f2",
+      "MetaInstanceID": "690ed981-a86d-4c55-bc4b-a8878969fec1",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -193,7 +210,7 @@
     },
     {
       "Name": "BCTimeSlopePos.Time",
-      "MetaInstanceID": "4b6e0e54-1627-4faa-aade-c9955cb6ea31",
+      "MetaInstanceID": "9a4c34c6-51ce-4f18-88f3-21424d23c76d",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -210,7 +227,7 @@
     },
     {
       "Name": "BCTimeSlopePos.Slope",
-      "MetaInstanceID": "13d007d6-882f-4d04-9897-7c9745a0f494",
+      "MetaInstanceID": "0a7c2e83-d103-4e69-ba4d-6654154c224a",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -227,7 +244,7 @@
     },
     {
       "Name": "BCTimeSlopePos.CurvePos",
-      "MetaInstanceID": "a6078c23-aa35-48a5-a928-1bfd88c84570",
+      "MetaInstanceID": "2e054d01-5460-415b-85dc-9262aee3c08b",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -246,26 +263,26 @@
   "Outputs": [
     {
       "Name": "Value",
-      "MetaInstanceID": "20b3262c-978e-43ad-854a-a68252ce715c",
+      "MetaInstanceID": "35e940bd-ddd7-499b-a9fa-3d5332578469",
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     },
     {
       "Name": "RelativeTime",
-      "MetaInstanceID": "84d4636f-5e11-4f06-b1ac-7f9533d0dc29",
+      "MetaInstanceID": "ebafcbd7-1e5a-47f0-9002-89995dc3df81",
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     },
     {
       "Name": "TransitionPoint",
-      "MetaInstanceID": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "MetaInstanceID": "20a72394-8297-4422-8d4a-1d63c7b02653",
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "10f60b3b-ac94-489d-b65f-b05b22c9a547",
-      "MetaID": "a395e901-2b91-495d-bffb-8a2c2f737ead",
-      "Name": "SKTransitionCurveTimeMarkerXXFunc",
-      "Version": "729b221d-cb3d-44d3-854a-1ad261a4cb63",
+      "MetaInstanceID": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b",
+      "MetaID": "9de60f6b-8040-47b8-81ac-67ee5f1e2a35",
+      "Name": "SKTransitionCurveTimeMarkerFunc",
+      "Version": "e4abe2ed-57e4-4d8e-b89e-7057ef52918f",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -275,7 +292,7 @@
         "using System.Text;",
         "using SharpDX;",
         "",
-        "namespace Framefield.Core.IDa395e901_2b91_495d_bffb_8a2c2f737ead",
+        "namespace Framefield.Core.ID9de60f6b_8040_47b8_81ac_67ee5f1e2a35",
         "{",
         "    public class Class_SKTransitionCurveTimeMarker : OperatorPart.Function,",
         "        Framefield.Core.OperatorPartTraits.ITimeMarker,",
@@ -284,7 +301,7 @@
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            TransitionPoint = 0,",
+        "            TransitionSec = 0,",
         "            ColorR = 1,",
         "            ColorG = 2,",
         "            ColorB = 3,",
@@ -297,7 +314,8 @@
         "            ABTimeSlopePosCurvePos = 10,",
         "            BCTimeSlopePosSlope = 11,",
         "            BCTimeSlopePosCurvePos = 12,",
-        "            OutputABCC = 13",
+        "            OutputABCC = 13,",
+        "            TransitionBeat = 14",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -310,11 +328,48 @@
         "        }",
         "        //<<< _outputids",
         "",
+        "        /*private double BeatsToSeconds(double beats, double bpm)",
+        "        {",
+        "            beats *= 60;",
+        "            beats /= bpm;",
+        "            return beats;",
+        "        }*/",
+        "        private float GetTime(double beats, double sec)",
+        "        {",
+        "            double? beatsec = null;",
+        "            if (Framefield.Core.OperatorPartContext.SKServerState.Server != null) {",
+        "                if (Framefield.Core.OperatorPartContext.SKServerState.Server.Transport != null) {",
+        "                    beatsec = Framefield.Core.OperatorPartContext.SKServerState.Server.Transport.CurrentRegionBeatToRegionSeconds(beats);",
+        "                }",
+        "            }",
+        "            if (!beatsec.HasValue)",
+        "                return (float)sec;//beats (float)(BeatsToSeconds(beats, bpm) + sec);",
+        "            return (float)(sec + beatsec.Value);",
+        "        }",
         "",
         "    \t// for itimemmarker",
         "        public double Time {",
-        "            get { return GetInputValue((int)InputId.TransitionPoint); }",
-        "            set { SetInputValue((int)InputId.TransitionPoint, value); }",
+        "            get",
+        "            {",
+        "                double sec = GetInputValue((int)InputId.TransitionSec);",
+        "                double beats = GetInputValue((int)InputId.TransitionBeat);",
+        "                var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
+        "                //double bpm = skstate.BPM;",
+        "                //if (Math.Abs(bpm) < 1)",
+        "                //    bpm = 120;",
+        "                ",
+        "                //if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                  //  var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                    //bpm = (float)skstate.BPM;",
+        "                    //Logger.Info(this,\"setting time to {0}\", skstate.ProgramTime);",
+        "                //}",
+        "                return GetTime(beats, sec);",
+        "            }",
+        "            set",
+        "            {",
+        "                SetInputValue((int)InputId.TransitionSec, value);",
+        "                SetInputValue((int)InputId.TransitionBeat, 0);",
+        "            }",
         "        }",
         "",
         "",
@@ -376,34 +431,37 @@
         "",
         "",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
-        "            //>>> _params",
-        "            var TransitionPoint = inputs[(int)InputId.TransitionPoint].Eval(context).Value;",
-        "            var ColorR = inputs[(int)InputId.ColorR].Eval(context).Value;",
-        "            var ColorG = inputs[(int)InputId.ColorG].Eval(context).Value;",
-        "            var ColorB = inputs[(int)InputId.ColorB].Eval(context).Value;",
-        "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
-        "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
+        "            //>>> _paramsk",
+        "            var TransitionSec = inputs[(int)InputId.TransitionSec].Eval(context).Value;",
+        "            //var ColorR = inputs[(int)InputId.ColorR].Eval(context).Value;",
+        "            //var ColorG = inputs[(int)InputId.ColorG].Eval(context).Value;",
+        "            //var ColorB = inputs[(int)InputId.ColorB].Eval(context).Value;",
+        "            //var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
+        "            //var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
         "            var OutputABCA = inputs[(int)InputId.OutputABCA].Eval(context).Value;",
         "            var OutputABCB = inputs[(int)InputId.OutputABCB].Eval(context).Value;",
         "            var OutputABCC = inputs[(int)InputId.OutputABCC].Eval(context).Value;",
-        "            var OutputABC = new Vector3(OutputABCA, OutputABCB, OutputABCC);",
+        "            //var OutputABC = new Vector3(OutputABCA, OutputABCB, OutputABCC);",
         "            var ABTimeSlopePosSlope = inputs[(int)InputId.ABTimeSlopePosSlope].Eval(context).Value;",
         "            var ABTimeSlopePosTime = inputs[(int)InputId.ABTimeSlopePosTime].Eval(context).Value;",
         "            var ABTimeSlopePosCurvePos = inputs[(int)InputId.ABTimeSlopePosCurvePos].Eval(context).Value;",
-        "            var ABTimeSlopePos = new Vector3(ABTimeSlopePosSlope, ABTimeSlopePosTime, ABTimeSlopePosCurvePos);",
+        "            //var ABTimeSlopePos = new Vector3(ABTimeSlopePosSlope, ABTimeSlopePosTime, ABTimeSlopePosCurvePos);",
         "            var BCTimeSlopePosTime = inputs[(int)InputId.BCTimeSlopePosTime].Eval(context).Value;",
         "            var BCTimeSlopePosSlope = inputs[(int)InputId.BCTimeSlopePosSlope].Eval(context).Value;",
         "            var BCTimeSlopePosCurvePos = inputs[(int)InputId.BCTimeSlopePosCurvePos].Eval(context).Value;",
-        "            var BCTimeSlopePos = new Vector3(BCTimeSlopePosTime, BCTimeSlopePosSlope, BCTimeSlopePosCurvePos);",
-        "            //<<< _params",
+        "            //var BCTimeSlopePos = new Vector3(BCTimeSlopePosTime, BCTimeSlopePosSlope, BCTimeSlopePosCurvePos);",
+        "            var TransitionBeat = inputs[(int)InputId.TransitionBeat].Eval(context).Value;",
+        "            //<<< _paramsk",
         "            ",
+        "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
         "",
-        "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
-        "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "            //if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                //var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                context.Time = (float)skstate.ProgramTime;",
         "                //Logger.Info(this,\"setting time to {0}\", skstate.ProgramTime);",
-        "            }",
+        "            //}",
         "            ",
+        "            float timeSec = GetTime(TransitionBeat, TransitionSec);",
         "            ",
         "            switch (outputIdx) {",
         "                case (int)OutputId.Value:",
@@ -411,7 +469,7 @@
         "                        OutputABCA, OutputABCB,",
         "                        context.Time,",
         "                        ABTimeSlopePosTime, 0, ABTimeSlopePosCurvePos,",
-        "                        TransitionPoint,",
+        "                        timeSec,",
         "                        ABTimeSlopePosSlope",
         "                        );",
         "",
@@ -419,23 +477,23 @@
         "                        leftValue, OutputABCC,",
         "                        context.Time,",
         "                        0, BCTimeSlopePosTime, BCTimeSlopePosCurvePos,",
-        "                        TransitionPoint,",
+        "                        timeSec,",
         "                        BCTimeSlopePosSlope",
         "                        );",
         "",
         "                    context.Value = rightValue;",
         "                    return context;",
         "                case (int)OutputId.RelativeTime:",
-        "                    context.Value = context.Time - TransitionPoint;",
+        "                    context.Value = context.Time - timeSec;",
         "                    //Logger.Info(this,\"relative time; output={0}\", context.Value);",
         "                    return context;",
         "                case (int)OutputId.TransitionPoint:",
         "                    //Logger.Info(this,\"TransitionPoint; time={0}\", context.Time);",
-        "                    context.Value = TransitionPoint;",
+        "                    context.Value = timeSec;",
         "                    return context;",
         "            }",
         "            ",
-        "            Logger.Info(this,\"unknown outputid\");",
+        "            //Logger.Info(this,\"unknown outputid\");",
         "            return context;",
         "        }",
         "",
@@ -463,105 +521,111 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8de355f6-6181-44ec-9263-388655bc1dce",
+      "SourceOpPart": "4e471f27-5417-4eb0-b568-31a8777d0842",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "66017789-413a-4a59-8367-cebca97751b3",
+      "SourceOpPart": "133662e1-c36e-4f88-9a5b-477a4ae5b4d6",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "7c5cf458-a5ad-4ad8-b33b-f17e8bb02d68",
+      "SourceOpPart": "3fd6bbcc-35c3-4817-a690-9159237168b5",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "59233fff-fec0-4221-bb91-a6a7050c746a",
+      "SourceOpPart": "662b6d4f-f390-480a-9a28-b07794631abd",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "9b6b51e5-c046-4bc1-a5a4-c9f3d78c7045",
+      "SourceOpPart": "4918be8f-f456-4035-9e35-d033e1306392",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "6abec742-dd5f-423f-8e67-54bcb0a93df3",
+      "SourceOpPart": "b50c3391-4ab8-4274-85e7-13f18585e90e",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8f48c14d-7790-4455-b906-60e75254f2b4",
+      "SourceOpPart": "1b1285ea-595a-426d-9c35-d7390a4dd0fd",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "f57ac1fc-ecb6-49d3-8ec2-4ca4fb129fc2",
+      "SourceOpPart": "efafdf8d-f8b3-4bcd-8ce0-8a52495812de",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "0ab8c8c9-bd45-4ecb-82ae-045d5aca6d69",
+      "SourceOpPart": "cba0ffb8-7b46-426c-9465-ff0c647ceaa8",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "4b6e0e54-1627-4faa-aade-c9955cb6ea31",
+      "SourceOpPart": "9a4c34c6-51ce-4f18-88f3-21424d23c76d",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "481b61cf-f73a-4e80-8594-87e2743c54f2",
+      "SourceOpPart": "690ed981-a86d-4c55-bc4b-a8878969fec1",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "13d007d6-882f-4d04-9897-7c9745a0f494",
+      "SourceOpPart": "0a7c2e83-d103-4e69-ba4d-6654154c224a",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "a6078c23-aa35-48a5-a928-1bfd88c84570",
+      "SourceOpPart": "2e054d01-5460-415b-85dc-9262aee3c08b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "c22adec6-c5c6-42d2-a77b-fa8e4d89d26d",
+      "SourceOpPart": "64729395-61ce-4b5e-b79c-ceedca77ce36",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547",
+      "SourceOpPart": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "20b3262c-978e-43ad-854a-a68252ce715c"
+      "TargetOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547",
+      "SourceOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "84d4636f-5e11-4f06-b1ac-7f9533d0dc29"
+      "TargetOpPart": "35e940bd-ddd7-499b-a9fa-3d5332578469"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "10f60b3b-ac94-489d-b65f-b05b22c9a547",
+      "SourceOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "15877404-209d-40ae-91f0-66cce5672ec9"
+      "TargetOpPart": "ebafcbd7-1e5a-47f0-9002-89995dc3df81"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d4922e23-1ca5-4427-b92c-ad8d2c3ff97b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653"
     }
   ]
 }

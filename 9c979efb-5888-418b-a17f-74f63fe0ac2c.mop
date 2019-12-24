@@ -1,12 +1,12 @@
 {
-  "Name": "DitherViaImageAndLUT",
-  "_id": "0f7e8ab8-1c27-460c-bb64-1d85bbfe1a46",
+  "Name": "DitherViaBayerAndLUT",
+  "_id": "9c979efb-5888-418b-a17f-74f63fe0ac2c",
   "Namespace": "user.tenfour",
   "Description": "fork from ditherviaimage",
   "Inputs": [
     {
       "Name": "Code",
-      "MetaInstanceID": "d0078fa8-432a-48f3-b80f-9618641d5a33",
+      "MetaInstanceID": "d7dfe754-78b8-4604-b918-26017dfd23a9",
       "DefaultValue": {
         "Type": "Text",
         "Value": [
@@ -19,15 +19,17 @@
           "//<<< _common parameters\r",
           "\r",
           "//>>> _parameters\r",
-          "Texture2D DitherPattern;",
           "Texture2D Image;",
-          "float DitherStrength01;",
-          "float LUTValues;",
+          "float DitherStrengthMul;",
+          "float PaletteSize;",
           "float2 Pixellate;",
           "Texture2D LUT;",
+          "float Bayer;",
+          "float3 Source;",
           "//<<< _parameters\r",
+          "\r",
           " \r",
-          "SamplerState samLinear\r",
+          "SamplerState samPoint\r",
           "{\r",
           "    Filter = MIN_MAG_MIP_LINEAR;\r",
           "    AddressU = Wrap;\r",
@@ -65,6 +67,45 @@
           "\r",
           "//>>> PS\r",
           "\r",
+          "float bayer2(in float2 fragCoord/*, float2 R*/) {\r",
+          "    static const int dim = 4;\r",
+          "    static const float kern[dim*dim] = {\r",
+          "        0.     ,0.5    ,0.125  ,0.625,\r",
+          " 0.75   ,0.25   ,0.875  ,0.375,\r",
+          " 0.1875 ,0.6875 ,0.0625 ,0.5625,\r",
+          " 0.9375 ,0.4375 ,0.8125 ,0.3125 };\r",
+          "    \r",
+          "    uint2 idx = uint2(fragCoord)% dim;\r",
+          "\r",
+          "    float dith = kern[idx.x + (idx.y * dim)]-.5;\r",
+          "    //float b = tobw(a);\r",
+          "    //o = vec4(b);\r",
+          "    return dith*2;\r",
+          "}\r",
+          "\r",
+          "float bayer4(in float2 fragCoord/*, float2 R*/) {\r",
+          "    static const int dim = 8;\r",
+          "    static const float kern[dim*dim] = {\r",
+          "0.       ,0.5      ,0.125    ,0.625    ,0.03125  ,0.53125  ,0.15625  ,0.65625 ,\r",
+          " 0.75     ,0.25     ,0.875    ,0.375    ,0.78125  ,0.28125  ,0.90625  ,0.40625 ,\r",
+          " 0.1875   ,0.6875   ,0.0625   ,0.5625   ,0.21875  ,0.71875  ,0.09375  ,0.59375 ,\r",
+          " 0.9375   ,0.4375   ,0.8125   ,0.3125   ,0.96875  ,0.46875  ,0.84375  ,0.34375 ,\r",
+          " 0.046875 ,0.546875 ,0.171875 ,0.671875 ,0.015625 ,0.515625 ,0.140625 ,0.640625,\r",
+          " 0.796875 ,0.296875 ,0.921875 ,0.421875 ,0.765625 ,0.265625 ,0.890625 ,0.390625,\r",
+          " 0.234375 ,0.734375 ,0.109375 ,0.609375 ,0.203125 ,0.703125 ,0.078125 ,0.578125,\r",
+          " 0.984375 ,0.484375 ,0.859375 ,0.359375 ,0.953125 ,0.453125 ,0.828125 ,0.328125};\r",
+          "    uint2 idx = uint2(fragCoord)% dim;\r",
+          "    //float    a = tex(fragCoord/R, R);\r",
+          "    float dith = kern[idx.x + (idx.y * dim)]-.5;\r",
+          "    \r",
+          "    //col += dith * DitherStrength01;\r",
+          "    //float b = tobw(a);\r",
+          "    //o = vec4(b);\r",
+          "    \r",
+          "    return dith*2;\r",
+          "}\r",
+          "\r",
+          "\r",
           "\r",
           "// 3D LUT texture format:\r",
           "// R = X coord within swatch\r",
@@ -86,28 +127,44 @@
           "\r",
           "float4 PS( PS_IN input ) : SV_Target\r",
           "{\r",
-          "    float ditherWidth, ditherHeight;\r",
-          "    DitherPattern.GetDimensions(ditherWidth, ditherHeight);\r",
+          "    // using tex.Sample() with any filtering produces artifacts for pixellate sizes like 5.\r",
+          "    // so using .Load(). but then i need to correct the coordinates to account for different resolutions.\r",
+          "\r",
+          "\tfloat imgW, imgH;\r",
+          "    Image.GetDimensions(imgW, imgH);\r",
+          "    float2 imageSize = float2(imgW, imgH);\r",
+          "    float2 coordCorrection =  imageSize / RenderTargetSize;\r",
+          "    float2 samplePx = input.pos.xy * coordCorrection;\r",
+          "\r",
+          "    float2 ditherPos = input.pos.xy;\r",
           "    \r",
-          "    uint2 srcPos = input.pos.xy;\r",
-          "    // quantize to pixellate.\r",
-          "    uint2 ditherPos = floor(srcPos / Pixellate);\r",
-          "    srcPos = ditherPos * Pixellate;\r",
+          "    if (Pixellate.x > 0 && Pixellate.y > 0) {\r",
+          "        float2 samplePixellate = Pixellate * coordCorrection;\r",
+          "        samplePx = floor(samplePx / samplePixellate) * samplePixellate;\r",
+          "        ditherPos /= Pixellate;\r",
+          "    }\r",
+          "\r",
+          "    float4 ret = Image.Load(uint3(samplePx,0));\r",
+          "    ret.rgb += Source.x;\r",
+          "    ret.rgb *= Source.y;\r",
+          "    ret.rgb = pow(max(0,ret.rgb), Source.z);\r",
           "    \r",
-          "    float dith = DitherPattern.Load(uint3(ditherPos % uint2(ditherWidth, ditherHeight), 0)).r;\r",
-          "    dith -= .5;\r",
-          "    float strength = DitherStrength01 * (1./LUTValues);\r",
-          "    dith *= strength;\r",
+          "    //float dith = bayer4(ditherPos);\r",
+          "    float dith;\r",
+          "    if (Bayer == 0) {\r",
+          "        dith = bayer2(ditherPos);\r",
+          "    } else {\r",
+          "        dith = bayer4(ditherPos);\r",
+          "    }\r",
+          "    dith /= PaletteSize;\r",
+          "    dith *= DitherStrengthMul;\r",
           "    \r",
-          "    float4 ret = Image.Load(uint3(srcPos,0));\r",
           "    ret.rgb += dith;\r",
           "    \r",
           "    // reduce values\r",
-          "    //ret.rgb = floor(ret.rgb * LUTValues) / LUTValues;\r",
-          "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
+          "    ret = clamp(ret, 0, 1);\r",
           "    ret.rgb = applyColorLUT(LUT, ret.rgb);\r",
-          "    \r",
-          "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
+          "    ret = clamp(ret, 0, 1);\r",
           "    return ret;\r",
           "}\r",
           "//<<< PS\r",
@@ -138,24 +195,7 @@
     },
     {
       "Name": "Image",
-      "MetaInstanceID": "dc0d743c-11d5-4d42-86e8-79adc2db3860",
-      "DefaultValue": {
-        "Type": "Image",
-        "Value": "Framefield.Core.Image"
-      },
-      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
-      "IsMultiInput": "False",
-      "Relevance": "Required",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "DitherPattern",
-      "MetaInstanceID": "300a90b7-513c-4c09-ac21-de504a985190",
+      "MetaInstanceID": "3af583b1-6199-4384-98f2-6a21478e5b34",
       "DefaultValue": {
         "Type": "Image",
         "Value": "Framefield.Core.Image"
@@ -172,7 +212,7 @@
     },
     {
       "Name": "LUT",
-      "MetaInstanceID": "2e4a4e0a-4a6a-4751-be22-7617d48bfb9a",
+      "MetaInstanceID": "ef00fb39-cd27-41d5-afee-a21722ec4f51",
       "DefaultValue": {
         "Type": "Image",
         "Value": "Framefield.Core.Image"
@@ -188,11 +228,11 @@
       "EnumValues": []
     },
     {
-      "Name": "DitherStrength01",
-      "MetaInstanceID": "0fa4285d-8e34-4268-8f3f-5c39a18aa50f",
+      "Name": "DitherStrengthMul",
+      "MetaInstanceID": "e44c74bf-7417-45c5-b3d7-211073c18759",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "0"
+        "Value": "1"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -205,8 +245,25 @@
       "EnumValues": []
     },
     {
-      "Name": "LUTValues",
-      "MetaInstanceID": "4fe29e55-383b-4ba1-8b37-9e36dbe28aa6",
+      "Name": "PaletteSize",
+      "MetaInstanceID": "2753b81d-7e88-40ab-b22b-42e569d93e37",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "16"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "2",
+      "Max": "10000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Pixellate.X",
+      "MetaInstanceID": "85d227ea-07f1-4920-a167-6f2b83f7a5ab",
       "DefaultValue": {
         "Type": "Float",
         "Value": "2"
@@ -215,24 +272,7 @@
       "IsMultiInput": "False",
       "Relevance": "Optional",
       "Description": "",
-      "Min": "2",
-      "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "Pixellate.X",
-      "MetaInstanceID": "668995bf-321a-4be2-b4d6-40d980084e92",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "1"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-10000",
+      "Min": "0",
       "Max": "10000",
       "Scale": "0.1",
       "ScaleType": "Linear",
@@ -240,7 +280,24 @@
     },
     {
       "Name": "Pixellate.Y",
-      "MetaInstanceID": "520ae563-8f42-45be-83d6-50ddf0f4ea21",
+      "MetaInstanceID": "e7ce3948-c67a-4628-8e32-d2aad26a5cd6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "2"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Bayer",
+      "MetaInstanceID": "2af22cd0-c4c6-421d-b9c8-514044243650",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -250,6 +307,66 @@
       "Relevance": "Optional",
       "Description": "",
       "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "4x4",
+          "Value": "0"
+        },
+        {
+          "Name": "8x8",
+          "Value": "1"
+        }
+      ]
+    },
+    {
+      "Name": "Source.X",
+      "MetaInstanceID": "46eb3e74-7a5b-48c1-8bdc-9d3acb4d28ef",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-999",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Source.Mul",
+      "MetaInstanceID": "9383c381-7706-413e-ac55-32bdf95cdca1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Source.Pow",
+      "MetaInstanceID": "251cbd4d-eb27-4946-811f-cb434cc925c9",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
       "Max": "10000",
       "Scale": "0.1",
       "ScaleType": "Linear",
@@ -259,16 +376,16 @@
   "Outputs": [
     {
       "Name": "Image",
-      "MetaInstanceID": "3c871c46-6e0e-4c37-b07d-6e1945eddc90",
+      "MetaInstanceID": "03578761-edf9-4ba0-b19c-d2613e3abd64",
       "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "b7433194-d167-470b-b5a9-bce30ecee27d",
-      "MetaID": "c7dbbd89-d4aa-4428-9a55-00883969bb15",
-      "Name": "DitherViaImageAndLUTFunc",
-      "Version": "56a15623-5192-4716-a591-1667fbb8bd9e",
+      "MetaInstanceID": "e6678ab2-2573-42a6-9b4b-101c17af159a",
+      "MetaID": "03e239a2-52b7-489c-a884-03282268e8e6",
+      "Name": "DitherViaBayerAndLUTFunc",
+      "Version": "4faf8c24-f7e4-4a19-a0a3-468e95ef4a32",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -282,52 +399,59 @@
         "using SharpDX.Windows;",
         "//<<< _using",
         "",
-        "namespace Framefield.Core.IDc7dbbd89_d4aa_4428_9a55_00883969bb15",
+        "namespace Framefield.Core.ID03e239a2_52b7_489c_a884_03282268e8e6",
         "{",
-        "    public class Class_DitherViaImageAndLUT : FXImageFunction",
+        "    public class Class_DitherViaBayerAndLUT : FXImageFunction",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
         "            Code = 0,",
-        "            DitherPattern = 1,",
-        "            Image = 2,",
-        "            DitherStrength01 = 3,",
-        "            LUTValues = 4,",
-        "            PixellateX = 5,",
-        "            PixellateY = 6,",
-        "            LUT = 7",
+        "            Image = 1,",
+        "            DitherStrengthMul = 2,",
+        "            PaletteSize = 3,",
+        "            PixellateX = 4,",
+        "            PixellateY = 5,",
+        "            LUT = 6,",
+        "            Bayer = 7,",
+        "            SourceX = 8,",
+        "            SourceMul = 9,",
+        "            SourcePow = 10",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "",
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
-        "            var DitherPattern = inputs[(int)InputId.DitherPattern].Eval(context).Image; // Needs to be checked for null!",
         "            var Image = inputs[(int)InputId.Image].Eval(context).Image; // Needs to be checked for null!",
-        "            var DitherStrength01 = inputs[(int)InputId.DitherStrength01].Eval(context).Value;",
-        "            var LUTValues = inputs[(int)InputId.LUTValues].Eval(context).Value;",
+        "            var DitherStrengthMul = inputs[(int)InputId.DitherStrengthMul].Eval(context).Value;",
+        "            var PaletteSize = inputs[(int)InputId.PaletteSize].Eval(context).Value;",
         "            var PixellateX = inputs[(int)InputId.PixellateX].Eval(context).Value;",
         "            var PixellateY = inputs[(int)InputId.PixellateY].Eval(context).Value;",
         "            var Pixellate = new Vector2(PixellateX, PixellateY);",
         "            var LUT = inputs[(int)InputId.LUT].Eval(context).Image; // Needs to be checked for null!",
+        "            var Bayer = (int) inputs[(int)InputId.Bayer].Eval(context).Value;",
+        "            var SourceX = inputs[(int)InputId.SourceX].Eval(context).Value;",
+        "            var SourceMul = inputs[(int)InputId.SourceMul].Eval(context).Value;",
+        "            var SourcePow = inputs[(int)InputId.SourcePow].Eval(context).Value;",
+        "            var Source = new Vector3(SourceX, SourceMul, SourcePow);",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
         "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 0));",
         "",
         "                //>>> _setup",
-        "                using (var DitherPatternView = new ShaderResourceView(context.D3DDevice, DitherPattern))",
         "                using (var ImageView = new ShaderResourceView(context.D3DDevice, Image))",
         "                using (var LUTView = new ShaderResourceView(context.D3DDevice, LUT))",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
-        "                    _effect.GetVariableByName(\"DitherPattern\").AsShaderResource().SetResource(DitherPatternView);",
         "                    _effect.GetVariableByName(\"Image\").AsShaderResource().SetResource(ImageView);",
-        "                    _effect.GetVariableByName(\"DitherStrength01\").AsScalar().Set(DitherStrength01);",
-        "                    _effect.GetVariableByName(\"LUTValues\").AsScalar().Set(LUTValues);",
+        "                    _effect.GetVariableByName(\"DitherStrengthMul\").AsScalar().Set(DitherStrengthMul);",
+        "                    _effect.GetVariableByName(\"PaletteSize\").AsScalar().Set(PaletteSize);",
         "                    _effect.GetVariableByName(\"Pixellate\").AsVector().Set(new Vector2(PixellateX, PixellateY));",
         "                    _effect.GetVariableByName(\"LUT\").AsShaderResource().SetResource(LUTView);",
+        "                    _effect.GetVariableByName(\"Bayer\").AsScalar().Set(Bayer);",
+        "                    _effect.GetVariableByName(\"Source\").AsVector().Set(new Vector3(SourceX, SourceMul, SourcePow));",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -350,57 +474,75 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d",
+      "SourceOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "3c871c46-6e0e-4c37-b07d-6e1945eddc90"
+      "TargetOpPart": "03578761-edf9-4ba0-b19c-d2613e3abd64"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "d0078fa8-432a-48f3-b80f-9618641d5a33",
+      "SourceOpPart": "d7dfe754-78b8-4604-b918-26017dfd23a9",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "300a90b7-513c-4c09-ac21-de504a985190",
+      "SourceOpPart": "3af583b1-6199-4384-98f2-6a21478e5b34",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "dc0d743c-11d5-4d42-86e8-79adc2db3860",
+      "SourceOpPart": "e44c74bf-7417-45c5-b3d7-211073c18759",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "0fa4285d-8e34-4268-8f3f-5c39a18aa50f",
+      "SourceOpPart": "2753b81d-7e88-40ab-b22b-42e569d93e37",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "4fe29e55-383b-4ba1-8b37-9e36dbe28aa6",
+      "SourceOpPart": "85d227ea-07f1-4920-a167-6f2b83f7a5ab",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "668995bf-321a-4be2-b4d6-40d980084e92",
+      "SourceOpPart": "e7ce3948-c67a-4628-8e32-d2aad26a5cd6",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "520ae563-8f42-45be-83d6-50ddf0f4ea21",
+      "SourceOpPart": "ef00fb39-cd27-41d5-afee-a21722ec4f51",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "2e4a4e0a-4a6a-4751-be22-7617d48bfb9a",
+      "SourceOpPart": "2af22cd0-c4c6-421d-b9c8-514044243650",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "46eb3e74-7a5b-48c1-8bdc-9d3acb4d28ef",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9383c381-7706-413e-ac55-32bdf95cdca1",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "251cbd4d-eb27-4946-811f-cb434cc925c9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e6678ab2-2573-42a6-9b4b-101c17af159a"
     }
   ]
 }

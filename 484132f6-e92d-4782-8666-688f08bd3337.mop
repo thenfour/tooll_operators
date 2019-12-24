@@ -1,0 +1,128 @@
+{
+  "Name": "StringCycle",
+  "_id": "484132f6-e92d-4782-8666-688f08bd3337",
+  "Namespace": "user.tenfour.string",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "String",
+      "MetaInstanceID": "c427e07e-a16c-46e3-a119-366b54f63734",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": ""
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Index",
+      "MetaInstanceID": "aa68d872-43f7-41c7-8372-b0b20699051f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "cc9668ac-50ea-41f4-bab7-bcebff689335",
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "65089d00-3883-480b-977b-edf138da9eef",
+      "MetaID": "24c78ee9-809d-4648-9e51-9cc3c8e55b6d",
+      "Name": "StringCycleFunc",
+      "Version": "30e6abd0-b629-4f57-a3b9-8470bb3dcbf5",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID24c78ee9_809d_4648_9e51_9cc3c8e55b6d",
+        "{",
+        "    public class Class_StringCycle : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Index = 0,",
+        "            String = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Index = inputs[(int)InputId.Index].Eval(context).Value;",
+        "            var String = inputs[(int)InputId.String].Eval(context).Text;",
+        "            //<<< _params",
+        "            ",
+        "            if (String.Length == 0) {",
+        "                context.Text = \"\";",
+        "                return context;",
+        "            }",
+        "            ",
+        "            int n = (int)Math.Abs(Index) % String.Length;",
+        "",
+        "            context.Text = String.Substring(n) + String.Substring(0, n);",
+        "",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "aa68d872-43f7-41c7-8372-b0b20699051f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "65089d00-3883-480b-977b-edf138da9eef"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c427e07e-a16c-46e3-a119-366b54f63734",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "65089d00-3883-480b-977b-edf138da9eef"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "65089d00-3883-480b-977b-edf138da9eef",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "cc9668ac-50ea-41f4-bab7-bcebff689335"
+    }
+  ]
+}

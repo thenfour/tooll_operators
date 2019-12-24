@@ -1,0 +1,124 @@
+{
+  "Name": "SelectFromStrings",
+  "_id": "a5e36644-79a8-4b4a-a156-8077b1b1469f",
+  "Namespace": "user.tenfour.string",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "e041561a-aeab-4e56-b7fb-e48718b1c944",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": ""
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Selector",
+      "MetaInstanceID": "eea4f05f-192d-46b5-8865-fe407cd1d292",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "21906edd-13a1-4b5a-b118-f63a9196bb48",
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "d8d473ab-b74f-4e2a-8c5c-0f5b754ccd02",
+      "MetaID": "6f9efb4a-2053-4031-baf4-a2148e78920e",
+      "Name": "SelectFromStringsFunc",
+      "Version": "400a1c08-15b5-489c-8259-98726efe640d",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID6f9efb4a_2053_4031_baf4_a2148e78920e",
+        "{",
+        "    public class Class_SelectFromStrings : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Selector = 0,",
+        "            Values = 1",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            var Selector = inputs[(int)InputId.Selector].Eval(context).Value;",
+        "            var ValuesNode = inputs[(int)InputId.Values];",
+        "        ",
+        "            if (ValuesNode.Connections.Count == 0)",
+        "                return context;",
+        "    ",
+        "            //int index1 = (int)(Selector % ValuesNode.Connections.Count);",
+        "            int i = (int)Selector % ValuesNode.Connections.Count;",
+        "            if (i < 0)",
+        "                i = -i;",
+        "            var v1Input = ValuesNode.Connections[i];",
+        "            string v1 = v1Input.Eval(context).Text;",
+        "            ",
+        "            context.Text = v1;",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "eea4f05f-192d-46b5-8865-fe407cd1d292",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d8d473ab-b74f-4e2a-8c5c-0f5b754ccd02"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d8d473ab-b74f-4e2a-8c5c-0f5b754ccd02"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d8d473ab-b74f-4e2a-8c5c-0f5b754ccd02",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "21906edd-13a1-4b5a-b118-f63a9196bb48"
+    }
+  ]
+}

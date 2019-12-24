@@ -1,5 +1,5 @@
 {
-  "Name": "BlendImages",
+  "Name": "BlendImagesFillAlpha",
   "_id": "ffe93a73-a6a3-42a3-85ca-783fa677194a",
   "Namespace": "user.tenfour",
   "Description": "Composes two images on top of each other.",
@@ -146,7 +146,7 @@
     {
       "MetaInstanceID": "c2f52762-4418-4c1a-80b9-fa42996916ec",
       "MetaID": "d770ce08-5454-4e04-8662-81e89aece5b5",
-      "Name": "BlendImagesFunc",
+      "Name": "BlendImagesFillAlphaFunc",
       "Version": "ad9ef6c1-add4-490b-8e00-6d42adf8bcd5",
       "Type": "Float",
       "IsMultiInput": "True",

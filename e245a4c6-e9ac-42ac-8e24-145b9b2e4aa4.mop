@@ -27,7 +27,7 @@
           "float RingRotationRandomAmt;",
           "float Translate;",
           "float RotationAlternation;",
-          "float ShadeAmt;",
+          "float2 ShadeAmt;",
           "float CellShape;",
           "//<<< _parameters\r",
           "\r",
@@ -135,7 +135,8 @@
           "    newUV.x /= R.x / R.y;\r",
           "    newUV += .5;\r",
           "    float4 ret = Image.Sample(samLinearWrap, newUV);\r",
-          "    ret.rgb *= lerp(1, ringPos, ShadeAmt);\r",
+          "    ret.rgb *= lerp(1, ringPos, ShadeAmt.x);\r",
+          "    ret.rgb *= lerp(1, 1.-ringPos, ShadeAmt.y);\r",
           "    return ret;\r",
           "}\r",
           "\r",
@@ -312,7 +313,7 @@
       ]
     },
     {
-      "Name": "ShadeAmt",
+      "Name": "ShadeAmt.X",
       "MetaInstanceID": "8b8391c8-28be-48cb-9495-28e10806637b",
       "DefaultValue": {
         "Type": "Float",
@@ -324,7 +325,24 @@
       "Description": "",
       "Min": "0",
       "Max": "1",
-      "Scale": "0.001",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ShadeAmt.Y",
+      "MetaInstanceID": "cda5992a-3ec8-42bf-84d9-e2b11b4e6dbc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
     },
@@ -358,7 +376,7 @@
       "MetaInstanceID": "6c0261dc-53f8-4430-ab29-7e3816582599",
       "MetaID": "b07b1d43-2f46-443a-992d-fb95d8c694bd",
       "Name": "SKRadialCellSlashFunc",
-      "Version": "0e390774-588e-4f79-af7c-7bce0f67fcaf",
+      "Version": "4af43bf5-5418-42f0-b56a-1f15df98160c",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -388,8 +406,9 @@
         "            RingRotationRandomAmt = 6,",
         "            Translate = 7,",
         "            RotationAlternation = 8,",
-        "            ShadeAmt = 9,",
-        "            CellShape = 10",
+        "            ShadeAmtX = 9,",
+        "            CellShape = 10,",
+        "            ShadeAmtY = 11",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -404,7 +423,9 @@
         "            var RingRotationRandomAmt = inputs[(int)InputId.RingRotationRandomAmt].Eval(context).Value;",
         "            var Translate = inputs[(int)InputId.Translate].Eval(context).Value;",
         "            var RotationAlternation = (int) inputs[(int)InputId.RotationAlternation].Eval(context).Value;",
-        "            var ShadeAmt = inputs[(int)InputId.ShadeAmt].Eval(context).Value;",
+        "            var ShadeAmtX = inputs[(int)InputId.ShadeAmtX].Eval(context).Value;",
+        "            var ShadeAmtY = inputs[(int)InputId.ShadeAmtY].Eval(context).Value;",
+        "            var ShadeAmt = new Vector2(ShadeAmtX, ShadeAmtY);",
         "            var CellShape = inputs[(int)InputId.CellShape].Eval(context).Value;",
         "            //<<< _params",
         "            ",
@@ -426,7 +447,7 @@
         "                    _effect.GetVariableByName(\"RingRotationRandomAmt\").AsScalar().Set(RingRotationRandomAmt);",
         "                    _effect.GetVariableByName(\"Translate\").AsScalar().Set(Translate);",
         "                    _effect.GetVariableByName(\"RotationAlternation\").AsScalar().Set(RotationAlternation);",
-        "                    _effect.GetVariableByName(\"ShadeAmt\").AsScalar().Set(ShadeAmt);",
+        "                    _effect.GetVariableByName(\"ShadeAmt\").AsVector().Set(new Vector2(ShadeAmtX, ShadeAmtY));",
         "                    _effect.GetVariableByName(\"CellShape\").AsScalar().Set(CellShape);",
         "                //<<< _setup",
         "                ",
@@ -534,6 +555,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "8125968f-41a4-4cff-bdb8-6d1db1e0e4df",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6c0261dc-53f8-4430-ab29-7e3816582599"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cda5992a-3ec8-42bf-84d9-e2b11b4e6dbc",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "6c0261dc-53f8-4430-ab29-7e3816582599"
     }

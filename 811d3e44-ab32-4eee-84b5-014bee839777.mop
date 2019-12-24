@@ -170,7 +170,7 @@
       "MetaInstanceID": "df6c6a23-9de4-4c03-93ba-0fa780598c55",
       "MetaID": "b11bf345-b17a-4f86-839c-0a9a02869fc3",
       "Name": "SKServerBeatFract (old)Func",
-      "Version": "e3c2cec3-551f-44fb-bb44-9b34d60b7838",
+      "Version": "6f62688d-b073-4baa-9175-96ac087fd36e",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -182,7 +182,7 @@
         "",
         "namespace Framefield.Core.IDb11bf345_b17a_4f86_839c_0a9a02869fc3",
         "{",
-        "    public class Class_SKServerBeatFract : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_SKServerBeatFract__old_ : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",

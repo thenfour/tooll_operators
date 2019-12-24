@@ -1,0 +1,42 @@
+{
+  "Name": "StringCycleXX",
+  "_id": "a8c1b3ec-68f9-4e0a-97a3-4657defb185c",
+  "Namespace": "user.tenfour.string",
+  "Description": "takes a long string and cycles through the head",
+  "Inputs": [
+    {
+      "Name": "Text",
+      "MetaInstanceID": "8efb03ed-9281-41f9-aac8-1180e9a474f2",
+      "DefaultValue": {
+        "Type": "Text",
+        "Value": "Hello World"
+      },
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "ce087976-5c43-4715-9c16-36d828e57732",
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "8efb03ed-9281-41f9-aac8-1180e9a474f2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "ce087976-5c43-4715-9c16-36d828e57732"
+    }
+  ]
+}

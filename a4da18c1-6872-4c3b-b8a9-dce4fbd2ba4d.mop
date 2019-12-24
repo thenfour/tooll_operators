@@ -2,7 +2,7 @@
   "Name": "SH_StarGrid",
   "_id": "a4da18c1-6872-4c3b-b8a9-dce4fbd2ba4d",
   "Namespace": "user.tenfour.shaders",
-  "Description": "",
+  "Description": "unfinished idea\r\n",
   "Inputs": [
     {
       "Name": "Code",

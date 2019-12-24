@@ -1,0 +1,103 @@
+{
+  "Name": "SKServerPrefixToString",
+  "_id": "8430668c-8dcb-4adb-98d7-b063e6406a7c",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "AddressIndex",
+      "MetaInstanceID": "0c945262-8824-47b8-bf73-847e5743c614",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "855c3524-22a5-4df6-88a5-53e116f377a4",
+      "MetaID": "c522a66e-3260-4692-b3e3-79fd0361fa3d"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "0056d147-c8ca-47e6-bd2f-afa7f0c45a5f",
+      "MetaID": "ae7fcf64-0099-4600-94b4-082f7498066e",
+      "Name": "SKServerPrefixToStringFunc",
+      "Version": "587dd177-3013-4369-a248-50561171d6ce",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "",
+        "namespace Framefield.Core.IDae7fcf64_0099_4600_94b4_082f7498066e",
+        "{",
+        "    public class Class_SKServerPrefixToString : OperatorPart.Function,",
+        "        Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            AddressIndex = 0",
+        "        }",
+        "        //<<< _inputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "            //>>> _params",
+        "            var AddressIndex = inputs[(int)InputId.AddressIndex].Eval(context).Value;",
+        "            //<<< _params",
+        "            string s = \"(no server state)\";",
+        "            if (context.GlobalObjects.ContainsKey(\"SKServerState\")) {",
+        "                s = string.Format(\"{0}\",context.GlobalObjects[\"SKServerState\"]);",
+        "            }",
+        "            ",
+        "            s = s.Replace(\"//\", \"%\");// to prevent http:// from forming newlines. multiple slashes don't form newlines.",
+        "            s = s.Replace(\"@\", \"@\\n\");",
+        "            s = s.Replace(\"/\", \"/\\n\");",
+        "            s = s.Replace(\"%\", \"//\");",
+        "",
+        "            context.Text= string.Format(\"IP index {0}\\n{1}\", AddressIndex, s);",
+        "            ",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0056d147-c8ca-47e6-bd2f-afa7f0c45a5f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "855c3524-22a5-4df6-88a5-53e116f377a4"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0c945262-8824-47b8-bf73-847e5743c614",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0056d147-c8ca-47e6-bd2f-afa7f0c45a5f"
+    }
+  ]
+}
