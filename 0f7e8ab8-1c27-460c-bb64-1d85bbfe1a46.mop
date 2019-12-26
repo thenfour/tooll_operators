@@ -25,6 +25,7 @@
           "float LUTValues;",
           "float2 Pixellate;",
           "Texture2D LUT;",
+          "float BWBiasAmount;",
           "//<<< _parameters\r",
           " \r",
           "SamplerState samLinear\r",
@@ -95,15 +96,20 @@
           "    srcPos = ditherPos * Pixellate;\r",
           "    \r",
           "    float dith = DitherPattern.Load(uint3(ditherPos % uint2(ditherWidth, ditherHeight), 0)).r;\r",
-          "    dith -= .5;\r",
+          "    dith -= .5;// dith is from -.5 to .5 (span of 1)\r",
           "    float strength = DitherStrength01 * (1./LUTValues);\r",
           "    dith *= strength;\r",
           "    \r",
           "    float4 ret = Image.Load(uint3(srcPos,0));\r",
-          "    ret.rgb += dith;\r",
+          "\r",
+          "    // we want pure black or white to stay pure (lol?) so bias the sample to applying\r",
+          "    // the dither pattern doesn't \r",
+          "    ret.rgb -= .5;// center over 0\r",
+          "    ret.rgb /= lerp(1, strength * .5, BWBiasAmount);// strength*.5 because dith is -.5 to .5, and the negative part doesn't contribute to this artifact.\r",
+          "    ret.rgb += .5;// reshift\r",
+          "    ret.rgb += dith;// apply dither pattern\r",
           "    \r",
           "    // reduce values\r",
-          "    //ret.rgb = floor(ret.rgb * LUTValues) / LUTValues;\r",
           "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
           "    ret.rgb = applyColorLUT(LUT, ret.rgb);\r",
           "    \r",
@@ -192,7 +198,7 @@
       "MetaInstanceID": "0fa4285d-8e34-4268-8f3f-5c39a18aa50f",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "0"
+        "Value": "1"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -254,6 +260,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "BWBiasAmount",
+      "MetaInstanceID": "6eb906ea-a1b5-4c6c-9b81-3c70241b1f7b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -268,7 +291,7 @@
       "MetaInstanceID": "b7433194-d167-470b-b5a9-bce30ecee27d",
       "MetaID": "c7dbbd89-d4aa-4428-9a55-00883969bb15",
       "Name": "DitherViaImageAndLUTFunc",
-      "Version": "56a15623-5192-4716-a591-1667fbb8bd9e",
+      "Version": "f2436aef-8109-46e2-9f70-9806120d035c",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -296,7 +319,8 @@
         "            LUTValues = 4,",
         "            PixellateX = 5,",
         "            PixellateY = 6,",
-        "            LUT = 7",
+        "            LUT = 7,",
+        "            BWBiasAmount = 8",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
@@ -311,6 +335,7 @@
         "            var PixellateY = inputs[(int)InputId.PixellateY].Eval(context).Value;",
         "            var Pixellate = new Vector2(PixellateX, PixellateY);",
         "            var LUT = inputs[(int)InputId.LUT].Eval(context).Image; // Needs to be checked for null!",
+        "            var BWBiasAmount = inputs[(int)InputId.BWBiasAmount].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -328,6 +353,7 @@
         "                    _effect.GetVariableByName(\"LUTValues\").AsScalar().Set(LUTValues);",
         "                    _effect.GetVariableByName(\"Pixellate\").AsVector().Set(new Vector2(PixellateX, PixellateY));",
         "                    _effect.GetVariableByName(\"LUT\").AsShaderResource().SetResource(LUTView);",
+        "                    _effect.GetVariableByName(\"BWBiasAmount\").AsScalar().Set(BWBiasAmount);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -399,6 +425,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "2e4a4e0a-4a6a-4751-be22-7617d48bfb9a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6eb906ea-a1b5-4c6c-9b81-3c70241b1f7b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
     }

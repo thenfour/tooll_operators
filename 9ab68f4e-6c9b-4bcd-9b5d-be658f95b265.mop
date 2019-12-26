@@ -51,7 +51,7 @@
       "Description": "",
       "Min": "0",
       "Max": "1",
-      "Scale": "0.01",
+      "Scale": "0.005",
       "ScaleType": "Linear",
       "EnumValues": []
     },
@@ -68,7 +68,7 @@
       "Description": "",
       "Min": "0",
       "Max": "1",
-      "Scale": "0.1",
+      "Scale": "0.005",
       "ScaleType": "Linear",
       "EnumValues": []
     },
@@ -85,7 +85,7 @@
       "Description": "",
       "Min": "-0.98",
       "Max": "0.98",
-      "Scale": "0.01",
+      "Scale": "0.005",
       "ScaleType": "Linear",
       "EnumValues": []
     },

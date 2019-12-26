@@ -34,6 +34,9 @@
           "float Scale;",
           "float FiveTileSampleAmt;",
           "float2 CellOffset;",
+          "float OutputSaturation;",
+          "float4 ColorKey;",
+          "float ColorKeyTolerance;",
           "//<<< _parameters\r",
           "Texture2D RefImage;\r",
           "Texture2D FontImage;\r",
@@ -418,6 +421,12 @@
           "    //float4 d = float4(srcCellPosPx / CharSize,0,1);\r",
           "    //fontColor = lerp(fontColor, d, .4);\r",
           "    //float4 fontColor = FontImage.Sample(samPoint, ((fontCell * CharSize) + srcCellPosPx) / fontImgSize );\r",
+          "    \r",
+          "    if (length(fontColor.rgb - ColorKey.rgb) < ColorKeyTolerance)\r",
+          "        fontColor.a = 0;\r",
+          "        \r",
+          "    fontColor.rgb = lerp((fontColor.r + fontColor.g + fontColor.b) / 3, fontColor.rgb, OutputSaturation);\r",
+          "    \r",
           "    return fontColor;\r",
           "}\r",
           "\r",
@@ -570,6 +579,108 @@
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "OutputSaturation",
+      "MetaInstanceID": "40e01bbe-fac3-40ea-8b22-35abdbf3fdca",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorKey.R",
+      "MetaInstanceID": "50e2a1ae-4d38-43f3-aed8-282f41c934c2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorKey.G",
+      "MetaInstanceID": "733a1bdd-037f-49ae-9844-d34726f52473",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorKey.B",
+      "MetaInstanceID": "75009414-cd71-4904-b328-48d49ad64e3a",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorKey.A",
+      "MetaInstanceID": "858a7710-c1fc-45b8-97d4-5e0be5768347",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorKeyTolerance",
+      "MetaInstanceID": "77b04be2-6dd4-439a-9911-028339327515",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "-1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -584,7 +695,7 @@
       "MetaInstanceID": "a3fef8f7-9932-46e9-89a5-48eb456f162b",
       "MetaID": "2cd667a5-afa0-4821-bb93-30b7ea93ca80",
       "Name": "ASCIIFilterRef4Func",
-      "Version": "4be1ce96-8520-42ed-87ef-bee0909052db",
+      "Version": "052ad36b-a46e-47c4-b35b-bd3c1e34feae",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -750,7 +861,13 @@
         "            FiveTileSampleAmt = 3,",
         "            MapArgsFilePath = 4,",
         "            CellOffsetX = 5,",
-        "            CellOffsetY = 6",
+        "            CellOffsetY = 6,",
+        "            OutputSaturation = 7,",
+        "            ColorKeyR = 8,",
+        "            ColorKeyG = 9,",
+        "            ColorKeyB = 10,",
+        "            ColorKeyA = 11,",
+        "            ColorKeyTolerance = 12",
         "        }",
         "        //<<< _inputids",
         "",
@@ -797,6 +914,13 @@
         "            var CellOffsetX = inputs[(int)InputId.CellOffsetX].Eval(context).Value;",
         "            var CellOffsetY = inputs[(int)InputId.CellOffsetY].Eval(context).Value;",
         "            var CellOffset = new Vector2(CellOffsetX, CellOffsetY);",
+        "            var OutputSaturation = inputs[(int)InputId.OutputSaturation].Eval(context).Value;",
+        "            var ColorKeyR = inputs[(int)InputId.ColorKeyR].Eval(context).Value;",
+        "            var ColorKeyG = inputs[(int)InputId.ColorKeyG].Eval(context).Value;",
+        "            var ColorKeyB = inputs[(int)InputId.ColorKeyB].Eval(context).Value;",
+        "            var ColorKeyA = inputs[(int)InputId.ColorKeyA].Eval(context).Value;",
+        "            var ColorKey = new Color4(ColorKeyR, ColorKeyG, ColorKeyB, ColorKeyA);",
+        "            var ColorKeyTolerance = inputs[(int)InputId.ColorKeyTolerance].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -874,6 +998,9 @@
         "                    _effect.GetVariableByName(\"Scale\").AsScalar().Set(Scale);",
         "                    _effect.GetVariableByName(\"FiveTileSampleAmt\").AsScalar().Set(FiveTileSampleAmt);",
         "                    _effect.GetVariableByName(\"CellOffset\").AsVector().Set(new Vector2(CellOffsetX, CellOffsetY));",
+        "                    _effect.GetVariableByName(\"OutputSaturation\").AsScalar().Set(OutputSaturation);",
+        "                    _effect.GetVariableByName(\"ColorKey\").AsVector().Set(new Vector4(ColorKeyR, ColorKeyG, ColorKeyB, ColorKeyA));",
+        "                    _effect.GetVariableByName(\"ColorKeyTolerance\").AsScalar().Set(ColorKeyTolerance);",
         "                    //<<< _setup",
         "                    ",
         "                    //Logger.Info(this, \"Hashcode = {0}\", Map[\"HashCode\"]);",
@@ -971,6 +1098,42 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "ffdbfa5f-fbd0-443d-bf89-dbd6efad218a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "40e01bbe-fac3-40ea-8b22-35abdbf3fdca",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "50e2a1ae-4d38-43f3-aed8-282f41c934c2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "733a1bdd-037f-49ae-9844-d34726f52473",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "75009414-cd71-4904-b328-48d49ad64e3a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "858a7710-c1fc-45b8-97d4-5e0be5768347",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "77b04be2-6dd4-439a-9911-028339327515",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
     }

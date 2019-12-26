@@ -19,26 +19,12 @@
       "MetaID": "e4ba1f80-fab0-44d8-bfae-aca670c5a14c",
       "OperatorProperties": {
         "Name": "beatworth",
-        "PosX": "339.884437641778",
-        "PosY": "-481.853726857988",
+        "PosX": "625.983968260394",
+        "PosY": "73.0163255710943",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
-          {
-            "ID": "06d21d6a-e9db-41d4-b389-611004359907",
-            "Type": "Float",
-            "Value": [
-              "13.7"
-            ]
-          },
-          {
-            "ID": "7b535fad-651b-4ef0-b641-039eae5fafe2",
-            "Type": "Float",
-            "Value": [
-              "250"
-            ]
-          },
           {
             "ID": "792dcfff-5ada-4f0b-b91e-3bec14f4e078",
             "Type": "Float",
@@ -422,7 +408,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "0697f298-fddf-4d5d-8ecd-ab8b34197ba2",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -433,13 +419,6 @@
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "13.74"
-            ]
-          },
           {
             "ID": "c22adec6-c5c6-42d2-a77b-fa8e4d89d26d",
             "Type": "Float",
@@ -467,7 +446,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "4c03fc70-d52a-4349-b176-27ae17f5bba4",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -477,20 +456,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "66.7"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "eaa85581-158a-48b4-8655-99e5947de558",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -500,20 +471,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "86.2"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "c717b44c-8e99-4ef7-8f4d-fe8c61fd6f69",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -523,20 +486,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "113.37"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "10484846-4165-4e66-bf58-991c6be23d19",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -546,20 +501,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "131.48"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "564a6e8f-21bf-4a8d-b2d9-c76e0e3312b5",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -569,20 +516,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "185.82"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "fc8c1b8e-759e-4353-af0a-7b3b197ed4f6",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -592,20 +531,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "193.44"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "084db116-ba86-45e1-8816-536d3bd344e3",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -615,20 +546,12 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "208.46"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "187f007e-556c-4001-846c-5f611d65de26",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -638,15 +561,7 @@
         "Width": "125",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "235.63"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
@@ -1345,7 +1260,7 @@
             "ID": "db391b6f-849f-40a3-b85b-769b80da3153",
             "Type": "Float",
             "Value": [
-              "2"
+              "1.4"
             ]
           },
           {
@@ -1490,7 +1405,7 @@
         "Name": "",
         "PosX": "767.407106210984",
         "PosY": "-399.724851239253",
-        "Width": "100",
+        "Width": "150",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [],
@@ -1633,8 +1548,8 @@
       "MetaID": "cc4aa9dd-545c-48d4-9e3c-233ba0a21bd7",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "1112.79088755261",
-        "PosY": "-78.6057759956157",
+        "PosX": "1222.83219305293",
+        "PosY": "-15.8940642588732",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -1916,6 +1831,213 @@
             "Type": "Float",
             "Value": [
               "2"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "4d9366a8-135f-476e-a670-afc96c6b5c29",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-427.447104834241",
+        "PosY": "676.173800377524",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "24"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "4a365fd6-d2a9-45e2-9908-2dce70a22f3c",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-217.817464948214",
+        "PosY": "673.974888071027",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "117.5"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "6f93f65c-aaa6-4b57-8afc-2b58f0a86b1c",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-18.3195620530669",
+        "PosY": "667.602771908631",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "152"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "54105f65-5dc4-4220-b740-afedb87d7a6d",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "179.55998910564",
+        "PosY": "664.820267521346",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "200"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "46806eb8-76fb-4420-8783-5330daed03b8",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "346.925888312026",
+        "PosY": "670.864772481672",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "232"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "a67f5107-dd94-4b92-92c7-95d4dc18bf97",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "526.30751332394",
+        "PosY": "663.596705918811",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "328"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "93f92366-afc9-4375-a11f-f6d30eb48461",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "717.275349289089",
+        "PosY": "667.510572754578",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "341.5"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "e13fb089-4d1a-4254-b04c-b6bfdd54ab35",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "881.680209203898",
+        "PosY": "664.954981059508",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "368"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "45e3fb6a-f3e7-4017-899a-03862d51598c",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "1059.63615190286",
+        "PosY": "659.283553789369",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "0ae882fa-c574-4f17-8a64-73dd954cb89c",
+            "Type": "Float",
+            "Value": [
+              "416"
             ]
           }
         ],
@@ -2355,6 +2477,72 @@
       "SourceOpPart": "80dd35a0-2435-4089-8eec-863150e47412",
       "TargetOp": "d12effdc-614a-44d3-a9eb-4e6c53f80c0a",
       "TargetOpPart": "94fc794e-6f68-410b-85f1-2914f8ee9d72"
+    },
+    {
+      "SourceOp": "4d9366a8-135f-476e-a670-afc96c6b5c29",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "0697f298-fddf-4d5d-8ecd-ab8b34197ba2",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "4a365fd6-d2a9-45e2-9908-2dce70a22f3c",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "4c03fc70-d52a-4349-b176-27ae17f5bba4",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "6f93f65c-aaa6-4b57-8afc-2b58f0a86b1c",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "eaa85581-158a-48b4-8655-99e5947de558",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "54105f65-5dc4-4220-b740-afedb87d7a6d",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "c717b44c-8e99-4ef7-8f4d-fe8c61fd6f69",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "46806eb8-76fb-4420-8783-5330daed03b8",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "10484846-4165-4e66-bf58-991c6be23d19",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "a67f5107-dd94-4b92-92c7-95d4dc18bf97",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "564a6e8f-21bf-4a8d-b2d9-c76e0e3312b5",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "93f92366-afc9-4375-a11f-f6d30eb48461",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "fc8c1b8e-759e-4353-af0a-7b3b197ed4f6",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "e13fb089-4d1a-4254-b04c-b6bfdd54ab35",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "084db116-ba86-45e1-8816-536d3bd344e3",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "45e3fb6a-f3e7-4017-899a-03862d51598c",
+      "SourceOpPart": "20a72394-8297-4422-8d4a-1d63c7b02653",
+      "TargetOp": "187f007e-556c-4001-846c-5f611d65de26",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "0697f298-fddf-4d5d-8ecd-ab8b34197ba2",
+      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "TargetOp": "7c7ffab7-7e6e-4d2b-bf27-1d7ddc38d94f",
+      "TargetOpPart": "06d21d6a-e9db-41d4-b389-611004359907"
+    },
+    {
+      "SourceOp": "187f007e-556c-4001-846c-5f611d65de26",
+      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "TargetOp": "7c7ffab7-7e6e-4d2b-bf27-1d7ddc38d94f",
+      "TargetOpPart": "7b535fad-651b-4ef0-b641-039eae5fafe2"
     }
   ]
 }

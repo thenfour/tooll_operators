@@ -25,6 +25,7 @@
           "float Contrast;",
           "float4 Color;",
           "float BlendingMode;",
+          "float ConvenientMultiply;",
           "//<<< _parameters\r",
           " \r",
           "//>>> setup\r",
@@ -98,19 +99,19 @@
           "    \r",
           "    switch (BlendingMode) {\r",
           "    case 0: // only stroke\r",
-          "        return strokeColor;\r",
+          "        return strokeColor * ConvenientMultiply;\r",
           "    case 1: // add\r",
-          "        return clamp(strokeColor + m, 0, 1);\r",
+          "        return clamp(strokeColor + m, 0, 1) * ConvenientMultiply;\r",
           "    case 2: // multiply\r",
-          "        return clamp(strokeColor * m, 0, 1);\r",
+          "        return clamp(strokeColor * m, 0, 1) * ConvenientMultiply;\r",
           "    case 3: // screen\r",
-          "        return clamp(1 - (1-strokeColor) * (1 - m), 0, 1);\r",
+          "        return clamp(1 - (1-strokeColor) * (1 - m), 0, 1) * ConvenientMultiply;\r",
           "    case 4: // fill alpha\r",
           "        // so mix based on original src alpha. this way only transparent pixels will show the stroke.\r",
-          "        return lerp(strokeColor, m, m.a);\r",
+          "        return lerp(strokeColor, m, m.a) * ConvenientMultiply;\r",
           "    }\r",
           "    \r",
-          "    return strokeColor;\r",
+          "    return strokeColor * ConvenientMultiply;\r",
           "    \r",
           "}\r",
           "//<<< PS\r",
@@ -312,6 +313,23 @@
           "Value": "4"
         }
       ]
+    },
+    {
+      "Name": "ConvenientMultiply",
+      "MetaInstanceID": "eff70abb-15d2-448b-8456-33e0867c6fe8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -326,7 +344,7 @@
       "MetaInstanceID": "a1d6108b-f149-4f9f-84e5-fe612e63c215",
       "MetaID": "72dc2dcd-0dbf-496b-9b3a-ed711a9977d2",
       "Name": "StrokeFunc",
-      "Version": "bf294dd1-3394-4ec4-9fde-3903562dc1b8",
+      "Version": "38152494-8069-44a7-b556-5f7571cbebd0",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -356,7 +374,8 @@
         "            ColorG = 6,",
         "            ColorB = 7,",
         "            ColorA = 8,",
-        "            BlendingMode = 9",
+        "            BlendingMode = 9,",
+        "            ConvenientMultiply = 10",
         "        }",
         "        //<<< _inputids",
         "",
@@ -374,6 +393,7 @@
         "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
         "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
         "            var BlendingMode = (int) inputs[(int)InputId.BlendingMode].Eval(context).Value;",
+        "            var ConvenientMultiply = inputs[(int)InputId.ConvenientMultiply].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            if(Image == null)",
@@ -393,6 +413,7 @@
         "                    _effect.GetVariableByName(\"Contrast\").AsScalar().Set(Contrast);",
         "                    _effect.GetVariableByName(\"Color\").AsVector().Set(new Vector4(ColorR, ColorG, ColorB, ColorA));",
         "                    _effect.GetVariableByName(\"BlendingMode\").AsScalar().Set(BlendingMode);",
+        "                    _effect.GetVariableByName(\"ConvenientMultiply\").AsScalar().Set(ConvenientMultiply);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -476,6 +497,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "8496a009-6821-48e8-ac5f-d2a1b9cd098b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a1d6108b-f149-4f9f-84e5-fe612e63c215"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "eff70abb-15d2-448b-8456-33e0867c6fe8",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "a1d6108b-f149-4f9f-84e5-fe612e63c215"
     }

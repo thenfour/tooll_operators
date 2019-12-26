@@ -22,6 +22,8 @@
           "Texture2D Image;",
           "float4 Color;",
           "float Tolerance;",
+          "float ConvenientMultiply;",
+          "float4 ConvenienceMultiplyColor;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -95,7 +97,7 @@
           "{\r",
           "    float4 t = Image.Sample(samLinear, input.texCoord);\r",
           "    float keya = smoothstep(length(t.rgb - Color.rgb), 0, Tolerance);\r",
-          "    return float4(t.rgb, min(keya, t.a));\r",
+          "    return float4(t.rgb, min(keya, t.a)) * ConvenientMultiply * ConvenienceMultiplyColor;\r",
           "}\r",
           "\r",
           "//<<< PS\r",
@@ -226,6 +228,91 @@
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "ConvenientMultiply",
+      "MetaInstanceID": "5ca294cf-c19f-49f1-9bbb-c3518f4593fd",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ConvenienceMultiplyColor.R",
+      "MetaInstanceID": "d2b204b5-9f3d-43a5-880f-719d713b8d0c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ConvenienceMultiplyColor.G",
+      "MetaInstanceID": "2bf76649-ae2f-43cb-970c-b74c3d2eb4c6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ConvenienceMultiplyColor.B",
+      "MetaInstanceID": "c620ea0c-587d-4a8f-904e-cc3c3291d7d6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ConvenienceMultiplyColor.A",
+      "MetaInstanceID": "90da2bda-3005-4bdd-b610-213e5c10b831",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -240,7 +327,7 @@
       "MetaInstanceID": "30ed0f06-e095-48cc-ad36-75ae033b59d2",
       "MetaID": "955846bb-6cc8-4e95-ae4a-4695b92a3b72",
       "Name": "HardColorKeyFunc",
-      "Version": "83d07a5c-7d33-4006-b69c-9222546facc5",
+      "Version": "30de1754-736c-4944-8d2a-cb7408c3c48b",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -267,7 +354,12 @@
         "            ColorG = 3,",
         "            ColorB = 4,",
         "            ColorA = 5,",
-        "            Tolerance = 6",
+        "            Tolerance = 6,",
+        "            ConvenientMultiply = 7,",
+        "            ConvenienceMultiplyColorR = 8,",
+        "            ConvenienceMultiplyColorG = 9,",
+        "            ConvenienceMultiplyColorB = 10,",
+        "            ConvenienceMultiplyColorA = 11",
         "        }",
         "        //<<< _inputids",
         "",
@@ -281,6 +373,12 @@
         "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
         "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
         "            var Tolerance = inputs[(int)InputId.Tolerance].Eval(context).Value;",
+        "            var ConvenientMultiply = inputs[(int)InputId.ConvenientMultiply].Eval(context).Value;",
+        "            var ConvenienceMultiplyColorR = inputs[(int)InputId.ConvenienceMultiplyColorR].Eval(context).Value;",
+        "            var ConvenienceMultiplyColorG = inputs[(int)InputId.ConvenienceMultiplyColorG].Eval(context).Value;",
+        "            var ConvenienceMultiplyColorB = inputs[(int)InputId.ConvenienceMultiplyColorB].Eval(context).Value;",
+        "            var ConvenienceMultiplyColorA = inputs[(int)InputId.ConvenienceMultiplyColorA].Eval(context).Value;",
+        "            var ConvenienceMultiplyColor = new Color4(ConvenienceMultiplyColorR, ConvenienceMultiplyColorG, ConvenienceMultiplyColorB, ConvenienceMultiplyColorA);",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -297,6 +395,8 @@
         "                    _effect.GetVariableByName(\"Image\").AsShaderResource().SetResource(ImageView);",
         "                    _effect.GetVariableByName(\"Color\").AsVector().Set(new Vector4(ColorR, ColorG, ColorB, ColorA));",
         "                    _effect.GetVariableByName(\"Tolerance\").AsScalar().Set(Tolerance);",
+        "                    _effect.GetVariableByName(\"ConvenientMultiply\").AsScalar().Set(ConvenientMultiply);",
+        "                    _effect.GetVariableByName(\"ConvenienceMultiplyColor\").AsVector().Set(new Vector4(ConvenienceMultiplyColorR, ConvenienceMultiplyColorG, ConvenienceMultiplyColorB, ConvenienceMultiplyColorA));",
         "                //<<< _setup",
         "",
         "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
@@ -374,6 +474,36 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "010622c0-f521-47fc-b846-db2cb993e602",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "30ed0f06-e095-48cc-ad36-75ae033b59d2"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "5ca294cf-c19f-49f1-9bbb-c3518f4593fd",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "30ed0f06-e095-48cc-ad36-75ae033b59d2"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d2b204b5-9f3d-43a5-880f-719d713b8d0c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "30ed0f06-e095-48cc-ad36-75ae033b59d2"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2bf76649-ae2f-43cb-970c-b74c3d2eb4c6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "30ed0f06-e095-48cc-ad36-75ae033b59d2"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c620ea0c-587d-4a8f-904e-cc3c3291d7d6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "30ed0f06-e095-48cc-ad36-75ae033b59d2"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "90da2bda-3005-4bdd-b610-213e5c10b831",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "30ed0f06-e095-48cc-ad36-75ae033b59d2"
     }

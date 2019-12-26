@@ -37,6 +37,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "FINALCHORDPOS",
+      "MetaInstanceID": "45045cca-792b-46c5-944b-22f5acfa6daf",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -361,24 +378,17 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "a65e762b-c164-4575-93d5-ad20d1a96ed0",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-973.972777358004",
-        "PosY": "474.2790981121",
+        "PosX": "-951.972777358004",
+        "PosY": "504.2790981121",
         "Width": "275",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "259.18"
-            ]
-          },
           {
             "ID": "c22adec6-c5c6-42d2-a77b-fa8e4d89d26d",
             "Type": "Float",
@@ -535,6 +545,12 @@
       "SourceOpPart": "ff288c9d-d820-45c2-9561-8dcf2b5fbf51",
       "TargetOp": "fcdca93d-0ebd-4c99-a6c9-ee2f18a411ee",
       "TargetOpPart": "5fa1199d-166e-42ed-9013-13b3dc238a75"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "45045cca-792b-46c5-944b-22f5acfa6daf",
+      "TargetOp": "a65e762b-c164-4575-93d5-ad20d1a96ed0",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
     }
   ]
 }

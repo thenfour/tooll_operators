@@ -1,0 +1,193 @@
+{
+  "Name": "PulseWhenChanged",
+  "_id": "aefe5f58-5f9b-4dfb-a2b3-ef13093c83d7",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "b8cbde6b-897d-411c-84f7-3e4dc27c6b27",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Output.Min",
+      "MetaInstanceID": "ab718187-922a-40f3-a47d-73e1c2475d06",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Output.Max",
+      "MetaInstanceID": "31b5881b-14fc-4507-94bb-450a0e904dc8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "LinearFalloffRange",
+      "MetaInstanceID": "3b007288-4239-45a5-90e1-329a6d417dea",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0.001",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Time",
+      "MetaInstanceID": "60a50a83-9537-4380-9ba2-c284f2582be0",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "2cb0ddd9-c12e-4cd6-85a5-bbecfe24120f",
+      "MetaID": "fdb3c10b-efb4-4c4c-be05-3d4ac4ecaf90",
+      "Name": "PulseWhenChangedFunc",
+      "Version": "e407749a-b95c-450e-8497-3a9fcea94839",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "",
+        "namespace Framefield.Core.IDfdb3c10b_efb4_4c4c_be05_3d4ac4ecaf90",
+        "{",
+        "    public class Class_PulseWhenChanged : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Value = 0,",
+        "            OutputMin = 1,",
+        "            OutputMax = 2,",
+        "            LinearFalloffRange = 3",
+        "        }",
+        "        //<<< _inputids        ",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var Value = inputs[(int)InputId.Value].Eval(context).Value;",
+        "            var OutputMin = inputs[(int)InputId.OutputMin].Eval(context).Value;",
+        "            var OutputMax = inputs[(int)InputId.OutputMax].Eval(context).Value;",
+        "            var Output = new Vector2(OutputMin, OutputMax);",
+        "            var LinearFalloffRange = inputs[(int)InputId.LinearFalloffRange].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            if (Changed == true && Value != _lastValue)",
+        "            {",
+        "                _lastValue = Value;",
+        "                _lastChangedTime = context.Time;",
+        "                Changed = false;",
+        "            }",
+        "            float timeSinceChanged = context.Time - _lastChangedTime;",
+        "            if (timeSinceChanged == 0) {",
+        "                context.Value = OutputMax;",
+        "            }else {",
+        "                //float x = 1.0f / timeSinceChanged; // sharp falloff",
+        "                float linear = timeSinceChanged / LinearFalloffRange;",
+        "                linear = Utilities.Clamp(1.0f-linear, 0, 1);",
+        "                ",
+        "                //x = Utilities.Lerp(x, linear, LinearMix);",
+        "                ",
+        "                //float fall;",
+        "                //x = (float)Math.Pow(x, .1);",
+        "                context.Value = Utilities.Lerp(OutputMin, OutputMax, linear);",
+        "            }",
+        "            return context;",
+        "        }",
+        "",
+        "        float _lastChangedTime = -99999;",
+        "        float _lastValue;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2cb0ddd9-c12e-4cd6-85a5-bbecfe24120f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "60a50a83-9537-4380-9ba2-c284f2582be0"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b8cbde6b-897d-411c-84f7-3e4dc27c6b27",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2cb0ddd9-c12e-4cd6-85a5-bbecfe24120f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ab718187-922a-40f3-a47d-73e1c2475d06",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2cb0ddd9-c12e-4cd6-85a5-bbecfe24120f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "31b5881b-14fc-4507-94bb-450a0e904dc8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2cb0ddd9-c12e-4cd6-85a5-bbecfe24120f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3b007288-4239-45a5-90e1-329a6d417dea",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2cb0ddd9-c12e-4cd6-85a5-bbecfe24120f"
+    }
+  ]
+}

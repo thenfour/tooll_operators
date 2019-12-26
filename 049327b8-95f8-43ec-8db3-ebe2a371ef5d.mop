@@ -27,6 +27,7 @@
           "float4 BlurColor;",
           "float DryBlendMode;",
           "float3 BeforeClamp;",
+          "float2 ConvenienceMultiply;",
           "//<<< _parameters\r",
           "float widthToHeight;\r",
           "float2 direction;\r",
@@ -137,7 +138,7 @@
           "            break;\r",
           "    }\r",
           "    \r",
-          "    return c;\r",
+          "    return c * ConvenienceMultiply.xxxy;\r",
           "}\r",
           "//<<< PS\r",
           "\r",
@@ -415,6 +416,40 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "ConvenienceMultiply.Color",
+      "MetaInstanceID": "94d14973-00c1-4727-b8de-536f7066b797",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ConvenienceMultiply.Alpha",
+      "MetaInstanceID": "67ae77bf-3158-4c54-8c86-718215ac47c4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -429,7 +464,7 @@
       "MetaInstanceID": "1fb84b16-89f4-488a-b2d1-4b7a3961410b",
       "MetaID": "25a6b226-4fbb-4fa8-a5f8-cc862744b61f",
       "Name": "GaussBlurExFunc",
-      "Version": "7efc5af1-9099-4e3c-bc44-ec15edd9d7af",
+      "Version": "c6ba02d6-7ec1-4351-b9ab-9855cee472e3",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -465,7 +500,9 @@
         "            DryBlendMode = 11,",
         "            BeforeClampX = 12,",
         "            BeforeClampMul = 13,",
-        "            BeforeClampPow = 14",
+        "            BeforeClampPow = 14,",
+        "            ConvenienceMultiplyColor = 15,",
+        "            ConvenienceMultiplyAlpha = 16",
         "        }",
         "        //<<< _inputids",
         "",
@@ -514,6 +551,9 @@
         "                var BeforeClampMul = inputs[(int)InputId.BeforeClampMul].Eval(context).Value;",
         "                var BeforeClampPow = inputs[(int)InputId.BeforeClampPow].Eval(context).Value;",
         "                var BeforeClamp = new Vector3(BeforeClampX, BeforeClampMul, BeforeClampPow);",
+        "                var ConvenienceMultiplyColor = inputs[(int)InputId.ConvenienceMultiplyColor].Eval(context).Value;",
+        "                var ConvenienceMultiplyAlpha = inputs[(int)InputId.ConvenienceMultiplyAlpha].Eval(context).Value;",
+        "                var ConvenienceMultiply = new Vector2(ConvenienceMultiplyColor, ConvenienceMultiplyAlpha);",
         "                //<<< _params",
         "",
         "                //>>> _setup",
@@ -528,6 +568,7 @@
         "                    _effect.GetVariableByName(\"BlurColor\").AsVector().Set(new Vector4(BlurColorR, BlurColorG, BlurColorB, BlurColorA));",
         "                    _effect.GetVariableByName(\"DryBlendMode\").AsScalar().Set(DryBlendMode);",
         "                    _effect.GetVariableByName(\"BeforeClamp\").AsVector().Set(new Vector3(BeforeClampX, BeforeClampMul, BeforeClampPow));",
+        "                    _effect.GetVariableByName(\"ConvenienceMultiply\").AsVector().Set(new Vector2(ConvenienceMultiplyColor, ConvenienceMultiplyAlpha));",
         "                //<<< _setup",
         "    ",
         "                    var D3DDevice = context.D3DDevice;",
@@ -697,6 +738,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "0a24ff47-b5ff-466c-82d9-957c595f6314",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1fb84b16-89f4-488a-b2d1-4b7a3961410b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "94d14973-00c1-4727-b8de-536f7066b797",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "1fb84b16-89f4-488a-b2d1-4b7a3961410b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "67ae77bf-3158-4c54-8c86-718215ac47c4",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "1fb84b16-89f4-488a-b2d1-4b7a3961410b"
     }

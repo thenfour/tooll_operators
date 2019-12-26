@@ -1,5 +1,5 @@
 {
-  "Name": "SKServerBeatSubdivider",
+  "Name": "SKServerBeatSequencer",
   "_id": "367ac5bc-179f-4b1e-98cf-808cc94fef67",
   "Namespace": "user.tenfour",
   "Description": "hard subdivider.\r\nspecify multiplier + divisor to divide the beat into subdivisions. a beat sequencer.\r\n\r\nThen specify a sequence using dashes and non-dashes. Each non-dash will increment the output.\r\n\r\nSo B-B-BBB- will output a stepped sequence, stepping every time a B occurs. Within the sequence, output will range 1-5\r\n\r\nTODO: this should actually output a ramp, not hard steps.",
@@ -101,7 +101,7 @@
     {
       "MetaInstanceID": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec",
       "MetaID": "087ba782-5e94-454a-b09e-af1e1f5c2f17",
-      "Name": "SKServerBeatSubdividerFunc",
+      "Name": "SKServerBeatSequencerFunc",
       "Version": "e21e2c63-75c9-47c1-9806-3281bd72f8e7",
       "Type": "Float",
       "IsMultiInput": "True",

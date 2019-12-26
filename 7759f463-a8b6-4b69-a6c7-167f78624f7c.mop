@@ -1,0 +1,106 @@
+{
+  "Name": "PulseWhenChangedXXX",
+  "_id": "7759f463-a8b6-4b69-a6c7-167f78624f7c",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "7da02785-3d01-4b3e-941b-5c6d5b1fbbbb",
+      "DefaultValue": {
+        "Type": "Generic",
+        "Value": "Framefield.Core.Generic"
+      },
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Time",
+      "MetaInstanceID": "5ffbb790-5df2-4cc4-be34-cba658c2150a",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [
+    {
+      "Name": "Sub",
+      "MetaInstanceID": "39e03cf7-730d-4d32-a27a-5e4a9c65e596",
+      "MetaID": "35aca9b1-29c5-41ea-ba17-dba64f692808",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "1213.38839883313",
+        "PosY": "-160.291408017755",
+        "Width": "225",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "Time",
+      "MetaInstanceID": "1aa773ad-b74b-4357-8548-b8da3e046b17",
+      "MetaID": "253e302b-8141-4d17-96ee-42af092dbf59",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "1213.38839883313",
+        "PosY": "-135.291408017755",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "TimeWhenChanged",
+      "MetaInstanceID": "4014da8f-a358-4e01-8406-807dec4c96a2",
+      "MetaID": "97c2c228-20db-4b5c-9988-8aa123912772",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "1313.38839883313",
+        "PosY": "-135.291408017755",
+        "Width": "125",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "SourceOp": "1aa773ad-b74b-4357-8548-b8da3e046b17",
+      "SourceOpPart": "fccdfff4-07c3-4c5c-9b4c-9a62c7ad7d66",
+      "TargetOp": "39e03cf7-730d-4d32-a27a-5e4a9c65e596",
+      "TargetOpPart": "1ab74814-67af-48af-82cb-e7c1b11ccf94"
+    },
+    {
+      "SourceOp": "39e03cf7-730d-4d32-a27a-5e4a9c65e596",
+      "SourceOpPart": "ce44fc03-f3eb-4518-860c-9b2ff291b64e",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "5ffbb790-5df2-4cc4-be34-cba658c2150a"
+    },
+    {
+      "SourceOp": "4014da8f-a358-4e01-8406-807dec4c96a2",
+      "SourceOpPart": "f630d2a6-dbc8-45b7-92df-95e0118a03f5",
+      "TargetOp": "39e03cf7-730d-4d32-a27a-5e4a9c65e596",
+      "TargetOpPart": "6092ae7f-4ef6-401a-b843-3168c017e305"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7da02785-3d01-4b3e-941b-5c6d5b1fbbbb",
+      "TargetOp": "4014da8f-a358-4e01-8406-807dec4c96a2",
+      "TargetOpPart": "2ca296f7-d4c9-4e90-acf8-f9078623c823"
+    }
+  ]
+}
