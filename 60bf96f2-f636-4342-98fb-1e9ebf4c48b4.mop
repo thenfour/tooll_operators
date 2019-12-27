@@ -1,5 +1,5 @@
 {
-  "Name": "DitherViaImage",
+  "Name": "DitherViaImageAndQuantize",
   "_id": "60bf96f2-f636-4342-98fb-1e9ebf4c48b4",
   "Namespace": "user.tenfour",
   "Description": "fork from asciifilter",
@@ -24,6 +24,8 @@
           "float DitherStrength01;",
           "float DestValues;",
           "float2 Pixellate;",
+          "float SrcMultiplyColor;",
+          "float SrcColorExponent;",
           "//<<< _parameters\r",
           " \r",
           "SamplerState samLinear\r",
@@ -80,6 +82,8 @@
           "    dith *= strength;\r",
           "    \r",
           "    float4 ret = Image.Load(uint3(srcPos,0));\r",
+          "    ret.rgb *= SrcMultiplyColor;\r",
+          "    ret.rgb = pow(clamp(ret.rgb, 0, 1), SrcColorExponent);\r",
           "    ret.rgb += dith;\r",
           "    \r",
           "    // reduce values\r",
@@ -215,6 +219,40 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "SrcMultiplyColor",
+      "MetaInstanceID": "27e8051c-1b10-483c-9ab9-427b5df3ad30",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SrcColorExponent",
+      "MetaInstanceID": "a47a5607-09d6-4bd1-a131-2a5380073e43",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -228,8 +266,8 @@
     {
       "MetaInstanceID": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240",
       "MetaID": "bc8d64b8-201e-4427-91e1-213378d77d81",
-      "Name": "DitherViaImageFunc",
-      "Version": "05f70000-e17c-4787-957a-594ac2e1dcff",
+      "Name": "DitherViaImageAndQuantizeFunc",
+      "Version": "6196256d-7c08-48a2-ab5e-4a7396487a2c",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -245,7 +283,7 @@
         "",
         "namespace Framefield.Core.IDbc8d64b8_201e_4427_91e1_213378d77d81",
         "{",
-        "    public class Class_DitherViaImage : FXImageFunction",
+        "    public class Class_DitherViaImageAndQuantize : FXImageFunction",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
@@ -256,7 +294,9 @@
         "            DitherStrength01 = 3,",
         "            DestValues = 4,",
         "            PixellateX = 5,",
-        "            PixellateY = 6",
+        "            PixellateY = 6,",
+        "            SrcMultiplyColor = 7,",
+        "            SrcColorExponent = 8",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
@@ -270,6 +310,8 @@
         "            var PixellateX = inputs[(int)InputId.PixellateX].Eval(context).Value;",
         "            var PixellateY = inputs[(int)InputId.PixellateY].Eval(context).Value;",
         "            var Pixellate = new Vector2(PixellateX, PixellateY);",
+        "            var SrcMultiplyColor = inputs[(int)InputId.SrcMultiplyColor].Eval(context).Value;",
+        "            var SrcColorExponent = inputs[(int)InputId.SrcColorExponent].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -285,6 +327,8 @@
         "                    _effect.GetVariableByName(\"DitherStrength01\").AsScalar().Set(DitherStrength01);",
         "                    _effect.GetVariableByName(\"DestValues\").AsScalar().Set(DestValues);",
         "                    _effect.GetVariableByName(\"Pixellate\").AsVector().Set(new Vector2(PixellateX, PixellateY));",
+        "                    _effect.GetVariableByName(\"SrcMultiplyColor\").AsScalar().Set(SrcMultiplyColor);",
+        "                    _effect.GetVariableByName(\"SrcColorExponent\").AsScalar().Set(SrcColorExponent);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -350,6 +394,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "294bf80b-fc0e-47c3-9267-9dacc1497570",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "27e8051c-1b10-483c-9ab9-427b5df3ad30",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "a47a5607-09d6-4bd1-a131-2a5380073e43",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "d4be96aa-2b82-44e6-a1cf-ec9c9db3b240"
     }

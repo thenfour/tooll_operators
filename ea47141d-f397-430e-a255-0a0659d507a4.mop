@@ -52,7 +52,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "a5019b94-b803-4791-bb5d-9d8e6143ac39",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -204,7 +204,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "463f2908-2c29-492e-9139-49907b81c581",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -738,7 +738,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "afeafae6-ea42-4adf-98cd-65e1c4a8a635",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -761,7 +761,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "89e73748-6768-41ce-a649-2dfa24226b00",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -784,7 +784,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "b8ceedf5-de30-4a89-8454-32df64cc2c8e",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -807,7 +807,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "f9163489-769e-49c7-a6fb-457c91083d0e",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -830,7 +830,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "d480307b-a691-4e7a-8422-ac1366106241",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -853,7 +853,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "7b58069e-dc49-4758-925b-524debe51a8c",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -876,7 +876,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "45cd2b59-76a1-40f7-b88c-6d0f57861b3a",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -899,7 +899,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "18744a10-92aa-45ac-87a6-015745bfc90a",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -922,7 +922,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "510c61b5-713c-435d-b000-cdf80b326b68",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -945,7 +945,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "782b8458-002a-40c3-b09c-f34c7dbf5654",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -968,7 +968,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "40c8c0b7-72b4-49b7-8917-740b303eb300",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -991,7 +991,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "84f81224-ea0b-4ca6-a4aa-0478c71c2caa",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -1014,7 +1014,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "7d8cd70b-7c1f-43ff-8ae6-c7f516331693",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -1037,7 +1037,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "27216395-7d82-4f55-832d-8a420a8ad32b",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -1270,7 +1270,14 @@
             "ID": "74ba6ba3-4f86-48b4-93a1-8c41e7f1a72a",
             "Type": "Float",
             "Value": [
-              "0.5"
+              "0.96"
+            ]
+          },
+          {
+            "ID": "8b556dbb-305a-42e5-a082-cebaa56126fe",
+            "Type": "Float",
+            "Value": [
+              "0"
             ]
           }
         ],
@@ -1635,7 +1642,7 @@
         "Name": "",
         "PosX": "156.399394662548",
         "PosY": "-193.754101417104",
-        "Width": "100",
+        "Width": "150",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
@@ -1643,7 +1650,7 @@
             "ID": "5da1e747-845c-4082-8bdc-73ae761a9ab7",
             "Type": "Float",
             "Value": [
-              "-1"
+              "0"
             ]
           },
           {

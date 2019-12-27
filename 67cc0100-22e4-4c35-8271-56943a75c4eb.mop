@@ -37,6 +37,7 @@
           "float OutputSaturation;",
           "float4 ColorKey;",
           "float ColorKeyTolerance;",
+          "float OutputMul;",
           "//<<< _parameters\r",
           "Texture2D RefImage;\r",
           "Texture2D FontImage;\r",
@@ -427,7 +428,7 @@
           "        \r",
           "    fontColor.rgb = lerp((fontColor.r + fontColor.g + fontColor.b) / 3, fontColor.rgb, OutputSaturation);\r",
           "    \r",
-          "    return fontColor;\r",
+          "    return fontColor * OutputMul;\r",
           "}\r",
           "\r",
           "\r",
@@ -681,6 +682,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "OutputMul",
+      "MetaInstanceID": "af03fa44-390a-4338-87ef-02cad78f87b6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -695,7 +713,7 @@
       "MetaInstanceID": "a3fef8f7-9932-46e9-89a5-48eb456f162b",
       "MetaID": "2cd667a5-afa0-4821-bb93-30b7ea93ca80",
       "Name": "ASCIIFilterRef4Func",
-      "Version": "052ad36b-a46e-47c4-b35b-bd3c1e34feae",
+      "Version": "e03813ea-f04b-483f-99a3-421c92d1e8be",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -867,7 +885,8 @@
         "            ColorKeyG = 9,",
         "            ColorKeyB = 10,",
         "            ColorKeyA = 11,",
-        "            ColorKeyTolerance = 12",
+        "            ColorKeyTolerance = 12,",
+        "            OutputMul = 13",
         "        }",
         "        //<<< _inputids",
         "",
@@ -921,6 +940,7 @@
         "            var ColorKeyA = inputs[(int)InputId.ColorKeyA].Eval(context).Value;",
         "            var ColorKey = new Color4(ColorKeyR, ColorKeyG, ColorKeyB, ColorKeyA);",
         "            var ColorKeyTolerance = inputs[(int)InputId.ColorKeyTolerance].Eval(context).Value;",
+        "            var OutputMul = inputs[(int)InputId.OutputMul].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -1001,6 +1021,7 @@
         "                    _effect.GetVariableByName(\"OutputSaturation\").AsScalar().Set(OutputSaturation);",
         "                    _effect.GetVariableByName(\"ColorKey\").AsVector().Set(new Vector4(ColorKeyR, ColorKeyG, ColorKeyB, ColorKeyA));",
         "                    _effect.GetVariableByName(\"ColorKeyTolerance\").AsScalar().Set(ColorKeyTolerance);",
+        "                    _effect.GetVariableByName(\"OutputMul\").AsScalar().Set(OutputMul);",
         "                    //<<< _setup",
         "                    ",
         "                    //Logger.Info(this, \"Hashcode = {0}\", Map[\"HashCode\"]);",
@@ -1134,6 +1155,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "77b04be2-6dd4-439a-9911-028339327515",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "af03fa44-390a-4338-87ef-02cad78f87b6",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "a3fef8f7-9932-46e9-89a5-48eb456f162b"
     }

@@ -104,35 +104,28 @@
             "ID": "5135350e-10d8-4dbe-b26e-190e7d2ce84b",
             "Type": "Float",
             "Value": [
-              "8"
+              "12"
             ]
           },
           {
             "ID": "a82dd705-ce81-4ec1-992e-958bdc177a26",
             "Type": "Float",
             "Value": [
-              "0.1"
+              "0.5"
             ]
           },
           {
             "ID": "e9e092c9-388c-40b9-ae66-cfcef8c0a02e",
             "Type": "Float",
             "Value": [
-              "0.1"
+              "0.5"
             ]
           },
           {
             "ID": "0d4dc2fc-c8d6-4826-a31f-07404cc0024f",
             "Type": "Float",
             "Value": [
-              "-2"
-            ]
-          },
-          {
-            "ID": "74ba6ba3-4f86-48b4-93a1-8c41e7f1a72a",
-            "Type": "Float",
-            "Value": [
-              "0.28"
+              "0"
             ]
           }
         ],

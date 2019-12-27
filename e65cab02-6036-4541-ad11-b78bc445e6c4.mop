@@ -1,0 +1,226 @@
+{
+  "Name": "SelectFromColors",
+  "_id": "e65cab02-6036-4541-ad11-b78bc445e6c4",
+  "Namespace": "user.tenfour",
+  "Description": "works in between values\r\ntodo: optimize\r\n\r\nuse with ColorValue\r\n",
+  "Inputs": [
+    {
+      "Name": "Values",
+      "MetaInstanceID": "07937a3a-1583-4f05-8010-6bed31b8654b",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "True",
+      "Relevance": "Required",
+      "Description": "SharpDX.Color4",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Selector",
+      "MetaInstanceID": "d29b0de2-d509-4ec3-9fe2-e604938d7976",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "R",
+      "MetaInstanceID": "11bbedfd-1c62-44df-9ab7-99a3a4192f1f",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "G",
+      "MetaInstanceID": "b8195f4e-72c3-47b0-a0e5-dc480c4f7a45",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "B",
+      "MetaInstanceID": "fae51994-9186-465e-8d39-eebd2040ddb7",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "A",
+      "MetaInstanceID": "a8e2e497-724b-4a79-b64f-8bc9d5a7048b",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    },
+    {
+      "Name": "Color4",
+      "MetaInstanceID": "a5a1b40a-bbad-4c3b-98ec-edd2f8a2dfc6",
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "7fa744af-ba0b-4480-ba0c-62972d6fd901",
+      "MetaID": "325aa5e0-4c82-4062-a272-8b20849f7b4b",
+      "Name": "SelectFromColorsFunc",
+      "Version": "7e105038-67d3-489b-b703-5a2905fdc2a3",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID325aa5e0_4c82_4062_a272_8b20849f7b4b",
+        "{",
+        "    public class Class_SelectFromColors : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Selector = 0,",
+        "            Values = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        //>>>_outputids",
+        "        private enum OutputId",
+        "        {",
+        "            R = 0,",
+        "            G = 1,",
+        "            B = 2,",
+        "            A = 3,",
+        "            Color4 = 4",
+        "        }",
+        "        //<<<_outputids",
+        "",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "",
+        "            var Selector = inputs[(int)InputId.Selector].Eval(context).Value;",
+        "            var ValuesNode = inputs[(int)InputId.Values];",
+        "        ",
+        "            if (ValuesNode.Connections.Count == 0)",
+        "                return context;",
+        "    ",
+        "            int index1 = (int)(Selector % ValuesNode.Connections.Count);",
+        "            int index2 = index1;",
+        "            float blendValue = Selector % 1;",
+        "            if ( blendValue > 0) {",
+        "                index2 ++;",
+        "            }",
+        "            ",
+        "            var v1Input = ValuesNode.Connections[index1 % ValuesNode.Connections.Count];",
+        "            object o1 = v1Input.Eval(context).Dynamic;",
+        "            if (o1 == null || (!(o1 is Color4))) {",
+        "                return context;",
+        "            }",
+        "            Color4 v1 = (Color4)o1;",
+        "            Color4 v2;",
+        "            ",
+        "            if( blendValue == 0) {",
+        "                v2 = v1;",
+        "            }",
+        "            else {",
+        "                var v2Input = ValuesNode.Connections[index2 % ValuesNode.Connections.Count];",
+        "                object o2 = v2Input.Eval(context).Dynamic;",
+        "                if (o2 == null || (!(o2 is Color4))) {",
+        "                    v2 = v1;",
+        "                } else {",
+        "                    v2 = (Color4)o2;",
+        "                }",
+        "                ",
+        "                //v2 = v2Input.Eval(context).Value;",
+        "            }",
+        "            ",
+        "            //Logger.Info(this,\"v1:{0} v2:{1}\", v1, v2);",
+        "            ",
+        "            //context.Value = (float)Utilities.Lerp(v1, v2, blendValue);",
+        "            //context.Dynamic = new Color4(0,0,0,0);",
+        "            Color4 ret = new Color4(",
+        "                Utilities.Lerp(v1.Red, v2.Red, blendValue),",
+        "                Utilities.Lerp(v1.Green, v2.Green, blendValue),",
+        "                Utilities.Lerp(v1.Blue, v2.Blue, blendValue),",
+        "                Utilities.Lerp(v1.Alpha, v2.Alpha, blendValue)",
+        "                );",
+        "            context.Dynamic = ret;",
+        "                ",
+        "            switch(outputIdx){ ",
+        "            case (int)OutputId.R:",
+        "                context.Value = ret.Red;",
+        "                break;",
+        "            case (int)OutputId.G:",
+        "                context.Value = ret.Green;",
+        "                break;",
+        "            case (int)OutputId.B:",
+        "                context.Value = ret.Blue;",
+        "                break;",
+        "            case (int)OutputId.A:",
+        "                context.Value = ret.Alpha;",
+        "                break;",
+        "            }",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d29b0de2-d509-4ec3-9fe2-e604938d7976",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "07937a3a-1583-4f05-8010-6bed31b8654b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "11bbedfd-1c62-44df-9ab7-99a3a4192f1f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b8195f4e-72c3-47b0-a0e5-dc480c4f7a45"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fae51994-9186-465e-8d39-eebd2040ddb7"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a8e2e497-724b-4a79-b64f-8bc9d5a7048b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7fa744af-ba0b-4480-ba0c-62972d6fd901",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a5a1b40a-bbad-4c3b-98ec-edd2f8a2dfc6"
+    }
+  ]
+}

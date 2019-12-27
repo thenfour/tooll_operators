@@ -344,7 +344,7 @@
       "MetaInstanceID": "a1d6108b-f149-4f9f-84e5-fe612e63c215",
       "MetaID": "72dc2dcd-0dbf-496b-9b3a-ed711a9977d2",
       "Name": "StrokeFunc",
-      "Version": "38152494-8069-44a7-b556-5f7571cbebd0",
+      "Version": "d506ddf6-170a-4683-ac64-d544460d0401",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -396,7 +396,7 @@
         "            var ConvenientMultiply = inputs[(int)InputId.ConvenientMultiply].Eval(context).Value;",
         "            //<<< _params",
         "            ",
-        "            if(Image == null)",
+        "           if(Image == null)",
         "                return context;",
         "",
         "",

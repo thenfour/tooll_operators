@@ -1,0 +1,164 @@
+{
+  "Name": "ColorValue",
+  "_id": "a41cb12d-4846-4220-bdd5-2e3ae74129e2",
+  "Namespace": "user.tenfour",
+  "Description": "outputs a Color4 dynamic\r\n\r\nused with SelectFromColors as a palette chooser/selector\r\n",
+  "Inputs": [
+    {
+      "Name": "Color.R",
+      "MetaInstanceID": "21a42c3b-b55c-4e96-8e26-1a6a9a49ea6b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Color.G",
+      "MetaInstanceID": "2714190f-8d78-4009-895a-7ac576852a64",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Color.B",
+      "MetaInstanceID": "20d9b6d2-a5ba-4b6d-8f0f-1f3b49c383f9",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Color.A",
+      "MetaInstanceID": "2e801cff-2d32-4a3e-8b82-0c987574d314",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Color4",
+      "MetaInstanceID": "d85ed4ff-4bd9-4c1e-bc18-edcd5883add1",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "0aa88164-5ed6-467b-b010-bc79ff81232a",
+      "MetaID": "0ddcb541-c98e-43dd-843a-e490043f71e8",
+      "Name": "ColorValueFunc",
+      "Version": "42251fd7-00ae-42e1-8f5b-186405fbb2c4",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID0ddcb541_c98e_43dd_843a_e490043f71e8",
+        "{",
+        "    public class Class_ColorValue : OperatorPart.Function",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            ColorR = 0,",
+        "            ColorG = 1,",
+        "            ColorB = 2,",
+        "            ColorA = 3",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
+        "        ",
+        "            //>>> _params",
+        "            var ColorR = inputs[(int)InputId.ColorR].Eval(context).Value;",
+        "            var ColorG = inputs[(int)InputId.ColorG].Eval(context).Value;",
+        "            var ColorB = inputs[(int)InputId.ColorB].Eval(context).Value;",
+        "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
+        "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
+        "            //<<< _params",
+        "            context.Dynamic = Color;",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "21a42c3b-b55c-4e96-8e26-1a6a9a49ea6b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0aa88164-5ed6-467b-b010-bc79ff81232a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2714190f-8d78-4009-895a-7ac576852a64",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0aa88164-5ed6-467b-b010-bc79ff81232a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "20d9b6d2-a5ba-4b6d-8f0f-1f3b49c383f9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0aa88164-5ed6-467b-b010-bc79ff81232a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2e801cff-2d32-4a3e-8b82-0c987574d314",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "0aa88164-5ed6-467b-b010-bc79ff81232a"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0aa88164-5ed6-467b-b010-bc79ff81232a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d85ed4ff-4bd9-4c1e-bc18-edcd5883add1"
+    }
+  ]
+}

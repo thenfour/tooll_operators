@@ -2,7 +2,7 @@
   "Name": "HardColorKey",
   "_id": "f21d7d61-9d8c-469a-9ecf-025eb9c6b56c",
   "Namespace": "user.tenfour",
-  "Description": "",
+  "Description": "\tfill",
   "Inputs": [
     {
       "Name": "Code",

@@ -27,6 +27,8 @@
           "float LineWidth;",
           "float2 Skew;",
           "float2 Movement;",
+          "float WholeImageRotation;",
+          "float Zoom;",
           "//<<< _parameters\r",
           "\r",
           "//const float iBPM;\r",
@@ -108,6 +110,9 @@
           "    p4 += dot(p4, p4.wzxy+33.33);\r",
           "    return fract((p4.xxyz+p4.yzzw)*p4.zywx);\r",
           "}\r",
+          "float2x2 rot2D(float r){\r",
+          "    return float2x2(cos(r), -sin(r), sin(r), cos(r));\r",
+          "}\r",
           "\r",
           "#define nsin(x) (sin(x)*.5+.5)\r",
           "//#define q(x,p) (floor((x)/(p))*(p))\r",
@@ -118,12 +123,13 @@
           "    vec2 uv = fragCoord/iResolution.xy-.5;\r",
           "    vec2 R = iResolution.xy;\r",
           "    uv.x *= R.x / R.y;\r",
-          "    uv *= 2.;\r",
+          "    uv = mul(uv, rot2D(WholeImageRotation));\r",
+          "    uv *= Zoom;\r",
           "\r",
           "    vec2 cellUL = vec2x(-.5);\r",
           "    vec2 cellBR = vec2x(.5);\r",
           "    float seed = RandomSeed;//floor(iBeat/4.);\r",
-          "    o = vec4x(.1);\r",
+          "    o = vec4x(0);\r",
           "    vec3 lineColor;\r",
           "    vec3 a, a2;\r",
           "    \r",
@@ -378,6 +384,40 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "WholeImageRotation",
+      "MetaInstanceID": "9ed76b15-bd00-4c6c-b059-7e8266c2d7ae",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Zoom",
+      "MetaInstanceID": "23676174-ee93-4dd6-968d-5843e1845a79",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1.2"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -392,7 +432,7 @@
       "MetaInstanceID": "3923262f-1179-459c-b6b2-41e54b4dd473",
       "MetaID": "7cc22dcc-1608-41ef-b98c-c1cff7061c2d",
       "Name": "SH_JazzyPartitionFunc",
-      "Version": "22f5e0c2-147e-49de-b135-56c32c45d145",
+      "Version": "faec6fdc-808b-4ebc-9924-de69b3bc3386",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -423,7 +463,9 @@
         "            SkewX = 7,",
         "            SkewY = 8,",
         "            MovementX = 9,",
-        "            MovementY = 10",
+        "            MovementY = 10,",
+        "            WholeImageRotation = 11,",
+        "            Zoom = 12",
         "        }",
         "        //<<< _inputids",
         "",
@@ -442,6 +484,8 @@
         "            var MovementX = inputs[(int)InputId.MovementX].Eval(context).Value;",
         "            var MovementY = inputs[(int)InputId.MovementY].Eval(context).Value;",
         "            var Movement = new Vector2(MovementX, MovementY);",
+        "            var WholeImageRotation = inputs[(int)InputId.WholeImageRotation].Eval(context).Value;",
+        "            var Zoom = inputs[(int)InputId.Zoom].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -458,6 +502,8 @@
         "                    _effect.GetVariableByName(\"LineWidth\").AsScalar().Set(LineWidth);",
         "                    _effect.GetVariableByName(\"Skew\").AsVector().Set(new Vector2(SkewX, SkewY));",
         "                    _effect.GetVariableByName(\"Movement\").AsVector().Set(new Vector2(MovementX, MovementY));",
+        "                    _effect.GetVariableByName(\"WholeImageRotation\").AsScalar().Set(WholeImageRotation);",
+        "                    _effect.GetVariableByName(\"Zoom\").AsScalar().Set(Zoom);",
         "                //<<< _setup",
         "",
         "                //if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -559,6 +605,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "60b88cd3-1683-488d-88b0-36122b52d5a7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3923262f-1179-459c-b6b2-41e54b4dd473"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9ed76b15-bd00-4c6c-b059-7e8266c2d7ae",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3923262f-1179-459c-b6b2-41e54b4dd473"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "23676174-ee93-4dd6-968d-5843e1845a79",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "3923262f-1179-459c-b6b2-41e54b4dd473"
     }

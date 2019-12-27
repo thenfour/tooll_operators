@@ -26,6 +26,9 @@
           "float2 Pixellate;",
           "Texture2D LUT;",
           "float BWBiasAmount;",
+          "float OutputSaturation;",
+          "float OutputMul;",
+          "float OutputExponent;",
           "//<<< _parameters\r",
           " \r",
           "SamplerState samLinear\r",
@@ -113,6 +116,9 @@
           "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
           "    ret.rgb = applyColorLUT(LUT, ret.rgb);\r",
           "    \r",
+          "    ret.rgb = lerp((ret.r+ret.g+ret.b)/3,ret.rgb,OutputSaturation);\r",
+          "    ret.rgb *= OutputMul;\r",
+          "    ret.rgb = pow(max(0,ret.rgb), OutputExponent);\r",
           "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
           "    return ret;\r",
           "}\r",
@@ -277,6 +283,57 @@
       "Scale": "0.005",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "OutputSaturation",
+      "MetaInstanceID": "efecb5fe-45b0-4623-bf71-0afbcc58bf34",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputMul",
+      "MetaInstanceID": "2e57753e-e823-42d3-a3dd-19395e2b84bb",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "2",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "OutputExponent",
+      "MetaInstanceID": "c9442737-bdf9-4d10-9a39-aa54af4b51c8",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -291,7 +348,7 @@
       "MetaInstanceID": "b7433194-d167-470b-b5a9-bce30ecee27d",
       "MetaID": "c7dbbd89-d4aa-4428-9a55-00883969bb15",
       "Name": "DitherViaImageAndLUTFunc",
-      "Version": "f2436aef-8109-46e2-9f70-9806120d035c",
+      "Version": "19a07cb1-34b2-4701-9bb6-25cc68da1276",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -320,7 +377,10 @@
         "            PixellateX = 5,",
         "            PixellateY = 6,",
         "            LUT = 7,",
-        "            BWBiasAmount = 8",
+        "            BWBiasAmount = 8,",
+        "            OutputSaturation = 9,",
+        "            OutputMul = 10,",
+        "            OutputExponent = 11",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
@@ -336,6 +396,9 @@
         "            var Pixellate = new Vector2(PixellateX, PixellateY);",
         "            var LUT = inputs[(int)InputId.LUT].Eval(context).Image; // Needs to be checked for null!",
         "            var BWBiasAmount = inputs[(int)InputId.BWBiasAmount].Eval(context).Value;",
+        "            var OutputSaturation = inputs[(int)InputId.OutputSaturation].Eval(context).Value;",
+        "            var OutputMul = inputs[(int)InputId.OutputMul].Eval(context).Value;",
+        "            var OutputExponent = inputs[(int)InputId.OutputExponent].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -354,6 +417,9 @@
         "                    _effect.GetVariableByName(\"Pixellate\").AsVector().Set(new Vector2(PixellateX, PixellateY));",
         "                    _effect.GetVariableByName(\"LUT\").AsShaderResource().SetResource(LUTView);",
         "                    _effect.GetVariableByName(\"BWBiasAmount\").AsScalar().Set(BWBiasAmount);",
+        "                    _effect.GetVariableByName(\"OutputSaturation\").AsScalar().Set(OutputSaturation);",
+        "                    _effect.GetVariableByName(\"OutputMul\").AsScalar().Set(OutputMul);",
+        "                    _effect.GetVariableByName(\"OutputExponent\").AsScalar().Set(OutputExponent);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -431,6 +497,24 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "6eb906ea-a1b5-4c6c-9b81-3c70241b1f7b",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "efecb5fe-45b0-4623-bf71-0afbcc58bf34",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "2e57753e-e823-42d3-a3dd-19395e2b84bb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "c9442737-bdf9-4d10-9a39-aa54af4b51c8",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
     }

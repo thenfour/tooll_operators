@@ -1,0 +1,42 @@
+{
+  "Name": "ColorValueXXX",
+  "_id": "57c0e125-e3d8-4bdd-a8d7-881a16ff64a5",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "6da942c1-99de-42b3-aedb-78e83dbed6de",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "a649b0ef-f997-48be-a99a-d248e1a9f8f9",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6da942c1-99de-42b3-aedb-78e83dbed6de",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "a649b0ef-f997-48be-a99a-d248e1a9f8f9"
+    }
+  ]
+}

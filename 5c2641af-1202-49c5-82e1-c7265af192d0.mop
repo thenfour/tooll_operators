@@ -1,0 +1,141 @@
+{
+  "Name": "ReduceFramerate",
+  "_id": "5c2641af-1202-49c5-82e1-c7265af192d0",
+  "Namespace": "user.tenfour",
+  "Description": "",
+  "Inputs": [
+    {
+      "Name": "Input",
+      "MetaInstanceID": "dec2ae58-34c3-4d10-9d2a-165319820fd2",
+      "DefaultValue": {
+        "Type": "Generic",
+        "Value": "Framefield.Core.Generic"
+      },
+      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Factor",
+      "MetaInstanceID": "6e145e1b-dc9b-4dd8-a222-b7ceab40f407",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "X offset to apply if you want transitions across boundaries",
+      "Min": "1",
+      "Max": "10000",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "270b9dd2-22ad-40d8-8a69-3e96488068e0",
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "6c0dedb2-b217-4be3-9354-7de02ecf08a7",
+      "MetaID": "58cab72d-0abd-47a9-86b0-f6e91c26667c",
+      "Name": "ReduceFramerateFunc",
+      "Version": "1038836f-f954-4815-973f-7309fffa82ce",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "",
+        "namespace Framefield.Core.ID58cab72d_0abd_47a9_86b0_f6e91c26667c",
+        "{",
+        "    public class Class_ReduceFramerate : OperatorPart.Function,",
+        "        Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            Factor = 0,",
+        "            Input = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var Factor = inputs[(int)InputId.Factor].Eval(context).Value;",
+        "            var Input = inputs[(int)InputId.Input];",
+        "            //<<< _params",
+        "            ",
+        "            if (context.Time == _lastTime) {",
+        "                // same frame. evaluate it if we are supposed to; don't change skips.",
+        "                if (skips == 0) {",
+        "                    return inputs[(int)InputId.Input].Eval(context);",
+        "                }",
+        "                context.Image = _lastImage;",
+        "                return context;",
+        "            }",
+        "",
+        "            // different frame.",
+        "            if (skips == 0 || _lastImage == null) {",
+        "                context = inputs[(int)InputId.Input].Eval(context);",
+        "                _lastImage = context.Image;",
+        "            }",
+        "            ",
+        "            skips = (skips + 1) % (int)Factor;",
+        "            context.Image = _lastImage;",
+        "",
+        "            return context;",
+        "        }",
+        "        ",
+        "        float _lastTime = -9999;",
+        "        int skips = 0;",
+        "        Texture2D _lastImage = null;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6e145e1b-dc9b-4dd8-a222-b7ceab40f407",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6c0dedb2-b217-4be3-9354-7de02ecf08a7"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "dec2ae58-34c3-4d10-9d2a-165319820fd2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "6c0dedb2-b217-4be3-9354-7de02ecf08a7"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6c0dedb2-b217-4be3-9354-7de02ecf08a7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "270b9dd2-22ad-40d8-8a69-3e96488068e0"
+    }
+  ]
+}

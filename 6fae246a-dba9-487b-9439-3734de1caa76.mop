@@ -37,6 +37,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "play title amt",
+      "MetaInstanceID": "071eeb72-b8d2-42e9-9b5b-6f3345c30152",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -160,8 +177,8 @@
       "MetaID": "9d7cc06b-ebfb-438a-a434-d9e96c74ad49",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "808.009482735719",
-        "PosY": "-483.988888213695",
+        "PosX": "804.51659389643",
+        "PosY": "-519.499924746464",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -220,8 +237,8 @@
       "MetaID": "14b56fac-39b7-42a7-8d60-fc529219bfe2",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "808.009482735719",
-        "PosY": "-458.988888213695",
+        "PosX": "804.51659389643",
+        "PosY": "-494.499924746464",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -238,7 +255,7 @@
       }
     },
     {
-      "Name": "BlendImages",
+      "Name": "BlendImagesFillAlpha",
       "MetaInstanceID": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
       "MetaID": "ffe93a73-a6a3-42a3-85ca-783fa677194a",
       "OperatorProperties": {
@@ -257,8 +274,8 @@
       "MetaInstanceID": "620d46df-9372-4545-8a9f-1900c407ea0d",
       "MetaID": "da549627-ccc4-418a-be00-7f37fa403a19",
       "OperatorProperties": {
-        "Name": "",
-        "PosX": "880.514046922701",
+        "Name": "play",
+        "PosX": "879.788542212841",
         "PosY": "-222.010035251149",
         "Width": "100",
         "Visible": "True",
@@ -276,34 +293,6 @@
             "Type": "Text",
             "Value": [
               "vcr osd mono"
-            ]
-          },
-          {
-            "ID": "c9c3eab8-b25a-4a0a-a345-ad3563c0ddb9",
-            "Type": "Float",
-            "Value": [
-              "0.8"
-            ]
-          },
-          {
-            "ID": "e27e12a4-03a2-4733-ab1a-2e26fd35ca40",
-            "Type": "Float",
-            "Value": [
-              "0.8"
-            ]
-          },
-          {
-            "ID": "43d34257-f668-4ec1-a6b3-4f385bbf38d5",
-            "Type": "Float",
-            "Value": [
-              "0.8"
-            ]
-          },
-          {
-            "ID": "a7aa49ee-6f6b-4ff6-bbbe-570fb151eaf3",
-            "Type": "Float",
-            "Value": [
-              "0.9"
             ]
           }
         ],
@@ -331,135 +320,12 @@
       "MetaID": "fd9d7b1a-86ba-4184-9dd1-a467a27ee3da",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "924.924186397428",
-        "PosY": "-327.378332630541",
+        "PosX": "1014.50958320521",
+        "PosY": "-373.096756427406",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
-          {
-            "ID": "8e00dd6f-1bd9-473c-9b8a-86ecc0d0ea10",
-            "Type": "Text",
-            "Value": [
-              "//>>> _common parameters\r",
-              "float4x4 objectToWorldMatrix;",
-              "float4x4 worldToCameraMatrix;",
-              "float4x4 projMatrix;",
-              "Texture2D txDiffuse;",
-              "float2 RenderTargetSize;",
-              "//<<< _common parameters\r",
-              "\r",
-              "//>>> _parameters\r",
-              "Texture2D Image;",
-              "float Strength;",
-              "float SampleRadius;",
-              "float Contrast;",
-              "float4 Color;",
-              "float BlendingMode;",
-              "//<<< _parameters\r",
-              " \r",
-              "//>>> setup\r",
-              "SamplerState samLinear\r",
-              "{\r",
-              "    Filter = MIN_MAG_LINEAR_MIP_POINT;\r",
-              "    //Filter = MIN_MAG_LINEAR;\r",
-              "    AddressU = Clamp;\r",
-              "    AddressV = Clamp;\r",
-              "};\r",
-              "//<<< setup\r",
-              "\r",
-              "//>>> declarations\r",
-              "struct VS_IN\r",
-              "{\r",
-              "    float4 pos : POSITION;\r",
-              "    float2 texCoord : TEXCOORD;\r",
-              "};\r",
-              "\r",
-              "struct PS_IN\r",
-              "{\r",
-              "    float4 pos : SV_POSITION;\r",
-              "    float2 texCoord: TEXCOORD0;\t    \r",
-              "    float3 worldTViewPos: TEXCOORD1;\r",
-              "    float3 worldTViewDir: TEXCOORD2;\r",
-              "};\r",
-              "//<<< declarations\r",
-              "\r",
-              "//>>> _GS\r",
-              "",
-              "//<<< _GS\r",
-              "\r",
-              "//>>> _VS \r",
-              "PS_IN VS( VS_IN input )",
-              "{",
-              "    PS_IN output = (PS_IN)0;",
-              "",
-              "    output.pos = mul(input.pos, worldToCameraMatrix);",
-              "    output.pos = mul(output.pos, projMatrix);",
-              "    output.texCoord = input.texCoord;",
-              "",
-              "    return output;",
-              "}",
-              "//<<< _VS\r",
-              "\r",
-              "//>>> PS\r",
-              "float4 PS( PS_IN input ) : SV_Target\r",
-              "{\r",
-              "    float width, height;\r",
-              "    Image.GetDimensions(width, height);\r",
-              "    \r",
-              "    float sx = SampleRadius / width;\r",
-              "    float sy = SampleRadius / height;\r",
-              "\r",
-              "    float4 y1= Image.Sample(samLinear, float2(input.texCoord.x,       input.texCoord.y + sy));\r",
-              "    float4 y2= Image.Sample(samLinear, float2(input.texCoord.x,       input.texCoord.y - sy));\r",
-              "    \r",
-              "    float4 x1= Image.Sample(samLinear,  float2(input.texCoord.x + sx, input.texCoord.y));\r",
-              "    float4 x2= Image.Sample(samLinear,  float2(input.texCoord.x - sx, input.texCoord.y)); \r",
-              "    float4 m =  Image.Sample(samLinear, float2(input.texCoord.x,      input.texCoord.y)); \r",
-              "    //return ((m-y1) + (m-y2) + (m-x1) + (m-x2)) * Strength;\r",
-              "    \r",
-              "    float strokeamt =  (           \r",
-              "                    abs(x1.r-m.r) + abs(x2.r-m.r) + abs(y1.r - m.r) +abs(y2.r - m.r) +\r",
-              "                    abs(x1.g-m.g) + abs(x2.g-m.g) + abs(y1.g - m.g) +abs(y2.g - m.g) +\r",
-              "                    abs(x1.b-m.b) + abs(x2.b-m.b) + abs(y1.b - m.b) +abs(y2.b - m.b)\r",
-              "                ) * Strength + Contrast;\r",
-              "                \r",
-              "    strokeamt = clamp(strokeamt, 0, 1);\r",
-              "    float4 strokeColor = strokeamt * Color;\r",
-              "    \r",
-              "    switch (BlendingMode) {\r",
-              "    case 0: // only stroke\r",
-              "        return strokeColor;\r",
-              "    case 1: // add\r",
-              "        return clamp(strokeColor + m, 0, 1);\r",
-              "    case 2: // multiply\r",
-              "        return clamp(strokeColor * m, 0, 1);\r",
-              "    case 3: // screen\r",
-              "        return clamp(1 - (1-strokeColor) * (1 - m), 0, 1);\r",
-              "    case 4: // fill alpha\r",
-              "        // so mix based on original src alpha. this way only transparent pixels will show the stroke.\r",
-              "        return lerp(strokeColor, m, m.a);\r",
-              "    }\r",
-              "    \r",
-              "    return strokeColor;\r",
-              "    \r",
-              "}\r",
-              "//<<< PS\r",
-              "\r",
-              "//>>> _technique\r",
-              "technique10 Render",
-              "{",
-              "    pass P0",
-              "    {",
-              "        SetGeometryShader( 0 );",
-              "        SetVertexShader( CompileShader( vs_4_0, VS() ) );",
-              "        SetPixelShader( CompileShader( ps_4_0, PS() ) );",
-              "    }",
-              "}",
-              "//<<< _technique\r",
-              ""
-            ]
-          },
           {
             "ID": "54ed2051-56be-4f15-9948-ea22772aed97",
             "Type": "Float",
@@ -823,6 +689,44 @@
         ],
         "States": []
       }
+    },
+    {
+      "Name": "Canvas",
+      "MetaInstanceID": "68301f08-93fd-4d60-9a2b-15761d99b464",
+      "MetaID": "65ee8537-143f-44f1-a167-b9339fdf551e",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "925.447300600282",
+        "PosY": "-452.210320389927",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "Multiply",
+      "MetaInstanceID": "e70fa4cd-3f51-495e-b1b6-c88c09958d40",
+      "MetaID": "f35f6533-1b97-4c8f-af4d-806456259dc3",
+      "OperatorProperties": {
+        "Name": "PLAY color / disabler",
+        "PosX": "788.271729578438",
+        "PosY": "-134.374620668907",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "6d55fd01-765b-4b44-831e-a5c52bbbec94",
+            "Type": "Float",
+            "Value": [
+              "0.8"
+            ]
+          }
+        ],
+        "States": []
+      }
     }
   ],
   "Connections": [
@@ -917,24 +821,6 @@
       "TargetOpPart": "dccb4e63-6205-4330-a3b9-41fc8efd22bc"
     },
     {
-      "SourceOp": "c0b1d888-72e4-4736-93a9-b4c2195564ab",
-      "SourceOpPart": "2bdba715-da0a-45a9-a9d6-0462fb93d8eb",
-      "TargetOp": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
-      "TargetOpPart": "84fc3426-b1b3-4805-bc8a-10d4d4f0adf5"
-    },
-    {
-      "SourceOp": "8677e1c8-b72c-4f23-994c-3526d2738ed5",
-      "SourceOpPart": "16c8ef90-7a5b-46be-91ee-5bcfb10ad07a",
-      "TargetOp": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
-      "TargetOpPart": "5a7ad421-c4ad-4fb4-bade-c8f0f8ef5850"
-    },
-    {
-      "SourceOp": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
-      "SourceOpPart": "68a6bdb5-9c75-403a-bd97-5dace5ab4928",
-      "TargetOp": "347e1b0e-fa18-4104-bca6-bb8485368a5b",
-      "TargetOpPart": "b789dbd8-ff6a-4962-b2cb-ef3a3032b55f"
-    },
-    {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "c26cf039-c982-4eb7-925a-dc6370c42956",
       "TargetOp": "b650ea39-443f-46b6-9efe-afd8c144d2f6",
@@ -957,6 +843,54 @@
       "SourceOpPart": "b04ed298-24ed-4876-b7c8-18d676f25e58",
       "TargetOp": "5790bbcd-e5fe-449e-b759-2da730c04623",
       "TargetOpPart": "7a5c1484-a9f5-45b2-9f50-a9a8133e9274"
+    },
+    {
+      "SourceOp": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
+      "SourceOpPart": "68a6bdb5-9c75-403a-bd97-5dace5ab4928",
+      "TargetOp": "347e1b0e-fa18-4104-bca6-bb8485368a5b",
+      "TargetOpPart": "b789dbd8-ff6a-4962-b2cb-ef3a3032b55f"
+    },
+    {
+      "SourceOp": "c0b1d888-72e4-4736-93a9-b4c2195564ab",
+      "SourceOpPart": "2bdba715-da0a-45a9-a9d6-0462fb93d8eb",
+      "TargetOp": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
+      "TargetOpPart": "84fc3426-b1b3-4805-bc8a-10d4d4f0adf5"
+    },
+    {
+      "SourceOp": "8677e1c8-b72c-4f23-994c-3526d2738ed5",
+      "SourceOpPart": "16c8ef90-7a5b-46be-91ee-5bcfb10ad07a",
+      "TargetOp": "aa38233d-ce86-476f-a4c8-684fc3c5411a",
+      "TargetOpPart": "5a7ad421-c4ad-4fb4-bade-c8f0f8ef5850"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "071eeb72-b8d2-42e9-9b5b-6f3345c30152",
+      "TargetOp": "e70fa4cd-3f51-495e-b1b6-c88c09958d40",
+      "TargetOpPart": "4529ed34-754a-48da-8772-4ea14d59c567"
+    },
+    {
+      "SourceOp": "e70fa4cd-3f51-495e-b1b6-c88c09958d40",
+      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
+      "TargetOp": "620d46df-9372-4545-8a9f-1900c407ea0d",
+      "TargetOpPart": "c9c3eab8-b25a-4a0a-a345-ad3563c0ddb9"
+    },
+    {
+      "SourceOp": "e70fa4cd-3f51-495e-b1b6-c88c09958d40",
+      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
+      "TargetOp": "620d46df-9372-4545-8a9f-1900c407ea0d",
+      "TargetOpPart": "e27e12a4-03a2-4733-ab1a-2e26fd35ca40"
+    },
+    {
+      "SourceOp": "e70fa4cd-3f51-495e-b1b6-c88c09958d40",
+      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
+      "TargetOp": "620d46df-9372-4545-8a9f-1900c407ea0d",
+      "TargetOpPart": "43d34257-f668-4ec1-a6b3-4f385bbf38d5"
+    },
+    {
+      "SourceOp": "e70fa4cd-3f51-495e-b1b6-c88c09958d40",
+      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
+      "TargetOp": "620d46df-9372-4545-8a9f-1900c407ea0d",
+      "TargetOpPart": "a7aa49ee-6f6b-4ff6-bbbe-570fb151eaf3"
     }
   ]
 }

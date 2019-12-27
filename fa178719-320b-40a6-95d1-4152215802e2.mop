@@ -1,0 +1,297 @@
+{
+  "Name": "SKServerBeatCurve2",
+  "_id": "fa178719-320b-40a6-95d1-4152215802e2",
+  "Namespace": "user.tenfour",
+  "Description": "now with different beat offset compat w other new stuffanother curve method (the 2-stage one used by most new things)\r\n\r\nanticipation & release are in scaled BEATs (0-1)",
+  "Inputs": [
+    {
+      "Name": "BeatOffset",
+      "MetaInstanceID": "f2cbb5a7-831a-42e8-ba12-6019cdbab786",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BeatPeriod",
+      "MetaInstanceID": "62d03120-6d35-4f7e-9a41-c4a355af4583",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Anticipation",
+      "MetaInstanceID": "51d86797-b1ce-43b4-85a1-f733519c0d86",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Release",
+      "MetaInstanceID": "1e9a8840-aefc-46da-a12a-38e9ec189d79",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.8"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Slope",
+      "MetaInstanceID": "59eafb13-5da0-403c-b600-440ff27663a4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.8"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.98",
+      "Max": "0.98",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurvePos",
+      "MetaInstanceID": "b1f259f0-6019-47ad-bb0a-756f338a02eb",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.001",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurvePosMode",
+      "MetaInstanceID": "0ab0828f-48b0-4dab-802d-b7fa8aadcb24",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": [
+        {
+          "Name": "UserInput",
+          "Value": "0"
+        },
+        {
+          "Name": "Calculated",
+          "Value": "1"
+        }
+      ]
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "c5bb972b-e909-403b-b6df-5354ba118e8e",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9",
+      "MetaID": "3068ddd6-09c7-4f5b-b17b-2ad34cc76c2f",
+      "Name": "SKServerBeatCurve2Func",
+      "Version": "1a5c3344-aa9b-4f7a-9f77-fdb2bdab19db",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "",
+        "namespace Framefield.Core.ID3068ddd6_09c7_4f5b_b17b_2ad34cc76c2f",
+        "{",
+        "    public class Class_SKServerBeatCurve2 : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            BeatOffset = 0,",
+        "            BeatPeriod = 1,",
+        "            Anticipation = 2,",
+        "            Release = 3,",
+        "            Slope = 4,",
+        "            CurvePos = 5,",
+        "            CurvePosMode = 6",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        ",
+        "                ",
+        "        // here's an actual 2-stage variable smoothstep that seems to serve us better.",
+        "        // https://www.desmos.com/calculator/3zhzwbfrxd",
+        "        // most of the time we would want s {0,1}. s can also be {-1,0} but it's not a useful shape i think.",
+        "        // s is slope.",
+        "        static Func<double, double, double, double> f = (c, x, n) => Math.Pow(x, c) / Math.Pow(n, c - 1);",
+        "        static Func<double, double, double, double> g = (c, x, n) => c * Math.Pow(x, c - 1);",
+        "        public static double SmoothStepVariable(double _x, double _p, double _s)",
+        "        {",
+        "            double c = (2 / (1.0 - _s)) - 1;",
+        "            if (_x <= _p) {",
+        "                return f(c, _x, _p);",
+        "            }",
+        "            return 1.0 - f(c, 1.0 - _x, 1.0 - _p);",
+        "        }",
+        "",
+        "        public float Clamp(float x, float a, float b) {",
+        "            if (x < a) return a;",
+        "            if (x > b) return b;",
+        "            return x;",
+        "        }",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
+        "            var BeatPeriod = inputs[(int)InputId.BeatPeriod].Eval(context).Value;",
+        "            var Anticipation = inputs[(int)InputId.Anticipation].Eval(context).Value;",
+        "            var Release = inputs[(int)InputId.Release].Eval(context).Value;",
+        "            var Slope = inputs[(int)InputId.Slope].Eval(context).Value;",
+        "            var CurvePos = inputs[(int)InputId.CurvePos].Eval(context).Value;",
+        "            var CurvePosMode = (int) inputs[(int)InputId.CurvePosMode].Eval(context).Value;",
+        "            //<<< _params",
+        "",
+        "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
+        "            //if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
+        "                //var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
+        "                float beat = (float)( (skstate.Beat - BeatOffset) / BeatPeriod);// scaled so 1 beat = 1 value",
+        "                //float beatRelative = scaledBeat - beatFloor + 1;// beat relative to our window, so 0 = this beat edge.",
+        "                ",
+        "                if (CurvePosMode == 1) {",
+        "                    if (Anticipation + Release == 0) {",
+        "                        CurvePos = .5f;",
+        "                    } else {",
+        "                        CurvePos = Anticipation / (Anticipation + Release);",
+        "                    }",
+        "                }",
+        "                ",
+        "                beat += Anticipation;// shift into even beat boundary",
+        "                float beatFloor = (float)Math.Floor(beat);",
+        "                beat -= beatFloor;",
+        "                beat /= Anticipation + Release;// scale the curve so right edge = 1",
+        "                float y = (float)SmoothStepVariable(Clamp(beat, 0, 1), CurvePos, Slope);",
+        "",
+        "                context.Value = y + beatFloor;",
+        "            //}",
+        "            return context;",
+        "            ",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c5bb972b-e909-403b-b6df-5354ba118e8e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f2cbb5a7-831a-42e8-ba12-6019cdbab786",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "62d03120-6d35-4f7e-9a41-c4a355af4583",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "51d86797-b1ce-43b4-85a1-f733519c0d86",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1e9a8840-aefc-46da-a12a-38e9ec189d79",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "59eafb13-5da0-403c-b600-440ff27663a4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b1f259f0-6019-47ad-bb0a-756f338a02eb",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "0ab0828f-48b0-4dab-802d-b7fa8aadcb24",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9"
+    }
+  ]
+}

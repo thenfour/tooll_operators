@@ -43,7 +43,7 @@
             "ID": "36d6ab8c-f29d-48aa-ae11-6911ff82c474",
             "Type": "Float",
             "Value": [
-              "0.3399999"
+              "0.2999999"
             ]
           },
           {
@@ -106,8 +106,8 @@
       "MetaID": "049327b8-95f8-43ec-8db3-ebe2a371ef5d",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "1075.60757570813",
-        "PosY": "-874.543858927974",
+        "PosX": "1067.69163027592",
+        "PosY": "-915.113079268032",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -354,7 +354,7 @@
             "ID": "4cf36563-ccd2-48a3-aaf8-b0c247082971",
             "Type": "Float",
             "Value": [
-              "0.2"
+              "0.15"
             ]
           }
         ],
@@ -891,8 +891,8 @@
       "MetaID": "cc4aa9dd-545c-48d4-9e3c-233ba0a21bd7",
       "OperatorProperties": {
         "Name": "bias",
-        "PosX": "-534.742031543546",
-        "PosY": "-226.791956992239",
+        "PosX": "-516.18988423175",
+        "PosY": "-301.000546239424",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -1504,8 +1504,8 @@
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
         "Name": "x switcher",
-        "PosX": "-765.598513301306",
-        "PosY": "-76.0828796404257",
+        "PosX": "-867.085240968929",
+        "PosY": "-195.692891562651",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -1671,9 +1671,9 @@
       "MetaID": "67cc0100-22e4-4c35-8271-56943a75c4eb",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "163.585302649811",
+        "PosX": "162.446799125451",
         "PosY": "-654.958900371917",
-        "Width": "100",
+        "Width": "350",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
@@ -1701,7 +1701,7 @@
       "MetaID": "da549627-ccc4-418a-be00-7f37fa403a19",
       "OperatorProperties": {
         "Name": "texxxxt",
-        "PosX": "163.585302649811",
+        "PosX": "162.446799125451",
         "PosY": "-579.958900371917",
         "Width": "100",
         "Visible": "True",
@@ -1752,7 +1752,7 @@
       "MetaID": "61560c16-3643-426a-ade5-f8e33ef51e78",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "163.585302649811",
+        "PosX": "162.446799125451",
         "PosY": "-604.958900371917",
         "Width": "100",
         "Visible": "True",
@@ -1828,7 +1828,7 @@
       "MetaID": "484132f6-e92d-4782-8666-688f08bd3337",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "163.585302649811",
+        "PosX": "162.446799125451",
         "PosY": "-554.958900371917",
         "Width": "100",
         "Visible": "True",
@@ -1838,7 +1838,7 @@
             "ID": "c427e07e-a16c-46e3-a119-366b54f63734",
             "Type": "Text",
             "Value": [
-              "https://www.__.com/"
+              "https://www.__.com/!!!#_oo0oo0o13371337aaa---||1|1..,.,.:;MMMXXxos- - -"
             ]
           }
         ],
@@ -1846,13 +1846,13 @@
       }
     },
     {
-      "Name": "SKServerBeatSubdivider",
+      "Name": "SKServerBeatSequencer",
       "MetaInstanceID": "a27a20a7-df47-4c1e-950b-00b980f79f39",
       "MetaID": "367ac5bc-179f-4b1e-98cf-808cc94fef67",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "293.791263617477",
-        "PosY": "-354.940301186",
+        "PosX": "317.370261545065",
+        "PosY": "-365.25611277932",
         "Width": "200",
         "Visible": "True",
         "Disabled": "False",
@@ -2054,8 +2054,8 @@
       "MetaID": "121afbdd-1a77-4e0f-a1d7-b460736448cf",
       "OperatorProperties": {
         "Name": "d2exit",
-        "PosX": "222.322255951084",
-        "PosY": "-219.937109473598",
+        "PosX": "232.638067544404",
+        "PosY": "-212.568672621227",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -2134,8 +2134,8 @@
       "MetaID": "184997ce-ee4f-41e3-9804-d15763967711",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "122.322255951084",
-        "PosY": "-244.937109473598",
+        "PosX": "132.638067544404",
+        "PosY": "-237.568672621227",
         "Width": "200",
         "Visible": "True",
         "Disabled": "False",
@@ -2172,7 +2172,7 @@
       "MetaID": "a7a622eb-e974-402a-ac4f-1b5f0ad141cc",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "163.585302649811",
+        "PosX": "162.446799125451",
         "PosY": "-629.958900371917",
         "Width": "225",
         "Visible": "True",
@@ -2432,8 +2432,8 @@
       "MetaID": "13a5500e-bb83-48f0-9e25-a2534d9e8e9c",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-656.032367836543",
-        "PosY": "-63.4462073284737",
+        "PosX": "-636.999258661804",
+        "PosY": "-103.989984325373",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -2446,18 +2446,26 @@
       "MetaInstanceID": "460f2b2c-3caa-49d1-a437-9c8b3a9fe8ef",
       "MetaID": "90e6a3b1-7a53-4799-b12e-35cd7c94fb67",
       "OperatorProperties": {
-        "Name": "",
-        "PosX": "-715.598513301306",
-        "PosY": "-126.082879640426",
+        "Name": "x sum",
+        "PosX": "-698.158433908233",
+        "PosY": "-270.761665912935",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [],
+        "Inputs": [
+          {
+            "ID": "5ca98249-3d6a-42f7-81aa-1cf02ba374e0",
+            "Type": "Float",
+            "Value": [
+              "707.2905"
+            ]
+          }
+        ],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "268e7405-05fa-4e1f-ac23-1bbb5fa7e73d",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2480,7 +2488,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "f037aa71-fb28-4a7d-b37a-41336fb05b93",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2508,8 +2516,8 @@
       "MetaID": "121afbdd-1a77-4e0f-a1d7-b460736448cf",
       "OperatorProperties": {
         "Name": "d1exit",
-        "PosX": "122.322255951084",
-        "PosY": "-219.937109473598",
+        "PosX": "132.638067544404",
+        "PosY": "-212.568672621227",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -2568,7 +2576,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "65d6aa98-3166-49f0-8efd-bb9883767a6a",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2591,7 +2599,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "59cdc178-92b0-436d-a061-4d7438eca83f",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2614,7 +2622,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "2d8beeeb-5eda-4ec6-9388-798ea41874f5",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2637,7 +2645,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "bd519cab-b42f-41af-943a-ff2c79b5284d",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2647,20 +2655,12 @@
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "97.25"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "ff5def5c-a320-499e-a3bd-d127a2b9481c",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2683,7 +2683,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "015b2472-72fb-4d3a-847e-7fbccd8ee923",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2693,20 +2693,12 @@
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8de355f6-6181-44ec-9263-388655bc1dce",
-            "Type": "Float",
-            "Value": [
-              "126.56"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "69022301-c8d4-4ea8-82df-4f738f1a823a",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2729,7 +2721,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "f2a949b9-673b-4348-8e4c-7f85e26f8d4d",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2752,7 +2744,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "df7afd47-435f-4d61-878e-3f91dcb6b5cb",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2775,7 +2767,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "e1a1392c-fb67-4bed-bab8-b18280bdc78d",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2798,7 +2790,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "63f9128f-20d8-4a35-aa96-f9fe2f493d81",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2821,7 +2813,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "94700cda-9e81-4730-b9fc-94b84c0acc4c",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -2844,7 +2836,7 @@
       }
     },
     {
-      "Name": "SKTransitionCurveTimeMarker",
+      "Name": "SKTransitionCurveTimeMarkerXX",
       "MetaInstanceID": "656cc93b-eb51-4e77-9989-6c6104ed9205",
       "MetaID": "5dbac8a4-7fad-4d33-9949-44a319b8015e",
       "OperatorProperties": {
@@ -3030,8 +3022,8 @@
       "MetaID": "0224a539-b443-455e-b426-3106bb2879ef",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-656.032367836543",
-        "PosY": "-38.4462073284737",
+        "PosX": "-636.999258661804",
+        "PosY": "-78.9899843253734",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -3083,8 +3075,8 @@
       "MetaID": "90e6a3b1-7a53-4799-b12e-35cd7c94fb67",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-1218.57132962204",
-        "PosY": "137.713932924325",
+        "PosX": "-1251.28792368235",
+        "PosY": "132.239159387691",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -3101,22 +3093,22 @@
       }
     },
     {
-      "Name": "Add",
-      "MetaInstanceID": "50222595-30e5-4c3e-9c67-efb277eba7ae",
-      "MetaID": "90e6a3b1-7a53-4799-b12e-35cd7c94fb67",
+      "Name": "SKTimeMarker",
+      "MetaInstanceID": "c5bf09bc-d4da-4c6a-a0e4-254cf9ac60db",
+      "MetaID": "c4d3de91-8e4a-4154-b741-056b72aa301d",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-1168.57132962204",
-        "PosY": "112.713932924325",
+        "PosX": "-364.010488458451",
+        "PosY": "668.392696310461",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
           {
-            "ID": "5ca98249-3d6a-42f7-81aa-1cf02ba374e0",
+            "ID": "ff596265-426b-4e10-a10b-8d60202ee25f",
             "Type": "Float",
             "Value": [
-              "6"
+              "138"
             ]
           }
         ],
@@ -3129,8 +3121,8 @@
       "MetaID": "f35f6533-1b97-4c8f-af4d-806456259dc3",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-765.598513301306",
-        "PosY": "-101.082879640426",
+        "PosX": "-867.085240968929",
+        "PosY": "-220.692891562651",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -3249,9 +3241,9 @@
       "MetaInstanceID": "f1877320-2fc9-4a7a-bbde-a90a637f7e01",
       "MetaID": "afdb1a8e-6267-46b8-8ec7-e12b1b23a82f",
       "OperatorProperties": {
-        "Name": "",
-        "PosX": "-615.526731355168",
-        "PosY": "-181.330714322039",
+        "Name": "y wavy",
+        "PosX": "-575.727694853766",
+        "PosY": "-152.090605872029",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -3280,8 +3272,8 @@
       "MetaID": "cc4aa9dd-545c-48d4-9e3c-233ba0a21bd7",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-566.852422614826",
-        "PosY": "-697.779536527742",
+        "PosX": "-540.378287895533",
+        "PosY": "-730.363086951488",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -3297,7 +3289,7 @@
             "ID": "db391b6f-849f-40a3-b85b-769b80da3153",
             "Type": "Float",
             "Value": [
-              "1.5"
+              "1"
             ]
           },
           {
@@ -3331,12 +3323,20 @@
       "MetaID": "f35f6533-1b97-4c8f-af4d-806456259dc3",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "222.322255951084",
-        "PosY": "-269.937109473598",
+        "PosX": "186.216915374465",
+        "PosY": "-292.779263715949",
         "Width": "200",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [],
+        "Inputs": [
+          {
+            "ID": "6d55fd01-765b-4b44-831e-a5c52bbbec94",
+            "Type": "Float",
+            "Value": [
+              "30"
+            ]
+          }
+        ],
         "States": []
       }
     },
@@ -3369,20 +3369,12 @@
       "MetaID": "25f6ebf4-0b3d-4570-a241-ee5222e2183b",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "347.322255951084",
-        "PosY": "-244.937109473598",
+        "PosX": "190.226633105974",
+        "PosY": "-340.589911071012",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "b452eb64-55c8-428e-97cf-25ea1a502076",
-            "Type": "Float",
-            "Value": [
-              "20"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
@@ -3527,7 +3519,7 @@
         "Name": "",
         "PosX": "1877.91752420874",
         "PosY": "-721.579139424216",
-        "Width": "100",
+        "Width": "250",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
@@ -3598,24 +3590,24 @@
       "MetaID": "e4ba1f80-fab0-44d8-bfae-aca670c5a14c",
       "OperatorProperties": {
         "Name": "synth - all",
-        "PosX": "925.530670501357",
-        "PosY": "661.141961313918",
+        "PosX": "900.990260720894",
+        "PosY": "614.865760013616",
         "Width": "450",
         "Visible": "True",
         "Disabled": "False",
         "Inputs": [
           {
-            "ID": "06d21d6a-e9db-41d4-b389-611004359907",
-            "Type": "Float",
-            "Value": [
-              "126.56"
-            ]
-          },
-          {
             "ID": "b0db75d3-01a2-4f85-8492-a4dc1c58cba5",
             "Type": "Float",
             "Value": [
               "2"
+            ]
+          },
+          {
+            "ID": "792dcfff-5ada-4f0b-b91e-3bec14f4e078",
+            "Type": "Float",
+            "Value": [
+              "97.25"
             ]
           }
         ],
@@ -3744,7 +3736,7 @@
             "ID": "3d1b280b-6f37-4c53-ab66-ad24603db387",
             "Type": "Float",
             "Value": [
-              "1.5"
+              "1"
             ]
           }
         ],
@@ -3805,7 +3797,7 @@
             "ID": "a7cf5cdd-80ab-47cc-b60f-e332b7cf4c9f",
             "Type": "Float",
             "Value": [
-              "0.5"
+              "0.3"
             ]
           },
           {
@@ -3839,7 +3831,7 @@
       "MetaInstanceID": "bba8b976-5b19-406a-b0dd-b4c1b71d5d46",
       "MetaID": "0224a539-b443-455e-b426-3106bb2879ef",
       "OperatorProperties": {
-        "Name": "",
+        "Name": "point streng",
         "PosX": "758.716906433913",
         "PosY": "-299.923522211211",
         "Width": "100",
@@ -3850,7 +3842,7 @@
             "ID": "3d1b280b-6f37-4c53-ab66-ad24603db387",
             "Type": "Float",
             "Value": [
-              "5"
+              "2"
             ]
           }
         ],
@@ -3885,9 +3877,9 @@
       "MetaInstanceID": "95d0a755-174c-4464-bff1-7f05876cfe12",
       "MetaID": "a5e36644-79a8-4b4a-a156-8077b1b1469f",
       "OperatorProperties": {
-        "Name": "",
-        "PosX": "1734.59453015003",
-        "PosY": "-583.534279440037",
+        "Name": "synth blinky vs cycled switcher",
+        "PosX": "1745.25954718155",
+        "PosY": "-592.012205113114",
         "Width": "200",
         "Visible": "True",
         "Disabled": "False",
@@ -3941,6 +3933,386 @@
         "Name": "",
         "PosX": "1050.60757570813",
         "PosY": "-849.543858927974",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "PolarToCartesian",
+      "MetaInstanceID": "a99bd856-9d69-497f-9be7-984a72032ea0",
+      "MetaID": "4bbe80c0-885a-4e89-aa49-e9992599a4eb",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-823.389305239799",
+        "PosY": "-56.1494629826822",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "Add",
+      "MetaInstanceID": "368423b5-9c0c-4988-ad37-61025c07d1b7",
+      "MetaID": "90e6a3b1-7a53-4799-b12e-35cd7c94fb67",
+      "OperatorProperties": {
+        "Name": "y sum",
+        "PosX": "-595.097718918467",
+        "PosY": "-268.278331656001",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "5ca98249-3d6a-42f7-81aa-1cf02ba374e0",
+            "Type": "Float",
+            "Value": [
+              "-0.2819559"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKStretchedTime",
+      "MetaInstanceID": "2b8580bb-34ba-4dc6-8b94-fda24d8d751c",
+      "MetaID": "25f6ebf4-0b3d-4570-a241-ee5222e2183b",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-850.996942788854",
+        "PosY": "-126.312566662477",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKStretchedTime",
+      "MetaInstanceID": "a698aebf-4c79-4839-8f42-4192502da55e",
+      "MetaID": "25f6ebf4-0b3d-4570-a241-ee5222e2183b",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-750.4247757828",
+        "PosY": "-123.383280244825",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKServerBeatCurve2",
+      "MetaInstanceID": "8ca959ea-527a-4f51-9901-b54f9552c514",
+      "MetaID": "fa178719-320b-40a6-95d1-4152215802e2",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-786.552641600509",
+        "PosY": "40.65675914369",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "62d03120-6d35-4f7e-9a41-c4a355af4583",
+            "Type": "Float",
+            "Value": [
+              "2"
+            ]
+          },
+          {
+            "ID": "51d86797-b1ce-43b4-85a1-f733519c0d86",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "1e9a8840-aefc-46da-a12a-38e9ec189d79",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKServerBeatFract",
+      "MetaInstanceID": "8bc592ed-694e-4309-91d6-8268e46f69fa",
+      "MetaID": "cc4aa9dd-545c-48d4-9e3c-233ba0a21bd7",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-907.629813530127",
+        "PosY": "8.82175750250178",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "4e54dcc0-69a6-4d50-a733-c1f49ce41f11",
+            "Type": "Float",
+            "Value": [
+              "2"
+            ]
+          },
+          {
+            "ID": "db391b6f-849f-40a3-b85b-769b80da3153",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          },
+          {
+            "ID": "bf7fbca9-0453-434b-a70c-7362c4f8d48b",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "5a2b8282-b787-46ff-ae53-a0b01ae304cc",
+            "Type": "Float",
+            "Value": [
+              "2.2"
+            ]
+          },
+          {
+            "ID": "7051e9c9-71b3-4c67-8c23-78cbdad47196",
+            "Type": "Float",
+            "Value": [
+              "0.4"
+            ]
+          },
+          {
+            "ID": "26b2c775-8aa0-4633-ba8b-6497be4f94d3",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "Value",
+      "MetaInstanceID": "a8eaaef7-c310-486a-a2a1-a16099b1c35f",
+      "MetaID": "7424a910-d647-4049-9fda-78189bcaa964",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "1909.60659413505",
+        "PosY": "-550.988166298509",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "Random",
+      "MetaInstanceID": "1e638c8b-85db-4d71-bd0a-fa4f0804a023",
+      "MetaID": "c421b57f-7b24-48bf-b32f-7ae0997170e7",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-786.552641600509",
+        "PosY": "15.65675914369",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "3c161f24-08ae-4639-adef-63b7fc61e016",
+            "Type": "Float",
+            "Value": [
+              "6.28"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "8715d924-c087-46cf-83f2-0a37696604ab",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "synth titel enabled",
+        "PosX": "14.9303013801203",
+        "PosY": "549.008108460869",
+        "Width": "200",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "64729395-61ce-4b5e-b79c-ceedca77ce36",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "BlendImages",
+      "MetaInstanceID": "c0b35fcb-4359-49d8-b7b7-05dfebf0d424",
+      "MetaID": "5778fd1e-bd11-4b21-9277-62c946c4f80c",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "956.236607856017",
+        "PosY": "-888.488664338357",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "cc982fe1-68b7-40f8-a1cc-cab61033d987",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "f25735ae-97a4-40c6-ac55-dc000d92ad93",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "423.783740490139",
+        "PosY": "-564.266470947025",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "b50c3391-4ab8-4274-85e7-13f18585e90e",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          },
+          {
+            "ID": "9a4c34c6-51ce-4f18-88f3-21424d23c76d",
+            "Type": "Float",
+            "Value": [
+              "4"
+            ]
+          },
+          {
+            "ID": "0a7c2e83-d103-4e69-ba4d-6654154c224a",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTimeMarker",
+      "MetaInstanceID": "4d2762eb-09c2-482c-9e6a-2e09667c022e",
+      "MetaID": "c4d3de91-8e4a-4154-b741-056b72aa301d",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-691.488977241048",
+        "PosY": "664.276821261187",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "ff596265-426b-4e10-a10b-8d60202ee25f",
+            "Type": "Float",
+            "Value": [
+              "106"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTransitionCurveTimeMarker",
+      "MetaInstanceID": "5700e112-b9be-498d-8378-e245f83fc017",
+      "MetaID": "21488ecc-b18b-489f-9e7b-442ef4ab7cbc",
+      "OperatorProperties": {
+        "Name": "petscii re-enabled",
+        "PosX": "560.685542530307",
+        "PosY": "-550.330972180327",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "b50c3391-4ab8-4274-85e7-13f18585e90e",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "9a4c34c6-51ce-4f18-88f3-21424d23c76d",
+            "Type": "Float",
+            "Value": [
+              "4"
+            ]
+          },
+          {
+            "ID": "0a7c2e83-d103-4e69-ba4d-6654154c224a",
+            "Type": "Float",
+            "Value": [
+              "0"
+            ]
+          },
+          {
+            "ID": "1b1285ea-595a-426d-9c35-d7390a4dd0fd",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          },
+          {
+            "ID": "64729395-61ce-4b5e-b79c-ceedca77ce36",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          },
+          {
+            "ID": "cba0ffb8-7b46-426c-9465-ff0c647ceaa8",
+            "Type": "Float",
+            "Value": [
+              "6"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "MaxNValues",
+      "MetaInstanceID": "f96d0ece-a2c5-4576-8f4c-ba6dfe333ee7",
+      "MetaID": "184997ce-ee4f-41e3-9804-d15763967711",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "542.4441706207",
+        "PosY": "-630.055087909149",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -4275,12 +4647,6 @@
       "TargetOpPart": "579cab4b-cc76-432b-8970-b41d46c9486a"
     },
     {
-      "SourceOp": "8fd8584c-f85d-4645-9856-e73cd4f58a31",
-      "SourceOpPart": "11dc311c-5beb-4ad6-8530-47d57df714e3",
-      "TargetOp": "460f2b2c-3caa-49d1-a437-9c8b3a9fe8ef",
-      "TargetOpPart": "5ca98249-3d6a-42f7-81aa-1cf02ba374e0"
-    },
-    {
       "SourceOp": "c869389c-4f5f-4110-ac2b-0ad14836302c",
       "SourceOpPart": "68a6bdb5-9c75-403a-bd97-5dace5ab4928",
       "TargetOp": "036520c8-1c26-4dfa-862d-ce3c9ced68fc",
@@ -4419,12 +4785,6 @@
       "TargetOpPart": "f49cb70f-a8fa-4c99-9575-2849fa8df3cc"
     },
     {
-      "SourceOp": "32f85876-bc74-4101-80c1-e6a28093f485",
-      "SourceOpPart": "50d08b9f-3096-4293-bb46-17be7cc4e2b9",
-      "TargetOp": "6e02b034-d341-45a3-bae9-24d0794dd1a0",
-      "TargetOpPart": "f49cb70f-a8fa-4c99-9575-2849fa8df3cc"
-    },
-    {
       "SourceOp": "4117f190-c832-4e45-b901-b2dec4b32440",
       "SourceOpPart": "fb40ef14-6cc7-43dd-95b1-65b2cbcc43e8",
       "TargetOp": "8fd8584c-f85d-4645-9856-e73cd4f58a31",
@@ -4459,18 +4819,6 @@
       "SourceOpPart": "0792c63b-adf5-4880-a5e7-bb6b60e139da",
       "TargetOp": "1d50fd41-5e24-4c65-92d4-67cc36ebe400",
       "TargetOpPart": "06d21d6a-e9db-41d4-b389-611004359907"
-    },
-    {
-      "SourceOp": "82c4acc7-9866-43cc-8bfa-220d831345a9",
-      "SourceOpPart": "0792c63b-adf5-4880-a5e7-bb6b60e139da",
-      "TargetOp": "50222595-30e5-4c3e-9c67-efb277eba7ae",
-      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
-    },
-    {
-      "SourceOp": "50222595-30e5-4c3e-9c67-efb277eba7ae",
-      "SourceOpPart": "0792c63b-adf5-4880-a5e7-bb6b60e139da",
-      "TargetOp": "1d50fd41-5e24-4c65-92d4-67cc36ebe400",
-      "TargetOpPart": "7b535fad-651b-4ef0-b641-039eae5fafe2"
     },
     {
       "SourceOp": "a0a34538-ca88-44f0-8518-1539aa5b8d50",
@@ -4539,18 +4887,6 @@
       "TargetOpPart": "d15d3520-5153-4a04-9717-3204f55b5a60"
     },
     {
-      "SourceOp": "f1877320-2fc9-4a7a-bbde-a90a637f7e01",
-      "SourceOpPart": "045786df-32a6-439d-bd09-ce4e14c72ee2",
-      "TargetOp": "b11c504a-8a2d-42f6-8790-0cd16cf283b9",
-      "TargetOpPart": "6a36d374-cb2b-41ad-8dd1-b01cf27e8d34"
-    },
-    {
-      "SourceOp": "e3a26ec8-7b2c-4f3f-965e-6fe773d6ef70",
-      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
-      "TargetOp": "460f2b2c-3caa-49d1-a437-9c8b3a9fe8ef",
-      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
-    },
-    {
       "SourceOp": "86c85722-930e-4009-827c-292e7c598701",
       "SourceOpPart": "80dd35a0-2435-4089-8eec-863150e47412",
       "TargetOp": "95cabc05-64a6-4464-b7b6-de5e6d8f4b84",
@@ -4573,12 +4909,6 @@
       "SourceOpPart": "0792c63b-adf5-4880-a5e7-bb6b60e139da",
       "TargetOp": "87b84ef8-b081-41c6-ac1d-fa871ea1607e",
       "TargetOpPart": "aa68d872-43f7-41c7-8372-b0b20699051f"
-    },
-    {
-      "SourceOp": "3ba13dd5-b711-49d2-a924-495693f09eb2",
-      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
-      "TargetOp": "73a86358-4ae4-4320-8d16-f2d1145d8dff",
-      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
     },
     {
       "SourceOp": "6d17af6c-93ba-4ad5-81f1-f8b4aff96abf",
@@ -4639,12 +4969,6 @@
       "SourceOpPart": "aa9422da-0e3a-46b1-bfb2-0a99244536df",
       "TargetOp": "4a5c7da0-178d-4ab3-bf84-de82fc03ddc6",
       "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"
-    },
-    {
-      "SourceOp": "ae5e10b0-e246-4231-a500-45c55e9968ba",
-      "SourceOpPart": "1589c0d1-e546-4d5a-9488-ed8174ff1777",
-      "TargetOp": "3ba13dd5-b711-49d2-a924-495693f09eb2",
-      "TargetOpPart": "6d55fd01-765b-4b44-831e-a5c52bbbec94"
     },
     {
       "SourceOp": "a27a20a7-df47-4c1e-950b-00b980f79f39",
@@ -4737,12 +5061,6 @@
       "TargetOpPart": "aa68d872-43f7-41c7-8372-b0b20699051f"
     },
     {
-      "SourceOp": "bd519cab-b42f-41af-943a-ff2c79b5284d",
-      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
-      "TargetOp": "47b4c68c-c32d-440a-b4de-9c6603fbb304",
-      "TargetOpPart": "792dcfff-5ada-4f0b-b91e-3bec14f4e078"
-    },
-    {
       "SourceOp": "e1a1392c-fb67-4bed-bab8-b18280bdc78d",
       "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
       "TargetOp": "47b4c68c-c32d-440a-b4de-9c6603fbb304",
@@ -4794,12 +5112,6 @@
       "SourceOp": "a7cf053a-4af9-4102-a3f8-455a990d5e08",
       "SourceOpPart": "1589c0d1-e546-4d5a-9488-ed8174ff1777",
       "TargetOp": "52ef81f9-555d-492c-8f7a-50394491e42b",
-      "TargetOpPart": "eea4f05f-192d-46b5-8865-fe407cd1d292"
-    },
-    {
-      "SourceOp": "f6775342-17d3-427b-b786-df488425c2f2",
-      "SourceOpPart": "205a259c-c18c-4a58-8f4d-819fa4df4134",
-      "TargetOp": "95d0a755-174c-4464-bff1-7f05876cfe12",
       "TargetOpPart": "eea4f05f-192d-46b5-8865-fe407cd1d292"
     },
     {
@@ -4917,10 +5229,160 @@
       "TargetOpPart": "84fc3426-b1b3-4805-bc8a-10d4d4f0adf5"
     },
     {
+      "SourceOp": "ae5e10b0-e246-4231-a500-45c55e9968ba",
+      "SourceOpPart": "1589c0d1-e546-4d5a-9488-ed8174ff1777",
+      "TargetOp": "73a86358-4ae4-4320-8d16-f2d1145d8dff",
+      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
+    },
+    {
+      "SourceOp": "3ba13dd5-b711-49d2-a924-495693f09eb2",
+      "SourceOpPart": "766805e8-b9a1-4b39-905e-9a09fcbce793",
+      "TargetOp": "ae5e10b0-e246-4231-a500-45c55e9968ba",
+      "TargetOpPart": "b452eb64-55c8-428e-97cf-25ea1a502076"
+    },
+    {
+      "SourceOp": "368423b5-9c0c-4988-ad37-61025c07d1b7",
+      "SourceOpPart": "0792c63b-adf5-4880-a5e7-bb6b60e139da",
+      "TargetOp": "b11c504a-8a2d-42f6-8790-0cd16cf283b9",
+      "TargetOpPart": "6a36d374-cb2b-41ad-8dd1-b01cf27e8d34"
+    },
+    {
+      "SourceOp": "2b8580bb-34ba-4dc6-8b94-fda24d8d751c",
+      "SourceOpPart": "1589c0d1-e546-4d5a-9488-ed8174ff1777",
+      "TargetOp": "460f2b2c-3caa-49d1-a437-9c8b3a9fe8ef",
+      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
+    },
+    {
+      "SourceOp": "a698aebf-4c79-4839-8f42-4192502da55e",
+      "SourceOpPart": "1589c0d1-e546-4d5a-9488-ed8174ff1777",
+      "TargetOp": "368423b5-9c0c-4988-ad37-61025c07d1b7",
+      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
+    },
+    {
+      "SourceOp": "a99bd856-9d69-497f-9be7-984a72032ea0",
+      "SourceOpPart": "77c71ac2-1618-4a28-83aa-01ed909d8a2b",
+      "TargetOp": "2b8580bb-34ba-4dc6-8b94-fda24d8d751c",
+      "TargetOpPart": "b452eb64-55c8-428e-97cf-25ea1a502076"
+    },
+    {
+      "SourceOp": "a99bd856-9d69-497f-9be7-984a72032ea0",
+      "SourceOpPart": "75705ee4-1602-4984-be40-e43e6fab1438",
+      "TargetOp": "a698aebf-4c79-4839-8f42-4192502da55e",
+      "TargetOpPart": "b452eb64-55c8-428e-97cf-25ea1a502076"
+    },
+    {
+      "SourceOp": "8bc592ed-694e-4309-91d6-8268e46f69fa",
+      "SourceOpPart": "80dd35a0-2435-4089-8eec-863150e47412",
+      "TargetOp": "a99bd856-9d69-497f-9be7-984a72032ea0",
+      "TargetOpPart": "c0195bb7-06a1-4d2f-a2e2-35666f9af568"
+    },
+    {
+      "SourceOp": "8ca959ea-527a-4f51-9901-b54f9552c514",
+      "SourceOpPart": "c5bb972b-e909-403b-b6df-5354ba118e8e",
+      "TargetOp": "1e638c8b-85db-4d71-bd0a-fa4f0804a023",
+      "TargetOpPart": "9de89cc6-2867-4eb3-9e16-e9568d14a31e"
+    },
+    {
+      "SourceOp": "1e638c8b-85db-4d71-bd0a-fa4f0804a023",
+      "SourceOpPart": "fccdfff4-07c3-4c5c-9b4c-9a62c7ad7d66",
+      "TargetOp": "a99bd856-9d69-497f-9be7-984a72032ea0",
+      "TargetOpPart": "95f44be9-656a-4d2f-a998-2048d3bac230"
+    },
+    {
+      "SourceOp": "59cdc178-92b0-436d-a061-4d7438eca83f",
+      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "TargetOp": "1d50fd41-5e24-4c65-92d4-67cc36ebe400",
+      "TargetOpPart": "7b535fad-651b-4ef0-b641-039eae5fafe2"
+    },
+    {
+      "SourceOp": "bd519cab-b42f-41af-943a-ff2c79b5284d",
+      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "TargetOp": "47b4c68c-c32d-440a-b4de-9c6603fbb304",
+      "TargetOpPart": "06d21d6a-e9db-41d4-b389-611004359907"
+    },
+    {
+      "SourceOp": "eea4c897-795f-4434-b3c1-c8f06278bcc0",
+      "SourceOpPart": "205a259c-c18c-4a58-8f4d-819fa4df4134",
+      "TargetOp": "a8eaaef7-c310-486a-a2a1-a16099b1c35f",
+      "TargetOpPart": "97e2fdc6-c6bd-4613-9050-622ae146a914"
+    },
+    {
+      "SourceOp": "a8eaaef7-c310-486a-a2a1-a16099b1c35f",
+      "SourceOpPart": "63476cd2-802c-4c65-a2b5-9c6f1380f8e3",
+      "TargetOp": "95d0a755-174c-4464-bff1-7f05876cfe12",
+      "TargetOpPart": "eea4f05f-192d-46b5-8865-fe407cd1d292"
+    },
+    {
+      "SourceOp": "8715d924-c087-46cf-83f2-0a37696604ab",
+      "SourceOpPart": "35e940bd-ddd7-499b-a9fa-3d5332578469",
+      "TargetOp": "973b8b37-6738-4d77-ae5f-79656d64f713",
+      "TargetOpPart": "eff70abb-15d2-448b-8456-33e0867c6fe8"
+    },
+    {
+      "SourceOp": "c5bf09bc-d4da-4c6a-a0e4-254cf9ac60db",
+      "SourceOpPart": "78d849a3-9e7f-4d04-824f-25baad4a123b",
+      "TargetOp": "015b2472-72fb-4d3a-847e-7fbccd8ee923",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
       "SourceOp": "dcf2bfc6-0b5a-40a4-a06b-eb1ff75d0940",
       "SourceOpPart": "68a6bdb5-9c75-403a-bd97-5dace5ab4928",
+      "TargetOp": "c0b35fcb-4359-49d8-b7b7-05dfebf0d424",
+      "TargetOpPart": "31cbd2f8-2f42-403d-9142-3ad22e6b6225"
+    },
+    {
+      "SourceOp": "986445e4-86c6-43e7-81b2-6344392e2fb9",
+      "SourceOpPart": "543f96aa-31d3-4b74-91d2-299cd157536d",
+      "TargetOp": "c0b35fcb-4359-49d8-b7b7-05dfebf0d424",
+      "TargetOpPart": "9d7470a5-c572-4924-b121-b6e2b1614034"
+    },
+    {
+      "SourceOp": "c0b35fcb-4359-49d8-b7b7-05dfebf0d424",
+      "SourceOpPart": "852971d5-5a56-4b81-97de-3c33203693c3",
       "TargetOp": "c4fafec3-5317-4ac5-b487-109c961c3571",
       "TargetOpPart": "d374d0d1-6ee3-40cf-9bc4-e3e80f3c29d1"
+    },
+    {
+      "SourceOp": "4d2762eb-09c2-482c-9e6a-2e09667c022e",
+      "SourceOpPart": "78d849a3-9e7f-4d04-824f-25baad4a123b",
+      "TargetOp": "bd519cab-b42f-41af-943a-ff2c79b5284d",
+      "TargetOpPart": "8de355f6-6181-44ec-9263-388655bc1dce"
+    },
+    {
+      "SourceOp": "bd519cab-b42f-41af-943a-ff2c79b5284d",
+      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "TargetOp": "f25735ae-97a4-40c6-ac55-dc000d92ad93",
+      "TargetOpPart": "4e471f27-5417-4eb0-b568-31a8777d0842"
+    },
+    {
+      "SourceOp": "c5bf09bc-d4da-4c6a-a0e4-254cf9ac60db",
+      "SourceOpPart": "fd1599e4-50a4-46e4-96ff-87d0253ec347",
+      "TargetOp": "8715d924-c087-46cf-83f2-0a37696604ab",
+      "TargetOpPart": "0ae882fa-c574-4f17-8a64-73dd954cb89c"
+    },
+    {
+      "SourceOp": "e1a1392c-fb67-4bed-bab8-b18280bdc78d",
+      "SourceOpPart": "15877404-209d-40ae-91f0-66cce5672ec9",
+      "TargetOp": "5700e112-b9be-498d-8378-e245f83fc017",
+      "TargetOpPart": "4e471f27-5417-4eb0-b568-31a8777d0842"
+    },
+    {
+      "SourceOp": "f25735ae-97a4-40c6-ac55-dc000d92ad93",
+      "SourceOpPart": "35e940bd-ddd7-499b-a9fa-3d5332578469",
+      "TargetOp": "f96d0ece-a2c5-4576-8f4c-ba6dfe333ee7",
+      "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"
+    },
+    {
+      "SourceOp": "5700e112-b9be-498d-8378-e245f83fc017",
+      "SourceOpPart": "35e940bd-ddd7-499b-a9fa-3d5332578469",
+      "TargetOp": "f96d0ece-a2c5-4576-8f4c-ba6dfe333ee7",
+      "TargetOpPart": "cd7c14a7-567e-4c48-b85a-07a173eb9287"
+    },
+    {
+      "SourceOp": "f96d0ece-a2c5-4576-8f4c-ba6dfe333ee7",
+      "SourceOpPart": "54a093e7-4cef-43a9-a679-ec14eeb601f0",
+      "TargetOp": "986445e4-86c6-43e7-81b2-6344392e2fb9",
+      "TargetOpPart": "af03fa44-390a-4338-87ef-02cad78f87b6"
     }
   ]
 }

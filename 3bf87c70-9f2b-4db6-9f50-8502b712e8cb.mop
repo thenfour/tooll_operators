@@ -1,5 +1,5 @@
 {
-  "Name": "SelectString",
+  "Name": "SelectStringXXX",
   "_id": "3bf87c70-9f2b-4db6-9f50-8502b712e8cb",
   "Namespace": "user.tenfour.string",
   "Description": "Extracts the Nth Element of an incoming List<String>\r\n",
@@ -50,7 +50,7 @@
     {
       "MetaInstanceID": "eddd142f-2cdc-4357-bb29-54f82cf90a65",
       "MetaID": "3e0720ec-fd1c-47d2-b4da-3a43e28fa9b8",
-      "Name": "SelectStringFunc",
+      "Name": "SelectStringXXXFunc",
       "Version": "9c2776b9-d080-4b30-a946-54c8e83f78f2",
       "Type": "Float",
       "IsMultiInput": "True",

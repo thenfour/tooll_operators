@@ -1,12 +1,12 @@
 {
-  "Name": "SH_GlowCellsLinear",
-  "_id": "5fc51ebe-b1f9-4ccb-827d-33b74e486991",
+  "Name": "SH_GlowCellsExperiment",
+  "_id": "ccca8426-6130-47ee-8ab2-664aa5c06c52",
   "Namespace": "user.tenfour.shaders",
   "Description": "fork of glowcells that works in some kind of linear fashion\r\n\r\nin fact now basically it can do everything the original GlowCells can do, but more.",
   "Inputs": [
     {
       "Name": "Code",
-      "MetaInstanceID": "66ff2a5c-db19-4589-9bb3-2b5d98c5ca9c",
+      "MetaInstanceID": "5b98f87b-e608-4237-959f-7d0372f2a316",
       "DefaultValue": {
         "Type": "Text",
         "Value": [
@@ -28,18 +28,13 @@
           "float PointStrength;",
           "float Density;",
           "float CellShape;",
-          "Texture2D Texture;",
           "float ColorSaturation;",
-          "float TextureMix;",
-          "float TextureScale;",
           "float OutputQuantization;",
           "float LevelQuantization;",
-          "float TextureSampleMode;",
           "float InitialCellSize;",
-          "float Wave;",
           "float CellRotationAmt;",
           "float CellScale;",
-          "float WaveType;",
+          "float4 BackgroundColor;",
           "//<<< _parameters\r",
           "\r",
           "static const float PI = atan(1.)*4.;\r",
@@ -118,7 +113,7 @@
           "    float2 cellSize = float2(InitialCellSize,InitialCellSize);\r",
           "    cellSize.x /= R.x / R.y;\r",
           "    float globalSD = 1e5;\r",
-          "    float3 color = float3(0,0,0);\r",
+          "    float4 color = float4(0,0,0,0);\r",
           "    float2 cellID = float2(0,0);\r",
           "    float2 cellPos1 = float2(0,0);\r",
           "    \r",
@@ -126,13 +121,6 @@
           "        cellID = floor(uv / cellSize);\r",
           "        float4 h = hash42(cellID + 1e3);\r",
           "        float4 h2 = hash42(cellID - 1e2);\r",
-          "        // parity just sorta doesn't work. probably due to cell division.\r",
-          "/*        float2 parity = i + cellID;\r",
-          "        parity /= cellSize *2;// add alternating decimal places.\r",
-          "        parity = frac(parity);// now alternating 0, .5\r",
-          "        parity -= .25;// alternating -.25, .25\r",
-          "        parity = sign(parity);\r",
-          "*/\r",
           "        cellID *= cellSize;\r",
           "        cellPos1 = (frac(uv / cellSize) - .5) * 2.;// -1 to 1\r",
           "        \r",
@@ -149,57 +137,34 @@
           "        float4 rowH = hash42(cellID.yy + 123.33);\r",
           "        float a;\r",
           "\r",
-          "        a = Animate;\r",
-          "        if (WaveType == 0) {\r",
-          "            float wave2 = max(Wave, .001);\r",
-          "            wave2.x = (rowH.x / wave2 + cellID.x)*-wave2;\r",
-          "            a += wave2.x;\r",
-          "            a = frac(a);\r",
-          "        } else {\r",
-          "            a = sin((Animate * h2.x) + 1e2 * h2.y)*.5+.5;\r",
-          "        }\r",
+          "        a = sin((Animate * h2.x) + 1e2 * h2.y)*.5+.5;\r",
           "        \r",
           "        a = smoothstep(Density,.0,a);\r",
           "        \r",
-          "        cellColor *= a;\r",
-          "        \r",
-          "        //color = lerp(color, cellColor, .5); \r",
-          "        //color += cellColor;\r",
-          "        //globalSD = min(globalSD, cellSD); // i had this cool idea to blend in subcells but it's taking too much time.\r",
+          "        //cellColor *= a;\r",
           "        \r",
           "        if (h.w < Bias || (i == MaxIterations - 1)) {\r",
-          "            color = cellColor;\r",
+          "            color = float4(cellColor, a);\r",
           "            globalSD = cellSD;\r",
           "            break;\r",
           "        }\r",
-          "        //uv *= 2;\r",
           "        cellSize /= 2;\r",
           "    }\r",
           "    \r",
           "    globalSD = pow(max(0,globalSD), Exponent);\r",
           "    globalSD *= PointStrength;\r",
           "    \r",
-          "    color = lerp((color.r+color.g+color.b)/3, color, ColorSaturation);\r",
+          "    color.rgb = lerp((color.r+color.g+color.b)/3, color.rgb, ColorSaturation);\r",
           "    color = clamp(color, 0, 1);\r",
           "    \r",
           "    if (LevelQuantization > 0.001) {\r",
-          "        color = floor(color / LevelQuantization) * LevelQuantization;\r",
-          "    }\r",
-          "    \r",
-          "    if (TextureMix > 0) {\r",
-          "        if (TextureSampleMode == 0) {\r",
-          "            // sample the UV normally.\r",
-          "            color = lerp(color, color * Texture.Sample(samLinearWrap, uv / TextureScale).rgb, TextureMix);\r",
-          "            //color = lerp(color, color * Texture.Sample(samLinearWrap, uv).rgb, TextureMix);\r",
-          "        } else {\r",
-          "            // 1= sample only the cell center.\r",
-          "            // OK actually it's just the upper left corner but who really cares\r",
-          "            color = lerp(color, color * Texture.Sample(samLinearWrap, (cellID / TextureScale / Zoom) - .5).rgb, TextureMix);\r",
-          "        }\r",
+          "        color.rgb = floor(color.rgb / LevelQuantization) * LevelQuantization;\r",
           "    }\r",
           "    color = clamp(color, 0, 1);\r",
           "    \r",
-          "    float4 ret = float4(globalSD * color,1);\r",
+          "    //float4 ret = lerp(BackgroundColor, float4(color, 1), globalSD);\r",
+          "    color = lerp(BackgroundColor, color, color.a);\r",
+          "    float4 ret = lerp(BackgroundColor, float4(color.rgb, 1), globalSD);\r",
           "    if (OutputQuantization > 0.001) {\r",
           "        ret.rgb = floor(ret.rgb / OutputQuantization) * OutputQuantization;\r",
           "    }\r",
@@ -234,7 +199,7 @@
     },
     {
       "Name": "Position.X",
-      "MetaInstanceID": "579cab4b-cc76-432b-8970-b41d46c9486a",
+      "MetaInstanceID": "4597dfd2-0653-45ae-8ba1-9bfe3798471c",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -251,7 +216,7 @@
     },
     {
       "Name": "Position.Y",
-      "MetaInstanceID": "6a36d374-cb2b-41ad-8dd1-b01cf27e8d34",
+      "MetaInstanceID": "c29a737d-74a6-4922-8632-ad21ffe55ade",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -268,7 +233,7 @@
     },
     {
       "Name": "MaxIterations",
-      "MetaInstanceID": "d3612ac9-3d4a-4dd2-b4cf-bf82f26d1ec2",
+      "MetaInstanceID": "12434283-00d7-4a26-9f30-3ddc966eb455",
       "DefaultValue": {
         "Type": "Float",
         "Value": "3"
@@ -285,7 +250,7 @@
     },
     {
       "Name": "Bias",
-      "MetaInstanceID": "1840409c-f337-4bdb-8cd9-62cd8fb544d8",
+      "MetaInstanceID": "70f4ea1d-0c03-4c4c-aeac-7e48d8c076be",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -302,7 +267,7 @@
     },
     {
       "Name": "Zoom",
-      "MetaInstanceID": "1de9e387-2493-4f4f-b430-b9bc0a606f84",
+      "MetaInstanceID": "f088a7f1-ec21-4b8a-be88-3219469b7e48",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -319,7 +284,7 @@
     },
     {
       "Name": "InitialCellSize",
-      "MetaInstanceID": "e9c511a4-83a7-443e-a4f1-0e7524edcb5b",
+      "MetaInstanceID": "47930213-4f6e-4f2d-abff-de6d4b8990e6",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.2"
@@ -336,7 +301,7 @@
     },
     {
       "Name": "CellShape",
-      "MetaInstanceID": "36d6ab8c-f29d-48aa-ae11-6911ff82c474",
+      "MetaInstanceID": "5a4a5ac4-87b4-43b4-85e0-987790335cee",
       "DefaultValue": {
         "Type": "Float",
         "Value": "7"
@@ -353,7 +318,7 @@
     },
     {
       "Name": "Animate",
-      "MetaInstanceID": "d053c221-29db-416a-baab-637843622401",
+      "MetaInstanceID": "55487e38-cc4d-4bc2-84dc-5a47fb2710fa",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -370,7 +335,7 @@
     },
     {
       "Name": "Density",
-      "MetaInstanceID": "b25578a0-e49d-427d-bd20-bab7b6f0d16c",
+      "MetaInstanceID": "891b4ebe-d673-44c5-8203-3cd195da6a37",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0.5"
@@ -387,7 +352,7 @@
     },
     {
       "Name": "Exponent",
-      "MetaInstanceID": "6de23c7b-058d-45c6-9989-26e95a8aecf4",
+      "MetaInstanceID": "0b9d081d-9d1f-4877-8de0-b01090638fe6",
       "DefaultValue": {
         "Type": "Float",
         "Value": "3"
@@ -404,7 +369,7 @@
     },
     {
       "Name": "PointStrength",
-      "MetaInstanceID": "bd51c82c-95c6-496a-8229-354b8638b8b9",
+      "MetaInstanceID": "530a1e9a-24ba-41ab-9907-63bfdc05b5fc",
       "DefaultValue": {
         "Type": "Float",
         "Value": "5"
@@ -421,7 +386,7 @@
     },
     {
       "Name": "ColorSaturation",
-      "MetaInstanceID": "10f1ba54-47e4-4a4a-90b9-62bf12a6c8b4",
+      "MetaInstanceID": "8e8bc9c1-fa80-46a8-a1c6-a44fead78edd",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -433,63 +398,12 @@
       "Min": "0",
       "Max": "1",
       "Scale": "0.01",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "Texture",
-      "MetaInstanceID": "0accd876-a7f1-42c4-8ce6-d536ff77ec76",
-      "DefaultValue": {
-        "Type": "Image",
-        "Value": "Framefield.Core.Image"
-      },
-      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
-      "IsMultiInput": "False",
-      "Relevance": "Required",
-      "Description": "",
-      "Min": "-100000",
-      "Max": "100000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "TextureMix",
-      "MetaInstanceID": "8fb5550c-8f5a-44d1-84e6-24a4b2cab7aa",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "0",
-      "Max": "1",
-      "Scale": "0.01",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
-      "Name": "TextureScale",
-      "MetaInstanceID": "96df599b-e4d8-43a7-9060-98681f8f2b0b",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "2"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-10000",
-      "Max": "10000",
-      "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
     },
     {
       "Name": "OutputQuantization",
-      "MetaInstanceID": "ae3a365b-6bf6-4e78-afc7-d1cc5373226a",
+      "MetaInstanceID": "29d849fe-4a1c-42b4-b59a-0ecdfcac3aa9",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -506,7 +420,7 @@
     },
     {
       "Name": "LevelQuantization",
-      "MetaInstanceID": "024b9069-a546-468e-bc88-89062dfcff71",
+      "MetaInstanceID": "b44e6349-7d09-4117-8d9f-ce0ec0e4b610",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -522,51 +436,8 @@
       "EnumValues": []
     },
     {
-      "Name": "TextureSampleMode",
-      "MetaInstanceID": "1bd129bf-a4cf-4726-8933-b9502241c4aa",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-10000",
-      "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": [
-        {
-          "Name": "UV",
-          "Value": "0"
-        },
-        {
-          "Name": "CellCenter",
-          "Value": "1"
-        }
-      ]
-    },
-    {
-      "Name": "Wave",
-      "MetaInstanceID": "82528546-3763-44fe-bb67-fb95ed01bd08",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0.3"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "",
-      "Min": "-2",
-      "Max": "2",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
-    },
-    {
       "Name": "CellRotationAmt",
-      "MetaInstanceID": "31eb2bad-6b09-447d-889b-8e7635d85ae2",
+      "MetaInstanceID": "8f24049b-e301-4fb6-bb45-bc263b28b9c7",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -583,7 +454,7 @@
     },
     {
       "Name": "CellScale",
-      "MetaInstanceID": "cb0337d4-9e94-40c4-bda7-19d40d9b12e0",
+      "MetaInstanceID": "726b0211-a7e1-4301-a42a-16b4570a1002",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -599,11 +470,11 @@
       "EnumValues": []
     },
     {
-      "Name": "WaveType",
-      "MetaInstanceID": "99799d9d-4db7-48d2-8594-a8f0474c56b8",
+      "Name": "BackgroundColor.R",
+      "MetaInstanceID": "988887dd-4bc0-4637-80eb-7bd608378813",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "0"
+        "Value": "1"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -611,33 +482,75 @@
       "Description": "",
       "Min": "0",
       "Max": "1",
-      "Scale": "1",
+      "Scale": "0.01",
       "ScaleType": "Linear",
-      "EnumValues": [
-        {
-          "Name": "Linear",
-          "Value": "0"
-        },
-        {
-          "Name": "Random",
-          "Value": "1"
-        }
-      ]
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.G",
+      "MetaInstanceID": "bc43d51c-59a2-4516-be0c-490fb99a735f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.B",
+      "MetaInstanceID": "b6697244-d1cb-4449-b6f1-83a52d7b8dc2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "BackgroundColor.A",
+      "MetaInstanceID": "b3f17930-2db8-4912-80d6-02d0d8615471",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
     {
       "Name": "Image",
-      "MetaInstanceID": "bc4c4135-a432-438e-aca7-eea13d09087f",
+      "MetaInstanceID": "941227dc-c7b3-47e3-a879-e762f445908e",
       "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "923ce220-c251-42e4-b898-307a0ded8903",
-      "MetaID": "7ced0e9c-6ef2-4efa-b6cb-8b8bd648b38c",
-      "Name": "SH_GlowCellsLinearFunc",
-      "Version": "f29356ee-851e-4561-8d0c-fc54f85416e2",
+      "MetaInstanceID": "e063f93d-febe-4cf8-beda-673ba087c6fe",
+      "MetaID": "870a0ae8-2497-4740-8096-d2108585f0b0",
+      "Name": "SH_GlowCellsExperimentFunc",
+      "Version": "37419737-bd51-4aad-8c92-4a956f190576",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -651,9 +564,9 @@
         "using SharpDX.Windows;",
         "//<<< _using",
         "",
-        "namespace Framefield.Core.ID7ced0e9c_6ef2_4efa_b6cb_8b8bd648b38c",
+        "namespace Framefield.Core.ID870a0ae8_2497_4740_8096_d2108585f0b0",
         "{",
-        "    public class Class_SH_GlowCellsLinear : FXImageFunction, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_SH_GlowCellsExperiment : FXImageFunction, Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
@@ -669,18 +582,16 @@
         "            PointStrength = 8,",
         "            Density = 9,",
         "            CellShape = 10,",
-        "            Texture = 11,",
-        "            ColorSaturation = 12,",
-        "            TextureMix = 13,",
-        "            TextureScale = 14,",
-        "            OutputQuantization = 15,",
-        "            LevelQuantization = 16,",
-        "            TextureSampleMode = 17,",
-        "            InitialCellSize = 18,",
-        "            Wave = 19,",
-        "            CellRotationAmt = 20,",
-        "            CellScale = 21,",
-        "            WaveType = 22",
+        "            ColorSaturation = 11,",
+        "            OutputQuantization = 12,",
+        "            LevelQuantization = 13,",
+        "            InitialCellSize = 14,",
+        "            CellRotationAmt = 15,",
+        "            CellScale = 16,",
+        "            BackgroundColorR = 17,",
+        "            BackgroundColorG = 18,",
+        "            BackgroundColorB = 19,",
+        "            BackgroundColorA = 20",
         "        }",
         "        //<<< _inputids",
         "",
@@ -698,25 +609,23 @@
         "            var PointStrength = inputs[(int)InputId.PointStrength].Eval(context).Value;",
         "            var Density = inputs[(int)InputId.Density].Eval(context).Value;",
         "            var CellShape = inputs[(int)InputId.CellShape].Eval(context).Value;",
-        "            var Texture = inputs[(int)InputId.Texture].Eval(context).Image; // Needs to be checked for null!",
         "            var ColorSaturation = inputs[(int)InputId.ColorSaturation].Eval(context).Value;",
-        "            var TextureMix = inputs[(int)InputId.TextureMix].Eval(context).Value;",
-        "            var TextureScale = inputs[(int)InputId.TextureScale].Eval(context).Value;",
         "            var OutputQuantization = inputs[(int)InputId.OutputQuantization].Eval(context).Value;",
         "            var LevelQuantization = inputs[(int)InputId.LevelQuantization].Eval(context).Value;",
-        "            var TextureSampleMode = (int) inputs[(int)InputId.TextureSampleMode].Eval(context).Value;",
         "            var InitialCellSize = inputs[(int)InputId.InitialCellSize].Eval(context).Value;",
-        "            var Wave = inputs[(int)InputId.Wave].Eval(context).Value;",
         "            var CellRotationAmt = inputs[(int)InputId.CellRotationAmt].Eval(context).Value;",
         "            var CellScale = inputs[(int)InputId.CellScale].Eval(context).Value;",
-        "            var WaveType = (int) inputs[(int)InputId.WaveType].Eval(context).Value;",
+        "            var BackgroundColorR = inputs[(int)InputId.BackgroundColorR].Eval(context).Value;",
+        "            var BackgroundColorG = inputs[(int)InputId.BackgroundColorG].Eval(context).Value;",
+        "            var BackgroundColorB = inputs[(int)InputId.BackgroundColorB].Eval(context).Value;",
+        "            var BackgroundColorA = inputs[(int)InputId.BackgroundColorA].Eval(context).Value;",
+        "            var BackgroundColor = new Color4(BackgroundColorR, BackgroundColorG, BackgroundColorB, BackgroundColorA);",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
         "                ClearRenderTarget(context, new SharpDX.Color4(0, 0, 0, 0));",
         "",
         "                //>>> _setup",
-        "                using (var TextureView = new ShaderResourceView(context.D3DDevice, Texture))",
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
         "                    _effect.GetVariableByName(\"Position\").AsVector().Set(new Vector2(PositionX, PositionY));",
@@ -728,18 +637,13 @@
         "                    _effect.GetVariableByName(\"PointStrength\").AsScalar().Set(PointStrength);",
         "                    _effect.GetVariableByName(\"Density\").AsScalar().Set(Density);",
         "                    _effect.GetVariableByName(\"CellShape\").AsScalar().Set(CellShape);",
-        "                    _effect.GetVariableByName(\"Texture\").AsShaderResource().SetResource(TextureView);",
         "                    _effect.GetVariableByName(\"ColorSaturation\").AsScalar().Set(ColorSaturation);",
-        "                    _effect.GetVariableByName(\"TextureMix\").AsScalar().Set(TextureMix);",
-        "                    _effect.GetVariableByName(\"TextureScale\").AsScalar().Set(TextureScale);",
         "                    _effect.GetVariableByName(\"OutputQuantization\").AsScalar().Set(OutputQuantization);",
         "                    _effect.GetVariableByName(\"LevelQuantization\").AsScalar().Set(LevelQuantization);",
-        "                    _effect.GetVariableByName(\"TextureSampleMode\").AsScalar().Set(TextureSampleMode);",
         "                    _effect.GetVariableByName(\"InitialCellSize\").AsScalar().Set(InitialCellSize);",
-        "                    _effect.GetVariableByName(\"Wave\").AsScalar().Set(Wave);",
         "                    _effect.GetVariableByName(\"CellRotationAmt\").AsScalar().Set(CellRotationAmt);",
         "                    _effect.GetVariableByName(\"CellScale\").AsScalar().Set(CellScale);",
-        "                    _effect.GetVariableByName(\"WaveType\").AsScalar().Set(WaveType);",
+        "                    _effect.GetVariableByName(\"BackgroundColor\").AsVector().Set(new Vector4(BackgroundColorR, BackgroundColorG, BackgroundColorB, BackgroundColorA));",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -766,147 +670,135 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "923ce220-c251-42e4-b898-307a0ded8903",
+      "SourceOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "bc4c4135-a432-438e-aca7-eea13d09087f"
+      "TargetOpPart": "941227dc-c7b3-47e3-a879-e762f445908e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "66ff2a5c-db19-4589-9bb3-2b5d98c5ca9c",
+      "SourceOpPart": "5b98f87b-e608-4237-959f-7d0372f2a316",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "579cab4b-cc76-432b-8970-b41d46c9486a",
+      "SourceOpPart": "4597dfd2-0653-45ae-8ba1-9bfe3798471c",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "6a36d374-cb2b-41ad-8dd1-b01cf27e8d34",
+      "SourceOpPart": "c29a737d-74a6-4922-8632-ad21ffe55ade",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "d3612ac9-3d4a-4dd2-b4cf-bf82f26d1ec2",
+      "SourceOpPart": "12434283-00d7-4a26-9f30-3ddc966eb455",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "1840409c-f337-4bdb-8cd9-62cd8fb544d8",
+      "SourceOpPart": "70f4ea1d-0c03-4c4c-aeac-7e48d8c076be",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "1de9e387-2493-4f4f-b430-b9bc0a606f84",
+      "SourceOpPart": "f088a7f1-ec21-4b8a-be88-3219469b7e48",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "6de23c7b-058d-45c6-9989-26e95a8aecf4",
+      "SourceOpPart": "0b9d081d-9d1f-4877-8de0-b01090638fe6",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "d053c221-29db-416a-baab-637843622401",
+      "SourceOpPart": "55487e38-cc4d-4bc2-84dc-5a47fb2710fa",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "bd51c82c-95c6-496a-8229-354b8638b8b9",
+      "SourceOpPart": "530a1e9a-24ba-41ab-9907-63bfdc05b5fc",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "b25578a0-e49d-427d-bd20-bab7b6f0d16c",
+      "SourceOpPart": "891b4ebe-d673-44c5-8203-3cd195da6a37",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "36d6ab8c-f29d-48aa-ae11-6911ff82c474",
+      "SourceOpPart": "5a4a5ac4-87b4-43b4-85e0-987790335cee",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "0accd876-a7f1-42c4-8ce6-d536ff77ec76",
+      "SourceOpPart": "8e8bc9c1-fa80-46a8-a1c6-a44fead78edd",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "10f1ba54-47e4-4a4a-90b9-62bf12a6c8b4",
+      "SourceOpPart": "29d849fe-4a1c-42b4-b59a-0ecdfcac3aa9",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "8fb5550c-8f5a-44d1-84e6-24a4b2cab7aa",
+      "SourceOpPart": "b44e6349-7d09-4117-8d9f-ce0ec0e4b610",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "96df599b-e4d8-43a7-9060-98681f8f2b0b",
+      "SourceOpPart": "47930213-4f6e-4f2d-abff-de6d4b8990e6",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "ae3a365b-6bf6-4e78-afc7-d1cc5373226a",
+      "SourceOpPart": "8f24049b-e301-4fb6-bb45-bc263b28b9c7",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "024b9069-a546-468e-bc88-89062dfcff71",
+      "SourceOpPart": "726b0211-a7e1-4301-a42a-16b4570a1002",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "1bd129bf-a4cf-4726-8933-b9502241c4aa",
+      "SourceOpPart": "988887dd-4bc0-4637-80eb-7bd608378813",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "e9c511a4-83a7-443e-a4f1-0e7524edcb5b",
+      "SourceOpPart": "bc43d51c-59a2-4516-be0c-490fb99a735f",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "82528546-3763-44fe-bb67-fb95ed01bd08",
+      "SourceOpPart": "b6697244-d1cb-4449-b6f1-83a52d7b8dc2",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "31eb2bad-6b09-447d-889b-8e7635d85ae2",
+      "SourceOpPart": "b3f17930-2db8-4912-80d6-02d0d8615471",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
-    },
-    {
-      "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "cb0337d4-9e94-40c4-bda7-19d40d9b12e0",
-      "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
-    },
-    {
-      "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "99799d9d-4db7-48d2-8594-a8f0474c56b8",
-      "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "923ce220-c251-42e4-b898-307a0ded8903"
+      "TargetOpPart": "e063f93d-febe-4cf8-beda-673ba087c6fe"
     }
   ]
 }

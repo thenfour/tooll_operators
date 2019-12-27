@@ -59,7 +59,7 @@
       }
     },
     {
-      "Name": "SKServerBeatFract",
+      "Name": "SKServerBeatFract (old)",
       "MetaInstanceID": "59347cd3-5ec3-463c-b4c0-617aff3b59f0",
       "MetaID": "811d3e44-ab32-4eee-84b5-014bee839777",
       "OperatorProperties": {
@@ -156,6 +156,13 @@
             "Type": "Float",
             "Value": [
               "0.5"
+            ]
+          },
+          {
+            "ID": "68e19c3d-2a7b-4ab6-80aa-84c07e3c14f2",
+            "Type": "Float",
+            "Value": [
+              "100"
             ]
           }
         ],

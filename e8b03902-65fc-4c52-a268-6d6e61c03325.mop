@@ -1,12 +1,12 @@
 {
-  "Name": "SKServerBeatSequencer",
-  "_id": "367ac5bc-179f-4b1e-98cf-808cc94fef67",
+  "Name": "SKServerBeatSequencer2",
+  "_id": "e8b03902-65fc-4c52-a268-6d6e61c03325",
   "Namespace": "user.tenfour",
-  "Description": "hard subdivider.\r\nspecify multiplier + divisor to divide the beat into subdivisions. a beat sequencer.\r\n\r\nThen specify a sequence using dashes and non-dashes. Each non-dash will increment the output.\r\n\r\nSo B-B-BBB- will output a stepped sequence, stepping every time a B occurs. Within the sequence, output will range 1-5\r\n\r\nTODO: this should actually output a ramp, not hard steps.",
+  "Description": "now with correct beatoffset.\r\n\r\nhard subdivider.\r\nspecify multiplier + divisor to divide the beat into subdivisions. a beat sequencer.\r\n\r\nThen specify a sequence using dashes and non-dashes. Each non-dash will increment the output.\r\n\r\nSo B-B-BBB- will output a stepped sequence, stepping every time a B occurs. Within the sequence, output will range 1-5\r\n\r\nTODO: this should actually output a ramp, not hard steps.",
   "Inputs": [
     {
       "Name": "BeatOffset",
-      "MetaInstanceID": "a027e4d8-7a0e-4e6f-9fe1-40c0c38005ab",
+      "MetaInstanceID": "fdf6ba4c-e0df-488f-8bac-097a8bd1789c",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -23,7 +23,7 @@
     },
     {
       "Name": "Multiplier",
-      "MetaInstanceID": "e1ac67dd-f4a7-460f-be47-b7e43813004e",
+      "MetaInstanceID": "1af0cb08-f96d-4bb9-b5d9-6339838e7a55",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -40,7 +40,7 @@
     },
     {
       "Name": "Divisor",
-      "MetaInstanceID": "5d55cd65-b8fd-4a77-8a38-0f4bf300bf62",
+      "MetaInstanceID": "e1046d75-0a88-433e-a534-b2b172324474",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -57,7 +57,7 @@
     },
     {
       "Name": "SubdivisionOffset",
-      "MetaInstanceID": "652d6b1d-d955-4bc0-847c-49405fd47a9f",
+      "MetaInstanceID": "e139160c-f825-4161-86fa-cc5f054c0075",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -74,7 +74,7 @@
     },
     {
       "Name": "Sequence",
-      "MetaInstanceID": "2ee9c1b9-4e2c-4bfb-8a76-4aa84aca3164",
+      "MetaInstanceID": "09e26feb-93de-4989-91b3-482d2d2c7345",
       "DefaultValue": {
         "Type": "Text",
         "Value": ""
@@ -93,16 +93,16 @@
   "Outputs": [
     {
       "Name": "Output",
-      "MetaInstanceID": "54723eb2-77fd-4456-9612-fbb76c7dd29c",
+      "MetaInstanceID": "e325a708-b0e4-4f02-bfe7-2056833c348f",
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec",
-      "MetaID": "087ba782-5e94-454a-b09e-af1e1f5c2f17",
-      "Name": "SKServerBeatSequencerFunc",
-      "Version": "68df71af-80c9-4da7-97f5-f8066b757727",
+      "MetaInstanceID": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f",
+      "MetaID": "4523ddf7-2c55-4a05-98aa-157aeeddde71",
+      "Name": "SKServerBeatSequencer2Func",
+      "Version": "504913fd-c34e-4208-830d-8ba9ebec6fd6",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -112,9 +112,9 @@
         "using System.Text;",
         "using SharpDX;",
         "",
-        "namespace Framefield.Core.ID087ba782_5e94_454a_b09e_af1e1f5c2f17",
+        "namespace Framefield.Core.ID4523ddf7_2c55_4a05_98aa_157aeeddde71",
         "{",
-        "    public class Class_SKServerBeatSequencer : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_SKServerBeatSequencer2 : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
@@ -141,7 +141,7 @@
         "",
         "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
         "                var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
-        "                float subdiv = (float)( (BeatOffset + skstate.Beat) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
+        "                float subdiv = (float)( (skstate.Beat - BeatOffset) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
         "                subdiv = subdiv + SubdivisionOffset;",
         "                if (Sequence.Length == 0) {",
         "                    context.Value = (float)Math.Floor(subdiv);",
@@ -188,39 +188,39 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec",
+      "SourceOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "54723eb2-77fd-4456-9612-fbb76c7dd29c"
+      "TargetOpPart": "e325a708-b0e4-4f02-bfe7-2056833c348f"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "652d6b1d-d955-4bc0-847c-49405fd47a9f",
+      "SourceOpPart": "e139160c-f825-4161-86fa-cc5f054c0075",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+      "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "2ee9c1b9-4e2c-4bfb-8a76-4aa84aca3164",
+      "SourceOpPart": "09e26feb-93de-4989-91b3-482d2d2c7345",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+      "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "e1ac67dd-f4a7-460f-be47-b7e43813004e",
+      "SourceOpPart": "1af0cb08-f96d-4bb9-b5d9-6339838e7a55",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+      "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "5d55cd65-b8fd-4a77-8a38-0f4bf300bf62",
+      "SourceOpPart": "e1046d75-0a88-433e-a534-b2b172324474",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+      "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "a027e4d8-7a0e-4e6f-9fe1-40c0c38005ab",
+      "SourceOpPart": "fdf6ba4c-e0df-488f-8bac-097a8bd1789c",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "3a1d7ec9-b21b-485e-9fbe-659bf01011ec"
+      "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
     }
   ]
 }
