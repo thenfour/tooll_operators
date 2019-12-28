@@ -1,0 +1,135 @@
+{
+  "Name": "StretchedTime2",
+  "_id": "b9951a96-5bbb-44a3-8dbd-5227dbca3fc9",
+  "Namespace": "user.tenfour",
+  "Description": "same but without fucking clamping wtf",
+  "Inputs": [
+    {
+      "Name": "ResetTrigger",
+      "MetaInstanceID": "6db1e9d8-6a80-4edc-8fb9-9803b78072d4",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Speed",
+      "MetaInstanceID": "16f70f1d-9c54-4e42-9f37-49089df3db1d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Relevant",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "StretchedTime",
+      "MetaInstanceID": "f138842e-a374-4c7a-b088-99e6b7f1ef21",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "65afcd46-b44f-4258-80c8-1e3c161f1674",
+      "MetaID": "9ed230fe-fe41-468c-8dff-f437cdca333a",
+      "Name": "StretchedTime2Func",
+      "Version": "b9e60b02-be13-42a1-9cc0-a1314fb16865",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using Framefield.Core.Profiling;",
+        "",
+        "namespace Framefield.Core.ID9ed230fe_fe41_468c_8dff_f437cdca333a",
+        "{",
+        "    public class Class_StretchedTime2 : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            ResetTrigger = 0,",
+        "            Speed = 1",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var ResetTrigger = inputs[(int)InputId.ResetTrigger].Eval(context).Value;",
+        "            var Speed = inputs[(int)InputId.Speed].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            var resetPressed = (ResetTrigger - _lastResetTrigger  > 0.5f); ",
+        "            if(resetPressed) {",
+        "                _time = 0;",
+        "            }",
+        "                                    ",
+        "            if(context.GlobalTime != _lastTime) {            ",
+        "                var duration = (float)(context.GlobalTime - _lastTime);",
+        "                _lastTime = context.GlobalTime;",
+        "                _time += duration * Speed;                ",
+        "            }",
+        "            //_time = Utilities.Clamp( _time, ClampRangeMin, ClampRangeMax);",
+        "            context.Value = (float)_time;;",
+        "            return context;",
+        "        }",
+        "",
+        "        private double _time; ",
+        "        private double _lastTime;",
+        "        private float _lastResetTrigger;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": []
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6db1e9d8-6a80-4edc-8fb9-9803b78072d4",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "65afcd46-b44f-4258-80c8-1e3c161f1674"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "16f70f1d-9c54-4e42-9f37-49089df3db1d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "65afcd46-b44f-4258-80c8-1e3c161f1674"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "65afcd46-b44f-4258-80c8-1e3c161f1674",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "f138842e-a374-4c7a-b088-99e6b7f1ef21"
+    }
+  ]
+}

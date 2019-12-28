@@ -26,6 +26,8 @@
           "float Chop;",
           "float Density;",
           "float PostEffect;",
+          "float CellRot;",
+          "float Saturation;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -133,7 +135,7 @@
           "    for (float i = 1.;i <= complexity; ++ i) {\r",
           "        vec4 h = hash42(floor(uv+i));\r",
           "        vec2 p = fract(uv+i)-.5;\r",
-          "        p = mul(p,rot2D(h.x*PI*2.));\r",
+          "        p = mul(p,rot2D(h.x*PI*2.*CellRot));\r",
           "        uv += p * h.z;\r",
           "        h = hash42(floor(uv));\r",
           "        h += length(fract(p+q(AnimTime,Chop)*.1)); // animate\r",
@@ -145,6 +147,7 @@
           "    o=pow(abs(o),o-o+.5);\r",
           "    if (PostEffect > 0)\r",
           "  \t o=step(.5,o) * mod(C.y,3.)/2.;\r",
+          "  \to = lerp((o.r+o.g+o.b)/3,o,Saturation);\r",
           "}\r",
           "\r",
           "\r",
@@ -331,6 +334,40 @@
           "Value": "1"
         }
       ]
+    },
+    {
+      "Name": "CellRot",
+      "MetaInstanceID": "e5e325da-d421-46bd-8d55-b0b91902abac",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Saturation",
+      "MetaInstanceID": "1647eaaf-b065-4f19-bf2f-567076feb73f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -345,7 +382,7 @@
       "MetaInstanceID": "2b655909-500a-4f7f-ac92-218fa127a86c",
       "MetaID": "da7012ff-a134-431d-8896-f4df8ab42f4e",
       "Name": "SH_Glitch01Func",
-      "Version": "11218c86-8772-40c1-b3d6-77cf054c642c",
+      "Version": "4530b8aa-10a9-41cd-8712-cd9fdc758367",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -374,7 +411,9 @@
         "            AnimTime = 5,",
         "            Chop = 6,",
         "            Density = 7,",
-        "            PostEffect = 8",
+        "            PostEffect = 8,",
+        "            CellRot = 9,",
+        "            Saturation = 10",
         "        }",
         "        //<<< _inputids",
         "",
@@ -390,6 +429,8 @@
         "            var Chop = inputs[(int)InputId.Chop].Eval(context).Value;",
         "            var Density = inputs[(int)InputId.Density].Eval(context).Value;",
         "            var PostEffect = (int) inputs[(int)InputId.PostEffect].Eval(context).Value;",
+        "            var CellRot = inputs[(int)InputId.CellRot].Eval(context).Value;",
+        "            var Saturation = inputs[(int)InputId.Saturation].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -405,6 +446,8 @@
         "                    _effect.GetVariableByName(\"Chop\").AsScalar().Set(Chop);",
         "                    _effect.GetVariableByName(\"Density\").AsScalar().Set(Density);",
         "                    _effect.GetVariableByName(\"PostEffect\").AsScalar().Set(PostEffect);",
+        "                    _effect.GetVariableByName(\"CellRot\").AsScalar().Set(CellRot);",
+        "                    _effect.GetVariableByName(\"Saturation\").AsScalar().Set(Saturation);",
         "                //<<< _setup",
         "",
         "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -495,6 +538,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "744cf9b0-1329-42c2-8928-b1ce608927c7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e5e325da-d421-46bd-8d55-b0b91902abac",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1647eaaf-b065-4f19-bf2f-567076feb73f",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "2b655909-500a-4f7f-ac92-218fa127a86c"
     }

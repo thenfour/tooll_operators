@@ -25,6 +25,8 @@
           "float2 Decay;",
           "float Complexity;",
           "float PostEffects;",
+          "float Saturation;",
+          "float ColorThreshold;",
           "//<<< _parameters\r",
           "\r",
           "const float iBPM;\r",
@@ -121,6 +123,7 @@
           "    uv.x += floor(uv.y/.2)*.5;\r",
           "    //uv.x += iTime*.2;\r",
           "    uv *= Zoom;\r",
+          "    uv += Position;\r",
           "    //float t = iTime;\r",
           "    //uv += floor(t*speed)*z;\r",
           "    o = vec4x(1);\r",
@@ -141,8 +144,9 @@
           "        }\r",
           "        s = -s;\r",
           "    }\r",
+          "    o = lerp((o.r+o.g+o.b)/3,o,Saturation);\r",
           "    if (PostEffects > 0) {\r",
-          "        o=step(.5,o) * mod(C.y,3.)/2.;\r",
+          "        o=step(ColorThreshold,o) * mod(C.y,3.)/2.;\r",
           "    }\r",
           "}\r",
           "\r",
@@ -330,6 +334,40 @@
           "Value": "1"
         }
       ]
+    },
+    {
+      "Name": "Saturation",
+      "MetaInstanceID": "dcc4fc02-6b89-406b-844a-88b944b7a932",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ColorThreshold",
+      "MetaInstanceID": "cddfc3dc-b1b7-40aa-b3d7-3956b96d0708",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -344,7 +382,7 @@
       "MetaInstanceID": "e7df888f-2c85-4334-9749-60a5f07b6b93",
       "MetaID": "5b7b2910-fd65-4ec7-b418-7619669a0d68",
       "Name": "SH_Glitch04Func",
-      "Version": "41b7316b-0bdf-454e-9207-fc95c0ef9455",
+      "Version": "029101c4-b13f-4530-829b-918214c096bc",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -373,7 +411,9 @@
         "            DecayX = 5,",
         "            DecayY = 6,",
         "            Complexity = 7,",
-        "            PostEffects = 8",
+        "            PostEffects = 8,",
+        "            Saturation = 9,",
+        "            ColorThreshold = 10",
         "        }",
         "        //<<< _inputids",
         "",
@@ -390,6 +430,8 @@
         "            var Decay = new Vector2(DecayX, DecayY);",
         "            var Complexity = inputs[(int)InputId.Complexity].Eval(context).Value;",
         "            var PostEffects = (int) inputs[(int)InputId.PostEffects].Eval(context).Value;",
+        "            var Saturation = inputs[(int)InputId.Saturation].Eval(context).Value;",
+        "            var ColorThreshold = inputs[(int)InputId.ColorThreshold].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -404,6 +446,8 @@
         "                    _effect.GetVariableByName(\"Decay\").AsVector().Set(new Vector2(DecayX, DecayY));",
         "                    _effect.GetVariableByName(\"Complexity\").AsScalar().Set(Complexity);",
         "                    _effect.GetVariableByName(\"PostEffects\").AsScalar().Set(PostEffects);",
+        "                    _effect.GetVariableByName(\"Saturation\").AsScalar().Set(Saturation);",
+        "                    _effect.GetVariableByName(\"ColorThreshold\").AsScalar().Set(ColorThreshold);",
         "                //<<< _setup",
         "",
         "                if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -493,6 +537,18 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "3d8f72f8-5203-4b70-aa5f-872717627609",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e7df888f-2c85-4334-9749-60a5f07b6b93"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "dcc4fc02-6b89-406b-844a-88b944b7a932",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e7df888f-2c85-4334-9749-60a5f07b6b93"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cddfc3dc-b1b7-40aa-b3d7-3956b96d0708",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "e7df888f-2c85-4334-9749-60a5f07b6b93"
     }

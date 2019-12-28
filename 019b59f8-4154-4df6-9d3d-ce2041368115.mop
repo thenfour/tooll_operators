@@ -27,6 +27,8 @@
           "float SourceLift;",
           "float SourceMul;",
           "float SourcePow;",
+          "float2 SourceRange;",
+          "float InputSaturation;",
           "//<<< _parameters\r",
           "\r",
           " \r",
@@ -127,6 +129,9 @@
           "    }\r",
           "\r",
           "    float4 ret = Image.Load(uint3(samplePx,0));\r",
+          "    ret.rgb = lerp((ret.r+ret.g+ret.b)/3,ret.rgb,InputSaturation);\r",
+          "    ret.rgb -= SourceRange.x;\r",
+          "    ret.rgb /= SourceRange.y - SourceRange.x;\r",
           "    ret.rgb += SourceLift;\r",
           "    ret.rgb *= SourceMul;\r",
           "    ret.rgb = pow(max(0,ret.rgb), SourcePow);\r",
@@ -150,6 +155,7 @@
           "    // the correct buckets.\r",
           "    float margin = 1 / QuantizationLevels;\r",
           "    ret.rgb = floor((ret.rgb * QuantizationLevels) + margin) / QuantizationLevels;\r",
+          "    \r",
           "    \r",
           "    ret = clamp(ret, 0, 1);\r",
           "    return ret;\r",
@@ -341,6 +347,57 @@
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "SourceRange.Min",
+      "MetaInstanceID": "d01d646e-2406-4e52-8377-16cf351d6c39",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "SourceRange.Max",
+      "MetaInstanceID": "efbae60f-59ce-4427-a8a8-141686fcfb1d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "InputSaturation",
+      "MetaInstanceID": "1cd4302d-ce5b-4423-9cf1-6d0b20316c1f",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -355,7 +412,7 @@
       "MetaInstanceID": "e520628b-806a-4c47-9c90-c5aa96ae2706",
       "MetaID": "9eb3658b-3b69-474c-b4bf-dc40d04a19b5",
       "Name": "DitherViaBayerAndQuantizeFunc",
-      "Version": "f8a82f5c-1bf3-4506-8426-c41365e483d6",
+      "Version": "d3e9733d-2246-4810-9497-7d9f6afd0557",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -385,7 +442,10 @@
         "            Bayer = 6,",
         "            SourceLift = 7,",
         "            SourceMul = 8,",
-        "            SourcePow = 9",
+        "            SourcePow = 9,",
+        "            SourceRangeMin = 10,",
+        "            SourceRangeMax = 11,",
+        "            InputSaturation = 12",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
@@ -402,6 +462,10 @@
         "            var SourceLift = inputs[(int)InputId.SourceLift].Eval(context).Value;",
         "            var SourceMul = inputs[(int)InputId.SourceMul].Eval(context).Value;",
         "            var SourcePow = inputs[(int)InputId.SourcePow].Eval(context).Value;",
+        "            var SourceRangeMin = inputs[(int)InputId.SourceRangeMin].Eval(context).Value;",
+        "            var SourceRangeMax = inputs[(int)InputId.SourceRangeMax].Eval(context).Value;",
+        "            var SourceRange = new Vector2(SourceRangeMin, SourceRangeMax);",
+        "            var InputSaturation = inputs[(int)InputId.InputSaturation].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -419,6 +483,8 @@
         "                    _effect.GetVariableByName(\"SourceLift\").AsScalar().Set(SourceLift);",
         "                    _effect.GetVariableByName(\"SourceMul\").AsScalar().Set(SourceMul);",
         "                    _effect.GetVariableByName(\"SourcePow\").AsScalar().Set(SourcePow);",
+        "                    _effect.GetVariableByName(\"SourceRange\").AsVector().Set(new Vector2(SourceRangeMin, SourceRangeMax));",
+        "                    _effect.GetVariableByName(\"InputSaturation\").AsScalar().Set(InputSaturation);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -502,6 +568,24 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "7f43a590-b00d-4137-bb49-e0f528085d06",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e520628b-806a-4c47-9c90-c5aa96ae2706"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d01d646e-2406-4e52-8377-16cf351d6c39",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e520628b-806a-4c47-9c90-c5aa96ae2706"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "efbae60f-59ce-4427-a8a8-141686fcfb1d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "e520628b-806a-4c47-9c90-c5aa96ae2706"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1cd4302d-ce5b-4423-9cf1-6d0b20316c1f",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "e520628b-806a-4c47-9c90-c5aa96ae2706"
     }

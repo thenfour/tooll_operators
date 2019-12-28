@@ -52,8 +52,8 @@
       "MetaID": "46f384c0-22e1-4809-9e79-eda933e5ea33",
       "OperatorProperties": {
         "Name": "BASS",
-        "PosX": "738.932275692732",
-        "PosY": "-7.49430558783919",
+        "PosX": "755.40147469156",
+        "PosY": "155.43312736485",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -159,29 +159,6 @@
     },
     {
       "Name": "String",
-      "MetaInstanceID": "f6e37b52-b749-47a3-947c-63d9c416e100",
-      "MetaID": "46f384c0-22e1-4809-9e79-eda933e5ea33",
-      "OperatorProperties": {
-        "Name": "BASS",
-        "PosX": "774.784391303434",
-        "PosY": "20.1963528106705",
-        "Width": "100",
-        "Visible": "True",
-        "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "0fdba84f-05db-4d8d-8a82-6a14be4cd77d",
-            "Type": "Text",
-            "Value": [
-              "BASS"
-            ]
-          }
-        ],
-        "States": []
-      }
-    },
-    {
-      "Name": "String",
       "MetaInstanceID": "6528e46a-49aa-43bc-a142-22cec6717a95",
       "MetaID": "46f384c0-22e1-4809-9e79-eda933e5ea33",
       "OperatorProperties": {
@@ -265,7 +242,7 @@
             "ID": "b452eb64-55c8-428e-97cf-25ea1a502076",
             "Type": "Float",
             "Value": [
-              "4"
+              "9"
             ]
           }
         ],
@@ -351,7 +328,43 @@
       "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
     },
     {
-      "SourceOp": "f6e37b52-b749-47a3-947c-63d9c416e100",
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
+      "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
+      "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
+      "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
+    },
+    {
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
+      "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
+      "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
+      "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
+    },
+    {
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
+      "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
+      "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
+      "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
+    },
+    {
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
+      "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
+      "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
+      "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
+    },
+    {
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
+      "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
+      "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
+      "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
+    },
+    {
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
+      "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
+      "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
+      "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"
+    },
+    {
+      "SourceOp": "ff95998a-becf-462e-a28b-d8e0b144772d",
       "SourceOpPart": "6a0b017e-9d0e-4839-9cfe-c95f4324d520",
       "TargetOp": "737ab7b7-3a89-4e3f-bf40-4815b3d158e5",
       "TargetOpPart": "e041561a-aeab-4e56-b7fb-e48718b1c944"

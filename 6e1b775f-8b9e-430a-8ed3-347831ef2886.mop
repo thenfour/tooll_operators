@@ -20,7 +20,7 @@
           "\r",
           "//>>> _parameters\r",
           "Texture2D Image;",
-          "float X;",
+          "float2 Position;",
           "float3 Tint;",
           "float2 WaveAmplitude;",
           "float WavePeriod;",
@@ -119,7 +119,7 @@
           "    vec2 uv = N;\r",
           "    uv.x *= R.x/R.y;\r",
           "    //float t = iTime  *.5;\r",
-          "    float t = X;\r",
+          "    float t = Position.x;\r",
           "    \r",
           "    uv *= 4.;\r",
           "\r",
@@ -133,7 +133,7 @@
           "    \r",
           "    vec2 uv2 = uv;\r",
           "\r",
-          "    uv.y = fmod(uv.y, WaveSpacing) - WaveSpacing*.5;\r",
+          "    uv.y = fmod(uv.y+Position.y, WaveSpacing) - WaveSpacing*.5;\r",
           "    \r",
           "    for (float i = -Iterations; i <= Iterations; ++ i) {\r",
           "    \tvec2 uvwave = vec2(uv2.x, uv.y + i * WaveSpacing);\r",
@@ -208,7 +208,24 @@
       "EnumValues": []
     },
     {
-      "Name": "X",
+      "Name": "Position.Y",
+      "MetaInstanceID": "bab2824f-049f-4778-9b53-eb051834fd7b",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Position.X",
       "MetaInstanceID": "a43291bd-b804-4489-9827-e99b11873907",
       "DefaultValue": {
         "Type": "Float",
@@ -390,7 +407,7 @@
       "MetaInstanceID": "386acca5-260c-4af8-9b98-f0b3ab0e8f4b",
       "MetaID": "c442ac06-a539-4dc8-8eab-d3daa9e1fa5e",
       "Name": "SH_AmplitudeModulationFunc",
-      "Version": "e3a757c8-32b9-4763-8f57-323e423f93cf",
+      "Version": "2f65105a-ba32-4eea-a616-407c2df28433",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -413,7 +430,7 @@
         "        {",
         "            Code = 0,",
         "            Image = 1,",
-        "            X = 2,",
+        "            PositionX = 2,",
         "            TintX = 3,",
         "            TintY = 4,",
         "            TintZ = 5,",
@@ -422,7 +439,8 @@
         "            WaveSpacing = 8,",
         "            WaveAmplitudeMax = 9,",
         "            Burn = 10,",
-        "            DTOA = 11",
+        "            DTOA = 11,",
+        "            PositionY = 12",
         "        }",
         "        //<<< _inputids",
         "",
@@ -430,7 +448,9 @@
         "            //>>> _params",
         "            var Code = inputs[(int)InputId.Code].Eval(context).Text;",
         "            var Image = inputs[(int)InputId.Image].Eval(context).Image; // Needs to be checked for null!",
-        "            var X = inputs[(int)InputId.X].Eval(context).Value;",
+        "            var PositionX = inputs[(int)InputId.PositionX].Eval(context).Value;",
+        "            var PositionY = inputs[(int)InputId.PositionY].Eval(context).Value;",
+        "            var Position = new Vector2(PositionX, PositionY);",
         "            var TintX = inputs[(int)InputId.TintX].Eval(context).Value;",
         "            var TintY = inputs[(int)InputId.TintY].Eval(context).Value;",
         "            var TintZ = inputs[(int)InputId.TintZ].Eval(context).Value;",
@@ -455,7 +475,7 @@
         "                {",
         "                    _effect.GetVariableByName(\"RenderTargetSize\").AsVector().Set(new Vector2(_usedViewport.Width, _usedViewport.Height));",
         "                    _effect.GetVariableByName(\"Image\").AsShaderResource().SetResource(ImageView);",
-        "                    _effect.GetVariableByName(\"X\").AsScalar().Set(X);",
+        "                    _effect.GetVariableByName(\"Position\").AsVector().Set(new Vector2(PositionX, PositionY));",
         "                    _effect.GetVariableByName(\"Tint\").AsVector().Set(new Vector3(TintX, TintY, TintZ));",
         "                    _effect.GetVariableByName(\"WaveAmplitude\").AsVector().Set(new Vector2(WaveAmplitudeMin, WaveAmplitudeMax));",
         "                    _effect.GetVariableByName(\"WavePeriod\").AsScalar().Set(WavePeriod);",
@@ -563,6 +583,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "74dda055-1f62-4a0f-9b7a-b5be675a202d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "386acca5-260c-4af8-9b98-f0b3ab0e8f4b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "bab2824f-049f-4778-9b53-eb051834fd7b",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "386acca5-260c-4af8-9b98-f0b3ab0e8f4b"
     }

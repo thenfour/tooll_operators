@@ -39,7 +39,7 @@
       "MetaInstanceID": "0b69e77a-8dfe-47e1-ba52-44e03fddd71e",
       "MetaID": "dbef9b88-ac5e-48fe-a1e7-34c039909060",
       "Name": "SKSceneSwitchFunc",
-      "Version": "850da1f2-420b-4a57-9ddd-1dbe1023de8d",
+      "Version": "d98b9667-1393-4fda-b6c7-a09a4ac20563",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -91,6 +91,10 @@
         "            //>>> _params",
         "            var Inputs = inputs[(int)InputId.Inputs];",
         "            //<<< _params",
+        "            ",
+        "            if (Inputs.Connections.Count < 1) {",
+        "                return context;",
+        "            }",
         "",
         "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
         "                var s = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
@@ -112,7 +116,7 @@
         "            return context;",
         "        }",
         "",
-        "        int _currentIndex = -1;",
+        "        int _currentIndex = 0;",
         "    }",
         "}",
         ""

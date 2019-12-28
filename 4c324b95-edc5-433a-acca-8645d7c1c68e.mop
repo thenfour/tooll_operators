@@ -234,7 +234,14 @@
             "ID": "adc7ed59-9fb4-4030-aef5-273b37472b30",
             "Type": "Float",
             "Value": [
-              "7"
+              "12"
+            ]
+          },
+          {
+            "ID": "97bbf050-ef75-487e-84f8-c214c953c1c8",
+            "Type": "Float",
+            "Value": [
+              "3.48"
             ]
           }
         ],
@@ -247,8 +254,8 @@
       "MetaID": "cc4aa9dd-545c-48d4-9e3c-233ba0a21bd7",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-165.955194027409",
-        "PosY": "-614.103353514543",
+        "PosX": "-38.2812425192109",
+        "PosY": "-539.452463834886",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -265,20 +272,6 @@
             "Type": "Float",
             "Value": [
               "4"
-            ]
-          },
-          {
-            "ID": "11c9f6a6-e7d0-452b-8920-58e3734d6c63",
-            "Type": "Float",
-            "Value": [
-              "0.5"
-            ]
-          },
-          {
-            "ID": "db391b6f-849f-40a3-b85b-769b80da3153",
-            "Type": "Float",
-            "Value": [
-              "1.2"
             ]
           },
           {
@@ -358,7 +351,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "917c463a-514d-4b36-a41e-da9052addff0",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
@@ -469,7 +462,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "f12f8ccd-9fa3-49ec-8b63-135b6a53644d",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
@@ -513,7 +506,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "90b36cae-812c-46b3-8b6f-028cf62f9d80",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
@@ -1388,7 +1381,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "930f0698-ecc5-4168-9d2e-a27b7f5459d4",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
@@ -1538,7 +1531,7 @@
             "ID": "b452eb64-55c8-428e-97cf-25ea1a502076",
             "Type": "Float",
             "Value": [
-              "0.5"
+              "0.7"
             ]
           }
         ],
@@ -1709,7 +1702,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "fe50bf91-6093-42a2-8bc2-82b6ee8dd483",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
@@ -2352,6 +2345,97 @@
         ],
         "States": []
       }
+    },
+    {
+      "Name": "Value",
+      "MetaInstanceID": "dd5bce9d-a14e-4fa0-8e40-c23b5973325b",
+      "MetaID": "7424a910-d647-4049-9fda-78189bcaa964",
+      "OperatorProperties": {
+        "Name": "beatenter",
+        "PosX": "-38.0977668440415",
+        "PosY": "-476.604524262471",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKRemapTimeMarker",
+      "MetaInstanceID": "6de3981c-f300-4a80-bbf9-f42285feb60e",
+      "MetaID": "121afbdd-1a77-4e0f-a1d7-b460736448cf",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-38.0977668440415",
+        "PosY": "-501.604524262471",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "da22eb4e-a8f3-4cff-93c5-4457db8ec53d",
+            "Type": "Float",
+            "Value": [
+              "1"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "Remap",
+      "MetaInstanceID": "1ebbe70a-6749-43b9-9a51-5efee25dc839",
+      "MetaID": "0224a539-b443-455e-b426-3106bb2879ef",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-38.2812425192109",
+        "PosY": "-564.452463834886",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "a7cf5cdd-80ab-47cc-b60f-e332b7cf4c9f",
+            "Type": "Float",
+            "Value": [
+              "0.5"
+            ]
+          },
+          {
+            "ID": "3d1b280b-6f37-4c53-ab66-ad24603db387",
+            "Type": "Float",
+            "Value": [
+              "1.2"
+            ]
+          }
+        ],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKTimeMarker",
+      "MetaInstanceID": "3a97dc7f-bae4-4e5e-9f1d-6783799222a7",
+      "MetaID": "c4d3de91-8e4a-4154-b741-056b72aa301d",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-228.666155289937",
+        "PosY": "497.51536110805",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "ff596265-426b-4e10-a10b-8d60202ee25f",
+            "Type": "Float",
+            "Value": [
+              "24"
+            ]
+          }
+        ],
+        "States": []
+      }
     }
   ],
   "Connections": [
@@ -2878,12 +2962,6 @@
       "TargetOpPart": "78390b92-9fa6-4023-be64-3f1c86853edb"
     },
     {
-      "SourceOp": "02929efb-19cc-4d4a-bf01-d5911c3bc0de",
-      "SourceOpPart": "80dd35a0-2435-4089-8eec-863150e47412",
-      "TargetOp": "474aaa3d-aca5-410e-9fde-6899c3af3f13",
-      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
-    },
-    {
       "SourceOp": "07998612-d0b1-4cfc-80ad-1dc25dd152a2",
       "SourceOpPart": "54a093e7-4cef-43a9-a679-ec14eeb601f0",
       "TargetOp": "474aaa3d-aca5-410e-9fde-6899c3af3f13",
@@ -3008,6 +3086,36 @@
       "SourceOpPart": "1c848d83-b9ee-4144-b178-ed47817d2502",
       "TargetOp": "acbdf52b-4835-42ae-80e6-2b6b3f260289",
       "TargetOpPart": "e8321acc-fcab-4d06-8dbd-90d5b32a092e"
+    },
+    {
+      "SourceOp": "dd5bce9d-a14e-4fa0-8e40-c23b5973325b",
+      "SourceOpPart": "63476cd2-802c-4c65-a2b5-9c6f1380f8e3",
+      "TargetOp": "6de3981c-f300-4a80-bbf9-f42285feb60e",
+      "TargetOpPart": "1d0cf0e9-24bd-4459-b813-928eb420412f"
+    },
+    {
+      "SourceOp": "1ebbe70a-6749-43b9-9a51-5efee25dc839",
+      "SourceOpPart": "fb40ef14-6cc7-43dd-95b1-65b2cbcc43e8",
+      "TargetOp": "474aaa3d-aca5-410e-9fde-6899c3af3f13",
+      "TargetOpPart": "19159331-0274-42c6-b32f-3f6e38073769"
+    },
+    {
+      "SourceOp": "02929efb-19cc-4d4a-bf01-d5911c3bc0de",
+      "SourceOpPart": "80dd35a0-2435-4089-8eec-863150e47412",
+      "TargetOp": "1ebbe70a-6749-43b9-9a51-5efee25dc839",
+      "TargetOpPart": "5fa1199d-166e-42ed-9013-13b3dc238a75"
+    },
+    {
+      "SourceOp": "6de3981c-f300-4a80-bbf9-f42285feb60e",
+      "SourceOpPart": "f5fbeb07-a5bf-46ca-96b0-08b601d5e8f6",
+      "TargetOp": "02929efb-19cc-4d4a-bf01-d5911c3bc0de",
+      "TargetOpPart": "db391b6f-849f-40a3-b85b-769b80da3153"
+    },
+    {
+      "SourceOp": "3a97dc7f-bae4-4e5e-9f1d-6783799222a7",
+      "SourceOpPart": "78d849a3-9e7f-4d04-824f-25baad4a123b",
+      "TargetOp": "dd5bce9d-a14e-4fa0-8e40-c23b5973325b",
+      "TargetOpPart": "97e2fdc6-c6bd-4613-9050-622ae146a914"
     }
   ]
 }

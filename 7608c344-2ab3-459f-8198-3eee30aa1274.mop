@@ -1,0 +1,163 @@
+{
+  "Name": "StretchedValue",
+  "_id": "7608c344-2ab3-459f-8198-3eee30aa1274",
+  "Namespace": "user.tenfour.math",
+  "Description": "like stretched time; an automation-friendly accumulating value.\r\n\r\ntakes an incoming value which changes over time, and a speed. Incoming changes are scaled by the speed.\r\n\r\nwhen you reset, we forget about the scaling adjustments and just go back to using the raw value.",
+  "Inputs": [
+    {
+      "Name": "Value",
+      "MetaInstanceID": "deb66483-b6ca-49f4-b5e4-5aa1cc100016",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ResetTrigger",
+      "MetaInstanceID": "37db71b3-7b1d-4fec-affc-b55a630debc7",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "Speed",
+      "MetaInstanceID": "b74a8856-20fc-4d30-af8d-33d75907871c",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.01",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "StretchedTime",
+      "MetaInstanceID": "d56c3d54-f8af-4503-92c1-143ebf5efc88",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "3b6db002-e4fc-4bb6-8a38-1128d33fa68f",
+      "MetaID": "85ea0f20-37f6-4bb9-9628-a270d2d6af82",
+      "Name": "StretchedValueFunc",
+      "Version": "600f4cae-1c4e-4c24-a240-2ca7f1dd2f59",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "//>>> _using",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using SharpDX.Direct3D11;",
+        "using SharpDX.Windows;",
+        "//<<< _using",
+        "using Framefield.Core.Profiling;",
+        "",
+        "namespace Framefield.Core.ID85ea0f20_37f6_4bb9_9628_a270d2d6af82",
+        "{",
+        "    public class Class_StretchedValue : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            ResetTrigger = 0,",
+        "            Speed = 1,",
+        "            Value = 2",
+        "        }",
+        "        //<<< _inputids",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx)",
+        "        {",
+        "            //>>> _params",
+        "            var ResetTrigger = inputs[(int)InputId.ResetTrigger].Eval(context).Value;",
+        "            var Speed = inputs[(int)InputId.Speed].Eval(context).Value;",
+        "            var Value = inputs[(int)InputId.Value].Eval(context).Value;",
+        "            //<<< _params",
+        "            ",
+        "            var resetPressed = (ResetTrigger - _lastResetTrigger  > 0.5f); ",
+        "            if(resetPressed) {",
+        "                _value = Value;",
+        "            }",
+        "            ",
+        "            if(Value != _lastValue) {",
+        "                var delta = (float)(Value - _lastValue);",
+        "                _lastValue = Value;",
+        "                _value += delta * Speed;                ",
+        "            }",
+        "            context.Value = (float)_value;",
+        "            return context;",
+        "        }",
+        "",
+        "        private float _lastTime;",
+        "",
+        "        private double _value; ",
+        "        private double _lastValue;",
+        "        private float _lastResetTrigger;",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "37db71b3-7b1d-4fec-affc-b55a630debc7",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3b6db002-e4fc-4bb6-8a38-1128d33fa68f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "b74a8856-20fc-4d30-af8d-33d75907871c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3b6db002-e4fc-4bb6-8a38-1128d33fa68f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "deb66483-b6ca-49f4-b5e4-5aa1cc100016",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "3b6db002-e4fc-4bb6-8a38-1128d33fa68f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3b6db002-e4fc-4bb6-8a38-1128d33fa68f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d56c3d54-f8af-4503-92c1-143ebf5efc88"
+    }
+  ]
+}

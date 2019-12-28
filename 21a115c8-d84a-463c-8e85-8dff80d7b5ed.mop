@@ -574,7 +574,7 @@
             "ID": "1de9e387-2493-4f4f-b430-b9bc0a606f84",
             "Type": "Float",
             "Value": [
-              "1"
+              "1.5"
             ]
           },
           {
@@ -1491,51 +1491,7 @@
             "ID": "acd2bda9-c13b-49bd-b1a9-836adaf67d06",
             "Type": "Float",
             "Value": [
-              "0.035"
-            ]
-          }
-        ],
-        "States": []
-      }
-    },
-    {
-      "Name": "SKServerBeatCurve",
-      "MetaInstanceID": "a0a34538-ca88-44f0-8518-1539aa5b8d50",
-      "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
-      "OperatorProperties": {
-        "Name": "x switcher",
-        "PosX": "-867.085240968929",
-        "PosY": "-195.692891562651",
-        "Width": "100",
-        "Visible": "True",
-        "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "0d4dc2fc-c8d6-4826-a31f-07404cc0024f",
-            "Type": "Float",
-            "Value": [
-              "0"
-            ]
-          },
-          {
-            "ID": "5135350e-10d8-4dbe-b26e-190e7d2ce84b",
-            "Type": "Float",
-            "Value": [
-              "4"
-            ]
-          },
-          {
-            "ID": "a82dd705-ce81-4ec1-992e-958bdc177a26",
-            "Type": "Float",
-            "Value": [
-              "0"
-            ]
-          },
-          {
-            "ID": "e9e092c9-388c-40b9-ae66-cfcef8c0a02e",
-            "Type": "Float",
-            "Value": [
-              "0.5"
+              "0.032"
             ]
           }
         ],
@@ -3116,29 +3072,6 @@
       }
     },
     {
-      "Name": "Multiply",
-      "MetaInstanceID": "e3a26ec8-7b2c-4f3f-965e-6fe773d6ef70",
-      "MetaID": "f35f6533-1b97-4c8f-af4d-806456259dc3",
-      "OperatorProperties": {
-        "Name": "",
-        "PosX": "-867.085240968929",
-        "PosY": "-220.692891562651",
-        "Width": "100",
-        "Visible": "True",
-        "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "6d55fd01-765b-4b44-831e-a5c52bbbec94",
-            "Type": "Float",
-            "Value": [
-              "0.3"
-            ]
-          }
-        ],
-        "States": []
-      }
-    },
-    {
       "Name": "SKTimeClipValue",
       "MetaInstanceID": "2bce2581-2b7a-48cc-b182-dec19b3f3e2b",
       "MetaID": "e4ba1f80-fab0-44d8-bfae-aca670c5a14c",
@@ -3289,7 +3222,7 @@
             "ID": "db391b6f-849f-40a3-b85b-769b80da3153",
             "Type": "Float",
             "Value": [
-              "1"
+              "1.5"
             ]
           },
           {
@@ -3984,8 +3917,8 @@
       "MetaID": "25f6ebf4-0b3d-4570-a241-ee5222e2183b",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-850.996942788854",
-        "PosY": "-126.312566662477",
+        "PosX": "-868.857884549861",
+        "PosY": "-121.311502969395",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -4068,7 +4001,7 @@
             "ID": "db391b6f-849f-40a3-b85b-769b80da3153",
             "Type": "Float",
             "Value": [
-              "1"
+              "2"
             ]
           },
           {
@@ -4082,14 +4015,14 @@
             "ID": "5a2b8282-b787-46ff-ae53-a0b01ae304cc",
             "Type": "Float",
             "Value": [
-              "2.2"
+              "1.5"
             ]
           },
           {
             "ID": "7051e9c9-71b3-4c67-8c23-78cbdad47196",
             "Type": "Float",
             "Value": [
-              "0.4"
+              "0.8"
             ]
           },
           {
@@ -4819,12 +4752,6 @@
       "SourceOpPart": "0792c63b-adf5-4880-a5e7-bb6b60e139da",
       "TargetOp": "1d50fd41-5e24-4c65-92d4-67cc36ebe400",
       "TargetOpPart": "06d21d6a-e9db-41d4-b389-611004359907"
-    },
-    {
-      "SourceOp": "a0a34538-ca88-44f0-8518-1539aa5b8d50",
-      "SourceOpPart": "2d7f354f-4f0f-4990-88b9-2b2d14308b5e",
-      "TargetOp": "e3a26ec8-7b2c-4f3f-965e-6fe773d6ef70",
-      "TargetOpPart": "4529ed34-754a-48da-8772-4ea14d59c567"
     },
     {
       "SourceOp": "916bf257-ae5d-43ad-a9e8-ebc302000772",

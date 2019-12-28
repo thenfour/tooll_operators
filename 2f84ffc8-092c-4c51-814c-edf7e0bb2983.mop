@@ -905,6 +905,29 @@
         ],
         "States": []
       }
+    },
+    {
+      "Name": "DitherViaBayerAndQuantize",
+      "MetaInstanceID": "19087962-8c87-4032-9e00-0169a2919a38",
+      "MetaID": "019b59f8-4154-4df6-9d3d-ce2041368115",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-939.933354450671",
+        "PosY": "-93.5702689450117",
+        "Width": "200",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [
+          {
+            "ID": "df89c97d-f811-4588-b0d2-74f5384a96d8",
+            "Type": "Float",
+            "Value": [
+              "4"
+            ]
+          }
+        ],
+        "States": []
+      }
     }
   ],
   "Connections": [
@@ -973,12 +996,6 @@
       "SourceOpPart": "68a6bdb5-9c75-403a-bd97-5dace5ab4928",
       "TargetOp": "cc42818d-5bb2-4836-93e0-4eb598a9edc0",
       "TargetOpPart": "306af3a5-3cf4-4868-b4ec-bdc6195dc2cc"
-    },
-    {
-      "SourceOp": "569f908c-1b4b-4ec7-b5fc-9171eabffa1c",
-      "SourceOpPart": "a8d3c4cc-57a1-4783-91cf-06888e22255d",
-      "TargetOp": "3686cf3c-e8b6-41c9-8318-3c3c93b59e28",
-      "TargetOpPart": "5a7ad421-c4ad-4fb4-bade-c8f0f8ef5850"
     },
     {
       "SourceOp": "9cf90239-96f3-4b56-9c70-05dc54a5ec84",
@@ -1111,6 +1128,18 @@
       "SourceOpPart": "80dd35a0-2435-4089-8eec-863150e47412",
       "TargetOp": "cc42818d-5bb2-4836-93e0-4eb598a9edc0",
       "TargetOpPart": "79253359-f75c-4ff8-82ee-4e30085ff25e"
+    },
+    {
+      "SourceOp": "a7924f74-1489-44e5-9bfc-280ef04a9927",
+      "SourceOpPart": "90fd79e0-baf0-4c26-bd26-aa8d58c4bd75",
+      "TargetOp": "19087962-8c87-4032-9e00-0169a2919a38",
+      "TargetOpPart": "3ee73645-4995-41f3-aca7-465de0d92c32"
+    },
+    {
+      "SourceOp": "19087962-8c87-4032-9e00-0169a2919a38",
+      "SourceOpPart": "5063171c-3ed2-4e6f-8f22-604a6c0d73ba",
+      "TargetOp": "3686cf3c-e8b6-41c9-8318-3c3c93b59e28",
+      "TargetOpPart": "5a7ad421-c4ad-4fb4-bade-c8f0f8ef5850"
     }
   ]
 }

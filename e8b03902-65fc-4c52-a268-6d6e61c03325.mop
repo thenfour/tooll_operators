@@ -88,6 +88,23 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "Enabled",
+      "MetaInstanceID": "e862fcb8-af06-47c2-9096-914294f40bb1",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -102,7 +119,7 @@
       "MetaInstanceID": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f",
       "MetaID": "4523ddf7-2c55-4a05-98aa-157aeeddde71",
       "Name": "SKServerBeatSequencer2Func",
-      "Version": "504913fd-c34e-4208-830d-8ba9ebec6fd6",
+      "Version": "ab6ea7c8-57a2-4e44-904d-b3b20a9c550a",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -123,7 +140,8 @@
         "            Sequence = 1,",
         "            Multiplier = 2,",
         "            Divisor = 3,",
-        "            BeatOffset = 4",
+        "            BeatOffset = 4,",
+        "            Enabled = 5",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -137,6 +155,7 @@
         "            var Multiplier = inputs[(int)InputId.Multiplier].Eval(context).Value;",
         "            var Divisor = inputs[(int)InputId.Divisor].Eval(context).Value;",
         "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
+        "            var Enabled = inputs[(int)InputId.Enabled].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
@@ -145,6 +164,11 @@
         "                subdiv = subdiv + SubdivisionOffset;",
         "                if (Sequence.Length == 0) {",
         "                    context.Value = (float)Math.Floor(subdiv);",
+        "                    return context;",
+        "                }",
+        "                ",
+        "                if (Enabled <= 0) {",
+        "                    context.Value = _value;",
         "                    return context;",
         "                }",
         "",
@@ -173,6 +197,8 @@
         "            return context;",
         "            ",
         "        }",
+        "        ",
+        "        float _value = 0;",
         "    }",
         "}",
         "",
@@ -219,6 +245,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "fdf6ba4c-e0df-488f-8bac-097a8bd1789c",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e862fcb8-af06-47c2-9096-914294f40bb1",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "c83aeccc-8a6b-4ad7-bd04-a69a53dfb98f"
     }

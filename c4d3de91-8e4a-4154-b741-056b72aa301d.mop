@@ -2,7 +2,7 @@
   "Name": "SKTimeMarker",
   "_id": "c4d3de91-8e4a-4154-b741-056b72aa301d",
   "Namespace": "user.tenfour",
-  "Description": "use as just a placeholder for cues",
+  "Description": "use as just a placeholder for cues\r\nit can convert beats to time, that's pretty cool. and if you give it a beat offset it will be relative to that beat.\r\n",
   "Inputs": [
     {
       "Name": "TransitionSec",
@@ -105,6 +105,23 @@
       "Scale": "0.01",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "BeatOffset",
+      "MetaInstanceID": "cf0cebec-694e-4cf4-9271-66c503cb1bba",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -129,7 +146,7 @@
       "MetaInstanceID": "7600e50b-f39b-4603-8cbe-c688c420b87b",
       "MetaID": "89f04cd4-3a88-4fa3-b02a-d60eae58df2d",
       "Name": "SKTimeMarkerFunc",
-      "Version": "b4d74fc4-448a-4c53-a138-1bbc2f67f7a3",
+      "Version": "8b1569ed-8a14-42c7-84bd-dfad7c8da746",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -153,7 +170,8 @@
         "            ColorG = 2,",
         "            ColorB = 3,",
         "            ColorA = 4,",
-        "            TransitionBeat = 5",
+        "            TransitionBeat = 5,",
+        "            BeatOffset = 6",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -191,6 +209,7 @@
         "            {",
         "                double sec = GetInputValue((int)InputId.TransitionSec);",
         "                double beats = GetInputValue((int)InputId.TransitionBeat);",
+        "                double beatOffset = GetInputValue((int)InputId.BeatOffset);",
         "                var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
         "                //double bpm = skstate.BPM;",
         "                //if (Math.Abs(bpm) < 1)",
@@ -201,7 +220,7 @@
         "                    //bpm = (float)skstate.BPM;",
         "                    //Logger.Info(this,\"setting time to {0}\", skstate.ProgramTime);",
         "                //}",
-        "                return GetTime(beats, sec);",
+        "                return GetTime(beats + beatOffset, sec);",
         "            }",
         "            set",
         "            {",
@@ -236,6 +255,7 @@
         "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
         "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
         "            var TransitionBeat = inputs[(int)InputId.TransitionBeat].Eval(context).Value;",
+        "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
@@ -250,15 +270,17 @@
         "            ",
         "            switch (outputIdx) {",
         "                case (int)OutputId.Time:",
-        "                    timeSec = GetTime(TransitionBeat, TransitionSec);",
+        "                    //timeSec = GetTime(TransitionBeat - BeatOffset, TransitionSec);",
+        "                    timeSec = GetTime(BeatOffset + TransitionBeat, TransitionSec);",
+        "                    ",
         "                    //Logger.Info(this,\"TransitionPoint; time={0}\", context.Time);",
         "                    context.Value = timeSec;",
         "                    return context;",
         "                case (int)OutputId.Beat:",
-        "                    context.Value = TransitionBeat;",
+        "                    context.Value = TransitionBeat + BeatOffset;",
         "                    return context;",
         "                case (int)OutputId.RelativeTime:",
-        "                    timeSec = GetTime(TransitionBeat, TransitionSec);",
+        "                    timeSec = GetTime(TransitionBeat + BeatOffset, TransitionSec);",
         "                    context.Value = context.Time - timeSec;",
         "                    return context;",
         "            }",
@@ -322,6 +344,12 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "ff596265-426b-4e10-a10b-8d60202ee25f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cf0cebec-694e-4cf4-9271-66c503cb1bba",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
     },

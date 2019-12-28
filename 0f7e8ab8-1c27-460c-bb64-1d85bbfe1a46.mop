@@ -29,6 +29,8 @@
           "float OutputSaturation;",
           "float OutputMul;",
           "float OutputExponent;",
+          "float2 InputRange;",
+          "float InputSaturation;",
           "//<<< _parameters\r",
           " \r",
           "SamplerState samLinear\r",
@@ -77,14 +79,18 @@
           "float3 applyColorLUT(Texture2D lut, float3 color) {\r",
           "    float lutWidth, lutRes;\r",
           "    lut.GetDimensions(lutWidth, lutRes);\r",
-          "    float2 lutSize = float2(lutWidth, lutRes);\r",
-          "\tfloat lutB = floor(color.b * lutRes);// blue swatch index\r",
-          "\tlutB = clamp(lutB, 0., lutRes - 1.);// clamp to array bounds\r",
-          "\tlutB = lutB / lutRes; // floor'd X position of blue swatch\r",
-          "\tfloat lutR = color.r / lutRes;// position within R swatch\r",
-          "\tfloat swatchMaxWidth = 1. / (lutRes + 1.);// a 1.0 value would bleed into the next swatch. clamping utilizes the full mapping range but prevents the overflow.\r",
-          "\tlutR = clamp(lutR, 0., swatchMaxWidth);\r",
-          "\treturn lut.Load(int3(lutSize * float2(lutR + lutB, 1.-color.g), 0)).rgb;\r",
+          "    uint ilutRes = (uint)lutRes;\r",
+          "    // compress and center colorant so it rounds perfectly.\r",
+          "    // example: if you have 32 lut entries, and colorant range 0-1, then we want\r",
+          "    // some small amount around 0 to round to index 0. same with around 1 should round to index 31\r",
+          "    color *= (lutRes - 1) / (lutRes);// slightly shrink so upper bound rounds\r",
+          "    color += .5/lutRes;// shift 1/2 a swatch so lower bound rounds preperly.\r",
+          "    uint3 ci = color * ilutRes;\r",
+          "    ci = clamp(ci, 0, lutRes-1);\r",
+          "\r",
+          "    // convert color indices to coords\r",
+          "    int2 p = int2((ci.b * ilutRes) + ci.r, lutRes-1-ci.g);\r",
+          "    return lut.Load(int3(p, 0)).rgb;\r",
           "}\r",
           "\r",
           "\r",
@@ -104,6 +110,10 @@
           "    dith *= strength;\r",
           "    \r",
           "    float4 ret = Image.Load(uint3(srcPos,0));\r",
+          "    ret.rgb = lerp((ret.r+ret.g+ret.b)/3,ret.rgb,InputSaturation);\r",
+          "    ret.rgb -= InputRange.x;\r",
+          "    ret.rgb /= InputRange.y - InputRange.x;\r",
+          "    ret.rgb = clamp(ret.rgb, 0, 1);\r",
           "\r",
           "    // we want pure black or white to stay pure (lol?) so bias the sample to applying\r",
           "    // the dither pattern doesn't \r",
@@ -334,6 +344,57 @@
       "Scale": "0.1",
       "ScaleType": "Linear",
       "EnumValues": []
+    },
+    {
+      "Name": "InputRange.Min",
+      "MetaInstanceID": "ba7072b8-ebde-4912-8479-de3998dd5e29",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "InputRange.Max",
+      "MetaInstanceID": "ac008854-0ec5-4eb4-967c-a1f4171f21fc",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "InputSaturation",
+      "MetaInstanceID": "317de2d6-1ee7-4fd1-b184-6da95e1bdb40",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -348,7 +409,7 @@
       "MetaInstanceID": "b7433194-d167-470b-b5a9-bce30ecee27d",
       "MetaID": "c7dbbd89-d4aa-4428-9a55-00883969bb15",
       "Name": "DitherViaImageAndLUTFunc",
-      "Version": "19a07cb1-34b2-4701-9bb6-25cc68da1276",
+      "Version": "899ba430-a6be-42a0-865d-2626fefc739e",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -380,7 +441,10 @@
         "            BWBiasAmount = 8,",
         "            OutputSaturation = 9,",
         "            OutputMul = 10,",
-        "            OutputExponent = 11",
+        "            OutputExponent = 11,",
+        "            InputRangeMin = 12,",
+        "            InputRangeMax = 13,",
+        "            InputSaturation = 14",
         "        }",
         "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
@@ -399,6 +463,10 @@
         "            var OutputSaturation = inputs[(int)InputId.OutputSaturation].Eval(context).Value;",
         "            var OutputMul = inputs[(int)InputId.OutputMul].Eval(context).Value;",
         "            var OutputExponent = inputs[(int)InputId.OutputExponent].Eval(context).Value;",
+        "            var InputRangeMin = inputs[(int)InputId.InputRangeMin].Eval(context).Value;",
+        "            var InputRangeMax = inputs[(int)InputId.InputRangeMax].Eval(context).Value;",
+        "            var InputRange = new Vector2(InputRangeMin, InputRangeMax);",
+        "            var InputSaturation = inputs[(int)InputId.InputSaturation].Eval(context).Value;",
         "            //<<< _params",
         "",
         "            return PrepareAndEvalOnChange(context, () => {",
@@ -420,6 +488,8 @@
         "                    _effect.GetVariableByName(\"OutputSaturation\").AsScalar().Set(OutputSaturation);",
         "                    _effect.GetVariableByName(\"OutputMul\").AsScalar().Set(OutputMul);",
         "                    _effect.GetVariableByName(\"OutputExponent\").AsScalar().Set(OutputExponent);",
+        "                    _effect.GetVariableByName(\"InputRange\").AsVector().Set(new Vector2(InputRangeMin, InputRangeMax));",
+        "                    _effect.GetVariableByName(\"InputSaturation\").AsScalar().Set(InputSaturation);",
         "                //<<< _setup",
         "",
         "                Render(context);",
@@ -515,6 +585,24 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "c9442737-bdf9-4d10-9a39-aa54af4b51c8",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ba7072b8-ebde-4912-8479-de3998dd5e29",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ac008854-0ec5-4eb4-967c-a1f4171f21fc",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "317de2d6-1ee7-4fd1-b184-6da95e1bdb40",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "b7433194-d167-470b-b5a9-bce30ecee27d"
     }

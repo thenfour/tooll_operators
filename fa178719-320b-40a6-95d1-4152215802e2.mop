@@ -1,5 +1,5 @@
 {
-  "Name": "SKServerBeatCurve2",
+  "Name": "SKServerBeatCurve",
   "_id": "fa178719-320b-40a6-95d1-4152215802e2",
   "Namespace": "user.tenfour",
   "Description": "now with different beat offset compat w other new stuffanother curve method (the 2-stage one used by most new things)\r\n\r\nanticipation & release are in scaled BEATs (0-1)",
@@ -144,7 +144,7 @@
     {
       "MetaInstanceID": "3af6e14f-5bbc-4fac-b224-01eb171bb4a9",
       "MetaID": "3068ddd6-09c7-4f5b-b17b-2ad34cc76c2f",
-      "Name": "SKServerBeatCurve2Func",
+      "Name": "SKServerBeatCurveFunc",
       "Version": "1a5c3344-aa9b-4f7a-9f77-fdb2bdab19db",
       "Type": "Float",
       "IsMultiInput": "True",
