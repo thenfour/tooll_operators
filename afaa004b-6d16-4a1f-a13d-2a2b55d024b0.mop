@@ -100,8 +100,6 @@
         "            string s=\"No server state found\";",
         "",
         "            try {",
-        "                //if (context.GlobalObjects.ContainsKey(\"SKPlayerState\")) {",
-        "                    //var state = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "                    var state = Framefield.Core.OperatorPartContext.SKServerState;",
         "                    ",
         "                    int currentRequestCount = state.Server.RequestCount;",

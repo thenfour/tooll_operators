@@ -687,13 +687,13 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "ee44f532-377a-4a6d-8180-382e54b09000",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-806.953174112749",
-        "PosY": "189.19465543699",
+        "PosX": "-819.267335850402",
+        "PosY": "218.559194965239",
         "Width": "100",
         "Visible": "True",
         "Disabled": "False",
@@ -849,7 +849,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve2",
+      "Name": "SKServerBeatCurve",
       "MetaInstanceID": "99f59712-8cfb-457f-b893-b88b1f1222ba",
       "MetaID": "fa178719-320b-40a6-95d1-4152215802e2",
       "OperatorProperties": {

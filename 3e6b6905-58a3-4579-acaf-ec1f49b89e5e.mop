@@ -5997,6 +5997,21 @@
         ],
         "States": []
       }
+    },
+    {
+      "Name": "SKServerBeatSequencer2",
+      "MetaInstanceID": "62a12969-5d1d-441b-a2af-e23ebe03cdf5",
+      "MetaID": "e8b03902-65fc-4c52-a268-6d6e61c03325",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "2399.32204996557",
+        "PosY": "571.449442936929",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
     }
   ],
   "Connections": [

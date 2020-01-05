@@ -1153,7 +1153,7 @@
       }
     },
     {
-      "Name": "SKServerBeatCurve",
+      "Name": "SKServerBeatCurve(old))",
       "MetaInstanceID": "f3d41fed-ec42-47a4-b3de-053700a4d8e0",
       "MetaID": "9ab68f4e-6c9b-4bcd-9b5d-be658f95b265",
       "OperatorProperties": {
