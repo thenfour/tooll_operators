@@ -2574,21 +2574,6 @@
         "Inputs": [],
         "States": []
       }
-    },
-    {
-      "Name": "SelectFromColors",
-      "MetaInstanceID": "c5302b59-f9a0-4437-b97b-974ccadc71e0",
-      "MetaID": "e65cab02-6036-4541-ad11-b78bc445e6c4",
-      "OperatorProperties": {
-        "Name": "",
-        "PosX": "-746.558310776936",
-        "PosY": "-1039.28644054074",
-        "Width": "100",
-        "Visible": "True",
-        "Disabled": "False",
-        "Inputs": [],
-        "States": []
-      }
     }
   ],
   "Connections": [
