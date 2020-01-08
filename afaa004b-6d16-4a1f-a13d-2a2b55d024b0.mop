@@ -16,7 +16,7 @@
       "MetaInstanceID": "b1006d87-ac75-4a72-a23f-277677ce1c19",
       "MetaID": "676a46e9-529d-4616-b6bb-71c848b6dc7c",
       "Name": "SKPlayerStateToStringFunc",
-      "Version": "15c93766-dea2-492c-9a14-81f49fbdde8b",
+      "Version": "b855fb74-f19f-4053-814e-68ce67ad2c94",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -169,7 +169,7 @@
         "            }",
         "            catch(Exception ex) {",
         "                //Logger.Info(this,\"Can't convert value to string. {0}\", ex);",
-        "                s = string.Format(\"SK server state exception: {0}\", ex);",
+        "                s = string.Format(\"SK server state  exception: {0}\", ex);",
         "            }",
         "            context.Text= s;",
         "            ",
