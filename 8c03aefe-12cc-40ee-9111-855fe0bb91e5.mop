@@ -1,22 +1,22 @@
 {
-  "Name": "SKServerPlayhead",
-  "_id": "88ab6b17-ac14-413b-b0b8-2d9547fde968",
+  "Name": "SKServerProgram",
+  "_id": "8c03aefe-12cc-40ee-9111-855fe0bb91e5",
   "Namespace": "user.tenfour",
-  "Description": "forces fetch time from global state.",
+  "Description": "Returns the the current composition time.",
   "Inputs": [],
   "Outputs": [
     {
       "Name": "Output",
-      "MetaInstanceID": "90323f6a-fdad-458c-ba68-6950e1ceae77",
+      "MetaInstanceID": "498d80b8-7380-4732-93c0-520f81c2a40a",
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "07c969dd-4fa8-48d8-a0d0-09edb7b7d3d5",
-      "MetaID": "52f0e488-0b26-414d-8539-782447bfd103",
-      "Name": "SKServerPlayheadFunc",
-      "Version": "ca78341c-1668-4c2a-8964-e8520eae76c2",
+      "MetaInstanceID": "29322d80-0a42-4493-938e-230f5c63f177",
+      "MetaID": "a99b3a31-c301-45ee-9a4b-fbc18e2c46e9",
+      "Name": "SKServerProgramFunc",
+      "Version": "d3f98d9b-7b40-48ce-9585-ce4ab5b8d21f",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -26,18 +26,23 @@
         "using System.Text;",
         "using SharpDX;",
         "",
-        "namespace Framefield.Core.ID52f0e488_0b26_414d_8539_782447bfd103",
+        "namespace Framefield.Core.IDa99b3a31_c301_45ee_9a4b_fbc18e2c46e9",
         "{",
-        "    public class Class_SKServerPlayhead : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    public class Class_SKServerProgram : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "        }",
+        "        //<<< _inputids",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
         "        {",
+        "            // >>> _params",
+        "            ",
+        "            // <<< _params",
         "            //>>> function",
-        "            ",
-        "            ",
-        "            ",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "            context.Value = ((float)skstate.ProgramStreamTime);",
+        "            context.Value = (float)(skstate.ProgramIndex);",
         "            return context;",
         "            ",
         "            //<<< function",
@@ -57,9 +62,9 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "07c969dd-4fa8-48d8-a0d0-09edb7b7d3d5",
+      "SourceOpPart": "29322d80-0a42-4493-938e-230f5c63f177",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "90323f6a-fdad-458c-ba68-6950e1ceae77"
+      "TargetOpPart": "498d80b8-7380-4732-93c0-520f81c2a40a"
     }
   ]
 }

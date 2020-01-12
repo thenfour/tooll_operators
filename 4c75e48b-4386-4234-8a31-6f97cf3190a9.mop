@@ -601,7 +601,7 @@
         "            ",
         "            // make sure time is correct for SK server",
         "             var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                context.Time = (float)skstate.ProgramTime;",
+        "                context.Time = (float)skstate.ProgramStreamTime;",
         "",
         "            float clipIn = ClipIn;",
         "            float clipOut = ClipOut;",

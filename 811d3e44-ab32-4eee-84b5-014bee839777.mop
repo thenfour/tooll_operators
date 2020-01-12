@@ -227,7 +227,7 @@
         "",
         "              var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
         "              ",
-        "              double x = (((BeatOffset + skstate.Beat) / BeatPeriod) % 1); // linear",
+        "              double x = (((BeatOffset + skstate.ProgramStreamBeat) / BeatPeriod) % 1); // linear",
         "              ",
         "              // map x{1-anticipationRange,1} to range 0,1",
         "              double anticipation = 0;",

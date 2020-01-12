@@ -556,53 +556,17 @@
       }
     },
     {
-      "Name": "SKServerBeatFract (old)",
-      "MetaInstanceID": "ca5334c9-2d40-43ca-b8ee-23c1dc243abf",
-      "MetaID": "811d3e44-ab32-4eee-84b5-014bee839777",
+      "Name": "Value",
+      "MetaInstanceID": "b74d9502-d27f-4f7d-980a-da579e5839b9",
+      "MetaID": "7424a910-d647-4049-9fda-78189bcaa964",
       "OperatorProperties": {
         "Name": "",
-        "PosX": "-214.7812711478",
-        "PosY": "-560.641616978563",
-        "Width": "150",
+        "PosX": "80.3891360409559",
+        "PosY": "103.205590642854",
+        "Width": "100",
         "Visible": "True",
         "Disabled": "False",
-        "Inputs": [
-          {
-            "ID": "8915b143-03e4-4508-83b0-ef4d815b0b6b",
-            "Type": "Float",
-            "Value": [
-              "2"
-            ]
-          },
-          {
-            "ID": "e967e0b7-73c0-4027-8072-bf1056543722",
-            "Type": "Float",
-            "Value": [
-              "0"
-            ]
-          },
-          {
-            "ID": "5a724f8b-8d70-4404-9f16-a4f2fe808b97",
-            "Type": "Float",
-            "Value": [
-              "1"
-            ]
-          },
-          {
-            "ID": "77c7dd72-f319-4fae-a281-707a4e8a15b3",
-            "Type": "Float",
-            "Value": [
-              "0"
-            ]
-          },
-          {
-            "ID": "3c36c7e1-3529-41af-88ae-532641d38082",
-            "Type": "Float",
-            "Value": [
-              "4"
-            ]
-          }
-        ],
+        "Inputs": [],
         "States": []
       }
     },
@@ -3028,6 +2992,12 @@
       "SourceOpPart": "e71a8f52-bb1f-45d0-92a6-294d228d0578",
       "TargetOp": "78584ad3-b82e-4828-b699-db0a710e2df5",
       "TargetOpPart": "9d7470a5-c572-4924-b121-b6e2b1614034"
+    },
+    {
+      "SourceOp": "bfacc0c8-7d59-4d54-b1b8-5a408bdd175c",
+      "SourceOpPart": "ebafcbd7-1e5a-47f0-9002-89995dc3df81",
+      "TargetOp": "b74d9502-d27f-4f7d-980a-da579e5839b9",
+      "TargetOpPart": "97e2fdc6-c6bd-4613-9050-622ae146a914"
     }
   ]
 }

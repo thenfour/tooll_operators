@@ -140,7 +140,7 @@
         "            //<<< _params",
         "",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                float subdiv = (float)( (BeatOffset + skstate.Beat) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
+        "                float subdiv = (float)( (BeatOffset + skstate.ProgramStreamBeat) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
         "                subdiv = subdiv + SubdivisionOffset;",
         "                if (Sequence == null || Sequence.Length == 0) {",
         "                    context.Value = (float)Math.Floor(subdiv);",

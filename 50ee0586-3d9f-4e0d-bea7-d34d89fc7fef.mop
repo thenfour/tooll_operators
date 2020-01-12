@@ -67,7 +67,7 @@
         "            ",
         "            float bpm = 100;",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                context.Time = ((float)skstate.ProgramTime);",
+        "                context.Time = ((float)skstate.ProgramStreamTime);",
         "                bpm = ((float)skstate.BPM);",
         "           ",
         "            context.Value = (float)(60 * Beats) / bpm;",

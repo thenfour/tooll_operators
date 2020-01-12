@@ -85,7 +85,7 @@
         "            //<<< _params",
         "            ",
         "              var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                context.Time = ((float)skstate.ProgramTime);",
+        "                context.Time = ((float)skstate.ProgramStreamTime);",
         "           ",
         "            var resetPressed = (ResetTrigger - _lastResetTrigger  > 0.5f); ",
         "            if(resetPressed) {",

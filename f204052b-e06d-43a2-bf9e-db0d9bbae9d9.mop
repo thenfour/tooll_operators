@@ -172,7 +172,6 @@
         "            // convert beats to seconds if necessary.",
         "            if (TimeMode == 1) {",
         "                var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                    //context.Time = ((float)skstate.ProgramTime);",
         "                    float bpm = ((float)skstate.BPM);",
         "                    if (bpm < 1) bpm = 60;",
         "                    TransitionTimePost = (float)(60 * TransitionTimePost) / bpm;",

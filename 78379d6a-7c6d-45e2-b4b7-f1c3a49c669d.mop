@@ -532,7 +532,7 @@
         "            ",
         "",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                context.Time = (float)skstate.ProgramTime;",
+        "                context.Time = (float)skstate.ProgramStreamTime;",
         "                    ",
         "            ",
         "            switch (outputIdx)",

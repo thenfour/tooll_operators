@@ -215,7 +215,7 @@
         "            //<<< _params",
         "",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                float beat = (float)( (skstate.Beat - BeatOffset) / BeatPeriod);// scaled so 1 beat = 1 value",
+        "                float beat = (float)( (skstate.ProgramStreamBeat - BeatOffset) / BeatPeriod);// scaled so 1 beat = 1 value",
         "                //float beatRelative = scaledBeat - beatFloor + 1;// beat relative to our window, so 0 = this beat edge.",
         "                ",
         "                if (CurvePosMode == 1) {",

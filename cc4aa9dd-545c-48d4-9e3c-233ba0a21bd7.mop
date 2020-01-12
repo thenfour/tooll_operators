@@ -289,7 +289,7 @@
         "            //<<< _params",
         "",
         "                var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                float beatFrac = (float)(((BeatOffset + skstate.Beat) / BeatPeriod) % 1); // linear",
+        "                float beatFrac = (float)(((BeatOffset + skstate.ProgramStreamBeat) / BeatPeriod) % 1); // linear",
         "              ",
         "                // \"release\" is the beginning of the beat (maximum -> minimum)",
         "                float releaseValue = MapValue(",

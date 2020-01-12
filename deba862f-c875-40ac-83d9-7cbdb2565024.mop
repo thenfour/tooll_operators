@@ -247,7 +247,7 @@
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.Beat);",
+        "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.ProgramStreamBeat);",
         "",
         "                _effect.GetVariableByName(\"iTime\").AsScalar().Set(context.Time);",
         "                Render(context);",

@@ -158,7 +158,7 @@
         "            var Enabled = inputs[(int)InputId.Enabled].Eval(context).Value;",
         "            //<<< _params",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                float subdiv = (float)( (skstate.Beat - BeatOffset) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
+        "                float subdiv = (float)( (skstate.ProgramStreamBeat - BeatOffset) / Multiplier * Divisor);// scaled so 1 beat = 1 value",
         "                subdiv = subdiv + SubdivisionOffset;",
         "                if (Sequence == null || Sequence.Length == 0) {",
         "                    context.Value = (float)Math.Floor(subdiv);",

@@ -83,7 +83,7 @@
         "              //var skstate = (SlashKickPerformer.SKPlayerState)context.GlobalObjects[\"SKPlayerState\"];",
         "            //    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "            //    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
-        "                context.Value = (float)((skstate.Beat + Offset) / BeatPeriod);",
+        "                context.Value = (float)((skstate.ProgramStreamBeat + Offset) / BeatPeriod);",
         "            //    _effect.GetVariableByName(\"iBeatInt\").AsScalar().Set((float)(double)context.Objects[\"SKPlayerBeatInt\"]);",
         "            return context;",
         "            ",
