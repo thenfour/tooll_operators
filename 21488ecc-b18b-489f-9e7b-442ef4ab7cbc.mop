@@ -339,7 +339,7 @@
         "            double? beatsec = null;",
         "            if (Framefield.Core.OperatorPartContext.SKServerState.Server != null) {",
         "                if (Framefield.Core.OperatorPartContext.SKServerState.Server.Transport != null) {",
-        "                    beatsec = Framefield.Core.OperatorPartContext.SKServerState.Server.Transport.CurrentRegionBeatToRegionSeconds(beats);",
+        "                    beatsec = Framefield.Core.OperatorPartContext.SKServerState.Server.Transport.RegionBeatsToTime(beats);",
         "                }",
         "            }",
         "            if (!beatsec.HasValue)",

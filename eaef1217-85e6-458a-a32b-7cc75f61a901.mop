@@ -1,0 +1,425 @@
+{
+  "Name": "RegionCurve",
+  "_id": "eaef1217-85e6-458a-a32b-7cc75f61a901",
+  "Namespace": "user.tenfour.animation",
+  "Description": "A = attack (time before transition)\r\nR = release (time after transition)\r\nP = position of the slope within the curve\r\nS = slope\r\n",
+  "Inputs": [
+    {
+      "Name": "CueIn",
+      "MetaInstanceID": "278a174a-7707-4e8b-9791-3a2ba8fae70a",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CueOut",
+      "MetaInstanceID": "95e291fd-a6bd-4fc6-9256-e5bf70902786",
+      "DefaultValue": {
+        "Type": "Dynamic",
+        "Value": "Framefield.Core.Dynamic"
+      },
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ValueBefore",
+      "MetaInstanceID": "cdddc25e-aae9-4770-be47-7bb2b5283337",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveInAR.Attack",
+      "MetaInstanceID": "f6171de4-d720-4985-9514-fbfa82aaa190",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveInAR.Release",
+      "MetaInstanceID": "e9482f86-c154-42df-a1ae-f694d1cf43aa",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveInPS.Pos",
+      "MetaInstanceID": "e29839d5-bf84-4a77-a93f-adcd90170af6",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveInPS.Slope",
+      "MetaInstanceID": "16a997fc-bd52-4c54-9fd9-cc167cc99225",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0.5"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.99",
+      "Max": "0.99",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ValueDuring",
+      "MetaInstanceID": "169a6567-e81c-4b38-9c3e-bc7e64d2a477",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveOutAR.Attack",
+      "MetaInstanceID": "6d00be75-6103-459a-ac9b-635f9a39f80d",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveOutAR.Release",
+      "MetaInstanceID": "bcabe146-4926-40c9-8b2b-daf2467c6092",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveOutPS.Pos",
+      "MetaInstanceID": "3019b60a-176e-40b3-82ba-b54c746c96d0",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "1",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "CurveOutPS.Slope",
+      "MetaInstanceID": "1d9ad06b-f050-4a5a-9f66-32a0248d62a2",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "1"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-0.99",
+      "Max": "0.99",
+      "Scale": "0.005",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ValueAfter",
+      "MetaInstanceID": "ec12e66c-8f96-49b0-a883-1b7c0cf870dd",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "0"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "-10000",
+      "Max": "10000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "fe14764a-3605-47e0-a913-f06735ac73c9",
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
+    }
+  ],
+  "OperatorParts": [
+    {
+      "MetaInstanceID": "d45530fa-641f-4582-8dd0-e813aac0996f",
+      "MetaID": "0b7a3c7e-b680-4cf9-8419-b573b1f58bdd",
+      "Name": "RegionCurveFunc",
+      "Version": "bb824b80-87b8-4977-a8a7-5a30565af29b",
+      "Type": "Float",
+      "IsMultiInput": "True",
+      "Script": [
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using System.Text;",
+        "using SharpDX;",
+        "using LibToollTenfour;",
+        "",
+        "namespace Framefield.Core.ID0b7a3c7e_b680_4cf9_8419_b573b1f58bdd",
+        "{",
+        "    public class Class_RegionCurve : OperatorPart.Function, Framefield.Core.OperatorPartTraits.ITimeAccessor",
+        "    {",
+        "        //>>> _inputids",
+        "        private enum InputId",
+        "        {",
+        "            CueIn = 0,",
+        "            ValueBefore = 1,",
+        "            CurveInPSPos = 2,",
+        "            CurveInPSSlope = 3,",
+        "            ValueAfter = 4,",
+        "            CurveInARAttack = 5,",
+        "            CurveInARRelease = 6,",
+        "            ValueDuring = 7,",
+        "            CurveOutARAttack = 8,",
+        "            CurveOutARRelease = 9,",
+        "            CurveOutPSPos = 10,",
+        "            CurveOutPSSlope = 11,",
+        "            CueOut = 12",
+        "        }",
+        "        //<<< _inputids",
+        "        ",
+        "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
+        "        {",
+        "            //>>> _params",
+        "            var CueIn = inputs[(int)InputId.CueIn].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            var ValueBefore = inputs[(int)InputId.ValueBefore].Eval(context).Value;",
+        "            var CurveInPSPos = inputs[(int)InputId.CurveInPSPos].Eval(context).Value;",
+        "            var CurveInPSSlope = inputs[(int)InputId.CurveInPSSlope].Eval(context).Value;",
+        "            var CurveInPS = new Vector2(CurveInPSPos, CurveInPSSlope);",
+        "            var ValueAfter = inputs[(int)InputId.ValueAfter].Eval(context).Value;",
+        "            var CurveInARAttack = inputs[(int)InputId.CurveInARAttack].Eval(context).Value;",
+        "            var CurveInARRelease = inputs[(int)InputId.CurveInARRelease].Eval(context).Value;",
+        "            var CurveInAR = new Vector2(CurveInARAttack, CurveInARRelease);",
+        "            var ValueDuring = inputs[(int)InputId.ValueDuring].Eval(context).Value;",
+        "            var CurveOutARAttack = inputs[(int)InputId.CurveOutARAttack].Eval(context).Value;",
+        "            var CurveOutARRelease = inputs[(int)InputId.CurveOutARRelease].Eval(context).Value;",
+        "            var CurveOutAR = new Vector2(CurveOutARAttack, CurveOutARRelease);",
+        "            var CurveOutPSPos = inputs[(int)InputId.CurveOutPSPos].Eval(context).Value;",
+        "            var CurveOutPSSlope = inputs[(int)InputId.CurveOutPSSlope].Eval(context).Value;",
+        "            var CurveOutPS = new Vector2(CurveOutPSPos, CurveOutPSSlope);",
+        "            var CueOut = inputs[(int)InputId.CueOut].Eval(context).Dynamic;  // Needs to be checked for null!",
+        "            //<<< _params",
+        "",
+        "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
+        "            if ((object)CueIn == null || (object)CueOut == null) {",
+        "                return context;",
+        "            }",
+        "            //context.Dynamic = Cue;            ",
+        "            //Log.WriteLine(\"Cue:{0:0.00}, Playhead:{1:0.00}\", Cue.StreamTime, skstate.ProgramStreamTime);",
+        "",
+        "            context.Value = (float)Curve2.Eval(skstate.ProgramStreamTime, CueIn.StreamTime, CueOut.StreamTime, new Curve2Region",
+        "            {",
+        "                ValueBefore = ValueBefore,",
+        "                CurveIn = new Curve2Spec",
+        "                {",
+        "                    AttackTime = CurveInARAttack,",
+        "                    ReleaseTime = CurveInARRelease,",
+        "                    P = CurveInPSPos,",
+        "                    S = CurveInPSSlope",
+        "                },",
+        "                ValueDuring = ValueDuring,",
+        "                CurveOut = new Curve2Spec",
+        "                {",
+        "                    AttackTime = CurveOutARAttack,",
+        "                    ReleaseTime = CurveOutARRelease,",
+        "                    P = CurveOutPSPos,",
+        "                    S = CurveOutPSSlope",
+        "                },",
+        "                ValueAfter = ValueAfter",
+        "            });",
+        "",
+        "            return context;",
+        "        }",
+        "    }",
+        "}",
+        "",
+        "",
+        ""
+      ],
+      "AdditionalAssemblies": [
+        "LibToollTenfour.dll"
+      ]
+    }
+  ],
+  "Operators": [],
+  "Connections": [
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "fe14764a-3605-47e0-a913-f06735ac73c9"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "278a174a-7707-4e8b-9791-3a2ba8fae70a",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "cdddc25e-aae9-4770-be47-7bb2b5283337",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e29839d5-bf84-4a77-a93f-adcd90170af6",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "16a997fc-bd52-4c54-9fd9-cc167cc99225",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "ec12e66c-8f96-49b0-a883-1b7c0cf870dd",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "f6171de4-d720-4985-9514-fbfa82aaa190",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "e9482f86-c154-42df-a1ae-f694d1cf43aa",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "169a6567-e81c-4b38-9c3e-bc7e64d2a477",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "6d00be75-6103-459a-ac9b-635f9a39f80d",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "bcabe146-4926-40c9-8b2b-daf2467c6092",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "3019b60a-176e-40b3-82ba-b54c746c96d0",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "1d9ad06b-f050-4a5a-9f66-32a0248d62a2",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "95e291fd-a6bd-4fc6-9256-e5bf70902786",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "d45530fa-641f-4582-8dd0-e813aac0996f"
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 {
-  "Name": "SKTimeMarker1",
-  "_id": "c4d3de91-8e4a-4154-b741-056b72aa301d",
-  "Namespace": "user.tenfour",
-  "Description": "use as just a placeholder for cues\r\nit can convert beats to time, that's pretty cool. and if you give it a beat offset it will be relative to that beat.\r\n",
+  "Name": "Cue",
+  "_id": "6df1ce6d-26f8-4b67-85a8-3fd7e2885120",
+  "Namespace": "user.tenfour.animation",
+  "Description": "v5 or so.use as just a placeholder for cues\r\n\r\nConverts stream to project, and beats to time.\r\nCan use a stream time as a basis, so you can define markers by beats from a previous cue.\r\n\r\nOutputs a LibToollTenfour.CueInfo object.\r\n",
   "Inputs": [
     {
-      "Name": "TransitionSec",
-      "MetaInstanceID": "ed64ff45-3210-4f3e-ad16-a5618537304c",
+      "Name": "ProjectTime",
+      "MetaInstanceID": "c07e7caa-af11-4213-87b8-4e061a7582e3",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -22,8 +22,8 @@
       "EnumValues": []
     },
     {
-      "Name": "TransitionBeat",
-      "MetaInstanceID": "ff596265-426b-4e10-a10b-8d60202ee25f",
+      "Name": "ProjectBeat",
+      "MetaInstanceID": "ccb8af50-0108-4514-8469-a9ee4604bf43",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -40,10 +40,10 @@
     },
     {
       "Name": "Color.R",
-      "MetaInstanceID": "2daebbf3-a4bd-41e8-84ff-e5a207762fb3",
+      "MetaInstanceID": "fb5871b9-9223-478b-a925-013d6941c721",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "1"
+        "Value": "0.53"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -57,10 +57,10 @@
     },
     {
       "Name": "Color.G",
-      "MetaInstanceID": "6b1a843c-a22c-4b8c-9dd4-71a99e4d340a",
+      "MetaInstanceID": "65a5b2a5-8dfe-464b-9b16-9db2311599c4",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "0.7"
+        "Value": "0.48"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -74,10 +74,10 @@
     },
     {
       "Name": "Color.B",
-      "MetaInstanceID": "aef14164-33ff-4b4d-a10b-fd6804b0972c",
+      "MetaInstanceID": "dd1e94b9-0bcd-4eb6-aa53-e033317070f9",
       "DefaultValue": {
         "Type": "Float",
-        "Value": "0.3"
+        "Value": "0.68"
       },
       "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
       "IsMultiInput": "False",
@@ -91,7 +91,7 @@
     },
     {
       "Name": "Color.A",
-      "MetaInstanceID": "1c20ed4a-8ea0-42b7-b7c9-25dea51fec02",
+      "MetaInstanceID": "4afa2668-e10a-4845-a8f8-35f30949e61c",
       "DefaultValue": {
         "Type": "Float",
         "Value": "1"
@@ -107,8 +107,8 @@
       "EnumValues": []
     },
     {
-      "Name": "BeatOffset",
-      "MetaInstanceID": "cf0cebec-694e-4cf4-9271-66c503cb1bba",
+      "Name": "StreamTimeOffset",
+      "MetaInstanceID": "28b48c7e-a58e-48b6-bafc-13ddc5f5f8fb",
       "DefaultValue": {
         "Type": "Float",
         "Value": "0"
@@ -126,27 +126,17 @@
   ],
   "Outputs": [
     {
-      "Name": "Beat",
-      "MetaInstanceID": "fd1599e4-50a4-46e4-96ff-87d0253ec347",
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
-    },
-    {
-      "Name": "Time",
-      "MetaInstanceID": "78d849a3-9e7f-4d04-824f-25baad4a123b",
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506"
-    },
-    {
-      "Name": "RelativeTime",
-      "MetaInstanceID": "695442b4-93b3-47d8-a49d-3dd48c957217",
-      "MetaID": "9f831cf2-a1ec-41f4-ba80-cced9736af6b"
+      "Name": "Cue",
+      "MetaInstanceID": "0b59b518-5e0f-42df-8d94-df3962be2e16",
+      "MetaID": "9701d534-b3ff-4889-a250-84aece4a7d76"
     }
   ],
   "OperatorParts": [
     {
-      "MetaInstanceID": "7600e50b-f39b-4603-8cbe-c688c420b87b",
-      "MetaID": "89f04cd4-3a88-4fa3-b02a-d60eae58df2d",
-      "Name": "SKTimeMarker1Func",
-      "Version": "8b1569ed-8a14-42c7-84bd-dfad7c8da746",
+      "MetaInstanceID": "f65e6e89-a4b3-4518-b261-532c506b124e",
+      "MetaID": "69fce000-1df9-434d-a8d2-15a8eff16125",
+      "Name": "CueFunc",
+      "Version": "d0ee06b5-e001-4eee-8d9a-be1f8a8693bd",
       "Type": "Generic",
       "IsMultiInput": "True",
       "Script": [
@@ -156,73 +146,57 @@
         "using System.Text;",
         "using SharpDX;",
         "",
-        "namespace Framefield.Core.ID89f04cd4_3a88_4fa3_b02a_d60eae58df2d",
+        "// projectbeat",
+        "// projecttime",
+        "// streamtime",
+        "// streambeat",
+        "// relativetime",
+        "",
+        "namespace Framefield.Core.ID69fce000_1df9_434d_a8d2_15a8eff16125",
         "{",
-        "    public class Class_SKTimeMarker : OperatorPart.Function,",
+        "    public class Class_Cue : OperatorPart.Function,",
         "        Framefield.Core.OperatorPartTraits.ITimeMarker,",
         "        Framefield.Core.OperatorPartTraits.ITimeAccessor",
         "    {",
         "        //>>> _inputids",
         "        private enum InputId",
         "        {",
-        "            TransitionSec = 0,",
+        "            ProjectTime = 0,",
         "            ColorR = 1,",
         "            ColorG = 2,",
         "            ColorB = 3,",
         "            ColorA = 4,",
-        "            TransitionBeat = 5,",
-        "            BeatOffset = 6",
+        "            ProjectBeat = 5,",
+        "            StreamTimeOffset = 6",
         "        }",
         "        //<<< _inputids",
         "        ",
         "        //>>> _outputids",
         "        private enum OutputId",
         "        {",
-        "            Beat = 0,",
-        "            Time = 1,",
-        "            RelativeTime = 2",
+        "            Cue = 0",
         "        }",
         "        //<<< _outputids",
-        "",
-        "        /*private double BeatsToSeconds(double beats, double bpm)",
-        "        {",
-        "            beats *= 60;",
-        "            beats /= bpm;",
-        "            return beats;",
-        "        }*/",
-        "        private float GetTime(double beats, double sec)",
-        "        {",
-        "            double? beatsec = null;",
-        "            if (Framefield.Core.OperatorPartContext.SKServerState.Server != null) {",
-        "                if (Framefield.Core.OperatorPartContext.SKServerState.Server.Transport != null) {",
-        "                    beatsec = Framefield.Core.OperatorPartContext.SKServerState.Server.Transport.RegionBeatsToTime(beats);",
-        "                }",
-        "            }",
-        "            if (!beatsec.HasValue)",
-        "                return (float)sec;//beats (float)(BeatsToSeconds(beats, bpm) + sec);",
-        "            return (float)(sec + beatsec.Value);",
-        "        }",
         "",
         "    \t// for itimemmarker",
         "        public double Time {",
         "            get",
         "            {",
-        "                double sec = GetInputValue((int)InputId.TransitionSec);",
-        "                double beats = GetInputValue((int)InputId.TransitionBeat);",
-        "                double beatOffset = GetInputValue((int)InputId.BeatOffset);",
-        "                var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
-        "                //double bpm = skstate.BPM;",
-        "                //if (Math.Abs(bpm) < 1)",
-        "                //    bpm = 120;",
+        "                double projectTime = GetInputValue((int)InputId.ProjectTime);",
+        "                double projectBeat = GetInputValue((int)InputId.ProjectBeat);",
+        "                double streamTimeOffset = GetInputValue((int)InputId.StreamTimeOffset);",
         "                ",
-        "                    //bpm = (float)skstate.BPM;",
-        "                //}",
-        "                return GetTime(beats + beatOffset, sec);",
+        "                var server = Framefield.Core.OperatorPartContext.SKServerState.Server;",
+        "                if (server != null && server.Transport != null) {",
+        "                    LibToollTenfour.CueInfo cue = server.Transport.CreateCue(streamTimeOffset, projectTime, projectBeat);",
+        "                    return cue.ProjectTime;",
+        "                }",
+        "                return 0;",
         "            }",
         "            set",
         "            {",
-        "                SetInputValue((int)InputId.TransitionSec, value);",
-        "                SetInputValue((int)InputId.TransitionBeat, 0);",
+        "                SetInputValue((int)InputId.ProjectTime, value);",
+        "                SetInputValue((int)InputId.ProjectBeat, 0);",
         "            }",
         "        }",
         "",
@@ -245,23 +219,33 @@
         "        ",
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) {",
         "            //>>> _params",
-        "            var TransitionSec = inputs[(int)InputId.TransitionSec].Eval(context).Value;",
+        "            var ProjectTime = inputs[(int)InputId.ProjectTime].Eval(context).Value;",
         "            var ColorR = inputs[(int)InputId.ColorR].Eval(context).Value;",
         "            var ColorG = inputs[(int)InputId.ColorG].Eval(context).Value;",
         "            var ColorB = inputs[(int)InputId.ColorB].Eval(context).Value;",
         "            var ColorA = inputs[(int)InputId.ColorA].Eval(context).Value;",
         "            var Color = new Color4(ColorR, ColorG, ColorB, ColorA);",
-        "            var TransitionBeat = inputs[(int)InputId.TransitionBeat].Eval(context).Value;",
-        "            var BeatOffset = inputs[(int)InputId.BeatOffset].Eval(context).Value;",
+        "            var ProjectBeat = inputs[(int)InputId.ProjectBeat].Eval(context).Value;",
+        "            var StreamTimeOffset = inputs[(int)InputId.StreamTimeOffset].Eval(context).Value;",
         "            //<<< _params",
         "            ",
         "            var skstate = Framefield.Core.OperatorPartContext.SKServerState;",
         "",
-        "                context.Time = (float)skstate.ProgramStreamTime;",
-        "            //}",
+        "            double projectTime = GetInputValue((int)InputId.ProjectTime);",
+        "            double projectBeat = GetInputValue((int)InputId.ProjectBeat);",
+        "            double streamTimeOffset = GetInputValue((int)InputId.StreamTimeOffset);",
         "            ",
-        "            float timeSec;",
+        "            if (skstate.Server != null && skstate.Server.Transport != null) {",
+        "                LibToollTenfour.CueInfo cue = skstate.Server.Transport.CreateCue(StreamTimeOffset, ProjectTime, ProjectBeat);",
+        "                context.Dynamic = cue;",
+        "            }",
+        "            return context;",
+        "",
+        "",
+        "//context.Time = (float)skstate.ProgramStreamTime;",
         "            ",
+        "            //float timeSec;",
+        "            /*",
         "            switch (outputIdx) {",
         "                case (int)OutputId.Time:",
         "                    //timeSec = GetTime(TransitionBeat - BeatOffset, TransitionSec);",
@@ -277,10 +261,10 @@
         "                    timeSec = GetTime(TransitionBeat + BeatOffset, TransitionSec);",
         "                    context.Value = context.Time - timeSec;",
         "                    return context;",
-        "            }",
+        "            }*/",
         "            ",
         "            //Logger.Info(this,\"unknown outputid\");",
-        "            return context;",
+        "            //return context;",
         "        }",
         "",
         "        private double GetInputValue(int index) {",
@@ -307,63 +291,51 @@
   "Connections": [
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "ed64ff45-3210-4f3e-ad16-a5618537304c",
+      "SourceOpPart": "c07e7caa-af11-4213-87b8-4e061a7582e3",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "2daebbf3-a4bd-41e8-84ff-e5a207762fb3",
+      "SourceOpPart": "fb5871b9-9223-478b-a925-013d6941c721",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "6b1a843c-a22c-4b8c-9dd4-71a99e4d340a",
+      "SourceOpPart": "65a5b2a5-8dfe-464b-9b16-9db2311599c4",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "aef14164-33ff-4b4d-a10b-fd6804b0972c",
+      "SourceOpPart": "dd1e94b9-0bcd-4eb6-aa53-e033317070f9",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "1c20ed4a-8ea0-42b7-b7c9-25dea51fec02",
+      "SourceOpPart": "4afa2668-e10a-4845-a8f8-35f30949e61c",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "ff596265-426b-4e10-a10b-8d60202ee25f",
+      "SourceOpPart": "ccb8af50-0108-4514-8469-a9ee4604bf43",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "cf0cebec-694e-4cf4-9271-66c503cb1bba",
+      "SourceOpPart": "28b48c7e-a58e-48b6-bafc-13ddc5f5f8fb",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b"
+      "TargetOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e"
     },
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b",
+      "SourceOpPart": "f65e6e89-a4b3-4518-b261-532c506b124e",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "fd1599e4-50a4-46e4-96ff-87d0253ec347"
-    },
-    {
-      "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b",
-      "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "78d849a3-9e7f-4d04-824f-25baad4a123b"
-    },
-    {
-      "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "7600e50b-f39b-4603-8cbe-c688c420b87b",
-      "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "695442b4-93b3-47d8-a49d-3dd48c957217"
+      "TargetOpPart": "0b59b518-5e0f-42df-8d94-df3962be2e16"
     }
   ]
 }

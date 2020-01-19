@@ -54,23 +54,6 @@
       "Scale": "1",
       "ScaleType": "Linear",
       "EnumValues": []
-    },
-    {
-      "Name": "IPAddressIndex",
-      "MetaInstanceID": "6982a0a5-ee3b-409b-b274-c0c47d7ee304",
-      "DefaultValue": {
-        "Type": "Float",
-        "Value": "0"
-      },
-      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
-      "IsMultiInput": "False",
-      "Relevance": "Optional",
-      "Description": "which IP address should the web server listen on?\r\n",
-      "Min": "-10000",
-      "Max": "10000",
-      "Scale": "0.1",
-      "ScaleType": "Linear",
-      "EnumValues": []
     }
   ],
   "Outputs": [
@@ -85,7 +68,7 @@
       "MetaInstanceID": "a6046534-ed3f-4b26-a304-a74a9ed12d0e",
       "MetaID": "fc530095-f8cd-494b-b66f-e1f0ce675291",
       "Name": "SKWebServerFunc",
-      "Version": "d96dc195-3cfb-4e46-a879-613de625b3a4",
+      "Version": "6e2170d3-ee5d-4404-955f-2ebcaeecf474",
       "Type": "Float",
       "IsMultiInput": "True",
       "Script": [
@@ -94,7 +77,7 @@
         "using System.Linq;",
         "using System.Text;",
         "using SharpDX;",
-        "using SlashKickPerformer;",
+        "using LibToollTenfour;",
         "using System.Net;",
         "using System.Net.NetworkInformation;",
         "",
@@ -108,8 +91,7 @@
         "        {",
         "            SyncOffsetMS = 0,",
         "            Input = 1,",
-        "            ServerPort = 2,",
-        "            IPAddressIndex = 3",
+        "            ServerPort = 2",
         "        }",
         "        //<<< _inputids",
         "        ",
@@ -128,7 +110,6 @@
         "            var SyncOffsetMS = inputs[(int)InputId.SyncOffsetMS].Eval(context).Value;",
         "            var Input = inputs[(int)InputId.Input];",
         "            var ServerPort = inputs[(int)InputId.ServerPort].Eval(context).Value;",
-        "            var IPAddressIndex = inputs[(int)InputId.IPAddressIndex].Eval(context).Value;",
         "            //<<< _params ",
         "",
         "            // http://127.0.0.1:7777",
@@ -139,11 +120,10 @@
         "                }",
         "                _oldPort = (int)ServerPort;",
         "                //_oldIPAddressIndex = (int)IPAddressIndex;",
-        "                //_oldPrefix = SlashKickPerformer.SKWebServer.GetServerPrefix(_oldPort, _oldIPAddressIndex);",
         "                //Logger.Info(this,\"desc: {0}, pref: {1}\", _oldPrefix.ServerPrefix, _oldPrefix.Description);",
         "                ",
         "                try {",
-        "                    _server = SlashKickPerformer.ServerUtils.CreateServer((int)ServerPort);",
+        "                    _server = LibToollTenfour.ServerUtils.CreateServer((int)ServerPort);",
         "                    Logger.Info(this,\"Started SK Web server @ {0}\", _server.CurrentPrefix.Description);",
         "                    //context.GlobalObjects[\"SKServerState\"] = string.Format(\"SKServer started @ {1} / {0}\", _server.CurrentPrefix.ServerPrefix, _server.CurrentPrefix.Description);",
         "                } catch (System.Net.HttpListenerException ex) {",
@@ -181,16 +161,14 @@
         "            }",
         "                    //context.Objects[\"SKPlayerState\"] = null;",
         "                    //context.GlobalObjects[\"SKPlayerState\"] = null;",
-        "                    //Framefield.Core.OperatorPartContext.SKServerState = new SlashKickPerformer.SKPlayerState();",
         "            context = Input.Eval(context);",
         "            context.Time = oldTime;",
         "            return context;",
         "        }",
         "        ",
-        "        SlashKickPerformer.ISKServer _server = null;",
+        "        LibToollTenfour.ISKServer _server = null;",
         "        int _oldPort = -1;",
         "        //int _oldIPAddressIndex = -1;",
-        "        //SlashKickPerformer.ServerPrefixInfo _oldPrefix;",
         "    }",
         "}",
         "",
@@ -218,12 +196,6 @@
     {
       "SourceOp": "00000000-0000-0000-0000-000000000000",
       "SourceOpPart": "f901fe55-c3ee-462f-846c-c88c99f1c800",
-      "TargetOp": "00000000-0000-0000-0000-000000000000",
-      "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
-    },
-    {
-      "SourceOp": "00000000-0000-0000-0000-000000000000",
-      "SourceOpPart": "6982a0a5-ee3b-409b-b274-c0c47d7ee304",
       "TargetOp": "00000000-0000-0000-0000-000000000000",
       "TargetOpPart": "a6046534-ed3f-4b26-a304-a74a9ed12d0e"
     },

@@ -1,0 +1,204 @@
+{
+  "Name": "SKServerSetup",
+  "_id": "ca482ccf-2f42-4a3d-b937-fbafd236c537",
+  "Namespace": "user.tenfour.rsync",
+  "Description": "Wrapper for the whole slashkick animation project",
+  "Inputs": [
+    {
+      "Name": "Image",
+      "MetaInstanceID": "7781d3e4-de13-4009-8992-098973cd1d4b",
+      "DefaultValue": {
+        "Type": "Image",
+        "Value": "Framefield.Core.Image"
+      },
+      "MetaID": "9848060d-fd84-45b0-b658-d0d531c61dab",
+      "IsMultiInput": "False",
+      "Relevance": "Required",
+      "Description": "",
+      "Min": "-100000",
+      "Max": "100000",
+      "Scale": "0.1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    },
+    {
+      "Name": "ServerPort",
+      "MetaInstanceID": "9d555c3c-c2b6-4cbd-b0b2-7ff07a824b35",
+      "DefaultValue": {
+        "Type": "Float",
+        "Value": "7777"
+      },
+      "MetaID": "3f76dee3-3897-44ac-82d6-25ce9f53a506",
+      "IsMultiInput": "False",
+      "Relevance": "Optional",
+      "Description": "",
+      "Min": "0",
+      "Max": "65535",
+      "Scale": "1",
+      "ScaleType": "Linear",
+      "EnumValues": []
+    }
+  ],
+  "Outputs": [
+    {
+      "Name": "Output",
+      "MetaInstanceID": "88984d8c-03bc-4c15-a093-f3ff31836861",
+      "MetaID": "79122951-7bc4-4c68-b085-866eab828248"
+    }
+  ],
+  "OperatorParts": [],
+  "Operators": [
+    {
+      "Name": "Group",
+      "MetaInstanceID": "22a99dcf-1bc8-46aa-901e-b2e415332170",
+      "MetaID": "46e0d20b-9ecc-42bc-ad5a-faeaf23e62f1",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-309.546987220335",
+        "PosY": "-836.079405420525",
+        "Width": "325",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "Layer2d",
+      "MetaInstanceID": "5464ee00-4790-490a-b303-a79173cff065",
+      "MetaID": "c6e1c4b9-28a8-41fb-a9fa-74591a1239f0",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-309.546987220335",
+        "PosY": "-811.079405420525",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "StateHUD",
+      "MetaInstanceID": "df4dc7cb-7edc-41da-9379-219f73790aac",
+      "MetaID": "125279bf-cc96-4642-a3dc-9e569a7a9fef",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-184.546987220335",
+        "PosY": "-811.079405420525",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "SKWebServer",
+      "MetaInstanceID": "576f05a0-6cba-419a-8821-35085617424d",
+      "MetaID": "29f0a920-72f4-450b-a6fe-f3c773736719",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-134.546987220335",
+        "PosY": "-861.079405420525",
+        "Width": "275",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "SyncHotkeys",
+      "MetaInstanceID": "d3500fd0-95bb-41c9-855b-471433912405",
+      "MetaID": "7e1c5996-ecd6-44f5-b2ce-9860acca036e",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-100.952937664768",
+        "PosY": "-717.522118014551",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    },
+    {
+      "Name": "SyncHUD",
+      "MetaInstanceID": "69a25e92-be6b-4025-bb7c-d1140c874dbc",
+      "MetaID": "ab03b2b7-bcc3-431b-bf24-64f9d9ab3082",
+      "OperatorProperties": {
+        "Name": "",
+        "PosX": "-84.546987220335",
+        "PosY": "-811.079405420525",
+        "Width": "100",
+        "Visible": "True",
+        "Disabled": "False",
+        "Inputs": [],
+        "States": []
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "SourceOp": "5464ee00-4790-490a-b303-a79173cff065",
+      "SourceOpPart": "76bdc878-f5e9-4b35-a44a-77a23d309c03",
+      "TargetOp": "22a99dcf-1bc8-46aa-901e-b2e415332170",
+      "TargetOpPart": "739993cc-ce22-4070-8914-da6008c79357"
+    },
+    {
+      "SourceOp": "df4dc7cb-7edc-41da-9379-219f73790aac",
+      "SourceOpPart": "13ba6084-b22e-43ad-ab2b-631b50a75eca",
+      "TargetOp": "22a99dcf-1bc8-46aa-901e-b2e415332170",
+      "TargetOpPart": "739993cc-ce22-4070-8914-da6008c79357"
+    },
+    {
+      "SourceOp": "69a25e92-be6b-4025-bb7c-d1140c874dbc",
+      "SourceOpPart": "1c831d4f-c7ab-407d-b585-b79699bbb33a",
+      "TargetOp": "22a99dcf-1bc8-46aa-901e-b2e415332170",
+      "TargetOpPart": "739993cc-ce22-4070-8914-da6008c79357"
+    },
+    {
+      "SourceOp": "576f05a0-6cba-419a-8821-35085617424d",
+      "SourceOpPart": "4722d312-1e90-40b6-8143-afcd1de4557f",
+      "TargetOp": "00000000-0000-0000-0000-000000000000",
+      "TargetOpPart": "88984d8c-03bc-4c15-a093-f3ff31836861"
+    },
+    {
+      "SourceOp": "22a99dcf-1bc8-46aa-901e-b2e415332170",
+      "SourceOpPart": "6d090348-b67e-4203-acba-43611af0395d",
+      "TargetOp": "576f05a0-6cba-419a-8821-35085617424d",
+      "TargetOpPart": "43ae3ec7-81f8-4c1a-bb9c-6c6edfa3d964"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "7781d3e4-de13-4009-8992-098973cd1d4b",
+      "TargetOp": "5464ee00-4790-490a-b303-a79173cff065",
+      "TargetOpPart": "e26b3a5b-cd72-47c4-9e3f-96a679418f26"
+    },
+    {
+      "SourceOp": "d3500fd0-95bb-41c9-855b-471433912405",
+      "SourceOpPart": "213f9ef9-9c42-4c14-83f6-88f768876137",
+      "TargetOp": "576f05a0-6cba-419a-8821-35085617424d",
+      "TargetOpPart": "72c67e8d-d5e8-4832-8070-af6288204715"
+    },
+    {
+      "SourceOp": "d3500fd0-95bb-41c9-855b-471433912405",
+      "SourceOpPart": "a3ba4e80-4778-4341-8bcd-ee2998ac992b",
+      "TargetOp": "69a25e92-be6b-4025-bb7c-d1140c874dbc",
+      "TargetOpPart": "a42986f2-5902-4077-b438-191d3dd4455f"
+    },
+    {
+      "SourceOp": "d3500fd0-95bb-41c9-855b-471433912405",
+      "SourceOpPart": "6de0a15d-58a8-473a-be36-3ac3715620e6",
+      "TargetOp": "69a25e92-be6b-4025-bb7c-d1140c874dbc",
+      "TargetOpPart": "6e864262-0ca0-4881-90b4-f75735351c1e"
+    },
+    {
+      "SourceOp": "00000000-0000-0000-0000-000000000000",
+      "SourceOpPart": "9d555c3c-c2b6-4cbd-b0b2-7ff07a824b35",
+      "TargetOp": "576f05a0-6cba-419a-8821-35085617424d",
+      "TargetOpPart": "f901fe55-c3ee-462f-846c-c88c99f1c800"
+    }
+  ]
+}

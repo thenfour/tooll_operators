@@ -127,7 +127,6 @@
         "                    }",
         "                    ",
         "                    //Logger.Info(this,\"typeof serverstate: {0}\", state.GetType().ToString());",
-        "                    //var state = (SlashKickPerformer.SKPlayerState)ServerState;",
         "                    s = string.Format(\"\"",
         "                        + \"FPS: {10}\\n\"",
         "                        + \"Program: #{2}, {1}bpm\\n\"//, rawtime:{17:0.00}\\n\"",

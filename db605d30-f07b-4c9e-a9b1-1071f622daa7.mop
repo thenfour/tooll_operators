@@ -39,7 +39,7 @@
         "        public override OperatorPartContext Eval(OperatorPartContext context, List<OperatorPart> inputs, int outputIdx) ",
         "        {",
         "            if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "              var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "              var skstate = (LibToollTenfour.SKPlayerState)context.Objects[\"SKPlayerState\"];",
         "              Logger.Info(this, \"skstate is OK\");",
         "            } else {",
         "              Logger.Info(this, \"skstate is NULL\");",

@@ -254,7 +254,7 @@
         "                //<<< _setup",
         "",
         "                if (context.Objects.ContainsKey(\"SKPlayerState\")) {",
-        "                  var skstate = (SlashKickPerformer.SKPlayerState)context.Objects[\"SKPlayerState\"];",
+        "                  var skstate = (LibToollTenfour.SKPlayerState)context.Objects[\"SKPlayerState\"];",
         "                    _effect.GetVariableByName(\"iBPM\").AsScalar().Set((float)skstate.BPM);",
         "                    _effect.GetVariableByName(\"iProgram\").AsScalar().Set(skstate.ProgramIndex);",
         "                    _effect.GetVariableByName(\"iBeat\").AsScalar().Set((float)skstate.ProgramStreamBeat);",
